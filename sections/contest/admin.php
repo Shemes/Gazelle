@@ -54,7 +54,7 @@ if (G::$DB->has_results()) {
 				<td>Date Ends</td>
 			</tr>
 <?php
-	while ($Row = G::$DB->next_record()) {
+	while ($Row =\G::$DB->next_record()) {
 ?>
 			<tr>
 				<td><a href="contest.php?action=admin&id=<?=$Row['ID']?>"><?=$Row['Name']?></a></td>

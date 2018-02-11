@@ -14,15 +14,15 @@ class Wiki {
 	 * @return array
 	 */
 	public static function get_aliases() {
-		$Aliases = G::$Cache->get_value('wiki_aliases');
+		$Aliases = \G::$Cache->get_value('wiki_aliases');
 		if (!$Aliases) {
-			$QueryID = G::$DB->get_query_id();
-			G::$DB->query("
+			$QueryID = \G::$DB->get_query_id();
+			\G::$DB->query("
 				SELECT Alias, ArticleID
 				FROM wiki_aliases");
-			$Aliases = G::$DB->to_pair('Alias', 'ArticleID');
-			G::$DB->set_query_id($QueryID);
-			G::$Cache->cache_value('wiki_aliases', $Aliases, 3600 * 24 * 14); // 2 weeks
+			$Aliases = \G::$DB->to_pair('Alias', 'ArticleID');
+			\G::$DB->set_query_id($QueryID);
+			\G::$Cache->cache_value('wiki_aliases', $Aliases, 3600 * 24 * 14); // 2 weeks
 		}
 		return $Aliases;
 	}
@@ -31,7 +31,7 @@ class Wiki {
 	 * Flush the alias cache. Call this whenever you touch the wiki_aliases table.
 	 */
 	public static function flush_aliases() {
-		G::$Cache->delete_value('wiki_aliases');
+		\G::$Cache->delete_value('wiki_aliases');
 	}
 
 	/**
@@ -56,10 +56,10 @@ class Wiki {
 	 * @return array|bool
 	 */
 	public static function get_article($ArticleID, $Error = true) {
-		$Contents = G::$Cache->get_value('wiki_article_'.$ArticleID);
+		$Contents = \G::$Cache->get_value('wiki_article_'.$ArticleID);
 		if (!$Contents) {
-			$QueryID = G::$DB->get_query_id();
-			G::$DB->query("
+			$QueryID = \G::$DB->get_query_id();
+			\G::$DB->query("
 				SELECT
 					w.Revision,
 					w.Title,
@@ -76,16 +76,16 @@ class Wiki {
 					LEFT JOIN users_main AS u ON u.ID=w.Author
 				WHERE w.ID='$ArticleID'
 				GROUP BY w.ID");
-			if (!G::$DB->has_results()) {
+			if (!\G::$DB->has_results()) {
 				if ($Error) {
 					error(404);
 				} else {
 					return false;
 				}
 			}
-			$Contents = G::$DB->to_array();
-			G::$DB->set_query_id($QueryID);
-			G::$Cache->cache_value('wiki_article_'.$ArticleID, $Contents, 3600 * 24 * 14); // 2 weeks
+			$Contents = \G::$DB->to_array();
+			\G::$DB->set_query_id($QueryID);
+			\G::$Cache->cache_value('wiki_article_'.$ArticleID, $Contents, 3600 * 24 * 14); // 2 weeks
 		}
 		return $Contents;
 	}
@@ -95,6 +95,6 @@ class Wiki {
 	 * @param int $ArticleID
 	 */
 	public static function flush_article($ArticleID) {
-		G::$Cache->delete_value('wiki_article_'.$ArticleID);
+		\G::$Cache->delete_value('wiki_article_'.$ArticleID);
 	}
 }

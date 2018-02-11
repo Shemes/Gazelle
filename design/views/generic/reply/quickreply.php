@@ -37,7 +37,7 @@
  */
 	global $HeavyInfo, $UserSubscriptions, $ThreadInfo, $ForumsDoublePost, $Document;
 
-	if (G::$LoggedUser['DisablePosting']) {
+	if (\G::$LoggedUser['DisablePosting']) {
 		return;
 	}
 	if (!isset($TextareaCols)) {
@@ -84,7 +84,7 @@
 						<tr class="colhead_dark">
 							<td colspan="<?=(Users::has_avatars_enabled() ? 2 : 1)?>">
 								<div style="float: left;"><a href="#quickreplypreview">#XXXXXX</a>
-									by <strong><?=Users::format_username(G::$LoggedUser['ID'], true, true, true, true)?></strong> Just now
+									by <strong><?=Users::format_username(\G::$LoggedUser['ID'], true, true, true, true)?></strong> Just now
 								</div>
 								<div style="float: right;">
 									<a href="#quickreplypreview" class="brackets">Report</a>
@@ -96,7 +96,7 @@
 						<tr>
 <?	if (Users::has_avatars_enabled()) { ?>
 							<td class="avatar" valign="top">
-								<?=Users::show_avatar(G::$LoggedUser['Avatar'], G::$LoggedUser['ID'], G::$LoggedUser['Username'], $HeavyInfo['DisableAvatars'])?>
+								<?=Users::show_avatar(\G::$LoggedUser['Avatar'], \G::$LoggedUser['ID'], \G::$LoggedUser['Username'], $HeavyInfo['DisableAvatars'])?>
 							</td>
 <?	} ?>
 							<td class="body" valign="top">
@@ -108,7 +108,7 @@
 					</table>
 					<form class="send_form center" name="reply" id="quickpostform" action="<?=$Action?>" method="post"<? if (!check_perms('users_mod')) { ?> onsubmit="quickpostform.submit_button.disabled = true;"<? } ?>>
 						<input type="hidden" name="action" value="<?=$InputAction?>" />
-						<input type="hidden" name="auth" value="<?=G::$LoggedUser['AuthKey']?>" />
+						<input type="hidden" name="auth" value="<?=\G::$LoggedUser['AuthKey']?>" />
 						<input type="hidden" name="<?=$InputName?>" value="<?=$InputID?>" />
 						<div id="quickreplytext">
 <?
@@ -134,7 +134,7 @@
 <?
 		}
 
-		if ($ThreadInfo['LastPostAuthorID'] == G::$LoggedUser['ID']) {
+		if ($ThreadInfo['LastPostAuthorID'] == \G::$LoggedUser['ID']) {
 			// Test to see if the post was made an hour ago, if so, auto-check merge box
 			/** @noinspection PhpUnhandledExceptionInspection */
 			$PostDate = date_create($ThreadInfo['LastPostTime'])->add(new DateInterval("PT1H"));
@@ -145,7 +145,7 @@
 							<label for="mergebox">Merge</label>
 <?
 		}
-		if (!G::$LoggedUser['DisableAutoSave']) {
+		if (!\G::$LoggedUser['DisableAutoSave']) {
 ?>
 							<script type="application/javascript">
 								var storedTempTextarea = new StoreText('quickpost', 'quickpostform', <?=$InputID?>);

@@ -45,7 +45,7 @@ foreach (Bonus::$Items as $Key => $Item) {
 				<td>
 HTML;
 
-	if (G::$LoggedUser['BonusPoints'] >= $Price) {
+	if (\G::$LoggedUser['BonusPoints'] >= $Price) {
 		$Url = array();
 		foreach ($Item['Options'] as $KKey => $Value) {
 			$Url[] = "{$KKey}={$Value}";

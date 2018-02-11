@@ -17,7 +17,7 @@ G::$DB->query("
 			$UserIDSQL
 		ORDER BY DATE DESC");
 
-$Answers = G::$DB->to_array(false, MYSQLI_ASSOC);
+$Answers =\G::$DB->to_array(false, MYSQLI_ASSOC);
 foreach($Answers as $Answer) {
 ?>
 	<div class="box box2">

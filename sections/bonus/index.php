@@ -1,7 +1,7 @@
 <?php
 enforce_login();
 
-if (G::$LoggedUser['DisablePoints']) {
+if (\G::$LoggedUser['DisablePoints']) {
 	error('Your points have been disabled.');
 }
 

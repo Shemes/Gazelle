@@ -124,7 +124,7 @@ class SiteHistoryView {
 <?		} else { ?>
 			<input type="hidden" name="action" value="take_create" />
 <?		} ?>
-			<input type="hidden" name="auth" value="<?=G::$LoggedUser['AuthKey']?>" />
+			<input type="hidden" name="auth" value="<?=\G::$LoggedUser['AuthKey']?>" />
 			<table cellpadding="6" cellspacing="1" border="0" class="layout border" width="100%">
 				<tr>
 					<td class="label">Title:</td>

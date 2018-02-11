@@ -18,7 +18,7 @@ if ($ThreadID > 0) {
 	}
 }
 elseif ($ThreadID === '') {
-	$ThreadID = Misc::create_thread(ANNOUNCEMENT_FORUM_ID, G::$LoggedUser['ID'], $_POST['title'], $_POST['body']);
+	$ThreadID = Misc::create_thread(ANNOUNCEMENT_FORUM_ID, \G::$LoggedUser['ID'], $_POST['title'], $_POST['body']);
 	if ($ThreadID < 1) {
 		error(0);
 	}
@@ -46,8 +46,8 @@ if ($BlogID > 0) {
 	if (isset($_POST['subscribe']) && $ThreadID !== null && $ThreadID > 0) {
 		$DB->prepared_query("
 		INSERT IGNORE INTO users_subscriptions
-		VALUES (?, ?)", G::$LoggedUser['ID'], $ThreadID);
-		$Cache->delete_value('subscriptions_user_'.G::$LoggedUser['ID']);
+		VALUES (?, ?)", \G::$LoggedUser['ID'], $ThreadID);
+		$Cache->delete_value('subscriptions_user_'.\G::$LoggedUser['ID']);
 	}
 }
 

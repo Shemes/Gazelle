@@ -12,15 +12,15 @@ class Votes {
 	 * @param $Vote The pre-existing vote, if it exists 'Up'|'Down'
 	 */
 	public static function vote_link($GroupID, $Vote = '') {
-		if (!G::$LoggedUser['NoVoteLinks'] && check_perms('site_album_votes')) {
+		if (!\G::$LoggedUser['NoVoteLinks'] && check_perms('site_album_votes')) {
 			$GroupVotes = self::get_group_votes($GroupID); ?>
 			<span class="votespan brackets" style="white-space: nowrap;">
 				Vote:
-				<a href="#" onclick="UpVoteGroup(<?=$GroupID?>, '<?=G::$LoggedUser['AuthKey']?>'); return false;" class="tooltip small_upvote vote_link_<?=$GroupID?><?=(!empty($Vote) ? ' hidden' : '')?>" style="font-weight: bolder;" title="Upvote">&and;</a>
+				<a href="#" onclick="UpVoteGroup(<?=$GroupID?>, '<?=\G::$LoggedUser['AuthKey']?>'); return false;" class="tooltip small_upvote vote_link_<?=$GroupID?><?=(!empty($Vote) ? ' hidden' : '')?>" style="font-weight: bolder;" title="Upvote">&and;</a>
 				<span class="tooltip voted_type small_upvoted voted_up_<?=$GroupID?><?=(($Vote == 'Down' || empty($Vote)) ? ' hidden' : '')?>" style="font-weight: bolder;" title="Upvoted">&and;</span>
-				<a href="#" onclick="DownVoteGroup(<?=$GroupID?>, '<?=G::$LoggedUser['AuthKey']?>'); return false;" class="tooltip small_downvote vote_link_<?=$GroupID?><?=(!empty($Vote) ? ' hidden' : '')?>" style="font-weight: bolder;" title="Downvote">&or;</a>
+				<a href="#" onclick="DownVoteGroup(<?=$GroupID?>, '<?=\G::$LoggedUser['AuthKey']?>'); return false;" class="tooltip small_downvote vote_link_<?=$GroupID?><?=(!empty($Vote) ? ' hidden' : '')?>" style="font-weight: bolder;" title="Downvote">&or;</a>
 				<span class="tooltip voted_type small_downvoted voted_down_<?=$GroupID?><?=(($Vote == 'Up' || empty($Vote)) ? ' hidden' : '')?>" style="font-weight: bolder;" title="Downvoted">&or;</span>
-				<a href="#" onclick="UnvoteGroup(<?=$GroupID?>, '<?=G::$LoggedUser['AuthKey']?>'); return false;" class="tooltip small_clearvote vote_clear_<?=$GroupID?><?=(empty($Vote) ? ' hidden' : '')?>" title="Clear your vote">x</a>
+				<a href="#" onclick="UnvoteGroup(<?=$GroupID?>, '<?=\G::$LoggedUser['AuthKey']?>'); return false;" class="tooltip small_clearvote vote_clear_<?=$GroupID?><?=(empty($Vote) ? ' hidden' : '')?>" title="Clear your vote">x</a>
 				Score: <?=number_format(self::binomial_score($GroupVotes['Ups'], $GroupVotes['Total']) * 100, 1)?>
 			</span>
 <?		}
@@ -36,16 +36,16 @@ class Votes {
 			return array();
 		}
 
-		$UserVotes = G::$Cache->get_value("voted_albums_$UserID");
+		$UserVotes = \G::$Cache->get_value("voted_albums_$UserID");
 		if ($UserVotes === false) {
-			$QueryID = G::$DB->get_query_id();
-			G::$DB->query("
+			$QueryID = \G::$DB->get_query_id();
+			\G::$DB->query("
 				SELECT GroupID, Type
 				FROM users_votes
 				WHERE UserID = $UserID");
-			$UserVotes = G::$DB->to_array('GroupID', MYSQLI_ASSOC, false);
-			G::$DB->set_query_id($QueryID);
-			G::$Cache->cache_value("voted_albums_$UserID", $UserVotes);
+			$UserVotes = \G::$DB->to_array('GroupID', MYSQLI_ASSOC, false);
+			\G::$DB->set_query_id($QueryID);
+			\G::$Cache->cache_value("voted_albums_$UserID", $UserVotes);
 		}
 		return $UserVotes;
 	}
@@ -59,20 +59,20 @@ class Votes {
 		if (!is_number($GroupID)) {
 			return array('Ups' => 0, 'Total' => 0);
 		}
-		$GroupVotes = G::$Cache->get_value("votes_$GroupID");
+		$GroupVotes = \G::$Cache->get_value("votes_$GroupID");
 		if ($GroupVotes === false) {
-			$QueryID = G::$DB->get_query_id();
-			G::$DB->query("
+			$QueryID = \G::$DB->get_query_id();
+			\G::$DB->query("
 				SELECT Ups AS Ups, Total AS Total
 				FROM torrents_votes
 				WHERE GroupID = $GroupID");
-			if (!G::$DB->has_results()) {
+			if (!\G::$DB->has_results()) {
 				$GroupVotes = array('Ups' => 0, 'Total' => 0);
 			} else {
-				$GroupVotes = G::$DB->next_record(MYSQLI_ASSOC, false);
+				$GroupVotes = \G::$DB->next_record(MYSQLI_ASSOC, false);
 			}
-			G::$DB->set_query_id($QueryID);
-			G::$Cache->cache_value("votes_$GroupID", $GroupVotes, 259200); // 3 days
+			\G::$DB->set_query_id($QueryID);
+			\G::$Cache->cache_value("votes_$GroupID", $GroupVotes, 259200); // 3 days
 		}
 		return $GroupVotes;
 	}
@@ -208,17 +208,17 @@ class Votes {
 			return false;
 		}
 
-		$Rankings = G::$Cache->get_value('voting_ranks_overall');
+		$Rankings = \G::$Cache->get_value('voting_ranks_overall');
 		if ($Rankings === false) {
-			$QueryID = G::$DB->get_query_id();
-			G::$DB->query('
+			$QueryID = \G::$DB->get_query_id();
+			\G::$DB->query('
 				SELECT GroupID, Score
 				FROM torrents_votes
 				ORDER BY Score DESC
 				LIMIT 100');
-			$Rankings = self::calc_ranks(G::$DB->to_pair(0, 1, false));
-			G::$DB->set_query_id($QueryID);
-			G::$Cache->cache_value('voting_ranks_overall', $Rankings, 259200); // 3 days
+			$Rankings = self::calc_ranks(\G::$DB->to_pair(0, 1, false));
+			\G::$DB->set_query_id($QueryID);
+			\G::$Cache->cache_value('voting_ranks_overall', $Rankings, 259200); // 3 days
 		}
 
 		return (isset($Rankings[$GroupID]) ? $Rankings[$GroupID] : false);
@@ -237,19 +237,19 @@ class Votes {
 			return false;
 		}
 
-		$Rankings = G::$Cache->get_value("voting_ranks_year_$Year");
+		$Rankings = \G::$Cache->get_value("voting_ranks_year_$Year");
 		if ($Rankings === false) {
-			$QueryID = G::$DB->get_query_id();
-			G::$DB->query("
+			$QueryID = \G::$DB->get_query_id();
+			\G::$DB->query("
 				SELECT GroupID, Score
 				FROM torrents_votes  AS v
 					JOIN torrents_group AS g ON g.ID = v.GroupID
 				WHERE g.Year = $Year
 				ORDER BY Score DESC
 				LIMIT 100");
-			$Rankings = self::calc_ranks(G::$DB->to_pair(0, 1, false));
-			G::$DB->set_query_id($QueryID);
-			G::$Cache->cache_value("voting_ranks_year_$Year", $Rankings, 259200); // 3 days
+			$Rankings = self::calc_ranks(\G::$DB->to_pair(0, 1, false));
+			\G::$DB->set_query_id($QueryID);
+			\G::$Cache->cache_value("voting_ranks_year_$Year", $Rankings, 259200); // 3 days
 		}
 
 		return (isset($Rankings[$GroupID]) ? $Rankings[$GroupID] : false);
@@ -271,10 +271,10 @@ class Votes {
 		// First year of the decade
 		$Year = $Year - ($Year % 10);
 
-		$Rankings = G::$Cache->get_value("voting_ranks_decade_$Year");
+		$Rankings = \G::$Cache->get_value("voting_ranks_decade_$Year");
 		if ($Rankings === false) {
-			$QueryID = G::$DB->get_query_id();
-			G::$DB->query("
+			$QueryID = \G::$DB->get_query_id();
+			\G::$DB->query("
 				SELECT GroupID, Score
 				FROM torrents_votes  AS v
 					JOIN torrents_group AS g ON g.ID = v.GroupID
@@ -282,9 +282,9 @@ class Votes {
 					  AND g.CategoryID = 1
 				ORDER BY Score DESC
 				LIMIT 100");
-			$Rankings = self::calc_ranks(G::$DB->to_pair(0, 1, false));
-			G::$DB->set_query_id($QueryID);
-			G::$Cache->cache_value("voting_ranks_decade_$Year", $Rankings, 259200); // 3 days
+			$Rankings = self::calc_ranks(\G::$DB->to_pair(0, 1, false));
+			\G::$DB->set_query_id($QueryID);
+			\G::$Cache->cache_value("voting_ranks_decade_$Year", $Rankings, 259200); // 3 days
 		}
 
 		return (isset($Rankings[$GroupID]) ? $Rankings[$GroupID] : false);

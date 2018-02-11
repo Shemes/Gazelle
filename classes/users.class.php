@@ -8,17 +8,17 @@ class Users {
 	public static function get_classes() {
 		global $Debug;
 		// Get permissions
-		list($Classes, $ClassLevels) = G::$Cache->get_value('classes');
+		list($Classes, $ClassLevels) = \G::$Cache->get_value('classes');
 		if (!$Classes || !$ClassLevels) {
-			$QueryID = G::$DB->get_query_id();
-			G::$DB->query('
+			$QueryID = \G::$DB->get_query_id();
+			\G::$DB->query('
 				SELECT ID, Name, Level, Secondary
 				FROM permissions
 				ORDER BY Level');
-			$Classes = G::$DB->to_array('ID');
-			$ClassLevels = G::$DB->to_array('Level');
-			G::$DB->set_query_id($QueryID);
-			G::$Cache->cache_value('classes', array($Classes, $ClassLevels), 0);
+			$Classes = \G::$DB->to_array('ID');
+			$ClassLevels = \G::$DB->to_array('Level');
+			\G::$DB->set_query_id($QueryID);
+			\G::$Cache->cache_value('classes', array($Classes, $ClassLevels), 0);
 		}
 		$Debug->set_flag('Loaded permissions');
 
@@ -65,12 +65,12 @@ class Users {
 	 */
 	public static function user_info($UserID) {
 		global $Classes, $SSL;
-		$UserInfo = G::$Cache->get_value("user_info_$UserID");
+		$UserInfo = \G::$Cache->get_value("user_info_$UserID");
 		// the !isset($UserInfo['Paranoia']) can be removed after a transition period
 		if (empty($UserInfo) || empty($UserInfo['ID']) || !isset($UserInfo['Paranoia']) || empty($UserInfo['Class'])) {
-			$OldQueryID = G::$DB->get_query_id();
+			$OldQueryID = \G::$DB->get_query_id();
 
-			G::$DB->query("
+			\G::$DB->query("
 				SELECT
 					m.ID,
 					m.Username,
@@ -93,7 +93,7 @@ class Users {
 				WHERE m.ID = '$UserID'
 				GROUP BY m.ID");
 
-			if (!G::$DB->has_results()) { // Deleted user, maybe?
+			if (!\G::$DB->has_results()) { // Deleted user, maybe?
 				$UserInfo = array(
 						'ID' => $UserID,
 						'Username' => '',
@@ -110,7 +110,7 @@ class Users {
 						'Levels' => '',
 						'Class' => 0);
 			} else {
-				$UserInfo = G::$DB->next_record(MYSQLI_ASSOC, array('Paranoia', 'Title'));
+				$UserInfo = \G::$DB->next_record(MYSQLI_ASSOC, array('Paranoia', 'Title'));
 				$UserInfo['CatchupTime'] = strtotime($UserInfo['CatchupTime']);
 				$UserInfo['Paranoia'] = unserialize_array($UserInfo['Paranoia']);
 				if ($UserInfo['Paranoia'] === false) {
@@ -135,12 +135,12 @@ class Users {
 			}
 			$UserInfo['EffectiveClass'] = $EffectiveClass;
 
-			G::$Cache->cache_value("user_info_$UserID", $UserInfo, 2592000);
-			G::$DB->set_query_id($OldQueryID);
+			\G::$Cache->cache_value("user_info_$UserID", $UserInfo, 2592000);
+			\G::$DB->set_query_id($OldQueryID);
 		}
 		if (strtotime($UserInfo['Warned']) < time()) {
 			$UserInfo['Warned'] = '0000-00-00 00:00:00';
-			G::$Cache->cache_value("user_info_$UserID", $UserInfo, 2592000);
+			\G::$Cache->cache_value("user_info_$UserID", $UserInfo, 2592000);
 		}
 
 		return $UserInfo;
@@ -156,11 +156,11 @@ class Users {
 	 */
 	public static function user_heavy_info($UserID) {
 
-		$HeavyInfo = G::$Cache->get_value("user_info_heavy_$UserID");
+		$HeavyInfo = \G::$Cache->get_value("user_info_heavy_$UserID");
 		if (empty($HeavyInfo)) {
 
-			$QueryID = G::$DB->get_query_id();
-			G::$DB->query("
+			$QueryID = \G::$DB->get_query_id();
+			\G::$DB->query("
 				SELECT
 					m.Invites,
 					m.torrent_pass,
@@ -195,7 +195,7 @@ class Users {
 				FROM users_main AS m
 					INNER JOIN users_info AS i ON i.UserID = m.ID
 				WHERE m.ID = '$UserID'");
-			$HeavyInfo = G::$DB->next_record(MYSQLI_ASSOC, array('CustomPermissions', 'SiteOptions'));
+			$HeavyInfo = \G::$DB->next_record(MYSQLI_ASSOC, array('CustomPermissions', 'SiteOptions'));
 
 			$HeavyInfo['CustomPermissions'] = unserialize_array($HeavyInfo['CustomPermissions']);
 
@@ -212,11 +212,11 @@ class Users {
 			}
 			unset($HeavyInfo['PermittedForums']);
 
-			G::$DB->query("
+			\G::$DB->query("
 				SELECT PermissionID
 				FROM users_levels
 				WHERE UserID = $UserID");
-			$PermIDs = G::$DB->collect('PermissionID');
+			$PermIDs = \G::$DB->collect('PermissionID');
 			foreach ($PermIDs AS $PermID) {
 				$Perms = Permissions::get_permissions($PermID);
 				if (!empty($Perms['PermittedForums'])) {
@@ -250,9 +250,9 @@ class Users {
 
 			unset($HeavyInfo['SiteOptions']);
 
-			G::$DB->set_query_id($QueryID);
+			\G::$DB->set_query_id($QueryID);
 
-			G::$Cache->cache_value("user_info_heavy_$UserID", $HeavyInfo, 0);
+			\G::$Cache->cache_value("user_info_heavy_$UserID", $HeavyInfo, 0);
 		}
 		return $HeavyInfo;
 	}
@@ -282,14 +282,14 @@ class Users {
 			return false;
 		}
 
-		$QueryID = G::$DB->get_query_id();
+		$QueryID = \G::$DB->get_query_id();
 
 		// Get SiteOptions
-		G::$DB->query("
+		\G::$DB->query("
 			SELECT SiteOptions
 			FROM users_info
 			WHERE UserID = $UserID");
-		list($SiteOptions) = G::$DB->next_record(MYSQLI_NUM, false);
+		list($SiteOptions) = \G::$DB->next_record(MYSQLI_NUM, false);
 		$SiteOptions = unserialize_array($SiteOptions);
 		$SiteOptions = array_merge(static::default_site_options(), $SiteOptions);
 
@@ -301,19 +301,19 @@ class Users {
 		$HeavyInfo = array_merge($HeavyInfo, $NewOptions);
 
 		// Update DB
-		G::$DB->query("
+		\G::$DB->query("
 			UPDATE users_info
 			SET SiteOptions = '".\Gazelle\Util\Db::string(serialize($SiteOptions))."'
 			WHERE UserID = $UserID");
-		G::$DB->set_query_id($QueryID);
+		\G::$DB->set_query_id($QueryID);
 
 		// Update cache
-		G::$Cache->cache_value("user_info_heavy_$UserID", $HeavyInfo, 0);
+		\G::$Cache->cache_value("user_info_heavy_$UserID", $HeavyInfo, 0);
 
-		// Update G::$LoggedUser if the options are changed for the current
-		if (G::$LoggedUser['ID'] == $UserID) {
-			G::$LoggedUser = array_merge(G::$LoggedUser, $NewOptions);
-			G::$LoggedUser['ID'] = $UserID; // We don't want to allow userid switching
+		// Update \G::$LoggedUser if the options are changed for the current
+		if (\G::$LoggedUser['ID'] == $UserID) {
+			\G::$LoggedUser = array_merge(\G::$LoggedUser, $NewOptions);
+			\G::$LoggedUser['ID'] = $UserID; // We don't want to allow userid switching
 		}
 		return true;
 	}
@@ -520,7 +520,7 @@ class Users {
 
 		$Str .= ($IsWarned && $UserInfo['Warned'] != '0000-00-00 00:00:00') ? '<a href="wiki.php?action=article&amp;id=114"'
 					. '><img src="'.STATIC_SERVER.'common/symbols/warned.png" alt="Warned" title="Warned'
-					. (G::$LoggedUser['ID'] === $UserID ? ' - Expires ' . date('Y-m-d H:i', strtotime($UserInfo['Warned'])) : '')
+					. (\G::$LoggedUser['ID'] === $UserID ? ' - Expires ' . date('Y-m-d H:i', strtotime($UserInfo['Warned'])) : '')
 					. '" class="tooltip" /></a>' : '';
 		$Str .= ($IsEnabled && $UserInfo['Enabled'] == 2) ? '<a href="rules.php"><img src="'.STATIC_SERVER.'common/symbols/disabled.png" alt="Banned" title="Disabled" class="tooltip" /></a>' : '';
 
@@ -578,19 +578,19 @@ class Users {
 	public static function get_bookmarks($UserID) {
 		$UserID = (int)$UserID;
 
-		if (($Data = G::$Cache->get_value("bookmarks_group_ids_$UserID"))) {
+		if (($Data = \G::$Cache->get_value("bookmarks_group_ids_$UserID"))) {
 			list($GroupIDs, $BookmarkData) = $Data;
 		} else {
-			$QueryID = G::$DB->get_query_id();
-			G::$DB->query("
+			$QueryID = \G::$DB->get_query_id();
+			\G::$DB->query("
 				SELECT GroupID, Sort, `Time`
 				FROM bookmarks_torrents
 				WHERE UserID = $UserID
 				ORDER BY Sort, `Time` ASC");
-			$GroupIDs = G::$DB->collect('GroupID');
-			$BookmarkData = G::$DB->to_array('GroupID', MYSQLI_ASSOC);
-			G::$DB->set_query_id($QueryID);
-			G::$Cache->cache_value("bookmarks_group_ids_$UserID",
+			$GroupIDs = \G::$DB->collect('GroupID');
+			$BookmarkData = \G::$DB->to_array('GroupID', MYSQLI_ASSOC);
+			\G::$DB->set_query_id($QueryID);
+			\G::$Cache->cache_value("bookmarks_group_ids_$UserID",
 				array($GroupIDs, $BookmarkData), 3600);
 		}
 
@@ -643,7 +643,7 @@ class Users {
 				$ShowAvatar = true;
 				// Fallthrough
 			case 3:
-				switch (G::$LoggedUser['Identicons']) {
+				switch (\G::$LoggedUser['Identicons']) {
 					case 0:
 						$Type = 'identicon';
 						break;
@@ -706,17 +706,17 @@ class Users {
 	 */
 	public static function has_autocomplete_enabled($Type, $Output = true) {
 		$Enabled = false;
-		if (empty(G::$LoggedUser['AutoComplete'])) {
+		if (empty(\G::$LoggedUser['AutoComplete'])) {
 			$Enabled = true;
-		} elseif (G::$LoggedUser['AutoComplete'] !== 1) {
+		} elseif (\G::$LoggedUser['AutoComplete'] !== 1) {
 			switch ($Type) {
 				case 'search':
-					if (G::$LoggedUser['AutoComplete'] == 2) {
+					if (\G::$LoggedUser['AutoComplete'] == 2) {
 						$Enabled = true;
 					}
 					break;
 				case 'other':
-					if (G::$LoggedUser['AutoComplete'] != 2) {
+					if (\G::$LoggedUser['AutoComplete'] != 2) {
 						$Enabled = true;
 					}
 					break;
@@ -741,7 +741,7 @@ class Users {
 	public static function resetPassword($UserID, $Username, $Email)
 	{
 		$ResetKey = Users::make_secret();
-		G::$DB->query("
+		\G::$DB->query("
 			UPDATE users_info
 			SET
 				ResetKey = '" . \Gazelle\Util\Db::string($ResetKey) . "',

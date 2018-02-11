@@ -96,7 +96,7 @@ switch ($_REQUEST['action']) {
 				}
 
 				if (empty($_SESSION['private_key'])) {
-					header('Location: user.php?action=2fa&do=enable&userid=' . G::$LoggedUser['ID']);
+					header('Location: user.php?action=2fa&do=enable&userid=' .\G::$LoggedUser['ID']);
 					exit;
 				}
 

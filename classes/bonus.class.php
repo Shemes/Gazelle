@@ -128,23 +128,23 @@ class Bonus {
 		if ($stats['BonusPoints'] < $price) {
 			return false;
 		}
-		G::$DB->prepared_query('UPDATE users_main SET BonusPoints = BonusPoints - ? WHERE BonusPoints > 0 AND ID = ?', $price, $fromID);
-		if (G::$DB->affected_rows() != 1) {
+		\G::$DB->prepared_query('UPDATE users_main SET BonusPoints = BonusPoints - ? WHERE BonusPoints > 0 AND ID = ?', $price, $fromID);
+		if (\G::$DB->affected_rows() != 1) {
 			return false;
 		}
 		$new_stats = Users::user_stats($fromID, true);
 		if (!($new_stats['BonusPoints'] >= 0 && $new_stats['BonusPoints'] < $stats['BonusPoints'])) {
 			return false;
 		}
-		G::$DB->prepared_query("UPDATE users_main SET FLTokens = FLTokens + ? WHERE ID=?", $amount, $toID);
-		if (G::$DB->affected_rows() != 1) {
+		\G::$DB->prepared_query("UPDATE users_main SET FLTokens = FLTokens + ? WHERE ID=?", $amount, $toID);
+		if (\G::$DB->affected_rows() != 1) {
 			// as they say, "this could never happen to us"
 			return false;
 		}
-		G::$Cache->delete_value("user_info_heavy_{$fromID}");
-		G::$Cache->delete_value("user_info_heavy_{$toID}");
+		\G::$Cache->delete_value("user_info_heavy_{$fromID}");
+		\G::$Cache->delete_value("user_info_heavy_{$toID}");
 		// the calling code may not know this has been invalidated, so we cheat
-		G::$LoggedUser['BonusPoints'] = $new_stats['BonusPoints'];
+		\G::$LoggedUser['BonusPoints'] = $new_stats['BonusPoints'];
 		self::send_pm_to_other($From['Username'], $toID, $amount);
 
 		return true;
@@ -174,7 +174,7 @@ Enjoy!";
 	public static function get_price($Item) {
 		$Price = $Item['Price'];
 		if (isset($Item['Free'])) {
-			if (isset($Item['Free']['Level']) && $Item['Free']['Level'] <= G::$LoggedUser['EffectiveClass']) {
+			if (isset($Item['Free']['Level']) && $Item['Free']['Level'] <= \G::$LoggedUser['EffectiveClass']) {
 				$Price = 0;
 			}
 		}

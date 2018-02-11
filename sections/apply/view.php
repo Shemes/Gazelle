@@ -4,7 +4,7 @@ $IS_STAFF = check_perms('admin_manage_applicants'); /* important for viewing the
 if (isset($_POST['id']) && is_number($_POST['id'])) {
 	authorize();
 	$ID = intval($_POST['id']);
-	$App = Applicant::factory($ID);
+	$App = \Gazelle\Applicant::factory($ID);
 	if (!$IS_STAFF && $App->user_id() != $LoggedUser['ID']) {
 		error(403);
 	}
@@ -32,7 +32,7 @@ if (isset($_POST['id']) && is_number($_POST['id'])) {
 }
 elseif (isset($_GET['id']) && is_number($_GET['id'])) {
 	$ID = intval($_GET['id']);
-	$App = Applicant::factory($ID);
+	$App = \Gazelle\Applicant::factory($ID);
 	if (!$IS_STAFF && $App->user_id() != $LoggedUser['ID']) {
 		error(403);
 	}
@@ -152,7 +152,7 @@ if ($IS_STAFF) {
 } else { /* no id parameter given -- show list of applicant entries - all if staff, otherwise their own (if any) */
 	$Page            = isset($_GET['page']) && is_number($_GET['page']) ? intval($_GET['page']) : 1;
 	$UserID          = $IS_STAFF ? 0 : $LoggedUser['ID'];
-	$ApplicationList = Applicant::get_list($Page, $Resolved, $UserID);
+	$ApplicationList = \Gazelle\Applicant::get_list($Page, $Resolved, $UserID);
 ?>
 	<h3><?=$Resolved ? 'Resolved' : 'Current' ?> Applications</h3>
 <?  if (count($ApplicationList)) { ?>

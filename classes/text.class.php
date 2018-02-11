@@ -764,7 +764,7 @@ class Text {
 					$Str .= '<blockquote class="hidden spoiler">'.self::to_html($Block['Val']).'</blockquote>';
 					break;
 				case 'mature':
-					if (G::$LoggedUser['EnableMatureContent']) {
+					if (\G::$LoggedUser['EnableMatureContent']) {
 						if (!empty($Block['Attr'])) {
 							$Str .= '<strong class="mature" style="font-size: 1.2em;">Mature content:</strong><strong> ' . $Block['Attr'] . '</strong><br /> <a href="javascript:void(0);" onclick="BBCode.spoiler(this);">Show</a>';
 							$Str .= '<blockquote class="hidden spoiler">'.self::to_html($Block['Val']).'</blockquote>';
@@ -774,7 +774,7 @@ class Text {
 						}
 					}
 					else {
-						$Str .= '<span class="mature_blocked" style="font-style: italic;"><a href="wiki.php?action=article&amp;id=1063">Mature content</a> has been blocked. You can choose to view mature content by editing your <a href="user.php?action=edit&amp;userid=' . G::$LoggedUser['ID'] . '">settings</a>.</span>';
+						$Str .= '<span class="mature_blocked" style="font-style: italic;"><a href="wiki.php?action=article&amp;id=1063">Mature content</a> has been blocked. You can choose to view mature content by editing your <a href="user.php?action=edit&amp;userid=' . \G::$LoggedUser['ID'] . '">settings</a>.</span>';
 					}
 					break;
 				case 'img':
@@ -921,7 +921,7 @@ class Text {
 	}
 
 	private static function smileys($Str) {
-		if (!empty(G::$LoggedUser['DisableSmileys'])) {
+		if (!empty(\G::$LoggedUser['DisableSmileys'])) {
 			return $Str;
 		}
 		if (count(self::$ProcessedSmileys) == 0 && count(self::$Smileys) > 0) {

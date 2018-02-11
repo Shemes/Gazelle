@@ -22,7 +22,7 @@ class Referral {
     function __construct() {
         // populate services array from cache if it exists, if not then grab from template
         $services_config = $GLOBALS['ExternalServicesConfig'];
-        $this->ExternalServices = G::$Cache->get_value('referral_services');
+        $this->ExternalServices = \G::$Cache->get_value('referral_services');
         // grab from template if not in cache
         if (empty($this->ExternalServices)) {
             $this->ExternalServices = $GLOBALS['ExternalServicesConfig'];
@@ -360,7 +360,7 @@ class Referral {
         $Tpl->set('SITE_URL', SITE_URL);
 
         // save invite to DB
-        G::$DB->query("
+        \G::$DB->query("
 		INSERT INTO invites
 			(InviterID, InviteKey, Email, Expires, Reason)
 		VALUES
@@ -374,7 +374,7 @@ class Referral {
      * Saves the external services array to the global cache.
      */
     private function cache_services() {
-        G::$Cache->cache_value('referral_services', $this->ExternalServices);
+        \G::$Cache->cache_value('referral_services', $this->ExternalServices);
     }
 
     /**

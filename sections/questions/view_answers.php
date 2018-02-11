@@ -30,7 +30,7 @@ G::$DB->query("
 		WHERE a.UserID = '$UserID'
 		ORDER BY AnswerDate DESC");
 
-$Questions = G::$DB->to_array();
+$Questions =\G::$DB->to_array();
 
 View::show_header($UserInfo['Username'] . "'s answers", 'questions,bbcode');
 

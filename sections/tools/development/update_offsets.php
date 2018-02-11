@@ -25,7 +25,7 @@ if (isset($_REQUEST['update']) && $_REQUEST['update'] === '1') {
 
 	G::$DB->prepared_query('TRUNCATE drives');
 	G::$DB->prepared_query('INSERT INTO drives (Name, Offset) VALUES '.implode(', ', $Prepared), ...$Offsets);
-	$Inserted = G::$DB->affected_rows();
+	$Inserted =\G::$DB->affected_rows();
 }
 
 View::show_header('Update Drive Offsets');
@@ -53,7 +53,7 @@ View::show_header('Update Drive Offsets');
 <?php
 
 G::$DB->prepared_query('SELECT Name, Offset FROM drives ORDER BY DriveID');
-while (list($Name, $Offset) = G::$DB->fetch_record()) {
+while (list($Name, $Offset) =\G::$DB->fetch_record()) {
 	?>
 		<tr>
 			<td><?=$Name?></td>

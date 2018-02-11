@@ -12,8 +12,8 @@ class RevisionHistory {
 		} else {
 			$Table = 'wiki_torrents';
 		}
-		$QueryID = G::$DB->get_query_id();
-		G::$DB->query("
+		$QueryID = \G::$DB->get_query_id();
+		\G::$DB->query("
 			SELECT
 				RevisionID,
 				Summary,
@@ -22,8 +22,8 @@ class RevisionHistory {
 			FROM $Table
 			WHERE PageID = $PageID
 			ORDER BY RevisionID DESC");
-		$Ret = G::$DB->to_array();
-		G::$DB->set_query_id($QueryID);
+		$Ret = \G::$DB->to_array();
+		\G::$DB->set_query_id($QueryID);
 		return $Ret;
 	}
 }

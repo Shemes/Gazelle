@@ -24,7 +24,7 @@ class Artists {
 			if (!is_number($GroupID)) {
 				continue;
 			}
-			$Artists = G::$Cache->get_value('groups_artists_'.$GroupID);
+			$Artists = \G::$Cache->get_value('groups_artists_'.$GroupID);
 			if (is_array($Artists)) {
 				$Results[$GroupID] = $Artists;
 			} else {
@@ -36,8 +36,8 @@ class Artists {
 			if (empty($IDs)) {
 				$IDs = "null";
 			}
-			$QueryID = G::$DB->get_query_id();
-			G::$DB->query("
+			$QueryID = \G::$DB->get_query_id();
+			\G::$DB->query("
 				SELECT ta.GroupID,
 					ta.ArtistID,
 					aa.Name,
@@ -49,17 +49,17 @@ class Artists {
 				ORDER BY ta.GroupID ASC,
 					ta.Importance ASC,
 					aa.Name ASC;");
-			while (list($GroupID, $ArtistID, $ArtistName, $ArtistImportance, $AliasID) = G::$DB->next_record(MYSQLI_BOTH, false)) {
+			while (list($GroupID, $ArtistID, $ArtistName, $ArtistImportance, $AliasID) = \G::$DB->next_record(MYSQLI_BOTH, false)) {
 				$Results[$GroupID][$ArtistImportance][] = array('id' => $ArtistID, 'name' => $ArtistName, 'aliasid' => $AliasID);
 				$New[$GroupID][$ArtistImportance][] = array('id' => $ArtistID, 'name' => $ArtistName, 'aliasid' => $AliasID);
 			}
-			G::$DB->set_query_id($QueryID);
+			\G::$DB->set_query_id($QueryID);
 			foreach ($DBs as $GroupID) {
 				if (isset($New[$GroupID])) {
-					G::$Cache->cache_value('groups_artists_'.$GroupID, $New[$GroupID]);
+					\G::$Cache->cache_value('groups_artists_'.$GroupID, $New[$GroupID]);
 				}
 				else {
-					G::$Cache->cache_value('groups_artists_'.$GroupID, array());
+					\G::$Cache->cache_value('groups_artists_'.$GroupID, array());
 				}
 			}
 			$Missing = array_diff($GroupIDs, array_keys($Results));
@@ -217,53 +217,53 @@ class Artists {
 	 * @param int $ArtistID
 	 */
 	public static function delete_artist($ArtistID) {
-		$QueryID = G::$DB->get_query_id();
-		G::$DB->query("
+		$QueryID = \G::$DB->get_query_id();
+		\G::$DB->query("
 			SELECT Name
 			FROM artists_group
 			WHERE ArtistID = ".$ArtistID);
-		list($Name) = G::$DB->next_record(MYSQLI_NUM, false);
+		list($Name) = \G::$DB->next_record(MYSQLI_NUM, false);
 
 		// Delete requests
-		G::$DB->query("
+		\G::$DB->query("
 			SELECT RequestID
 			FROM requests_artists
 			WHERE ArtistID = $ArtistID
 				AND ArtistID != 0");
-		$Requests = G::$DB->to_array();
+		$Requests = \G::$DB->to_array();
 		foreach ($Requests AS $Request) {
 			list($RequestID) = $Request;
-			G::$DB->query('DELETE FROM requests WHERE ID='.$RequestID);
-			G::$DB->query('DELETE FROM requests_votes WHERE RequestID='.$RequestID);
-			G::$DB->query('DELETE FROM requests_tags WHERE RequestID='.$RequestID);
-			G::$DB->query('DELETE FROM requests_artists WHERE RequestID='.$RequestID);
+			\G::$DB->query('DELETE FROM requests WHERE ID='.$RequestID);
+			\G::$DB->query('DELETE FROM requests_votes WHERE RequestID='.$RequestID);
+			\G::$DB->query('DELETE FROM requests_tags WHERE RequestID='.$RequestID);
+			\G::$DB->query('DELETE FROM requests_artists WHERE RequestID='.$RequestID);
 		}
 
 		// Delete artist
-		G::$DB->query('DELETE FROM artists_group WHERE ArtistID='.$ArtistID);
-		G::$DB->query('DELETE FROM artists_alias WHERE ArtistID='.$ArtistID);
-		G::$Cache->decrement('stats_artist_count');
+		\G::$DB->query('DELETE FROM artists_group WHERE ArtistID='.$ArtistID);
+		\G::$DB->query('DELETE FROM artists_alias WHERE ArtistID='.$ArtistID);
+		\G::$Cache->decrement('stats_artist_count');
 
 		// Delete wiki revisions
-		G::$DB->query('DELETE FROM wiki_artists WHERE PageID='.$ArtistID);
+		\G::$DB->query('DELETE FROM wiki_artists WHERE PageID='.$ArtistID);
 
 		// Delete tags
-		G::$DB->query('DELETE FROM artists_tags WHERE ArtistID='.$ArtistID);
+		\G::$DB->query('DELETE FROM artists_tags WHERE ArtistID='.$ArtistID);
 
 		// Delete artist comments, subscriptions and quote notifications
 		Comments::delete_page('artist', $ArtistID);
 
-		G::$Cache->delete_value('artist_'.$ArtistID);
-		G::$Cache->delete_value('artist_groups_'.$ArtistID);
+		\G::$Cache->delete_value('artist_'.$ArtistID);
+		\G::$Cache->delete_value('artist_groups_'.$ArtistID);
 		// Record in log
 
-		if (!empty(G::$LoggedUser['Username'])) {
-			$Username = G::$LoggedUser['Username'];
+		if (!empty(\G::$LoggedUser['Username'])) {
+			$Username = \G::$LoggedUser['Username'];
 		} else {
 			$Username = 'System';
 		}
 		Misc::write_log("Artist $ArtistID ($Name) was deleted by $Username");
-		G::$DB->set_query_id($QueryID);
+		\G::$DB->set_query_id($QueryID);
 	}
 
 

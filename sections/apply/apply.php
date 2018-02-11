@@ -6,7 +6,7 @@ if (isset($_POST['auth'])) {
 
 	if (strlen($Role)) {
 		if (strlen($Body) > 80) {
-			$Applicant = new Applicant($LoggedUser['ID'], $Role, $Body);
+			$Applicant = new \Gazelle\Applicant($LoggedUser['ID'], $Role, $Body);
 			header('Location: /apply.php?action=view&id=' . $Applicant->id());
 			exit;
 		}
@@ -28,14 +28,14 @@ View::show_header('Apply', 'apply');
 <div class="thin">
 	<div class="header">
 		<h3>Apply for a role at <?=SITE_NAME?></h3>
-<? if (check_perms('admin_manage_applicants') || Applicant::user_is_applicant($LoggedUser['ID'])) { ?>
+<? if (check_perms('admin_manage_applicants') || \Gazelle\Applicant::user_is_applicant($LoggedUser['ID'])) { ?>
 		<div class="linkbox">
 	<? if (check_perms('admin_manage_applicants')) { ?>
 			<a href="/apply.php?action=view" class="brackets">Current applications</a>
 			<a href="/apply.php?action=view&status=resolved" class="brackets">Resolved applications</a>
 			<a href="/apply.php?action=admin" class="brackets">Manage roles</a>
 	<? }
-	if (Applicant::user_is_applicant($LoggedUser['ID'])) { ?>
+	if (\Gazelle\Applicant::user_is_applicant($LoggedUser['ID'])) { ?>
 			<a href="/apply.php?action=view" class="brackets">View your application</a>
 	<? } ?>
 		</div>

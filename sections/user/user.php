@@ -632,7 +632,7 @@ if (check_perms('users_view_invites')) {
 				?></li>
 <?
 }
-if (Applicant::user_is_applicant($UserID) && (check_perms('admin_manage_applicants') || $OwnProfile)) {
+if (\Gazelle\Applicant::user_is_applicant($UserID) && (check_perms('admin_manage_applicants') || $OwnProfile)) {
 ?>
 				<li>Roles applied for: <a href="/apply.php?action=view" class="brackets">View</a></li>
 <?
@@ -663,7 +663,7 @@ if ($OwnProfile || check_perms('users_mod')) {
 				FROM users_info ui
 				LEFT JOIN users_history_passwords uhp ON uhp.UserID = $UserID
 				WHERE ui.UserID = $UserID");
-	list($PasswordHistory, $JoinDate) = G::$DB->next_record();
+	list($PasswordHistory, $JoinDate) =\G::$DB->next_record();
 	$Age = (empty($PasswordHistory)) ? \Gazelle\Util\Time::timeDiff($JoinDate) : \Gazelle\Util\Time::timeDiff($PasswordHistory);
 	$PasswordAge = substr($Age, 0, strpos($Age, " ago"));
 ?>

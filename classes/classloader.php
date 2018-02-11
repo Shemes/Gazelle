@@ -27,6 +27,8 @@ spl_autoload_register(function ($ClassName) {
 			case 'BENCODE_LIST':
 				$FileName = 'torrent.class';
 				break;
+			case 'APPLICANT':
+				break;
 			default:
 				die("Couldn't import class $ClassName");
 		}
@@ -34,5 +36,3 @@ spl_autoload_register(function ($ClassName) {
 	}
 	require_once($FilePath);
 });
-
-require(__DIR__.'/../vendor/autoload.php');

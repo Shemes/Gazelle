@@ -18,7 +18,7 @@ switch ($action) {
 		break;
 
 	case 'view':
-		if (check_perms('admin_manage_applicants') || (!check_perms('admin_manage_applicants') && Applicant::user_is_applicant($LoggedUser['ID']))) {
+		if (check_perms('admin_manage_applicants') || (!check_perms('admin_manage_applicants') && \Gazelle\Applicant::user_is_applicant($LoggedUser['ID']))) {
 			include(SERVER_ROOT.'/sections/apply/view.php');
 		}
 		else {

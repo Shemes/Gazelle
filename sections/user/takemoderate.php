@@ -199,7 +199,7 @@ $UpdateSet = array();
 $EditSummary = array();
 $TrackerUserUpdates = array('passkey' => $Cur['torrent_pass']);
 
-$QueryID = G::$DB->get_query_id();
+$QueryID =\G::$DB->get_query_id();
 
 if ($LockType == '---' || $LockedAccount == 0) {
 	if ($Cur['Type']) {

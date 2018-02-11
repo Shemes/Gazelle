@@ -26,7 +26,7 @@ if (check_perms('admin_manage_blog')) {
 			<div class="pad">
 				<input type="hidden" name="action"
 				       value="<?= empty($_GET['action']) ? 'takenewblog' : 'takeeditblog' ?>"/>
-				<input type="hidden" name="auth" value="<?= G::$LoggedUser['AuthKey'] ?>"/>
+				<input type="hidden" name="auth" value="<?= \G::$LoggedUser['AuthKey'] ?>"/>
 				<?php if (!empty($_GET['action']) && $_GET['action'] == 'editblog') { ?>
 					<input type="hidden" name="blogid" value="<?= $BlogID; ?>"/>
 				<?php } ?>
@@ -81,15 +81,15 @@ if (!isset($_GET['action']) || $_GET['action'] !== 'editblog') {
 		$Cache->cache_value('blog', $Blog, 1209600);
 	}
 
-	if (count($Blog) > 0 && G::$LoggedUser['LastReadBlog'] < $Blog[0][0]) {
-		$Cache->begin_transaction('user_info_heavy_'.G::$LoggedUser['ID']);
+	if (count($Blog) > 0 && \G::$LoggedUser['LastReadBlog'] < $Blog[0][0]) {
+		$Cache->begin_transaction('user_info_heavy_'.\G::$LoggedUser['ID']);
 		$Cache->update_row(false, array('LastReadBlog' => $Blog[0][0]));
 		$Cache->commit_transaction(0);
 		$DB->prepared_query("
 		UPDATE users_info
 		SET LastReadBlog = ?
-		WHERE UserID = ?", $Blog[0][0], G::$LoggedUser['ID']);
-		G::$LoggedUser['LastReadBlog'] = $Blog[0][0];
+		WHERE UserID = ?", $Blog[0][0], \G::$LoggedUser['ID']);
+		\G::$LoggedUser['LastReadBlog'] = $Blog[0][0];
 	}
 
 	foreach ($Blog as $BlogItem) {
@@ -100,7 +100,7 @@ if (!isset($_GET['action']) || $_GET['action'] !== 'editblog') {
 				<strong><?=$Title?></strong> - posted <?=\Gazelle\Util\Time::timeDiff($BlogTime);?> by <a href="user.php?id=<?=$AuthorID?>"><?=$Author?></a>
 				<?php	if (check_perms('admin_manage_blog')) { ?>
 					- <a href="blog.php?action=editblog&amp;id=<?=$BlogID?>" class="brackets">Edit</a>
-					<a href="blog.php?action=deleteblog&amp;id=<?=$BlogID?>&amp;auth=<?=G::$LoggedUser['AuthKey']?>" class="brackets">Delete</a>
+					<a href="blog.php?action=deleteblog&amp;id=<?=$BlogID?>&amp;auth=<?=\G::$LoggedUser['AuthKey']?>" class="brackets">Delete</a>
 				<?php	} ?>
 			</div>
 			<div class="pad">
@@ -109,7 +109,7 @@ if (!isset($_GET['action']) || $_GET['action'] !== 'editblog') {
 					<br /><br />
 					<em><a href="forums.php?action=viewthread&amp;threadid=<?=$ThreadID?>">Discuss this post here</a></em>
 					<?php		if (check_perms('admin_manage_blog')) { ?>
-						<a href="blog.php?action=deadthread&amp;id=<?=$BlogID?>&amp;auth=<?=G::$LoggedUser['AuthKey']?>" class="brackets">Remove link</a>
+						<a href="blog.php?action=deadthread&amp;id=<?=$BlogID?>&amp;auth=<?=\G::$LoggedUser['AuthKey']?>" class="brackets">Remove link</a>
 						<?php
 					}
 				}

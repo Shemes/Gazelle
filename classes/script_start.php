@@ -87,8 +87,8 @@ $Enc = new \Gazelle\Crypt;
 // Autoload classes.
 require SERVER_ROOT . '/classes/classloader.php';
 
-G::$Cache = $Cache;
-G::$DB = $DB;
+\G::$Cache = $Cache;
+\G::$DB = $DB;
 
 //Begin browser identification
 
@@ -167,7 +167,7 @@ if (isset($LoginCookie)) {
 
     // Create LoggedUser array
     $LoggedUser = array_merge($HeavyInfo, $LightInfo, $UserStats);
-    G::$LoggedUser = &$LoggedUser;
+    \G::$LoggedUser = &$LoggedUser;
 
     $LoggedUser['RSS_Auth'] = md5($LoggedUser['ID'] . RSS_HASH . $LoggedUser['torrent_pass']);
 
@@ -301,18 +301,18 @@ function logout()
     setcookie('keeplogged', '', time() - 60 * 60 * 24 * 365, '/', '', false);
     setcookie('session', '', time() - 60 * 60 * 24 * 365, '/', '', false);
     if ($SessionID) {
-        G::$DB->query("
+        \G::$DB->query("
 			DELETE FROM users_sessions
-			WHERE UserID = '" . G::$LoggedUser['ID'] . "'
+			WHERE UserID = '" . \G::$LoggedUser['ID'] . "'
 				AND SessionID = '" . \Gazelle\Util\Db::string($SessionID) . "'");
 
-        G::$Cache->begin_transaction('users_sessions_' . G::$LoggedUser['ID']);
-        G::$Cache->delete_row($SessionID);
-        G::$Cache->commit_transaction(0);
+        \G::$Cache->begin_transaction('users_sessions_' . \G::$LoggedUser['ID']);
+        \G::$Cache->delete_row($SessionID);
+        \G::$Cache->commit_transaction(0);
     }
-    G::$Cache->delete_value('user_info_' . G::$LoggedUser['ID']);
-    G::$Cache->delete_value('user_stats_' . G::$LoggedUser['ID']);
-    G::$Cache->delete_value('user_info_heavy_' . G::$LoggedUser['ID']);
+    \G::$Cache->delete_value('user_info_' . \G::$LoggedUser['ID']);
+    \G::$Cache->delete_value('user_stats_' . \G::$LoggedUser['ID']);
+    \G::$Cache->delete_value('user_info_heavy_' . \G::$LoggedUser['ID']);
 
     header('Location: login.php');
 
@@ -324,20 +324,20 @@ function logout()
  */
 function logout_all_sessions()
 {
-    $UserID = G::$LoggedUser['ID'];
+    $UserID = \G::$LoggedUser['ID'];
 
-    G::$DB->query("
+    \G::$DB->query("
 		DELETE FROM users_sessions
 		WHERE UserID = '$UserID'");
 
-    G::$Cache->delete_value('users_sessions_' . $UserID);
+    \G::$Cache->delete_value('users_sessions_' . $UserID);
     logout();
 }
 
 function enforce_login()
 {
     global $SessionID;
-    if (!$SessionID || !G::$LoggedUser) {
+    if (!$SessionID || !\G::$LoggedUser) {
         setcookie('redirect', $_SERVER['REQUEST_URI'], time() + 60 * 30, '/', '', false);
         logout();
     }
@@ -352,8 +352,8 @@ function enforce_login()
  */
 function authorize($Ajax = false)
 {
-    if (empty($_REQUEST['auth']) || $_REQUEST['auth'] != G::$LoggedUser['AuthKey']) {
-        send_irc('PRIVMSG ' . LAB_CHAN . ' :' . G::$LoggedUser['Username'] . ' just failed authorize on ' . $_SERVER['REQUEST_URI'] . (!empty($_SERVER['HTTP_REFERER']) ? ' coming from ' . $_SERVER['HTTP_REFERER'] : ''));
+    if (empty($_REQUEST['auth']) || $_REQUEST['auth'] != \G::$LoggedUser['AuthKey']) {
+        send_irc('PRIVMSG ' . LAB_CHAN . ' :' . \G::$LoggedUser['Username'] . ' just failed authorize on ' . $_SERVER['REQUEST_URI'] . (!empty($_SERVER['HTTP_REFERER']) ? ' coming from ' . $_SERVER['HTTP_REFERER'] : ''));
         error('Invalid authorization key. Go back, refresh, and try again.', $Ajax);
         return false;
     }
@@ -363,8 +363,8 @@ function authorize($Ajax = false)
 function authorizeIfPost($Ajax = false)
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (empty($_POST['auth']) || $_POST['auth'] != G::$LoggedUser['AuthKey']) {
-            send_irc('PRIVMSG ' . LAB_CHAN . ' :' . G::$LoggedUser['Username'] . ' just failed authorize on ' . $_SERVER['REQUEST_URI'] . (!empty($_SERVER['HTTP_REFERER']) ? ' coming from ' . $_SERVER['HTTP_REFERER'] : ''));
+        if (empty($_POST['auth']) || $_POST['auth'] != \G::$LoggedUser['AuthKey']) {
+            send_irc('PRIVMSG ' . LAB_CHAN . ' :' . \G::$LoggedUser['Username'] . ' just failed authorize on ' . $_SERVER['REQUEST_URI'] . (!empty($_SERVER['HTTP_REFERER']) ? ' coming from ' . $_SERVER['HTTP_REFERER'] : ''));
             error('Invalid authorization key. Go back, refresh, and try again.', $Ajax);
             return false;
         }
@@ -398,7 +398,7 @@ define('STAFF_LOCKED', 1);
 
 $AllowedPages = ['staffpm', 'ajax', 'locked', 'logout', 'login'];
 
-if (isset(G::$LoggedUser['LockedAccount']) && !in_array($Document, $AllowedPages)) {
+if (isset(\G::$LoggedUser['LockedAccount']) && !in_array($Document, $AllowedPages)) {
     require SERVER_ROOT . '/sections/locked/index.php';
 } else {
     if (!file_exists(SERVER_ROOT . '/sections/' . $Document . '/index.php')) {
