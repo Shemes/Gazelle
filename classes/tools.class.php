@@ -267,10 +267,10 @@ class Tools {
 			G::$DB->query('
 				UPDATE users_info
 				SET
-					Warned = \''.db_string($NewExpDate).'\',
+					Warned = \''.\Gazelle\Util\Db::string($NewExpDate).'\',
 					WarnedTimes = WarnedTimes + 1,
-					AdminComment = CONCAT(\''.db_string($AdminComment).'\', AdminComment)
-				WHERE UserID = \''.db_string($UserID).'\'');
+					AdminComment = CONCAT(\''.\Gazelle\Util\Db::string($AdminComment).'\', AdminComment)
+				WHERE UserID = \''.\Gazelle\Util\Db::string($UserID).'\'');
 		} else {
 			//Not changing, user was not already warned
 			$WarnTime = time_plus($Duration);
@@ -284,10 +284,10 @@ class Tools {
 			G::$DB->query('
 				UPDATE users_info
 				SET
-					Warned = \''.db_string($WarnTime).'\',
+					Warned = \''.\Gazelle\Util\Db::string($WarnTime).'\',
 					WarnedTimes = WarnedTimes + 1,
-					AdminComment = CONCAT(\''.db_string($AdminComment).'\', AdminComment)
-				WHERE UserID = \''.db_string($UserID).'\'');
+					AdminComment = CONCAT(\''.\Gazelle\Util\Db::string($AdminComment).'\', AdminComment)
+				WHERE UserID = \''.\Gazelle\Util\Db::string($UserID).'\'');
 		}
 		G::$DB->set_query_id($QueryID);
 	}
@@ -301,8 +301,8 @@ class Tools {
 		$QueryID = G::$DB->get_query_id();
 		G::$DB->query('
 			UPDATE users_info
-			SET AdminComment = CONCAT(\''.db_string($AdminComment).'\', AdminComment)
-			WHERE UserID = \''.db_string($UserID).'\'');
+			SET AdminComment = CONCAT(\''.\Gazelle\Util\Db::string($AdminComment).'\', AdminComment)
+			WHERE UserID = \''.\Gazelle\Util\Db::string($UserID).'\'');
 		G::$DB->set_query_id($QueryID);
 	}
 

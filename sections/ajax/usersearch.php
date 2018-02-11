@@ -27,7 +27,7 @@ if (isset($_GET['username'])) {
 			Avatar
 		FROM users_main AS um
 			JOIN users_info AS ui ON ui.UserID = um.ID
-		WHERE Username LIKE '%".db_string($_GET['username'])."%'
+		WHERE Username LIKE '%".\Gazelle\Util\Db::string($_GET['username'])."%'
 		ORDER BY Username
 		LIMIT $Limit");
 	$Results = $DB->to_array();

@@ -5,21 +5,21 @@ include(SERVER_ROOT.'/classes/validate.class.php');
 $Val = new VALIDATE;
 
 $P = array();
-$P = db_array($_POST);
+$P = \Gazelle\Util\Db::array($_POST);
 
 if ($P['category'] > 0 || check_perms('site_collages_renamepersonal')) {
 	$Val->SetFields('name', '1', 'string', 'The name must be between 3 and 100 characters', array('maxlength' => 100, 'minlength' => 3));
 } else {
 	// Get a collage name and make sure it's unique
 	$name = $LoggedUser['Username']."'s personal collage";
-	$P['name'] = db_string($name);
+	$P['name'] = \Gazelle\Util\Db::string($name);
 	$DB->query("
 		SELECT ID
 		FROM collages
 		WHERE Name = '".$P['name']."'");
 	$i = 2;
 	while ($DB->has_results()) {
-		$P['name'] = db_string("$name no. $i");
+		$P['name'] = \Gazelle\Util\Db::string("$name no. $i");
 		$DB->query("
 			SELECT ID
 			FROM collages

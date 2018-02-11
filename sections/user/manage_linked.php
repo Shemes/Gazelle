@@ -19,7 +19,7 @@ switch ($_REQUEST['dupeaction']) {
 			$DB->query("
 				SELECT ID
 				FROM users_main
-				WHERE Username LIKE '".db_string($Target)."'");
+				WHERE Username LIKE '".\Gazelle\Util\Db::string($Target)."'");
 			if (list($TargetID) = $DB->next_record()) {
 				link_users($UserID, $TargetID, (isset($_REQUEST['ignore_comments'])) ? true : false);
 			} else {

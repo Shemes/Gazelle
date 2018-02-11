@@ -85,14 +85,14 @@ $DB->query("
 	INSERT INTO forums_topics
 		(Title, AuthorID, ForumID, LastPostTime, LastPostAuthorID, CreatedTime)
 	Values
-		('".db_string($Title)."', '".$LoggedUser['ID']."', '$ForumID', '".$sqltime."', '".$LoggedUser['ID']."', '".$sqltime."')");
+		('".\Gazelle\Util\Db::string($Title)."', '".$LoggedUser['ID']."', '$ForumID', '".$sqltime."', '".$LoggedUser['ID']."', '".$sqltime."')");
 $TopicID = $DB->inserted_id();
 
 $DB->query("
 	INSERT INTO forums_posts
 		(TopicID, AuthorID, AddedTime, Body)
 	VALUES
-		('$TopicID', '".$LoggedUser['ID']."', '".$sqltime."', '".db_string($Body)."')");
+		('$TopicID', '".$LoggedUser['ID']."', '".$sqltime."', '".\Gazelle\Util\Db::string($Body)."')");
 
 $PostID = $DB->inserted_id();
 
@@ -125,7 +125,7 @@ if (!$NoPoll) { // god, I hate double negatives...
 		INSERT INTO forums_polls
 			(TopicID, Question, Answers)
 		VALUES
-			('$TopicID', '".db_string($Question)."', '".db_string(serialize($Answers))."')");
+			('$TopicID', '".\Gazelle\Util\Db::string($Question)."', '".\Gazelle\Util\Db::string(serialize($Answers))."')");
 	$Cache->cache_value("polls_$TopicID", array($Question, $Answers, $Votes, '0000-00-00 00:00:00', '0'), 0);
 
 	if ($ForumID == STAFF_FORUM) {

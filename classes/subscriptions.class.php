@@ -47,11 +47,11 @@ class Subscriptions {
 
 		$Results = G::$DB->to_array();
 		foreach ($Results as $Result) {
-			$UserID = db_string($Result['ID']);
-			$QuoterID = db_string(G::$LoggedUser['ID']);
-			$Page = db_string($Page);
-			$PageID = db_string($PageID);
-			$PostID = db_string($PostID);
+			$UserID = \Gazelle\Util\Db::string($Result['ID']);
+			$QuoterID = \Gazelle\Util\Db::string(G::$LoggedUser['ID']);
+			$Page = \Gazelle\Util\Db::string($Page);
+			$PageID = \Gazelle\Util\Db::string($PageID);
+			$PostID = \Gazelle\Util\Db::string($PostID);
 
 			G::$DB->query("
 				INSERT IGNORE INTO users_notify_quoted
@@ -85,13 +85,13 @@ class Subscriptions {
 		if ($Key !== false) {
 			G::$DB->query('
 				DELETE FROM users_subscriptions
-				WHERE UserID = ' . db_string($UserID) . '
-					AND TopicID = ' . db_string($TopicID));
+				WHERE UserID = ' . \Gazelle\Util\Db::string($UserID) . '
+					AND TopicID = ' . \Gazelle\Util\Db::string($TopicID));
 			unset($UserSubscriptions[$Key]);
 		} else {
 			G::$DB->query("
 				INSERT IGNORE INTO users_subscriptions (UserID, TopicID)
-				VALUES ($UserID, " . db_string($TopicID) . ")");
+				VALUES ($UserID, " . \Gazelle\Util\Db::string($TopicID) . ")");
 			array_push($UserSubscriptions, $TopicID);
 		}
 		G::$Cache->replace_value("subscriptions_user_$UserID", $UserSubscriptions, 0);
@@ -116,16 +116,16 @@ class Subscriptions {
 		if ($Key !== false) {
 			G::$DB->query("
 				DELETE FROM users_subscriptions_comments
-				WHERE UserID = " . db_string($UserID) . "
-					AND Page = '" . db_string($Page) . "'
-					AND PageID = " . db_string($PageID));
+				WHERE UserID = " . \Gazelle\Util\Db::string($UserID) . "
+					AND Page = '" . \Gazelle\Util\Db::string($Page) . "'
+					AND PageID = " . \Gazelle\Util\Db::string($PageID));
 			unset($UserCommentSubscriptions[$Key]);
 		} else {
 			G::$DB->query("
 				INSERT IGNORE INTO users_subscriptions_comments
 					(UserID, Page, PageID)
 				VALUES
-					($UserID, '" . db_string($Page) . "', " . db_string($PageID) . ")");
+					($UserID, '" . \Gazelle\Util\Db::string($Page) . "', " . \Gazelle\Util\Db::string($PageID) . ")");
 			array_push($UserCommentSubscriptions, array($Page, $PageID));
 		}
 		G::$Cache->replace_value("subscriptions_comments_user_$UserID", $UserCommentSubscriptions, 0);
@@ -149,7 +149,7 @@ class Subscriptions {
 			G::$DB->query('
 				SELECT TopicID
 				FROM users_subscriptions
-				WHERE UserID = ' . db_string($UserID));
+				WHERE UserID = ' . \Gazelle\Util\Db::string($UserID));
 			$UserSubscriptions = G::$DB->collect(0);
 			G::$Cache->cache_value("subscriptions_user_$UserID", $UserSubscriptions, 0);
 		}
@@ -172,7 +172,7 @@ class Subscriptions {
 			G::$DB->query('
 				SELECT Page, PageID
 				FROM users_subscriptions_comments
-				WHERE UserID = ' . db_string($UserID));
+				WHERE UserID = ' . \Gazelle\Util\Db::string($UserID));
 			$UserCommentSubscriptions = G::$DB->to_array(false, MYSQLI_NUM);
 			G::$Cache->cache_value("subscriptions_comments_user_$UserID", $UserCommentSubscriptions, 0);
 		}

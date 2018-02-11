@@ -8,7 +8,7 @@ list ($Page, $Limit) = Format::page_limit(USERS_PER_PAGE);
 
 $SearchQuery = '';
 if ($_GET['username']) {
-	$SearchString = db_string($_GET['username']);
+	$SearchString = \Gazelle\Util\Db::string($_GET['username']);
 	$SearchQuery = " WHERE Username LIKE '%$SearchString%' ";
 }
 

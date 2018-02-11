@@ -26,8 +26,8 @@ if ($_POST['submit'] == 'Delete') {
 		die();
 	}
 
-	$Client = db_string($_POST['client']);
-	$PeerID = db_string($_POST['peer_id']);
+	$Client = \Gazelle\Util\Db::string($_POST['client']);
+	$PeerID = \Gazelle\Util\Db::string($_POST['peer_id']);
 
 	if ($_POST['submit'] == 'Edit') { //Edit
 		if (empty($_POST['id']) || !is_number($_POST['id'])) {

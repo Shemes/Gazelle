@@ -18,7 +18,7 @@ if (!isset($_REQUEST['authkey']) || !isset($_REQUEST['torrent_pass'])) {
 			FROM users_main AS m
 				INNER JOIN users_info AS i ON i.UserID = m.ID
 				LEFT JOIN locked_accounts AS la ON la.UserID = m.ID
-			WHERE m.torrent_pass = '".db_string($_REQUEST['torrent_pass'])."'
+			WHERE m.torrent_pass = '".\Gazelle\Util\Db::string($_REQUEST['torrent_pass'])."'
 				AND m.Enabled = '1'");
 		$UserInfo = $DB->next_record(MYSQLI_NUM, array(2));
 		$SiteOptions = array_merge(Users::default_site_options(), unserialize_array($UserInfo[2]));
@@ -79,7 +79,7 @@ if (!is_array($Info) || !array_key_exists('PlainArtists', $Info) || empty($Info[
 			t.info_hash
 		FROM torrents AS t
 			INNER JOIN torrents_group AS tg ON tg.ID = t.GroupID
-		WHERE t.ID = '".db_string($TorrentID)."'");
+		WHERE t.ID = '".\Gazelle\Util\Db::string($TorrentID)."'");
 	if (!$DB->has_results()) {
 		error(404);
 	}

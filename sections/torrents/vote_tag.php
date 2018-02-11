@@ -1,8 +1,8 @@
 <?
 $UserID = $LoggedUser['ID'];
-$TagID = db_string($_GET['tagid']);
-$GroupID = db_string($_GET['groupid']);
-$Way = db_string($_GET['way']);
+$TagID = \Gazelle\Util\Db::string($_GET['tagid']);
+$GroupID = \Gazelle\Util\Db::string($_GET['groupid']);
+$Way = \Gazelle\Util\Db::string($_GET['way']);
 
 if (!is_number($TagID) || !is_number($GroupID)) {
 	error(404);

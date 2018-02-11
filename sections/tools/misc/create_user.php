@@ -34,7 +34,7 @@ if (isset($_POST['Username'])) {
 			INSERT INTO users_main
 				(Username, Email, PassHash, torrent_pass, Enabled, PermissionID)
 			VALUES
-				('".db_string($Username)."', '".db_string($Email)."', '".db_string(Users::make_password_hash($Password))."', '".db_string($torrent_pass)."', '1', '".USER."')");
+				('".\Gazelle\Util\Db::string($Username)."', '".\Gazelle\Util\Db::string($Email)."', '".\Gazelle\Util\Db::string(Users::make_password_hash($Password))."', '".\Gazelle\Util\Db::string($torrent_pass)."', '1', '".USER."')");
 
 		//Increment site user count
 		$Cache->increment('stats_user_count');
@@ -58,7 +58,7 @@ if (isset($_POST['Username'])) {
 			INSERT INTO users_info
 				(UserID, StyleID, AuthKey, JoinDate)
 			VALUES
-				('".db_string($UserID)."', '".db_string($StyleID)."', '".db_string($AuthKey)."', '".sqltime()."')");
+				('".\Gazelle\Util\Db::string($UserID)."', '".\Gazelle\Util\Db::string($StyleID)."', '".\Gazelle\Util\Db::string($AuthKey)."', '".sqltime()."')");
 
 		// Give the notification settings
 		$DB->query("INSERT INTO users_notifications_settings (UserID) VALUES ('$UserID')");

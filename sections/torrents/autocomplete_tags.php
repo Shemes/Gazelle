@@ -15,7 +15,7 @@ if (!$AutoSuggest) {
 		SELECT Name
 		FROM tags
 		WHERE Name != ''
-			AND Name LIKE '".db_string(str_replace('\\', '\\\\', $Letters), true)."%'
+			AND Name LIKE '".\Gazelle\Util\Db::string(str_replace('\\', '\\\\', $Letters), true)."%'
 			AND (Uses > 700 OR TagType = 'genre')
 		ORDER BY TagType = 'genre' DESC, Uses DESC
 		LIMIT $Limit");

@@ -19,15 +19,15 @@ if (isset($_GET['search'])) {
 	$Search = '';
 }
 
-$ThreadAfterDate = db_string($_GET['thread_created_after']);
-$ThreadBeforeDate = db_string($_GET['thread_created_before']);
+$ThreadAfterDate = \Gazelle\Util\Db::string($_GET['thread_created_after']);
+$ThreadBeforeDate = \Gazelle\Util\Db::string($_GET['thread_created_before']);
 
 if ((!empty($ThreadAfterDate) && !is_valid_date($ThreadAfterDate)) || (!empty($ThreadBeforeDate) && !is_valid_date($ThreadBeforeDate))) {
 	error("Incorrect topic created date");
 }
 
-$PostAfterDate = db_string($_GET['post_created_after']);
-$PostBeforeDate = db_string($_GET['post_created_before']);
+$PostAfterDate = \Gazelle\Util\Db::string($_GET['post_created_after']);
+$PostBeforeDate = \Gazelle\Util\Db::string($_GET['post_created_before']);
 
 if ((!empty($PostAfterDate) && !is_valid_date($PostAfterDate)) || (!empty($PostBeforeDate) && !is_valid_date($PostBeforeDate))) {
 	error("Incorrect post created date");
@@ -39,7 +39,7 @@ if (!empty($_GET['user'])) {
 	$DB->query("
 		SELECT ID
 		FROM users_main
-		WHERE Username = '".db_string($User)."'");
+		WHERE Username = '".\Gazelle\Util\Db::string($User)."'");
 	list($AuthorID) = $DB->next_record();
 	if ($AuthorID === null) {
 		$AuthorID = 0;
@@ -208,7 +208,7 @@ if (empty($ThreadID)) {
 <?
 
 // Break search string down into individual words
-$Words = explode(' ', db_string($Search));
+$Words = explode(' ', \Gazelle\Util\Db::string($Search));
 
 if ($Type == 'body') {
 

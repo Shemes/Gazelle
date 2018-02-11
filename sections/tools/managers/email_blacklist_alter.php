@@ -21,7 +21,7 @@ if ($_POST['submit'] === 'Delete') { // Delete
 	}
 
 	$P = array();
-	$P = db_array($_POST); // Sanitize the form
+	$P = \Gazelle\Util\Db::array($_POST); // Sanitize the form
 
 	if ($_POST['submit'] === 'Edit') { // Edit
 		if (!is_number($_POST['id']) || $_POST['id'] === '') {

@@ -130,7 +130,7 @@ class NotificationsManager {
 		if (!isset($Importance)) {
 			$Importance = self::INFO;
 		}
-		$Type = db_string($Type);
+		$Type = \Gazelle\Util\Db::string($Type);
 		if (!empty($UserIDs)) {
 			$UserIDs = implode(',', $UserIDs);
 			$QueryID = G::$DB->get_query_id();
@@ -158,7 +158,7 @@ class NotificationsManager {
 	}
 
 	public static function get_notification_enabled_users($Type, $UserID) {
-		$Type = db_string($Type);
+		$Type = \Gazelle\Util\Db::string($Type);
 		$UserWhere = '';
 		if (isset($UserID)) {
 			$UserID = (int)$UserID;
@@ -672,7 +672,7 @@ class NotificationsManager {
 		if ($PushService === 6) { //pushbullet
 			$PushOptionsArray['PushDevice'] = $_POST['pushdevice'];
 		}
-		$PushOptions = db_string(serialize($PushOptionsArray));
+		$PushOptions = \Gazelle\Util\Db::string(serialize($PushOptionsArray));
 
 		if ($PushService != 0) {
 			G::$DB->query("

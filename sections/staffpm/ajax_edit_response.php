@@ -17,7 +17,7 @@ if (!($SupportFor != '' || $DisplayStaff == '1')) {
 	error(403);
 }
 
-if (($Message = db_string($_POST['message'])) && ($Name = db_string($_POST['name']))) {
+if (($Message = \Gazelle\Util\Db::string($_POST['message'])) && ($Name = \Gazelle\Util\Db::string($_POST['name']))) {
 	$ID = (int)$_POST['id'];
 	if (is_numeric($ID)) {
 		if ($ID == 0) {

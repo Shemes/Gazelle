@@ -53,34 +53,34 @@ if (!empty($_GET['way']) && array_key_exists($_GET['way'], $Ways)) {
 $SearchWhere = array();
 if (!empty($_GET['format'])) {
 	if (in_array($_GET['format'], $Formats)) {
-		$SearchWhere[] = "t.Format = '".db_string($_GET['format'])."'";
+		$SearchWhere[] = "t.Format = '".\Gazelle\Util\Db::string($_GET['format'])."'";
 	} elseif ($_GET['format'] == 'perfectflac') {
 		$_GET['filter'] = 'perfectflac';
 	}
 }
 
 if (!empty($_GET['bitrate']) && in_array($_GET['bitrate'], $Bitrates)) {
-	$SearchWhere[] = "t.Encoding = '".db_string($_GET['bitrate'])."'";
+	$SearchWhere[] = "t.Encoding = '".\Gazelle\Util\Db::string($_GET['bitrate'])."'";
 }
 
 if (!empty($_GET['media']) && in_array($_GET['media'], $Media)) {
-	$SearchWhere[] = "t.Media = '".db_string($_GET['media'])."'";
+	$SearchWhere[] = "t.Media = '".\Gazelle\Util\Db::string($_GET['media'])."'";
 }
 
 if (!empty($_GET['releasetype']) && array_key_exists($_GET['releasetype'], $ReleaseTypes)) {
-	$SearchWhere[] = "tg.ReleaseType = '".db_string($_GET['releasetype'])."'";
+	$SearchWhere[] = "tg.ReleaseType = '".\Gazelle\Util\Db::string($_GET['releasetype'])."'";
 }
 
 if (isset($_GET['scene']) && in_array($_GET['scene'], array('1', '0'))) {
-	$SearchWhere[] = "t.Scene = '".db_string($_GET['scene'])."'";
+	$SearchWhere[] = "t.Scene = '".\Gazelle\Util\Db::string($_GET['scene'])."'";
 }
 
 if (isset($_GET['vanityhouse']) && in_array($_GET['vanityhouse'], array('1', '0'))) {
-	$SearchWhere[] = "tg.VanityHouse = '".db_string($_GET['vanityhouse'])."'";
+	$SearchWhere[] = "tg.VanityHouse = '".\Gazelle\Util\Db::string($_GET['vanityhouse'])."'";
 }
 
 if (isset($_GET['cue']) && in_array($_GET['cue'], array('1', '0'))) {
-	$SearchWhere[] = "t.HasCue = '".db_string($_GET['cue'])."'";
+	$SearchWhere[] = "t.HasCue = '".\Gazelle\Util\Db::string($_GET['cue'])."'";
 }
 
 if (isset($_GET['log']) && in_array($_GET['log'], array('1', '0', '100', '-1'))) {
@@ -91,7 +91,7 @@ if (isset($_GET['log']) && in_array($_GET['log'], array('1', '0', '100', '-1')))
 		$SearchWhere[] = "t.HasLog = '1'";
 		$SearchWhere[] = "t.LogScore < '100'";
 	} else {
-		$SearchWhere[] = "t.HasLog = '".db_string($_GET['log'])."'";
+		$SearchWhere[] = "t.HasLog = '".\Gazelle\Util\Db::string($_GET['log'])."'";
 	}
 }
 
@@ -101,7 +101,7 @@ if (!empty($_GET['categories'])) {
 		if (!is_number($Cat)) {
 			error(0);
 		}
-		$Cats[] = "tg.CategoryID = '".db_string($Cat)."'";
+		$Cats[] = "tg.CategoryID = '".\Gazelle\Util\Db::string($Cat)."'";
 	}
 	$SearchWhere[] = '('.implode(' OR ', $Cats).')';
 }
@@ -123,9 +123,9 @@ if (!empty($_GET['tags'])) {
 			if (empty($Tag)) {
 				continue;
 			}
-			$TagList[] = "CONCAT(' ', tg.TagList, ' ') NOT LIKE '% ".db_string($Tag)." %'";
+			$TagList[] = "CONCAT(' ', tg.TagList, ' ') NOT LIKE '% ".\Gazelle\Util\Db::string($Tag)." %'";
 		} else {
-			$TagList[] = "CONCAT(' ', tg.TagList, ' ') LIKE '% ".db_string($Tag)." %'";
+			$TagList[] = "CONCAT(' ', tg.TagList, ' ') LIKE '% ".\Gazelle\Util\Db::string($Tag)." %'";
 		}
 	}
 	if (!empty($TagList)) {
@@ -300,7 +300,7 @@ if ((empty($_GET['search']) || trim($_GET['search']) === '') && $Order != 'Name'
 			GROUP BY TorrentID, Time");
 
 	if (!empty($_GET['search']) && trim($_GET['search']) !== '') {
-		$Words = array_unique(explode(' ', db_string($_GET['search'])));
+		$Words = array_unique(explode(' ', \Gazelle\Util\Db::string($_GET['search'])));
 	}
 
 	$SQL = "

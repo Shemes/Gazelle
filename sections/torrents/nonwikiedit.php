@@ -39,9 +39,9 @@ if (check_perms('torrents_freeleech') && (isset($_POST['freeleech']) xor isset($
 }
 
 //Escape fields
-$Year = db_string((int)$_POST['year']);
-$RecordLabel = db_string($_POST['record_label']);
-$CatalogueNumber = db_string($_POST['catalogue_number']);
+$Year = \Gazelle\Util\Db::string((int)$_POST['year']);
+$RecordLabel = \Gazelle\Util\Db::string($_POST['record_label']);
+$CatalogueNumber = \Gazelle\Util\Db::string($_POST['catalogue_number']);
 
 // Get some info for the group log
 $DB->query("
@@ -63,7 +63,7 @@ $DB->query("
 if ($OldYear != $Year) {
 	$DB->query("
 		INSERT INTO group_log (GroupID, UserID, Time, Info)
-		VALUES ('$GroupID', ".$LoggedUser['ID'].", '".sqltime()."', '".db_string("Year changed from $OldYear to $Year")."')");
+		VALUES ('$GroupID', ".$LoggedUser['ID'].", '".sqltime()."', '".\Gazelle\Util\Db::string("Year changed from $OldYear to $Year")."')");
 }
 
 $DB->query("

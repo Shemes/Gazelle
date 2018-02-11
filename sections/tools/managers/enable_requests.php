@@ -54,15 +54,15 @@ if ($_GET['view'] == 'perfect') {
 
 // Build query further based on search
 if (isset($_GET['search'])) {
-    $Username = db_string($_GET['username']);
-    $IP = db_string($_GET['ip']);
-    $SubmittedBetween = db_string($_GET['submitted_between']);
-    $SubmittedTimestamp1 = db_string($_GET['submitted_timestamp1']);
-    $SubmittedTimestamp2 = db_string($_GET['submitted_timestamp2']);
-    $HandledUsername = db_string($_GET['handled_username']);
-    $HandledBetween = db_string($_GET['handled_between']);
-    $HandledTimestamp1 = db_string($_GET['handled_timestamp1']);
-    $HandledTimestamp2 = db_string($_GET['handled_timestamp2']);
+    $Username = \Gazelle\Util\Db::string($_GET['username']);
+    $IP = \Gazelle\Util\Db::string($_GET['ip']);
+    $SubmittedBetween = \Gazelle\Util\Db::string($_GET['submitted_between']);
+    $SubmittedTimestamp1 = \Gazelle\Util\Db::string($_GET['submitted_timestamp1']);
+    $SubmittedTimestamp2 = \Gazelle\Util\Db::string($_GET['submitted_timestamp2']);
+    $HandledUsername = \Gazelle\Util\Db::string($_GET['handled_username']);
+    $HandledBetween = \Gazelle\Util\Db::string($_GET['handled_between']);
+    $HandledTimestamp1 = \Gazelle\Util\Db::string($_GET['handled_timestamp1']);
+    $HandledTimestamp2 = \Gazelle\Util\Db::string($_GET['handled_timestamp2']);
     $OutcomeSearch = (int) $_GET['outcome_search'];
     $Checked = (isset($_GET['show_checked']));
 

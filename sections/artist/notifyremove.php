@@ -40,7 +40,7 @@ if ($Artists == '|') {
 } else {
 	$DB->query("
 		UPDATE users_notify_filters
-		SET Artists = '".db_string($Artists)."'
+		SET Artists = '".\Gazelle\Util\Db::string($Artists)."'
 		WHERE ID = '$ID'");
 }
 $Cache->delete_value('notify_filters_'.$LoggedUser['ID']);

@@ -12,11 +12,11 @@ if (!empty($_POST['invitekey']) && check_perms('users_edit_invites')) {
 
 	$DB->query("
 		DELETE FROM invites
-		WHERE InviteKey = '".db_string($_POST['invitekey'])."'");
+		WHERE InviteKey = '".\Gazelle\Util\Db::string($_POST['invitekey'])."'");
 }
 
 if (!empty($_GET['search'])) {
-	$Search = db_string($_GET['search']);
+	$Search = \Gazelle\Util\Db::string($_GET['search']);
 } else {
 	$Search = '';
 }

@@ -2,7 +2,7 @@
 authorize();
 
 $UserID = $LoggedUser['ID'];
-$GroupID = db_string($_POST['groupid']);
+$GroupID = \Gazelle\Util\Db::string($_POST['groupid']);
 $Importances = $_POST['importance'];
 $AliasNames = $_POST['aliasname'];
 
@@ -33,7 +33,7 @@ for ($i = 0; $i < count($AliasNames); $i++) {
 		$DB->query("
 			SELECT AliasID, ArtistID, Redirect, Name
 			FROM artists_alias
-			WHERE Name = '".db_string($AliasName)."'");
+			WHERE Name = '".\Gazelle\Util\Db::string($AliasName)."'");
 		while (list($AliasID, $ArtistID, $Redirect, $FoundAliasName) = $DB->next_record(MYSQLI_NUM, false)) {
 			if (!strcasecmp($AliasName, $FoundAliasName)) {
 				if ($Redirect) {
@@ -43,7 +43,7 @@ for ($i = 0; $i < count($AliasNames); $i++) {
 			}
 		}
 		if (!$AliasID) {
-			$AliasName = db_string($AliasName);
+			$AliasName = \Gazelle\Util\Db::string($AliasName);
 			$DB->query("
 				INSERT INTO artists_group (Name)
 				VALUES ('$AliasName')");

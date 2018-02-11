@@ -23,7 +23,7 @@ switch ($_REQUEST['action']) {
 	case 'notify_delete':
 		authorize();
 		if ($_GET['id'] && is_number($_GET['id'])) {
-			$DB->query("DELETE FROM users_notify_filters WHERE ID='".db_string($_GET['id'])."' AND UserID='$LoggedUser[ID]'");
+			$DB->query("DELETE FROM users_notify_filters WHERE ID='".\Gazelle\Util\Db::string($_GET['id'])."' AND UserID='$LoggedUser[ID]'");
 			$ArtistNotifications = $Cache->get_value('notify_artists_'.$LoggedUser['ID']);
 			if (is_array($ArtistNotifications) && $ArtistNotifications['ID'] == $_GET['id']) {
 				$Cache->delete_value('notify_artists_'.$LoggedUser['ID']);
@@ -67,7 +67,7 @@ switch ($_REQUEST['action']) {
 			error(404);
 		}
 
-		$DB->query("SELECT m.PassHash, m.Secret, m.2FA_Key, p.Level FROM users_main AS m LEFT JOIN permissions AS p ON p.ID = PermissionID WHERE m.ID = '" . db_string($UserID) . "'");
+		$DB->query("SELECT m.PassHash, m.Secret, m.2FA_Key, p.Level FROM users_main AS m LEFT JOIN permissions AS p ON p.ID = PermissionID WHERE m.ID = '" . \Gazelle\Util\Db::string($UserID) . "'");
 
 		list($PassHash, $Secret, $TFAKey, $Level) = $DB->next_record(MYSQLI_NUM);
 

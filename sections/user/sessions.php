@@ -26,7 +26,7 @@ if (isset($_POST['session'])) {
 	$DB->query("
 		DELETE FROM users_sessions
 		WHERE UserID = '$UserID'
-			AND SessionID = '".db_string($_POST['session'])."'");
+			AND SessionID = '".\Gazelle\Util\Db::string($_POST['session'])."'");
 	$Cache->delete_value("users_sessions_$UserID");
 }
 

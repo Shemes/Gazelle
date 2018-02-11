@@ -23,7 +23,7 @@ list($Score, $Details, $Checksum, $LogText) = $Log->parse();
 $Details = trim(implode("\r\n", $Details));
 $DetailsArray[] = $Details;
 $LogChecksum = min(intval($Checksum), $LogChecksum);
-$DB->query("UPDATE torrents_logs SET Log='".db_string($LogText)."', Details='".db_string($Details)."', Score='{$Score}', `Checksum`='{$Checksum}', Adjusted='0' WHERE LogID='{$LogID}' AND TorrentID='{$TorrentID}'");
+$DB->query("UPDATE torrents_logs SET Log='".\Gazelle\Util\Db::string($LogText)."', Details='".\Gazelle\Util\Db::string($Details)."', Score='{$Score}', `Checksum`='{$Checksum}', Adjusted='0' WHERE LogID='{$LogID}' AND TorrentID='{$TorrentID}'");
 
 $DB->query("
 UPDATE torrents AS t

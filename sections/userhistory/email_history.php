@@ -122,7 +122,7 @@ foreach ($History as $Key => $Values) {
 						ue.Time,
 						ue.IP
 					FROM users_history_emails AS ue, users_main AS um
-					WHERE ue.Email = '".db_string($Values['Email'])."'
+					WHERE ue.Email = '".\Gazelle\Util\Db::string($Values['Email'])."'
 						AND ue.UserID != $UserID
 						AND um.ID = ue.UserID");
 		while (list($UserID2, $Time, $IP) = $DB->next_record()) { ?>

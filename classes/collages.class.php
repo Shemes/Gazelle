@@ -34,8 +34,8 @@ class Collages {
 			header('Location: collage.php?id='.$CollageID);
 			die();
 		}
-		$NameStr = db_string(G::$LoggedUser['Username'] . "'s personal collage" . ($CollageCount > 0 ? ' no. ' . ($CollageCount + 1) : ''));
-		$Description = db_string('Personal collage for ' . G::$LoggedUser['Username'] . '. The first 5 albums will appear on his or her [url=' . site_url() . 'user.php?id= ' . G::$LoggedUser['ID'] . ']profile[/url].');
+		$NameStr = \Gazelle\Util\Db::string(G::$LoggedUser['Username'] . "'s personal collage" . ($CollageCount > 0 ? ' no. ' . ($CollageCount + 1) : ''));
+		$Description = \Gazelle\Util\Db::string('Personal collage for ' . G::$LoggedUser['Username'] . '. The first 5 albums will appear on his or her [url=' . site_url() . 'user.php?id= ' . G::$LoggedUser['ID'] . ']profile[/url].');
 		G::$DB->query("
 			INSERT INTO collages
 				(Name, Description, CategoryID, UserID)

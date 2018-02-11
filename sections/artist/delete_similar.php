@@ -1,6 +1,6 @@
 <?php
 authorize();
-$SimilarID = db_string($_GET['similarid']);
+$SimilarID = \Gazelle\Util\Db::string($_GET['similarid']);
 $PrimaryArtistID = intval($_GET['artistid']);
 
 if (!is_number($SimilarID) || !$SimilarID) {

@@ -100,7 +100,7 @@ if (!empty($_POST['action'])) {
 		$DB->query("
 			SELECT ArtistID, Name
 			FROM artists_alias
-			WHERE Name LIKE '" . db_string($NameSearch) . "'");
+			WHERE Name LIKE '" . \Gazelle\Util\Db::string($NameSearch) . "'");
 		if (!$DB->has_results()) {
 			if (isset($LoggedUser['SearchType']) && $LoggedUser['SearchType']) {
 				header('Location: torrents.php?action=advanced&artistname=' . urlencode($_GET['artistname']));

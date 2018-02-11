@@ -52,7 +52,7 @@ if (isset($_POST['torrents'])) {
                 if (isset($_POST['NLOver']) && $FreeLeechType == 1) {
                     // Only use this checkbox if freeleech is selected
                     $Size = (int) $_POST['size'];
-                    $Units = db_string($_POST['scale']);
+                    $Units = \Gazelle\Util\Db::string($_POST['scale']);
 
                     if (empty($Size) || !in_array($Units, array('k', 'm', 'g'))) {
                         $Err = 'Invalid size or units';

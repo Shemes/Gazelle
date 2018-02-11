@@ -29,7 +29,7 @@ $DB->query("
 	SET Status = 'Resolved',
 		ResolvedTime = '".sqltime()."',
 		ResolverID = '".$LoggedUser['ID']."'
-	WHERE ID = '".db_string($ReportID)."'");
+	WHERE ID = '".\Gazelle\Util\Db::string($ReportID)."'");
 
 $Channels = array();
 

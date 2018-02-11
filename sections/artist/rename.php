@@ -48,7 +48,7 @@ if ($OldName == $NewName) {
 $DB->query("
 	SELECT AliasID
 	FROM artists_alias
-	WHERE Name = '".db_string($OldName)."'
+	WHERE Name = '".\Gazelle\Util\Db::string($OldName)."'
 		AND ArtistID = '$ArtistID'");
 list($OldAliasID) = $DB->next_record(MYSQLI_NUM, false);
 if (!$OldAliasID) {
@@ -58,7 +58,7 @@ if (!$OldAliasID) {
 $DB->query("
 	SELECT AliasID, ArtistID
 	FROM artists_alias
-	WHERE name LIKE '".db_string($NewName, true)."'");
+	WHERE name LIKE '".\Gazelle\Util\Db::string($NewName, true)."'");
 list($TargetAliasID, $TargetArtistID) = $DB->next_record(MYSQLI_NUM, false);
 
 if (!$TargetAliasID || $TargetAliasID == $OldAliasID) {
@@ -67,7 +67,7 @@ if (!$TargetAliasID || $TargetAliasID == $OldAliasID) {
 		INSERT INTO artists_alias
 			(ArtistID, Name, Redirect, UserID)
 		VALUES
-			($ArtistID, '".db_string($NewName)."', '0', '$LoggedUser[ID]')");
+			($ArtistID, '".\Gazelle\Util\Db::string($NewName)."', '0', '$LoggedUser[ID]')");
 	$TargetAliasID = $DB->inserted_id();
 
 	$DB->query("
@@ -76,7 +76,7 @@ if (!$TargetAliasID || $TargetAliasID == $OldAliasID) {
 		WHERE AliasID = '$OldAliasID'");
 	$DB->query("
 		UPDATE artists_group
-		SET Name = '".db_string($NewName)."'
+		SET Name = '".\Gazelle\Util\Db::string($NewName)."'
 		WHERE ArtistID = '$ArtistID'");
 
 	$DB->query("
@@ -138,7 +138,7 @@ if (!$TargetAliasID || $TargetAliasID == $OldAliasID) {
 	} else {
 		$DB->query("
 			UPDATE artists_group
-			SET Name = '".db_string($NewName)."'
+			SET Name = '".\Gazelle\Util\Db::string($NewName)."'
 			WHERE ArtistID = '$ArtistID'");
 	}
 

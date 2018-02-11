@@ -16,8 +16,8 @@ switch ($_GET['action']) {
 
 			$DB->query("
 				UPDATE news
-				SET Title = '".db_string($_POST['title'])."', Body = '".db_string($_POST['body'])."'
-				WHERE ID = '".db_string($_POST['newsid'])."'");
+				SET Title = '".\Gazelle\Util\Db::string($_POST['title'])."', Body = '".\Gazelle\Util\Db::string($_POST['body'])."'
+				WHERE ID = '".\Gazelle\Util\Db::string($_POST['newsid'])."'");
 			$Cache->delete_value('news');
 			$Cache->delete_value('feed_news');
 		}

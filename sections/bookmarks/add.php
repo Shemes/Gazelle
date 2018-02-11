@@ -95,7 +95,7 @@ if (!$DB->has_results()) {
 		$DB->query("
 			SELECT UserID
 			FROM $Table
-			WHERE $Col = '".db_string($PageID)."'");
+			WHERE $Col = '".\Gazelle\Util\Db::string($PageID)."'");
 		if ($DB->record_count() < 100) {
 			// Sphinx doesn't like huge MVA updates. Update sphinx_requests_delta
 			// and live with the <= 1 minute delay if we have more than 100 bookmarkers

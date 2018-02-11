@@ -1,7 +1,7 @@
 <?
 authorize();
 
-$InviteKey = db_string($_GET['invite']);
+$InviteKey = \Gazelle\Util\Db::string($_GET['invite']);
 $DB->query("
 	SELECT InviterID
 	FROM invites

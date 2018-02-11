@@ -260,14 +260,14 @@ class Contest {
 	public static function save($params) {
 		G::$DB->query("
 			UPDATE contest SET
-				Name		= '".db_string($params['name'])."',
+				Name		= '".\Gazelle\Util\Db::string($params['name'])."',
 				Display		= {$params['display']},
 				MaxTracked	= {$params['maxtrack']},
-				DateBegin	= '".db_string($params['date_begin'])."',
-				DateEnd		= '".db_string($params['date_end'])."',
+				DateBegin	= '".\Gazelle\Util\Db::string($params['date_begin'])."',
+				DateEnd		= '".\Gazelle\Util\Db::string($params['date_end'])."',
 				ContestTypeID	= {$params['type']},
-				Banner		= '".db_string($params['banner'])."',
-				WikiText	= '".db_string($params['intro'])."'
+				Banner		= '".\Gazelle\Util\Db::string($params['banner'])."',
+				WikiText	= '".\Gazelle\Util\Db::string($params['intro'])."'
 			WHERE ID = {$params['cid']}
 		");
 		G::$Cache->delete_value('contest_current');

@@ -37,7 +37,7 @@ if (!$Sticky && $Ranking > 0) {
 } elseif (0 > $Ranking) {
 	error('Ranking cannot be a negative value');
 }
-$Title = db_string($_POST['title']);
+$Title = \Gazelle\Util\Db::string($_POST['title']);
 $RawTitle = $_POST['title'];
 $ForumID = (int)$_POST['forumid'];
 $Page = (int)$_POST['page'];

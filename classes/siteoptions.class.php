@@ -15,7 +15,7 @@ class SiteOptions {
         $Value = G::$Cache->get_value('site_option_' . $Name);
 
         if ($Value === false) {
-            G::$DB->query("SELECT Value FROM site_options WHERE Name = '" . db_string($Name) . "'");
+            G::$DB->query("SELECT Value FROM site_options WHERE Name = '" . \Gazelle\Util\Db::string($Name) . "'");
 
             if (G::$DB->has_results()) {
                 list($Value) = G::$DB->next_record();

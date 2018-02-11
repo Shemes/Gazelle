@@ -11,7 +11,7 @@ if (strtotime($BannedUntil) < time()) {
 		$DB->query("
 			UPDATE login_attempts
 			SET BannedUntil = '0000-00-00 00:00:00', Attempts = '0'
-			WHERE ID = '".db_string($AttemptID)."'");
+			WHERE ID = '".\Gazelle\Util\Db::string($AttemptID)."'");
 		$Attempts = 0;
 	}
 	if (isset($Err)) {

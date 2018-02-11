@@ -32,7 +32,7 @@ $Answers = serialize($Answers);
 
 $DB->query("
 	UPDATE forums_polls
-	SET Answers = '".db_string($Answers)."'
+	SET Answers = '".\Gazelle\Util\Db::string($Answers)."'
 	WHERE TopicID = $ThreadID");
 $Cache->delete_value("polls_$ThreadID");
 

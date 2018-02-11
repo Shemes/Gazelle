@@ -82,7 +82,7 @@ if ($ThreadInfo['LastPostAuthorID'] == $LoggedUser['ID'] && isset($_POST['merge'
 	$DB->query("
 		UPDATE forums_posts
 		SET
-			Body = CONCAT(Body,'\n\n".db_string($Body)."'),
+			Body = CONCAT(Body,'\n\n".\Gazelle\Util\Db::string($Body)."'),
 			EditedUserID = '".$LoggedUser['ID']."',
 			EditedTime = '$SQLTime'
 		WHERE ID = '$PostID'");
@@ -92,7 +92,7 @@ if ($ThreadInfo['LastPostAuthorID'] == $LoggedUser['ID'] && isset($_POST['merge'
 		INSERT INTO comments_edits
 			(Page, PostID, EditUser, EditTime, Body)
 		VALUES
-			('forums', $PostID, ".$LoggedUser['ID'].", '$SQLTime', '".db_string($OldBody)."')");
+			('forums', $PostID, ".$LoggedUser['ID'].", '$SQLTime', '".\Gazelle\Util\Db::string($OldBody)."')");
 	$Cache->delete_value("forums_edits_$PostID");
 
 	//Get the catalogue it is in
@@ -126,7 +126,7 @@ if ($ThreadInfo['LastPostAuthorID'] == $LoggedUser['ID'] && isset($_POST['merge'
 	//Insert the post into the posts database
 	$DB->query("
 		INSERT INTO forums_posts (TopicID, AuthorID, AddedTime, Body)
-		VALUES ('$TopicID', '".$LoggedUser['ID']."', '$SQLTime', '".db_string($Body)."')");
+		VALUES ('$TopicID', '".$LoggedUser['ID']."', '$SQLTime', '".\Gazelle\Util\Db::string($Body)."')");
 
 	$PostID = $DB->inserted_id();
 

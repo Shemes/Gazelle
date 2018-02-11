@@ -274,7 +274,7 @@ class Forums {
 			INSERT INTO forums_topic_notes
 				(TopicID, AuthorID, AddedTime, Body)
 			VALUES
-				($TopicID, $UserID, '" . sqltime() . "', '" . db_string($Note) . "')");
+				($TopicID, $UserID, '" . sqltime() . "', '" . \Gazelle\Util\Db::string($Note) . "')");
 		G::$DB->set_query_id($QueryID);
 		return (bool)G::$DB->affected_rows();
 	}

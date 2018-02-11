@@ -56,7 +56,7 @@ if ($ConvID = (int)$_GET['convid']) {
 
 	if ($LoggedUser['EffectiveClass'] >= min($Level, $LevelCap) || $AssignedToUser == $LoggedUser['ID']) {
 		// Staff member is allowed to assign conversation, assign
-		list($LevelType, $NewLevel) = explode('_', db_string($_POST['assign']));
+		list($LevelType, $NewLevel) = explode('_', \Gazelle\Util\Db::string($_POST['assign']));
 
 		if ($LevelType == 'class') {
 			// Assign to class

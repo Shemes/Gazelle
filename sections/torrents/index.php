@@ -287,7 +287,7 @@ if (!empty($_REQUEST['action'])) {
 		$DB->query("
 			SELECT ID
 			FROM torrents_group
-			WHERE Name LIKE '".db_string($_GET['groupname'])."'");
+			WHERE Name LIKE '".\Gazelle\Util\Db::string($_GET['groupname'])."'");
 		list($GroupID) = $DB->next_record();
 		if ($GroupID) {
 			header("Location: torrents.php?id=$GroupID");

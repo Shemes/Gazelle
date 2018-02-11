@@ -236,7 +236,7 @@ class Torrents {
 			INSERT INTO group_log
 				(GroupID, TorrentID, UserID, Info, Time, Hidden)
 			VALUES
-				($GroupID, $TorrentID, $UserID, '".db_string($Message)."', '".sqltime()."', $Hidden)");
+				($GroupID, $TorrentID, $UserID, '".\Gazelle\Util\Db::string($Message)."', '".sqltime()."', $Hidden)");
 		G::$DB->set_query_id($QueryID);
 	}
 
@@ -541,7 +541,7 @@ class Torrents {
 				Leechers, LogScore, CAST(Scene AS CHAR), CAST(HasLog AS CHAR), CAST(HasCue AS CHAR),
 				CAST(FreeTorrent AS CHAR), Media, Format, Encoding, Description,
 				RemasterYear, RemasterTitle, RemasterRecordLabel, RemasterCatalogueNumber,
-				REPLACE(REPLACE(FileList, '_', ' '), '/', ' ') AS FileList, $VoteScore, '".db_string($ArtistName)."'
+				REPLACE(REPLACE(FileList, '_', ' '), '/', ' ') AS FileList, $VoteScore, '".\Gazelle\Util\Db::string($ArtistName)."'
 			FROM torrents AS t
 				JOIN torrents_group AS g ON g.ID = t.GroupID
 			WHERE g.ID = $GroupID");
@@ -593,7 +593,7 @@ class Torrents {
 			$FileString = implode("\n", $TmpFileList);
 			G::$DB->query("
 				UPDATE torrents
-				SET Size = $TotalSize, FilePath = '".db_string($FilePath)."', FileList = '".db_string($FileString)."'
+				SET Size = $TotalSize, FilePath = '".\Gazelle\Util\Db::string($FilePath)."', FileList = '".\Gazelle\Util\Db::string($FileString)."'
 				WHERE ID = $TorrentID");
 			G::$Cache->delete_value("torrents_details_$GroupID");
 		}

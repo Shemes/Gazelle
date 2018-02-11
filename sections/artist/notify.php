@@ -36,7 +36,7 @@ if (empty($Notify) && !$DB->has_results()) {
 		INSERT INTO users_notify_filters
 			(UserID, Label, Artists)
 		VALUES
-			('$LoggedUser[ID]', 'Artist notifications', '|".db_string($ArtistAliases)."|')");
+			('$LoggedUser[ID]', 'Artist notifications', '|".\Gazelle\Util\Db::string($ArtistAliases)."|')");
 	$FilterID = $DB->inserted_id();
 	$Cache->delete_value('notify_filters_'.$LoggedUser['ID']);
 	$Cache->delete_value('notify_artists_'.$LoggedUser['ID']);
@@ -46,7 +46,7 @@ if (empty($Notify) && !$DB->has_results()) {
 		$ArtistNames .= "$ArtistAliases|";
 		$DB->query("
 			UPDATE users_notify_filters
-			SET Artists = '".db_string($ArtistNames)."'
+			SET Artists = '".\Gazelle\Util\Db::string($ArtistNames)."'
 			WHERE ID = '$ID'");
 		$Cache->delete_value('notify_filters_'.$LoggedUser['ID']);
 		$Cache->delete_value('notify_artists_'.$LoggedUser['ID']);

@@ -20,9 +20,9 @@ $DeleteKeys = false;
 
 // Variables for database input
 $Class = (int)$_POST['Class'];
-$Username = db_string($_POST['Username']);
-$Title = db_string($_POST['Title']);
-$AdminComment = db_string($_POST['AdminComment']);
+$Username = \Gazelle\Util\Db::string($_POST['Username']);
+$Title = \Gazelle\Util\Db::string($_POST['Title']);
+$AdminComment = \Gazelle\Util\Db::string($_POST['AdminComment']);
 $Donor = isset($_POST['Donor']) ? 1 : 0;
 $Artist = isset($_POST['Artist']) ? 1 : 0;
 $SecondaryClasses = isset($_POST['secondary_classes']) ? $_POST['secondary_classes'] : array();
@@ -33,7 +33,7 @@ foreach ($SecondaryClasses as $i => $Val) {
 }
 $Visible = isset($_POST['Visible']) ? 1 : 0;
 $Invites = (int)$_POST['Invites'];
-$SupportFor = db_string($_POST['SupportFor']);
+$SupportFor = \Gazelle\Util\Db::string($_POST['SupportFor']);
 $Pass = $_POST['ChangePassword'];
 $Warned = isset($_POST['Warned']) ? 1 : 0;
 $Uploaded = $Downloaded = $BonusPoints = null;
@@ -86,8 +86,8 @@ $DisableLeech = isset($_POST['DisableLeech']) ? 0 : 1;
 $LockedAccount = isset($_POST['LockAccount']) ? 1 : 0;
 $LockType = $_POST['LockReason'];
 
-$RestrictedForums = db_string(trim($_POST['RestrictedForums']));
-$PermittedForums = db_string(trim($_POST['PermittedForums']));
+$RestrictedForums = \Gazelle\Util\Db::string(trim($_POST['RestrictedForums']));
+$PermittedForums = \Gazelle\Util\Db::string(trim($_POST['PermittedForums']));
 $EnableUser = (int)$_POST['UserStatus'];
 $ResetRatioWatch = isset($_POST['ResetRatioWatch']) ? 1 : 0;
 $ResetPasskey = isset($_POST['ResetPasskey']) ? 1 : 0;
@@ -98,8 +98,8 @@ if ($SendHackedMail && !empty($_POST['HackedEmail'])) {
 } else {
 	$SendHackedMail = false;
 }
-$MergeStatsFrom = db_string($_POST['MergeStatsFrom']);
-$Reason = db_string($_POST['Reason']);
+$MergeStatsFrom = \Gazelle\Util\Db::string($_POST['MergeStatsFrom']);
+$Reason = \Gazelle\Util\Db::string($_POST['Reason']);
 $HeavyUpdates = array();
 $LightUpdates = array();
 
@@ -380,7 +380,7 @@ if ($Username != $Cur['Username'] && check_perms('users_edit_usernames', $Cur['C
 	}
 }
 
-if ($Title != db_string($Cur['Title']) && check_perms('users_edit_titles')) {
+if ($Title != \Gazelle\Util\Db::string($Cur['Title']) && check_perms('users_edit_titles')) {
 	// Using the unescaped value for the test to avoid confusion
 	if (strlen($_POST['Title']) > 1024) {
 		error("Custom titles have a maximum length of 1,024 characters.");
@@ -492,7 +492,7 @@ if ($Warned == 1 && $Cur['Warned'] == '0000-00-00 00:00:00' && check_perms('user
 	if ($WarnReason) {
 		$Msg .= " for \"$WarnReason\"";
 	}
-	$EditSummary[] = db_string($Msg);
+	$EditSummary[] = \Gazelle\Util\Db::string($Msg);
 	$LightUpdates['Warned'] = time_plus(3600 * 24 * 7 * $WarnLength);
 
 } elseif ($Warned == 0 && $Cur['Warned'] != '0000-00-00 00:00:00' && check_perms('users_warn')) {
@@ -515,7 +515,7 @@ if ($Warned == 1 && $Cur['Warned'] == '0000-00-00 00:00:00' && check_perms('user
 	if ($WarnReason) {
 		$Msg .= " for \"$WarnReason\"";
 	}
-	$EditSummary[] = db_string($Msg);
+	$EditSummary[] = \Gazelle\Util\Db::string($Msg);
 	$LightUpdates['Warned'] = $WarnedUntil;
 
 } elseif ($Warned == 1 && $ExtendWarning == '---' && $ReduceWarning != '---' && check_perms('users_warn')) {
@@ -532,22 +532,22 @@ if ($Warned == 1 && $Cur['Warned'] == '0000-00-00 00:00:00' && check_perms('user
 	if ($WarnReason) {
 		$Msg .= " for \"$WarnReason\"";
 	}
-	$EditSummary[] = db_string($Msg);
+	$EditSummary[] = \Gazelle\Util\Db::string($Msg);
 	$LightUpdates['Warned'] = $WarnedUntil;
 }
 
-if ($SupportFor != db_string($Cur['SupportFor']) && (check_perms('admin_manage_fls') || (check_perms('users_mod') && $UserID == $LoggedUser['ID']))) {
+if ($SupportFor != \Gazelle\Util\Db::string($Cur['SupportFor']) && (check_perms('admin_manage_fls') || (check_perms('users_mod') && $UserID == $LoggedUser['ID']))) {
 	$UpdateSet[] = "SupportFor = '$SupportFor'";
 	$EditSummary[] = "First-Line Support status changed to \"$SupportFor\"";
 }
 
-if ($RestrictedForums != db_string($Cur['RestrictedForums']) && check_perms('users_mod')) {
+if ($RestrictedForums != \Gazelle\Util\Db::string($Cur['RestrictedForums']) && check_perms('users_mod')) {
 	$UpdateSet[] = "RestrictedForums = '$RestrictedForums'";
 	$EditSummary[] = "restricted forum(s): $RestrictedForums";
 	$DeleteKeys = true;
 }
 
-if ($PermittedForums != db_string($Cur['PermittedForums']) && check_perms('users_mod')) {
+if ($PermittedForums != \Gazelle\Util\Db::string($Cur['PermittedForums']) && check_perms('users_mod')) {
 	$ForumSet = explode(',', $PermittedForums);
 	$ForumList = array();
 	foreach ($ForumSet as $ForumID) {
@@ -709,7 +709,7 @@ if ($EnableUser != $Cur['Enabled'] && check_perms('users_disable_users')) {
 }
 
 if ($ResetPasskey == 1 && check_perms('users_edit_reset_keys')) {
-	$Passkey = db_string(Users::make_secret());
+	$Passkey = \Gazelle\Util\Db::string(Users::make_secret());
 	$UpdateSet[] = "torrent_pass = '$Passkey'";
 	$EditSummary[] = 'passkey reset';
 	$HeavyUpdates['torrent_pass'] = $Passkey;
@@ -726,7 +726,7 @@ if ($ResetPasskey == 1 && check_perms('users_edit_reset_keys')) {
 }
 
 if ($ResetAuthkey == 1 && check_perms('users_edit_reset_keys')) {
-	$Authkey = db_string(Users::make_secret());
+	$Authkey = \Gazelle\Util\Db::string(Users::make_secret());
 	$UpdateSet[] = "AuthKey = '$Authkey'";
 	$EditSummary[] = 'authkey reset';
 	$HeavyUpdates['AuthKey'] = $Authkey;
@@ -770,7 +770,7 @@ if ($MergeStatsFrom && check_perms('users_edit_ratio')) {
 }
 
 if ($Pass && check_perms('users_edit_password')) {
-	$UpdateSet[] = "PassHash = '".db_string(Users::make_password_hash($Pass))."'";
+	$UpdateSet[] = "PassHash = '".\Gazelle\Util\Db::string(Users::make_password_hash($Pass))."'";
 	$EditSummary[] = 'password reset';
 
 	$Cache->delete_value("user_info_$UserID");

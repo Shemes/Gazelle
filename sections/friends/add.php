@@ -3,7 +3,7 @@ authorize();
 if (!is_number($_GET['friendid'])) {
 	error(404);
 }
-$FriendID = db_string($_GET['friendid']);
+$FriendID = \Gazelle\Util\Db::string($_GET['friendid']);
 
 // Check if the user $FriendID exists
 $DB->query("

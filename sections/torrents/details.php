@@ -244,7 +244,7 @@ if ($Categories[$GroupCategoryID - 1] == 'Music') {
 					FROM artists_alias
 					WHERE ArtistID = ".$Artist['id']."
 						AND ArtistID != AliasID
-						AND Name = '".db_string($Artist['name'])."'");
+						AND Name = '".\Gazelle\Util\Db::string($Artist['name'])."'");
 				list($AliasID) = $DB->next_record();
 				if (empty($AliasID)) {
 					$AliasID = $Artist['id'];
@@ -269,7 +269,7 @@ if ($Categories[$GroupCategoryID - 1] == 'Music') {
 					FROM artists_alias
 					WHERE ArtistID = ".$Artist['id']."
 						AND ArtistID != AliasID
-						AND Name = '".db_string($Artist['name'])."'");
+						AND Name = '".\Gazelle\Util\Db::string($Artist['name'])."'");
 					list($AliasID) = $DB->next_record();
 					if (empty($AliasID)) {
 						$AliasID = $Artist['id'];
@@ -316,7 +316,7 @@ if ($Categories[$GroupCategoryID - 1] == 'Music') {
 					FROM artists_alias
 					WHERE ArtistID = ".$Artist['id']."
 						AND ArtistID != AliasID
-						AND Name = '".db_string($Artist['name'])."'");
+						AND Name = '".\Gazelle\Util\Db::string($Artist['name'])."'");
 				list($AliasID) = $DB->next_record();
 				if (empty($AliasID)) {
 					$AliasID = $Artist['id'];
@@ -341,7 +341,7 @@ if ($Categories[$GroupCategoryID - 1] == 'Music') {
 					FROM artists_alias
 					WHERE ArtistID = ".$Artist['id']."
 						AND ArtistID != AliasID
-						AND Name = '".db_string($Artist['name'])."'");
+						AND Name = '".\Gazelle\Util\Db::string($Artist['name'])."'");
 				list($AliasID) = $DB->next_record();
 				if (empty($AliasID)) {
 					$AliasID = $Artist['id'];
@@ -366,7 +366,7 @@ if ($Categories[$GroupCategoryID - 1] == 'Music') {
 					FROM artists_alias
 					WHERE ArtistID = ".$Artist['id']."
 						AND ArtistID != AliasID
-						AND Name = '".db_string($Artist['name'])."'");
+						AND Name = '".\Gazelle\Util\Db::string($Artist['name'])."'");
 				list($AliasID) = $DB->next_record();
 				if (empty($AliasID)) {
 					$AliasID = $Artist['id'];
@@ -392,7 +392,7 @@ if ($Categories[$GroupCategoryID - 1] == 'Music') {
 					FROM artists_alias
 					WHERE ArtistID = ".$Artist['id']."
 						AND ArtistID != AliasID
-						AND Name = '".db_string($Artist['name'])."'");
+						AND Name = '".\Gazelle\Util\Db::string($Artist['name'])."'");
 				list($AliasID) = $DB->next_record();
 				if (empty($AliasID)) {
 					$AliasID = $Artist['id'];

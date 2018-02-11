@@ -7,7 +7,7 @@ if (!check_perms("users_mod")) {
 }
 
 $ID = $_POST['id'];
-$Answer = db_string($_POST['answer']);
+$Answer = \Gazelle\Util\Db::string($_POST['answer']);
 $Date = sqltime();
 $UserID = $LoggedUser['ID'];
 

@@ -92,8 +92,8 @@ class Misc {
 		global $Time;
 		$UnescapedSubject = $Subject;
 		$UnescapedBody = $Body;
-		$Subject = db_string($Subject);
-		$Body = db_string($Body);
+		$Subject = \Gazelle\Util\Db::string($Subject);
+		$Body = \Gazelle\Util\Db::string($Body);
 		if ($ToID == 0 || $ToID == $FromID) {
 			// Don't allow users to send messages to the system or themselves
 			return;
@@ -453,7 +453,7 @@ class Misc {
 		$QueryID = G::$DB->get_query_id();
 		G::$DB->query("
 			INSERT INTO log (Message, Time)
-			VALUES ('" . db_string($Message) . "', '" . sqltime() . "')");
+			VALUES ('" . \Gazelle\Util\Db::string($Message) . "', '" . sqltime() . "')");
 		G::$DB->set_query_id($QueryID);
 	}
 
@@ -469,7 +469,7 @@ class Misc {
 		$Str = preg_replace('/[^a-z0-9.]/', '', $Str);
 		$Str = preg_replace('/(^[.,]*)|([.,]*$)/', '', $Str);
 		$Str = htmlspecialchars($Str);
-		$Str = db_string(trim($Str));
+		$Str = \Gazelle\Util\Db::string(trim($Str));
 		return $Str;
 	}
 

@@ -68,7 +68,7 @@ class AutoEnable {
 			}
 		} else {
 			// New disable activation request
-			$UserAgent = db_string($_SERVER['HTTP_USER_AGENT']);
+			$UserAgent = \Gazelle\Util\Db::string($_SERVER['HTTP_USER_AGENT']);
 
 			G::$DB->query("
 				INSERT INTO users_enable_requests
@@ -135,7 +135,7 @@ class AutoEnable {
 
 				if ($Status == self::APPROVED) {
 					// Generate token
-					$Token = db_string(Users::make_secret());
+					$Token = \Gazelle\Util\Db::string(Users::make_secret());
 					G::$DB->query("
 						UPDATE users_enable_requests
 						SET Token = '$Token'
@@ -245,7 +245,7 @@ class AutoEnable {
 	 * @return string The error output, or an empty string
 	 */
 	public static function handle_token($Token) {
-		$Token = db_string($Token);
+		$Token = \Gazelle\Util\Db::string($Token);
 		G::$DB->query("
 			SELECT UserID, HandledTimestamp
 			FROM users_enable_requests

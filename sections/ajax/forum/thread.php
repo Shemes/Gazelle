@@ -126,7 +126,7 @@ if ($_GET['updatelastread'] !== '0') {
 				INSERT INTO forums_last_read_topics
 					(UserID, TopicID, PostID)
 				VALUES
-					('$LoggedUser[ID]', '$ThreadID', '".db_string($LastPost)."')
+					('$LoggedUser[ID]', '$ThreadID', '".\Gazelle\Util\Db::string($LastPost)."')
 				ON DUPLICATE KEY UPDATE
 					PostID = '$LastPost'");
 		}

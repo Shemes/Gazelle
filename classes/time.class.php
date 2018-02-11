@@ -1,6 +1,6 @@
 <?php
 
-use Gazelle\Util\Time;
+use \Gazelle\Util\Time;
 
 function time_ago($TimeStamp) {
 	return Time::timeAgo($TimeStamp);

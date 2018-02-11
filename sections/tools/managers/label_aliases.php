@@ -29,8 +29,8 @@ if (!empty($LabelID)) {
 */
 
 if (isset($_POST['newalias'])) {
-	$BadLabel = db_string($_POST['BadLabel']);
-	$AliasLabel = db_string($_POST['AliasLabel']);
+	$BadLabel = \Gazelle\Util\Db::string($_POST['BadLabel']);
+	$AliasLabel = \Gazelle\Util\Db::string($_POST['AliasLabel']);
 
 	$DB->query("
 		INSERT INTO label_aliases (BadLabel, AliasLabel)
@@ -39,8 +39,8 @@ if (isset($_POST['newalias'])) {
 
 if (isset($_POST['changealias']) && is_number($_POST['aliasid'])) {
 	$AliasID = $_POST['aliasid'];
-	$BadLabel = db_string($_POST['BadLabel']);
-	$AliasLabel = db_string($_POST['AliasLabel']);
+	$BadLabel = \Gazelle\Util\Db::string($_POST['BadLabel']);
+	$AliasLabel = \Gazelle\Util\Db::string($_POST['AliasLabel']);
 
 	if ($_POST['save']) {
 		$DB->query("

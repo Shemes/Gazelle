@@ -13,7 +13,7 @@ if (!check_perms('site_moderate_forums') || empty($_POST['id'])) {
 $ID = (int)$_POST['id'];
 
 $Notes = str_replace("<br />", "\n", $_POST['notes']);
-$Notes = db_string($Notes);
+$Notes = \Gazelle\Util\Db::string($Notes);
 
 $DB->query("
 	UPDATE reports

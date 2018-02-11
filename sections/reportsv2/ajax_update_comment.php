@@ -9,7 +9,7 @@ if (!check_perms('admin_reports')) {
 
 $ReportID = (int) $_POST['reportid'];
 
-$Message = db_string($_POST['comment']);
+$Message = \Gazelle\Util\Db::string($_POST['comment']);
 //Message can be blank!
 
 $DB->query("

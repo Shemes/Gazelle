@@ -150,18 +150,18 @@ if ($CurEmail != $_POST['email']) {
 		$DB->query("
 			SELECT PassHash, Secret
 			FROM users_main
-			WHERE ID = '".db_string($UserID)."'");
+			WHERE ID = '".\Gazelle\Util\Db::string($UserID)."'");
 		list($PassHash,$Secret)=$DB->next_record();
 		if (!Users::check_password($_POST['cur_pass'], $PassHash)) {
 			$Err = 'You did not enter the correct password.';
 		}
 	}
 	if (!$Err) {
-		$NewEmail = db_string($_POST['email']);
+		$NewEmail = \Gazelle\Util\Db::string($_POST['email']);
 
 
 		//This piece of code will update the time of their last email change to the current time *not* the current change.
-		$ChangerIP = db_string($LoggedUser['IP']);
+		$ChangerIP = \Gazelle\Util\Db::string($LoggedUser['IP']);
 		$DB->query("
 			UPDATE users_history_emails
 			SET Time = '".sqltime()."'
@@ -171,7 +171,7 @@ if ($CurEmail != $_POST['email']) {
 			INSERT INTO users_history_emails
 				(UserID, Email, Time, IP)
 			VALUES
-				('$UserID', '$NewEmail', '0000-00-00 00:00:00', '".db_string($_SERVER['REMOTE_ADDR'])."')");
+				('$UserID', '$NewEmail', '0000-00-00 00:00:00', '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."')");
 
 	} else {
 		error($Err);
@@ -187,7 +187,7 @@ if (!$Err && !empty($_POST['cur_pass']) && !empty($_POST['new_pass_1']) && !empt
 	$DB->query("
 		SELECT PassHash, Secret
 		FROM users_main
-		WHERE ID = '".db_string($UserID)."'");
+		WHERE ID = '".\Gazelle\Util\Db::string($UserID)."'");
 	list($PassHash, $Secret) = $DB->next_record();
 
 	if (Users::check_password($_POST['cur_pass'], $PassHash)) {
@@ -231,7 +231,7 @@ $Options['EnableMatureContent'] = (!empty($_POST['enablematurecontent']) ? 1 : 0
 $Options['UseOpenDyslexic']     = (!empty($_POST['useopendyslexic']) ? 1 : 0);
 $Options['Tooltipster']         = (!empty($_POST['usetooltipster']) ? 1 : 0);
 $Options['AutoloadCommStats']   = (check_perms('users_mod') && !empty($_POST['autoload_comm_stats']) ? 1 : 0);
-$Options['DisableAvatars']      = db_string($_POST['disableavatars']);
+$Options['DisableAvatars']      = \Gazelle\Util\Db::string($_POST['disableavatars']);
 $Options['Identicons']          = (!empty($_POST['identicons']) ? (int)$_POST['identicons'] : 0);
 $Options['DisablePMAvatars']    = (!empty($_POST['disablepmavatars']) ? 1 : 0);
 $Options['NotifyOnQuote']       = (!empty($_POST['notifications_Quotes_popup']) ? 1 : 0);
@@ -273,7 +273,7 @@ $DownloadAlt = isset($_POST['downloadalt']) ? 1 : 0;
 $UnseededAlerts = isset($_POST['unseededalerts']) ? 1 : 0;
 
 
-$LastFMUsername = db_string($_POST['lastfm_username']);
+$LastFMUsername = \Gazelle\Util\Db::string($_POST['lastfm_username']);
 $OldLastFMUsername = '';
 $DB->query("
 	SELECT username
@@ -329,23 +329,23 @@ $SQL = "
 	UPDATE users_main AS m
 		JOIN users_info AS i ON m.ID = i.UserID
 	SET
-		i.StyleID = '".db_string($_POST['stylesheet'])."',
-		i.StyleURL = '".db_string($_POST['styleurl'])."',
-		i.Avatar = '".db_string($_POST['avatar'])."',
-		i.SiteOptions = '".db_string(serialize($Options))."',
-		i.NotifyOnQuote = '".db_string($Options['NotifyOnQuote'])."',
-		i.Info = '".db_string($_POST['info'])."',
-		i.InfoTitle = '".db_string($_POST['profile_title'])."',
+		i.StyleID = '".\Gazelle\Util\Db::string($_POST['stylesheet'])."',
+		i.StyleURL = '".\Gazelle\Util\Db::string($_POST['styleurl'])."',
+		i.Avatar = '".\Gazelle\Util\Db::string($_POST['avatar'])."',
+		i.SiteOptions = '".\Gazelle\Util\Db::string(serialize($Options))."',
+		i.NotifyOnQuote = '".\Gazelle\Util\Db::string($Options['NotifyOnQuote'])."',
+		i.Info = '".\Gazelle\Util\Db::string($_POST['info'])."',
+		i.InfoTitle = '".\Gazelle\Util\Db::string($_POST['profile_title'])."',
 		i.DownloadAlt = '$DownloadAlt',
 		i.UnseededAlerts = '$UnseededAlerts',
-		m.Email = '".db_string($_POST['email'])."',
-		m.IRCKey = '".db_string($_POST['irckey'])."',
-		m.Paranoia = '".db_string(serialize($Paranoia))."'";
+		m.Email = '".\Gazelle\Util\Db::string($_POST['email'])."',
+		m.IRCKey = '".\Gazelle\Util\Db::string($_POST['irckey'])."',
+		m.Paranoia = '".\Gazelle\Util\Db::string(serialize($Paranoia))."'";
 
 if ($ResetPassword) {
-	$ChangerIP = db_string($LoggedUser['IP']);
+	$ChangerIP = \Gazelle\Util\Db::string($LoggedUser['IP']);
 	$PassHash = Users::make_password_hash($_POST['new_pass_1']);
-	$SQL.= ",m.PassHash = '".db_string($PassHash)."'";
+	$SQL.= ",m.PassHash = '".\Gazelle\Util\Db::string($PassHash)."'";
 	$DB->query("
 		INSERT INTO users_history_passwords
 			(UserID, ChangerIP, ChangeTime)
@@ -357,9 +357,9 @@ if ($ResetPassword) {
 if (isset($_POST['resetpasskey'])) {
 
 	$UserInfo = Users::user_heavy_info($UserID);
-	$OldPassKey = db_string($UserInfo['torrent_pass']);
-	$NewPassKey = db_string(Users::make_secret());
-	$ChangerIP = db_string($LoggedUser['IP']);
+	$OldPassKey = \Gazelle\Util\Db::string($UserInfo['torrent_pass']);
+	$NewPassKey = \Gazelle\Util\Db::string(Users::make_secret());
+	$ChangerIP = \Gazelle\Util\Db::string($LoggedUser['IP']);
 	$SQL .= ",m.torrent_pass = '$NewPassKey'";
 	$DB->query("
 		INSERT INTO users_history_passkeys
@@ -374,7 +374,7 @@ if (isset($_POST['resetpasskey'])) {
 	Tracker::update_tracker('change_passkey', array('oldpasskey' => $OldPassKey, 'newpasskey' => $NewPassKey));
 }
 
-$SQL .= "WHERE m.ID = '".db_string($UserID)."'";
+$SQL .= "WHERE m.ID = '".\Gazelle\Util\Db::string($UserID)."'";
 $DB->query($SQL);
 
 if ($ResetPassword) {

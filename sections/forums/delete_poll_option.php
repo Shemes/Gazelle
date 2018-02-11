@@ -32,7 +32,7 @@ if (is_number($ThreadID) && is_number($PollOption)) {
 
 	$DB->query("
 		UPDATE forums_polls
-		SET Answers = '".db_string($Answers)."'
+		SET Answers = '".\Gazelle\Util\Db::string($Answers)."'
 		WHERE TopicID = $ThreadID");
 	$DB->query("
 		DELETE FROM forums_polls_votes

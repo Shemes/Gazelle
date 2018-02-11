@@ -6,7 +6,7 @@ if (!check_perms('site_edit_wiki')) {
 }
 
 $UserID = $LoggedUser['ID'];
-$GroupID = db_string($_POST['groupid']);
+$GroupID = \Gazelle\Util\Db::string($_POST['groupid']);
 $Summaries = $_POST['summary'];
 $Images = $_POST['image'];
 $Time = sqltime();
@@ -29,8 +29,8 @@ for ($i = 0; $i < count($Images); $i++) {
 	}
 
 	// sanitize inputs
-	$Image = db_string($Image);
-	$Summary = db_string($Summary);
+	$Image = \Gazelle\Util\Db::string($Image);
+	$Summary = \Gazelle\Util\Db::string($Summary);
 	$DB->query("
 		INSERT IGNORE INTO cover_art
 			(GroupID, Image, Summary, UserID, Time)

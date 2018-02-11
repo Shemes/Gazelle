@@ -26,7 +26,7 @@ if (!empty($_GET['searchstr']) || !empty($_GET['groupname'])) {
 
 	// Search by infohash
 	if ($InfoHash = is_valid_torrenthash($InfoHash)) {
-		$InfoHash = db_string(pack('H*', $InfoHash));
+		$InfoHash = \Gazelle\Util\Db::string(pack('H*', $InfoHash));
 		$DB->query("
 			SELECT ID, GroupID
 			FROM torrents
@@ -47,7 +47,7 @@ if (!empty($_GET['setdefault'])) {
 	$DB->query("
 		SELECT SiteOptions
 		FROM users_info
-		WHERE UserID = '".db_string($LoggedUser['ID'])."'");
+		WHERE UserID = '".\Gazelle\Util\Db::string($LoggedUser['ID'])."'");
 	list($SiteOptions) = $DB->next_record(MYSQLI_NUM, false);
 	$SiteOptions = unserialize_array($SiteOptions);
 	$SiteOptions = array_merge(Users::default_site_options(), $SiteOptions);
@@ -55,8 +55,8 @@ if (!empty($_GET['setdefault'])) {
 	$SiteOptions['DefaultSearch'] = preg_replace($UnsetRegexp, '', $_SERVER['QUERY_STRING']);
 	$DB->query("
 		UPDATE users_info
-		SET SiteOptions = '".db_string(serialize($SiteOptions))."'
-		WHERE UserID = '".db_string($LoggedUser['ID'])."'");
+		SET SiteOptions = '".\Gazelle\Util\Db::string(serialize($SiteOptions))."'
+		WHERE UserID = '".\Gazelle\Util\Db::string($LoggedUser['ID'])."'");
 	$Cache->begin_transaction("user_info_heavy_$UserID");
 	$Cache->update_row(false, array('DefaultSearch' => $SiteOptions['DefaultSearch']));
 	$Cache->commit_transaction(0);
@@ -66,14 +66,14 @@ if (!empty($_GET['setdefault'])) {
 	$DB->query("
 		SELECT SiteOptions
 		FROM users_info
-		WHERE UserID = '".db_string($LoggedUser['ID'])."'");
+		WHERE UserID = '".\Gazelle\Util\Db::string($LoggedUser['ID'])."'");
 	list($SiteOptions) = $DB->next_record(MYSQLI_NUM, false);
 	$SiteOptions = unserialize_array($SiteOptions);
 	$SiteOptions['DefaultSearch'] = '';
 	$DB->query("
 		UPDATE users_info
-		SET SiteOptions = '".db_string(serialize($SiteOptions))."'
-		WHERE UserID = '".db_string($LoggedUser['ID'])."'");
+		SET SiteOptions = '".\Gazelle\Util\Db::string(serialize($SiteOptions))."'
+		WHERE UserID = '".\Gazelle\Util\Db::string($LoggedUser['ID'])."'");
 	$Cache->begin_transaction("user_info_heavy_$UserID");
 	$Cache->update_row(false, array('DefaultSearch' => ''));
 	$Cache->commit_transaction(0);

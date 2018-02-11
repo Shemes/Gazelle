@@ -108,6 +108,6 @@ foreach ($Top10 as $Torrent) {
 			INSERT INTO top10_history_torrents
 				(HistoryID, Rank, TorrentID, TitleString, TagString)
 			VALUES
-				($HistoryID, $i, $TorrentID, '".db_string($TitleString)."', '".db_string($TagString)."')");
+				($HistoryID, $i, $TorrentID, '".\Gazelle\Util\Db::string($TitleString)."', '".\Gazelle\Util\Db::string($TagString)."')");
 	$i++;
 }

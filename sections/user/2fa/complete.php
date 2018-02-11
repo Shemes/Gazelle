@@ -6,7 +6,7 @@ if (!is_number($UserID)) {
 	error(404);
 }
 
-$DB->query("SELECT Recovery FROM users_main WHERE ID = '" . db_string($UserID) . "'");
+$DB->query("SELECT Recovery FROM users_main WHERE ID = '" . \Gazelle\Util\Db::string($UserID) . "'");
 
 list($Recovery) = $DB->next_record(MYSQLI_NUM, false);
 

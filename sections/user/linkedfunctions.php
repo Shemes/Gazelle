@@ -52,7 +52,7 @@ function link_users($UserID, $TargetID, $IgnoreComments) {
 				WHERE GroupID = $UserGroupID");
 			$DB->query("
 				UPDATE dupe_groups
-				SET Comments = CONCAT('".db_string($Comments)."\n\n',Comments)
+				SET Comments = CONCAT('".\Gazelle\Util\Db::string($Comments)."\n\n',Comments)
 				WHERE ID = $TargetGroupID");
 			$DB->query("DELETE FROM dupe_groups WHERE ID = $UserGroupID");
 			$GroupID = $UserGroupID;
@@ -75,7 +75,7 @@ function link_users($UserID, $TargetID, $IgnoreComments) {
 		$DB->query("
 			UPDATE users_info AS i
 				JOIN users_dupes AS d ON d.UserID = i.UserID
-			SET i.AdminComment = CONCAT('".db_string($AdminComment)."\n\n', i.AdminComment)
+			SET i.AdminComment = CONCAT('".\Gazelle\Util\Db::string($AdminComment)."\n\n', i.AdminComment)
 			WHERE d.GroupID = $GroupID");
 	}
 }
@@ -100,7 +100,7 @@ function unlink_user($UserID) {
 		UPDATE users_info AS i
 			JOIN users_dupes AS d1 ON d1.UserID = i.UserID
 			JOIN users_dupes AS d2 ON d2.GroupID = d1.GroupID
-		SET i.AdminComment = CONCAT('".db_string($AdminComment)."\n\n', i.AdminComment)
+		SET i.AdminComment = CONCAT('".\Gazelle\Util\Db::string($AdminComment)."\n\n', i.AdminComment)
 		WHERE d2.UserID = $UserID");
 	$DB->query("DELETE FROM users_dupes WHERE UserID = '$UserID'");
 	$DB->query("
@@ -149,12 +149,12 @@ function dupe_comments($GroupID, $Comments, $IgnoreComments) {
 		if ($_POST['form_comment_hash'] == $OldCommentHash) {
 			$DB->query("
 				UPDATE dupe_groups
-				SET Comments = '".db_string($Comments)."'
+				SET Comments = '".\Gazelle\Util\Db::string($Comments)."'
 				WHERE ID = '$GroupID'");
 		} else {
 			$DB->query("
 				UPDATE dupe_groups
-				SET Comments = CONCAT('".db_string($Comments)."\n\n',Comments)
+				SET Comments = CONCAT('".\Gazelle\Util\Db::string($Comments)."\n\n',Comments)
 				WHERE ID = '$GroupID'");
 		}
 
@@ -162,7 +162,7 @@ function dupe_comments($GroupID, $Comments, $IgnoreComments) {
 			$DB->query("
 				UPDATE users_info AS i
 					JOIN users_dupes AS d ON d.UserID = i.UserID
-				SET i.AdminComment = CONCAT('".db_string($AdminComment)."\n\n', i.AdminComment)
+				SET i.AdminComment = CONCAT('".\Gazelle\Util\Db::string($AdminComment)."\n\n', i.AdminComment)
 				WHERE d.GroupID = $GroupID");
 		}
 	}

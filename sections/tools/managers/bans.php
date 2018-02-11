@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
 			error($Err);
 		}
 
-		$Notes = db_string($_POST['notes']);
+		$Notes = \Gazelle\Util\Db::string($_POST['notes']);
 		$Start = Tools::ip_to_unsigned($_POST['start']); //Sanitized by Validation regex
 		$End = Tools::ip_to_unsigned($_POST['end']); //See above
 
@@ -61,7 +61,7 @@ $sql = "
 	FROM ip_bans ";
 
 if (!empty($_REQUEST['notes'])) {
-	$sql .= "WHERE Reason LIKE '%".db_string($_REQUEST['notes'])."%' ";
+	$sql .= "WHERE Reason LIKE '%".\Gazelle\Util\Db::string($_REQUEST['notes'])."%' ";
 }
 
 if (!empty($_REQUEST['ip']) && preg_match('/'.IP_REGEX.'/', $_REQUEST['ip'])) {

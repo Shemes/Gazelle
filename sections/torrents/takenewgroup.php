@@ -12,8 +12,8 @@ if (!check_perms('torrents_edit')) {
 
 $OldGroupID = $_POST['oldgroupid'];
 $TorrentID = $_POST['torrentid'];
-$ArtistName = db_string(trim($_POST['artist']));
-$Title = db_string(trim($_POST['title']));
+$ArtistName = \Gazelle\Util\Db::string(trim($_POST['artist']));
+$Title = \Gazelle\Util\Db::string(trim($_POST['title']));
 $Year = trim($_POST['year']);
 
 if (!is_number($OldGroupID) || !is_number($TorrentID) || !is_number($Year) || !$OldGroupID || !$TorrentID || !$Year || empty($Title) || empty($ArtistName)) {

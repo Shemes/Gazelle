@@ -82,7 +82,7 @@ if (!empty($_GET['action']) && $_GET['action'] == 'revert') { // if we're revert
 		$Image = '';
 	}
 	ImageTools::blacklisted($Image);
-	$Summary = db_string($_POST['summary']);
+	$Summary = \Gazelle\Util\Db::string($_POST['summary']);
 }
 
 // Insert revision
@@ -91,7 +91,7 @@ if (empty($RevisionID)) { // edit
 		INSERT INTO wiki_torrents
 			(PageID, Body, Image, UserID, Summary, Time)
 		VALUES
-			('$GroupID', '".db_string($Body)."', '".db_string($Image)."', '$UserID', '$Summary', '".sqltime()."')");
+			('$GroupID', '".\Gazelle\Util\Db::string($Body)."', '".\Gazelle\Util\Db::string($Image)."', '$UserID', '$Summary', '".sqltime()."')");
 
 	$DB->query("
 		UPDATE torrents_group
@@ -119,8 +119,8 @@ else { // revert
 
 $RevisionID = $DB->inserted_id();
 
-$Body = db_string($Body);
-$Image = db_string($Image);
+$Body = \Gazelle\Util\Db::string($Body);
+$Image = \Gazelle\Util\Db::string($Image);
 
 // Update torrents table (technically, we don't need the RevisionID column, but we can use it for a join which is nice and fast)
 $DB->query("
@@ -137,7 +137,7 @@ if ($OldVH != $VanityHouse && check_perms('torrents_edit_vanityhouse')) {
 		INSERT INTO group_log
 			(GroupID, UserID, Time, Info)
 		VALUES
-			('$GroupID',".$LoggedUser['ID'].",'".sqltime()."','".db_string('Vanity House status changed to '.($VanityHouse ? 'true' : 'false'))."')");
+			('$GroupID',".$LoggedUser['ID'].",'".sqltime()."','".\Gazelle\Util\Db::string('Vanity House status changed to '.($VanityHouse ? 'true' : 'false'))."')");
 }
 
 // There we go, all done!

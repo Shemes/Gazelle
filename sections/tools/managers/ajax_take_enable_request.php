@@ -11,8 +11,8 @@ $Type = $_GET['type'];
 
 if ($Type == "resolve") {
     $IDs = $_GET['ids'];
-    $Comment = db_string($_GET['comment']);
-    $Status = db_string($_GET['status']);
+    $Comment = \Gazelle\Util\Db::string($_GET['comment']);
+    $Status = \Gazelle\Util\Db::string($_GET['status']);
 
     // Error check and set things up
     if ($Status == "Approve" || $Status == "Approve Selected") {

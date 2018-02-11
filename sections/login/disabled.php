@@ -4,7 +4,7 @@ View::show_header('Disabled');
 if (isset($_POST['email']) && FEATURE_EMAIL_REENABLE) {
 	// Handle auto-enable request
 	if ($_POST['email'] != '') {
-		$Output = AutoEnable::new_request(db_string($_POST['username']), db_string($_POST['email']));
+		$Output = AutoEnable::new_request(\Gazelle\Util\Db::string($_POST['username']), \Gazelle\Util\Db::string($_POST['email']));
 	} else {
 		$Output = "Please enter a valid email address.";
 	}

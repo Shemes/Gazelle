@@ -43,7 +43,7 @@ if ($NewArtistID > 0) {
 	$DB->query("
 		SELECT ArtistID
 		FROM artists_alias
-		WHERE Name = '".db_string($NewArtistName)."'
+		WHERE Name = '".\Gazelle\Util\Db::string($NewArtistName)."'
 		LIMIT 1");
 	if (!(list($NewArtistID) = $DB->next_record())) {
 		error('No artist by that name was found.');

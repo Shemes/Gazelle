@@ -93,7 +93,7 @@ if (!empty($_POST['track'])) {
 }
 
 if (!empty($_POST['extra'])) {
-	$Extra = db_string($_POST['extra']);
+	$Extra = \Gazelle\Util\Db::string($_POST['extra']);
 } else {
 	$Err = 'As useful as blank reports are, could you be a tiny bit more helpful? (Leave a comment)';
 }
@@ -117,7 +117,7 @@ $DB->query("
 	SELECT ID
 	FROM reportsv2
 	WHERE TorrentID = $TorrentID
-		AND ReporterID = ".db_string($LoggedUser['ID'])."
+		AND ReporterID = ".\Gazelle\Util\Db::string($LoggedUser['ID'])."
 		AND ReportedTime > '".time_minus(3)."'");
 if ($DB->has_results()) {
 	header("Location: torrents.php?torrentid=$TorrentID");
@@ -128,7 +128,7 @@ $DB->query("
 	INSERT INTO reportsv2
 		(ReporterID, TorrentID, Type, UserComment, Status, ReportedTime, Track, Image, ExtraID, Link)
 	VALUES
-		(".db_string($LoggedUser['ID']).", $TorrentID, '".db_string($Type)."', '$Extra', 'New', '".sqltime()."', '".db_string($Tracks)."', '".db_string($Images)."', '".db_string($ExtraIDs)."', '".db_string($Links)."')");
+		(".\Gazelle\Util\Db::string($LoggedUser['ID']).", $TorrentID, '".\Gazelle\Util\Db::string($Type)."', '$Extra', 'New', '".sqltime()."', '".\Gazelle\Util\Db::string($Tracks)."', '".\Gazelle\Util\Db::string($Images)."', '".\Gazelle\Util\Db::string($ExtraIDs)."', '".\Gazelle\Util\Db::string($Links)."')");
 
 $ReportID = $DB->inserted_id();
 

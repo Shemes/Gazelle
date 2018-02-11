@@ -8,11 +8,11 @@ list ($Page, $Limit) = Format::page_limit(EMAILS_PER_PAGE);
 View::show_header('Manage email blacklist');
 $Where = "";
 if (!empty($_POST['email'])) {
-	$Email = db_string($_POST['email']);
+	$Email = \Gazelle\Util\Db::string($_POST['email']);
 	$Where .= " WHERE Email LIKE '%$Email%'";
 }
 if (!empty($_POST['comment'])) {
-	$Comment = db_string($_POST['comment']);
+	$Comment = \Gazelle\Util\Db::string($_POST['comment']);
 	if (!empty($Where)) {
 		$Where .= " AND";
 	} else {

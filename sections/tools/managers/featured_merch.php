@@ -13,12 +13,12 @@ if (!empty($_POST)) {
 	}
 
 	$ProductID = (int)$_POST['productid'];
-	$Title = db_string($_POST['title']);
-	$Image = db_string($_POST['image']);
+	$Title = \Gazelle\Util\Db::string($_POST['title']);
+	$Image = \Gazelle\Util\Db::string($_POST['image']);
 	$AritstID = ((int)$_POST['artistid'] > 0) ? (int)$_POST['artistid'] : 0;
 
 	if (!$Title) {
-		$Title = db_string('Featured Product');
+		$Title = \Gazelle\Util\Db::string('Featured Product');
 	}
 
 	$DB->query("

@@ -62,7 +62,7 @@ if (!empty($_POST['user']) && check_perms('site_moderate_requests')) {
 	$DB->query("
 		SELECT ID
 		FROM users_main
-		WHERE Username LIKE '".db_string($FillerUsername)."'");
+		WHERE Username LIKE '".\Gazelle\Util\Db::string($FillerUsername)."'");
 	if (!$DB->has_results()) {
 		$Err = 'No such user to fill for!';
 	} else {

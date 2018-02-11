@@ -33,7 +33,7 @@ if ($Other === 'true') {
 		error('You have to enter a username to give tokens to.');
 	}
 	$User = urldecode($_GET['user']);
-	G::$DB->query("SELECT ID FROM users_main WHERE Username='".db_string($User)."'");
+	G::$DB->query("SELECT ID FROM users_main WHERE Username='".\Gazelle\Util\Db::string($User)."'");
 	if (!G::$DB->has_results()) {
 		error('Invalid username. Please select a valid user');
 	}

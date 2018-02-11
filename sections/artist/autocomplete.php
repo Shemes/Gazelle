@@ -24,7 +24,7 @@ if (!$AutoSuggest) {
 		FROM artists_group AS a
 			INNER JOIN torrents_artists AS ta ON ta.ArtistID=a.ArtistID
 			INNER JOIN torrents AS t ON t.GroupID=ta.GroupID
-		WHERE a.Name LIKE '".db_string(str_replace('\\','\\\\',$Letters),true)."%'
+		WHERE a.Name LIKE '".\Gazelle\Util\Db::string(str_replace('\\','\\\\',$Letters),true)."%'
 		GROUP BY ta.ArtistID
 		ORDER BY t.Snatched DESC
 		LIMIT $Limit");

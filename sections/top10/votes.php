@@ -15,7 +15,7 @@ if (!empty($_GET['advanced']) && check_perms('site_advanced_top10')) {
 		foreach ($Tags as $Tag) {
 			$Tag = preg_replace('/[^a-z0-9_]/', '', $Tag);
 			if ($Tag != '') {
-				$TagWhere[] = "g.TagList REGEXP '[[:<:]]".db_string($Tag)."[[:>:]]'";
+				$TagWhere[] = "g.TagList REGEXP '[[:<:]]".\Gazelle\Util\Db::string($Tag)."[[:>:]]'";
 			}
 		}
 		$Operator = $TagsAny ? ' OR ' : ' AND ';

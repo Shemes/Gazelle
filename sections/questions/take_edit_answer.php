@@ -3,7 +3,7 @@ authorize();
 
 $ID = $_POST['id'];
 $UserID = $_POST['userid'];
-$Answer = db_string($_POST['edit']);
+$Answer = \Gazelle\Util\Db::string($_POST['edit']);
 
 if (empty($Answer) || !is_number($ID) || $UserID != $LoggedUser['ID']) {
 	error(403);

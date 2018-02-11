@@ -7,9 +7,9 @@ $CanEdit = check_perms('users_mod');
 if ($CanEdit && isset($_POST['perform'])) {
 	authorize();
 	if ($_POST['perform'] === 'add' && !empty($_POST['message'])) {
-		$Message = db_string($_POST['message']);
-		$Author = db_string($_POST['author']);
-		$Date = db_string($_POST['date']);
+		$Message = \Gazelle\Util\Db::string($_POST['message']);
+		$Author = \Gazelle\Util\Db::string($_POST['author']);
+		$Date = \Gazelle\Util\Db::string($_POST['date']);
 		if (!is_valid_date($Date)) {
 			$Date = sqltime();
 		}

@@ -29,7 +29,7 @@ if (isset($_GET['id'])) {
 	if (!is_number($_GET['id']) && $View !== 'type') {
 		error(404);
 	} else {
-		$ID = db_string($_GET['id']);
+		$ID = \Gazelle\Util\Db::string($_GET['id']);
 	}
 } else {
 	$ID = '';

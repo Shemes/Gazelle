@@ -44,7 +44,7 @@ if (isset($_REQUEST['act']) && $_REQUEST['act'] == 'recover') {
 				i.ResetExpires
 			FROM users_main as m
 				INNER JOIN users_info AS i ON i.UserID = m.ID
-			WHERE i.ResetKey = '".db_string($_REQUEST['key'])."'
+			WHERE i.ResetKey = '".\Gazelle\Util\Db::string($_REQUEST['key'])."'
 				AND i.ResetKey != ''
 				AND m.Enabled = '1'");
 		list($UserID, $Email, $Country, $Expires) = $DB->next_record();
@@ -65,7 +65,7 @@ if (isset($_REQUEST['act']) && $_REQUEST['act'] == 'recover') {
 							users_main AS m,
 							users_info AS i
 						SET
-							m.PassHash = '".db_string(Users::make_password_hash($_REQUEST['password']))."',
+							m.PassHash = '".\Gazelle\Util\Db::string(Users::make_password_hash($_REQUEST['password']))."',
 							i.ResetKey = '',
 							i.ResetExpires = '0000-00-00 00:00:00'
 						WHERE m.ID = '$UserID'
@@ -119,7 +119,7 @@ if (isset($_REQUEST['act']) && $_REQUEST['act'] == 'recover') {
 						Username,
 						Email
 					FROM users_main
-					WHERE Email = '".db_string($_REQUEST['email'])."'
+					WHERE Email = '".\Gazelle\Util\Db::string($_REQUEST['email'])."'
 						AND Enabled = '1'");
 				list($UserID, $Username, $Email) = $DB->next_record();
 
@@ -203,7 +203,7 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa_recovery') {
 				INSERT INTO users_sessions
 					(UserID, SessionID, KeepLogged, Browser, OperatingSystem, IP, LastUpdate, FullUA)
 				VALUES
-					('$UserID', '" . db_string($SessionID) . "', '$KeepLogged', '$Browser', '$OperatingSystem', '" . db_string($_SERVER['REMOTE_ADDR']) . "', '" . sqltime() . "', '" . db_string($_SERVER['HTTP_USER_AGENT']) . "')");
+					('$UserID', '" . \Gazelle\Util\Db::string($SessionID) . "', '$KeepLogged', '$Browser', '$OperatingSystem', '" . \Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR']) . "', '" . sqltime() . "', '" . \Gazelle\Util\Db::string($_SERVER['HTTP_USER_AGENT']) . "')");
 
 			$Cache->begin_transaction("users_sessions_$UserID");
 			$Cache->insert_front($SessionID, array(
@@ -222,8 +222,8 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa_recovery') {
 				SET
 					LastLogin = '" . sqltime() . "',
 					LastAccess = '" . sqltime() . "',
-					Recovery = '" . db_string($Recovery) . "'
-				WHERE ID = '" . db_string($UserID) . "'";
+					Recovery = '" . \Gazelle\Util\Db::string($Recovery) . "'
+				WHERE ID = '" . \Gazelle\Util\Db::string($UserID) . "'";
 
 			$DB->query($Sql);
 
@@ -241,7 +241,7 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa_recovery') {
 			$DB->query("
 				SELECT ID, Attempts, Bans, BannedUntil
 				FROM login_attempts
-				WHERE IP = '".db_string($_SERVER['REMOTE_ADDR'])."'");
+				WHERE IP = '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."'");
 			list($AttemptID, $Attempts, $Bans, $BannedUntil) = $DB->next_record();
 
 			// Function to log a user's login attempt
@@ -258,10 +258,10 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa_recovery') {
 					UPDATE login_attempts
 					SET
 						LastAttempt = '".sqltime()."',
-						Attempts = '".db_string($Attempts)."',
-						BannedUntil = '".db_string($BannedUntil)."',
+						Attempts = '".\Gazelle\Util\Db::string($Attempts)."',
+						BannedUntil = '".\Gazelle\Util\Db::string($BannedUntil)."',
 						Bans = Bans + 1
-					WHERE ID = '".db_string($AttemptID)."'");
+					WHERE ID = '".\Gazelle\Util\Db::string($AttemptID)."'");
 
 						if ($Bans > 9) { // Automated bruteforce prevention
 							$DB->query("
@@ -294,9 +294,9 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa_recovery') {
 					UPDATE login_attempts
 					SET
 						LastAttempt = '".sqltime()."',
-						Attempts = '".db_string($Attempts)."',
+						Attempts = '".\Gazelle\Util\Db::string($Attempts)."',
 						BannedUntil = '0000-00-00 00:00:00'
-					WHERE ID = '".db_string($AttemptID)."'");
+					WHERE ID = '".\Gazelle\Util\Db::string($AttemptID)."'");
 					}
 				} else { // User has not attempted to log in recently
 					$Attempts = 1;
@@ -304,7 +304,7 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa_recovery') {
 				INSERT INTO login_attempts
 					(UserID, IP, LastAttempt, Attempts)
 				VALUES
-					('".db_string($UserID)."', '".db_string($IPStr)."', '".sqltime()."', 1)");
+					('".\Gazelle\Util\Db::string($UserID)."', '".\Gazelle\Util\Db::string($IPStr)."', '".sqltime()."', 1)");
 				}
 			} // end log_attempt function
 			log_attempt($UserID);
@@ -358,7 +358,7 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa') {
 							INSERT INTO users_sessions
 								(UserID, SessionID, KeepLogged, Browser, OperatingSystem, IP, LastUpdate, FullUA)
 							VALUES
-								('$UserID', '" . db_string($SessionID) . "', '$KeepLogged', '$Browser', '$OperatingSystem', '" . db_string($_SERVER['REMOTE_ADDR']) . "', '" . sqltime() . "', '" . db_string($_SERVER['HTTP_USER_AGENT']) . "')");
+								('$UserID', '" . \Gazelle\Util\Db::string($SessionID) . "', '$KeepLogged', '$Browser', '$OperatingSystem', '" . \Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR']) . "', '" . sqltime() . "', '" . \Gazelle\Util\Db::string($_SERVER['HTTP_USER_AGENT']) . "')");
 
 			$Cache->begin_transaction("users_sessions_$UserID");
 			$Cache->insert_front($SessionID, array(
@@ -375,7 +375,7 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa') {
 							SET
 								LastLogin = '" . sqltime() . "',
 								LastAccess = '" . sqltime() . "'
-							WHERE ID = '" . db_string($UserID) . "'";
+							WHERE ID = '" . \Gazelle\Util\Db::string($UserID) . "'";
 
 			$DB->query($Sql);
 
@@ -404,7 +404,7 @@ else {
 	$DB->query("
 		SELECT ID, Attempts, Bans, BannedUntil
 		FROM login_attempts
-		WHERE IP = '".db_string($_SERVER['REMOTE_ADDR'])."'");
+		WHERE IP = '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."'");
 	list($AttemptID, $Attempts, $Bans, $BannedUntil) = $DB->next_record();
 
 	// Function to log a user's login attempt
@@ -421,10 +421,10 @@ else {
 					UPDATE login_attempts
 					SET
 						LastAttempt = '".sqltime()."',
-						Attempts = '".db_string($Attempts)."',
-						BannedUntil = '".db_string($BannedUntil)."',
+						Attempts = '".\Gazelle\Util\Db::string($Attempts)."',
+						BannedUntil = '".\Gazelle\Util\Db::string($BannedUntil)."',
 						Bans = Bans + 1
-					WHERE ID = '".db_string($AttemptID)."'");
+					WHERE ID = '".\Gazelle\Util\Db::string($AttemptID)."'");
 
 				if ($Bans > 9) { // Automated bruteforce prevention
 					$DB->query("
@@ -457,9 +457,9 @@ else {
 					UPDATE login_attempts
 					SET
 						LastAttempt = '".sqltime()."',
-						Attempts = '".db_string($Attempts)."',
+						Attempts = '".\Gazelle\Util\Db::string($Attempts)."',
 						BannedUntil = '0000-00-00 00:00:00'
-					WHERE ID = '".db_string($AttemptID)."'");
+					WHERE ID = '".\Gazelle\Util\Db::string($AttemptID)."'");
 			}
 		} else { // User has not attempted to log in recently
 			$Attempts = 1;
@@ -467,7 +467,7 @@ else {
 				INSERT INTO login_attempts
 					(UserID, IP, LastAttempt, Attempts)
 				VALUES
-					('".db_string($UserID)."', '".db_string($IPStr)."', '".sqltime()."', 1)");
+					('".\Gazelle\Util\Db::string($UserID)."', '".\Gazelle\Util\Db::string($IPStr)."', '".sqltime()."', 1)");
 		}
 	} // end log_attempt function
 
@@ -492,7 +492,7 @@ else {
 					2FA_Key,
 					Recovery
 				FROM users_main
-				WHERE Username = '".db_string($_POST['username'])."'
+				WHERE Username = '".\Gazelle\Util\Db::string($_POST['username'])."'
 					AND Username != ''");
 			$UserData = $DB->next_record(MYSQLI_NUM, array(2, 7));
 			list($UserID, $PermissionID, $CustomPermissions, $PassHash, $Secret, $Enabled, $TFAKey) = $UserData;
@@ -501,7 +501,7 @@ else {
 					if (password_needs_rehash($PassHash, PASSWORD_DEFAULT)) {
 						$DB->query("
 							UPDATE users_main
-							SET passhash = '".db_string(Users::make_password_hash($_POST['password']))."'
+							SET passhash = '".\Gazelle\Util\Db::string(Users::make_password_hash($_POST['password']))."'
 							WHERE ID = $UserID");
 					}
 					if ($Enabled == 1) {
@@ -538,7 +538,7 @@ else {
 							INSERT INTO users_sessions
 								(UserID, SessionID, KeepLogged, Browser, OperatingSystem, IP, LastUpdate, FullUA)
 							VALUES
-								('$UserID', '".db_string($SessionID)."', '$KeepLogged', '$Browser', '$OperatingSystem', '".db_string($_SERVER['REMOTE_ADDR'])."', '".sqltime()."', '".db_string($_SERVER['HTTP_USER_AGENT'])."')");
+								('$UserID', '".\Gazelle\Util\Db::string($SessionID)."', '$KeepLogged', '$Browser', '$OperatingSystem', '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."', '".sqltime()."', '".\Gazelle\Util\Db::string($_SERVER['HTTP_USER_AGENT'])."')");
 
 						$Cache->begin_transaction("users_sessions_$UserID");
 						$Cache->insert_front($SessionID, array(
@@ -555,7 +555,7 @@ else {
 							SET
 								LastLogin = '".sqltime()."',
 								LastAccess = '".sqltime()."'
-							WHERE ID = '".db_string($UserID)."'";
+							WHERE ID = '".\Gazelle\Util\Db::string($UserID)."'";
 
 						$DB->query($Sql);
 
@@ -573,7 +573,7 @@ else {
 						if ($Enabled == 2) {
 
 							// Save the username in a cookie for the disabled page
-							setcookie('username', db_string($_POST['username']), time() + 60 * 60, '/', '', false);
+							setcookie('username', \Gazelle\Util\Db::string($_POST['username']), time() + 60 * 60, '/', '', false);
 							header('Location: login.php?action=disabled');
 						} elseif ($Enabled == 0) {
 							$Err = 'Your account has not been confirmed.<br />Please check your email.';

@@ -60,7 +60,7 @@ class DonationsBitcoin {
 			$QueryID = G::$DB->get_query_id();
 			G::$DB->query("
 				UPDATE users_info
-				SET BitcoinAddress = '".db_string($NewAddr)."'
+				SET BitcoinAddress = '".\Gazelle\Util\Db::string($NewAddr)."'
 				WHERE UserID = '$UserID'
 					AND BitcoinAddress IS NULL");
 			G::$DB->set_query_id($QueryID);

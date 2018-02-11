@@ -347,7 +347,7 @@ class Referral {
         // form invite data and populate template
         $InviteExpires = time_plus(60 * 60 * 24 * 3); // 3 days
         $InviteReason = 'This user was referred to membership by their account at ' . $service . '. They verified their account on ' . date('Y-m-d H:i:s');
-        $InviteKey = db_string(Users::make_secret());
+        $InviteKey = \Gazelle\Util\Db::string(Users::make_secret());
         $InviterId = $this->ExternalServices[$service]['inviter_id'];
         require(SERVER_ROOT . '/classes/templates.class.php');
         $Tpl = NEW TEMPLATE;
@@ -364,7 +364,7 @@ class Referral {
 		INSERT INTO invites
 			(InviterID, InviteKey, Email, Expires, Reason)
 		VALUES
-			('$InviterId', '$InviteKey', '".db_string($email)."', '$InviteExpires', '$InviteReason')");
+			('$InviterId', '$InviteKey', '".\Gazelle\Util\Db::string($email)."', '$InviteExpires', '$InviteReason')");
 
         // send email
         Misc::send_email($email, 'You have been invited to ' . SITE_NAME, $Tpl->get(), 'noreply', 'text/plain');

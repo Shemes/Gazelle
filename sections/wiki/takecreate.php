@@ -2,7 +2,7 @@
 authorize();
 
 $P = array();
-$P = db_array($_POST);
+$P = \Gazelle\Util\Db::array($_POST);
 
 include(SERVER_ROOT.'/classes/validate.class.php');
 $Val = new VALIDATE;
@@ -59,7 +59,7 @@ $Dupe = Wiki::alias_to_id($_POST['title']);
 if ($TitleAlias != '' && $Dupe === false) {
 	$DB->query("
 		INSERT INTO wiki_aliases (Alias, ArticleID)
-		VALUES ('".db_string($TitleAlias)."', '$ArticleID')");
+		VALUES ('".\Gazelle\Util\Db::string($TitleAlias)."', '$ArticleID')");
 	Wiki::flush_aliases();
 }
 

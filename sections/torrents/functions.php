@@ -40,12 +40,12 @@ function get_group_info($GroupID, $Return = true, $RevisionID = 0, $PersonalProp
 
 		if ($RevisionID) {
 			$SQL .= "
-				LEFT JOIN wiki_torrents AS w ON w.PageID = '".db_string($GroupID)."'
-						AND w.RevisionID = '".db_string($RevisionID)."' ";
+				LEFT JOIN wiki_torrents AS w ON w.PageID = '".\Gazelle\Util\Db::string($GroupID)."'
+						AND w.RevisionID = '".\Gazelle\Util\Db::string($RevisionID)."' ";
 		}
 
 		$SQL .= "
-			WHERE g.ID = '".db_string($GroupID)."'
+			WHERE g.ID = '".\Gazelle\Util\Db::string($GroupID)."'
 			GROUP BY NULL";
 
 		$DB->query($SQL);
@@ -100,7 +100,7 @@ function get_group_info($GroupID, $Return = true, $RevisionID = 0, $PersonalProp
 				LEFT JOIN torrents_cassette_approved AS ca ON ca.TorrentID = t.ID
 				LEFT JOIN torrents_lossymaster_approved AS lma ON lma.TorrentID = t.ID
 				LEFT JOIN torrents_lossyweb_approved AS lwa ON lwa.TorrentID = t.ID
-			WHERE t.GroupID = '".db_string($GroupID)."'
+			WHERE t.GroupID = '".\Gazelle\Util\Db::string($GroupID)."'
 			GROUP BY t.ID
 			ORDER BY t.Remastered ASC,
 				(t.RemasterYear != 0) DESC,
@@ -183,7 +183,7 @@ function torrenthash_to_torrentid($Str) {
 	$DB->query("
 		SELECT ID
 		FROM torrents
-		WHERE HEX(info_hash) = '".db_string($Str)."'");
+		WHERE HEX(info_hash) = '".\Gazelle\Util\Db::string($Str)."'");
 	$TorrentID = (int)array_pop($DB->next_record(MYSQLI_ASSOC));
 	if ($TorrentID) {
 		return $TorrentID;
@@ -196,7 +196,7 @@ function torrenthash_to_groupid($Str) {
 	$DB->query("
 		SELECT GroupID
 		FROM torrents
-		WHERE HEX(info_hash) = '".db_string($Str)."'");
+		WHERE HEX(info_hash) = '".\Gazelle\Util\Db::string($Str)."'");
 	$GroupID = (int)array_pop($DB->next_record(MYSQLI_ASSOC));
 	if ($GroupID) {
 		return $GroupID;
@@ -209,7 +209,7 @@ function torrentid_to_groupid($TorrentID) {
 	$DB->query("
 		SELECT GroupID
 		FROM torrents
-		WHERE ID = '".db_string($TorrentID)."'");
+		WHERE ID = '".\Gazelle\Util\Db::string($TorrentID)."'");
 	$GroupID = (int)array_pop($DB->next_record(MYSQLI_ASSOC));
 	if ($GroupID) {
 		return $GroupID;

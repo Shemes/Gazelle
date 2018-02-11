@@ -18,7 +18,7 @@ $OrderTable = array('Title'=>'Title', 'Created'=>'ID', 'Edited'=>'Date');
 $WayTable = array('Ascending'=>'ASC', 'Descending'=>'DESC');
 
 // What are we looking for? Let's make sure it isn't dangerous.
-$Search = db_string(trim($_GET['search']));
+$Search = \Gazelle\Util\Db::string(trim($_GET['search']));
 
 if (!in_array($Type, array('Title', 'Body'))) {
 	$Type = 'Title';

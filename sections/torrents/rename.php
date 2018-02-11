@@ -25,7 +25,7 @@ list($OldName) = $DB->next_record(MYSQLI_NUM, false);
 
 $DB->query("
 	UPDATE torrents_group
-	SET Name = '".db_string($NewName)."'
+	SET Name = '".\Gazelle\Util\Db::string($NewName)."'
 	WHERE ID = '$GroupID'");
 $Cache->delete_value("torrents_details_$GroupID");
 

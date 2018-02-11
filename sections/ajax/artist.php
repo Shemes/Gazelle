@@ -19,7 +19,7 @@ if ($ArtistID && !is_number($ArtistID)) {
 
 if (empty($ArtistID)) {
 	if (!empty($_GET['artistname'])) {
-		$Name = db_string(trim($_GET['artistname']));
+		$Name = \Gazelle\Util\Db::string(trim($_GET['artistname']));
 		$DB->query("
 			SELECT ArtistID
 			FROM artists_alias

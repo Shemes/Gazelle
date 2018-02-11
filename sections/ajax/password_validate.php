@@ -1,5 +1,5 @@
 <?php
-$Password = db_string($_POST['password']);
+$Password = \Gazelle\Util\Db::string($_POST['password']);
 $IsGoodPassword = false;
 
 $DB->query("

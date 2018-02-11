@@ -1,7 +1,7 @@
 <?
-$ArtistID = db_string($_GET['artistid']);
-$GroupID = db_string($_GET['groupid']);
-$Importance = db_string($_GET['importance']);
+$ArtistID = \Gazelle\Util\Db::string($_GET['artistid']);
+$GroupID = \Gazelle\Util\Db::string($_GET['groupid']);
+$Importance = \Gazelle\Util\Db::string($_GET['importance']);
 
 if (!is_number($ArtistID) || !is_number($GroupID) || !is_number($Importance)) {
 	error(404);

@@ -18,8 +18,8 @@ if (!empty($AfterDate) && !empty($BeforeDate)) {
 	if (!checkdate($M, $D, $Y)) {
 		error('Incorrect "before" date format');
 	}
-	$AfterDate = db_string($AfterDate);
-	$BeforeDate = db_string($BeforeDate);
+	$AfterDate = \Gazelle\Util\Db::string($AfterDate);
+	$BeforeDate = \Gazelle\Util\Db::string($BeforeDate);
 	$DateSearch = true;
 }
 

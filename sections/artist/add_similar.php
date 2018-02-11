@@ -2,8 +2,8 @@
 authorize();
 
 $UserID = $LoggedUser['ID'];
-$Artist1ID = db_string($_POST['artistid']);
-$Artist2Name = db_string($_POST['artistname']);
+$Artist1ID = \Gazelle\Util\Db::string($_POST['artistid']);
+$Artist2Name = \Gazelle\Util\Db::string($_POST['artistname']);
 
 if (!is_number($Artist1ID)) {
 	error(0);

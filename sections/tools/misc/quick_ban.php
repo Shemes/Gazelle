@@ -12,7 +12,7 @@ if (isset($_GET['perform'])) {
 		$DB->query('DELETE FROM ip_bans WHERE ID='.$_GET['id']);
 		$Bans = $Cache->delete_value('ip_bans_'.$IPA);
 	} elseif ($_GET['perform'] == 'create') {
-		$Notes = db_string($_GET['notes']);
+		$Notes = \Gazelle\Util\Db::string($_GET['notes']);
 		$IP = Tools::ip_to_unsigned($_GET['ip']); //Sanitized by Validation regex
 		$DB->query("
 			INSERT INTO ip_bans (FromIP, ToIP, Reason)

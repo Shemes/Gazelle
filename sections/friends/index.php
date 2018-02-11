@@ -1,5 +1,5 @@
 <?
-$P = db_array($_POST);
+$P = \Gazelle\Util\Db::array($_POST);
 enforce_login();
 if (!empty($_REQUEST['friendid']) && !is_number($_REQUEST['friendid'])) {
 	error(404);

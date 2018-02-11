@@ -19,7 +19,7 @@ $sql = "
 	FROM wiki_articles
 	WHERE MinClassRead <= '".$LoggedUser['EffectiveClass']."'";
 if (isset($Letter) && $Letter !== '1') {
-	$sql .= " AND LEFT(Title,1) = '".db_string($Letter)."'";
+	$sql .= " AND LEFT(Title,1) = '".\Gazelle\Util\Db::string($Letter)."'";
 } else {
 	$Letter = 'All';
 }

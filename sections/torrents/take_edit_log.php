@@ -78,7 +78,7 @@ foreach ($TrackDeductions as $Deduction) {
 $AdjustedScore = max(0, $AdjustedScore);
 $AdjustmentDetails = serialize($AdjustmentDetails);
 
-$DB->query("UPDATE torrents_logs SET Adjusted='{$Adjusted}', AdjustedScore='{$AdjustedScore}', AdjustedChecksum='{$AdjustedChecksum}', AdjustedBy='{$AdjustedBy}', AdjustmentReason='".db_string($AdjustmentReason)."', AdjustmentDetails='".db_string($AdjustmentDetails)."' WHERE LogID='{$LogID}' AND TorrentID='{$TorrentID}'");
+$DB->query("UPDATE torrents_logs SET Adjusted='{$Adjusted}', AdjustedScore='{$AdjustedScore}', AdjustedChecksum='{$AdjustedChecksum}', AdjustedBy='{$AdjustedBy}', AdjustmentReason='".\Gazelle\Util\Db::string($AdjustmentReason)."', AdjustmentDetails='".\Gazelle\Util\Db::string($AdjustmentDetails)."' WHERE LogID='{$LogID}' AND TorrentID='{$TorrentID}'");
 $DB->query("
 UPDATE torrents AS t
 JOIN (

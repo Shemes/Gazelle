@@ -83,7 +83,7 @@ if (!$NumResults) {
 			SELECT GroupID
 			FROM collages_torrents
 			WHERE CollageID = $CollageID
-				AND AddedOn > '" . db_string($LastVisit) . "'
+				AND AddedOn > '" . \Gazelle\Util\Db::string($LastVisit) . "'
 			ORDER BY AddedOn");
 		$NewTorrentCount = $DB->record_count();
 

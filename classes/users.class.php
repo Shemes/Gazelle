@@ -303,7 +303,7 @@ class Users {
 		// Update DB
 		G::$DB->query("
 			UPDATE users_info
-			SET SiteOptions = '".db_string(serialize($SiteOptions))."'
+			SET SiteOptions = '".\Gazelle\Util\Db::string(serialize($SiteOptions))."'
 			WHERE UserID = $UserID");
 		G::$DB->set_query_id($QueryID);
 
@@ -744,7 +744,7 @@ class Users {
 		G::$DB->query("
 			UPDATE users_info
 			SET
-				ResetKey = '" . db_string($ResetKey) . "',
+				ResetKey = '" . \Gazelle\Util\Db::string($ResetKey) . "',
 				ResetExpires = '" . time_plus(60 * 60) . "'
 			WHERE UserID = '$UserID'");
 

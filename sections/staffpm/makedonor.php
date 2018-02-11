@@ -31,7 +31,7 @@ $DB->query("
 	INSERT INTO staff_pm_messages
 		(UserID, SentDate, Message, ConvID)
 	VALUES
-		(".$LoggedUser['ID'].", '".sqltime()."', '".db_string($Message)."', $ConvID)");
+		(".$LoggedUser['ID'].", '".sqltime()."', '".\Gazelle\Util\Db::string($Message)."', $ConvID)");
 */
 $DB->query("
 	UPDATE staff_pm_conversations

@@ -22,8 +22,8 @@ if (isset($LoginCookie)) {
     }
 
     if (!$Enabled = $Cache->get_value("enabled_$UserID")) {
-        require SERVER_ROOT . '/classes/mysql.class.php'; //Require the database wrapper
-        $DB = new DB_MYSQL; //Load the database wrapper
+         
+        $DB =  new Gazelle\DBMySQL; //Load the database wrapper
         $DB->query("
 			SELECT Enabled
 			FROM users_main

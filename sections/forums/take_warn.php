@@ -39,9 +39,9 @@ $DB->query("
 	INSERT INTO users_warnings_forums
 		(UserID, Comment)
 	VALUES
-		('$UserID', '" . db_string($AdminComment) . "')
+		('$UserID', '" . \Gazelle\Util\Db::string($AdminComment) . "')
 	ON DUPLICATE KEY UPDATE
-		Comment = CONCAT('" . db_string($AdminComment) . "', Comment)");
+		Comment = CONCAT('" . \Gazelle\Util\Db::string($AdminComment) . "', Comment)");
 Misc::send_pm($UserID, $LoggedUser['ID'], $Subject, $PrivateMessage);
 
 //edit the post
@@ -68,7 +68,7 @@ list($OldBody, $AuthorID, $TopicID, $ForumID, $Page) = $DB->next_record();
 // Perform the update
 $DB->query("
 	UPDATE forums_posts
-	SET Body = '" . db_string($Body) . "',
+	SET Body = '" . \Gazelle\Util\Db::string($Body) . "',
 		EditedUserID = '$UserID',
 		EditedTime = '$SQLTime'
 	WHERE ID = '$PostID'");
@@ -105,7 +105,7 @@ $DB->query("
 	INSERT INTO comments_edits
 		(Page, PostID, EditUser, EditTime, Body)
 	VALUES
-		('forums', $PostID, $UserID, '$SQLTime', '" . db_string($OldBody) . "')");
+		('forums', $PostID, $UserID, '$SQLTime', '" . \Gazelle\Util\Db::string($OldBody) . "')");
 $Cache->delete_value("forums_edits_$PostID");
 
 header("Location: forums.php?action=viewthread&postid=$PostID#post$PostID");

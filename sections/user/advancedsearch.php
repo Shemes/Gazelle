@@ -8,7 +8,7 @@ if (!empty($_GET['search'])) {
 		$DB->query("
 			SELECT ID
 			FROM users_main
-			WHERE Username = '".db_string($_GET['search'])."'");
+			WHERE Username = '".\Gazelle\Util\Db::string($_GET['search'])."'");
 		if (list($ID) = $DB->next_record()) {
 			header("Location: user.php?id=$ID");
 			die();
@@ -32,7 +32,7 @@ function wrap($String, $ForceMatch = '', $IPSearch = false) {
 			error('Regex contains illegal characters.');
 		}
 	} else {
-		$String = db_string($String);
+		$String = \Gazelle\Util\Db::string($String);
 	}
 	if ($Match == ' LIKE ') {
 		// Fuzzy search
@@ -54,8 +54,8 @@ function wrap($String, $ForceMatch = '', $IPSearch = false) {
 }
 
 function date_compare($Field, $Operand, $Date1, $Date2 = '') {
-	$Date1 = db_string($Date1);
-	$Date2 = db_string($Date2);
+	$Date1 = \Gazelle\Util\Db::string($Date1);
+	$Date2 = \Gazelle\Util\Db::string($Date2);
 	$Return = array();
 
 	switch ($Operand) {
@@ -82,10 +82,10 @@ function date_compare($Field, $Operand, $Date1, $Date2 = '') {
 function num_compare($Field, $Operand, $Num1, $Num2 = '') {
 
 	if ($Num1 != 0) {
-		$Num1 = db_string($Num1);
+		$Num1 = \Gazelle\Util\Db::string($Num1);
 	}
 	if ($Num2 != 0) {
-		$Num2 = db_string($Num2);
+		$Num2 = \Gazelle\Util\Db::string($Num2);
 	}
 
 	$Return = array();
@@ -324,9 +324,9 @@ if (count($_GET)) {
 
 		if (!empty($_GET['cc'])) {
 			if ($_GET['cc_op'] == 'equal') {
-				$Where[] = "um1.ipcc = '".db_string($_GET['cc'])."'";
+				$Where[] = "um1.ipcc = '".\Gazelle\Util\Db::string($_GET['cc'])."'";
 			} else {
-				$Where[] = "um1.ipcc != '".db_string($_GET['cc'])."'";
+				$Where[] = "um1.ipcc != '".\Gazelle\Util\Db::string($_GET['cc'])."'";
 			}
 		}
 

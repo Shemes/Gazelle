@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
     authorize();
 
     if ($_POST['submit'] == 'Delete') {
-	$Name = db_string($_POST['name']);
+	$Name = \Gazelle\Util\Db::string($_POST['name']);
         $DB->query("DELETE FROM site_options WHERE Name = '" . $Name . "'");
         $Cache->delete_value('site_option_' . $Name);
     } else {
@@ -52,12 +52,12 @@ if (isset($_POST['submit'])) {
             error($Error);
         }
 
-        $Name = db_string($_POST['name']);
-        $Value = db_string($_POST['value']);
-        $Comment = db_string($_POST['comment']);
+        $Name = \Gazelle\Util\Db::string($_POST['name']);
+        $Value = \Gazelle\Util\Db::string($_POST['value']);
+        $Comment = \Gazelle\Util\Db::string($_POST['comment']);
 
         if ($_POST['submit'] == 'Edit') {
-            $DB->query("SELECT Name FROM site_options WHERE ID = '" . db_string($_POST['id']) . "'");
+            $DB->query("SELECT Name FROM site_options WHERE ID = '" . \Gazelle\Util\Db::string($_POST['id']) . "'");
             list($OldName) = $DB->next_record();
             $DB->query("
                 UPDATE site_options
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
                     Name = '$Name',
                     Value = '$Value',
                     Comment = '$Comment'
-                WHERE ID = '" . db_string($_POST['id']) . "'
+                WHERE ID = '" . \Gazelle\Util\Db::string($_POST['id']) . "'
             ");
             $Cache->delete_value('site_option_' . $OldName);
         } else {

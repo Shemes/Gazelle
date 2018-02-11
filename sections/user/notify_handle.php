@@ -27,7 +27,7 @@ if ($_POST['artists'.$FormID]) {
 	$ParsedArtists = array();
 	foreach ($Artists as $Artist) {
 		if (trim($Artist) != '') {
-			$ParsedArtists[] = db_string(trim($Artist));
+			$ParsedArtists[] = \Gazelle\Util\Db::string(trim($Artist));
 		}
 	}
 	if (count($ParsedArtists) > 0) {
@@ -54,7 +54,7 @@ if ($_POST['tags'.$FormID]) {
 	$TagList = '|';
 	$Tags = explode(',', $_POST['tags'.$FormID]);
 	foreach ($Tags as $Tag) {
-		$TagList.=db_string(trim($Tag)).'|';
+		$TagList.=\Gazelle\Util\Db::string(trim($Tag)).'|';
 	}
 	$HasFilter = true;
 }
@@ -63,7 +63,7 @@ if ($_POST['nottags'.$FormID]) {
 	$NotTagList = '|';
 	$Tags = explode(',', $_POST['nottags'.$FormID]);
 	foreach ($Tags as $Tag) {
-		$NotTagList.=db_string(trim($Tag)).'|';
+		$NotTagList.=\Gazelle\Util\Db::string(trim($Tag)).'|';
 	}
 	$HasFilter = true;
 }
@@ -71,7 +71,7 @@ if ($_POST['nottags'.$FormID]) {
 if ($_POST['categories'.$FormID]) {
 	$CategoryList = '|';
 	foreach ($_POST['categories'.$FormID] as $Category) {
-		$CategoryList.=db_string(trim($Category)).'|';
+		$CategoryList.=\Gazelle\Util\Db::string(trim($Category)).'|';
 	}
 	$HasFilter = true;
 }
@@ -79,7 +79,7 @@ if ($_POST['categories'.$FormID]) {
 if ($_POST['releasetypes'.$FormID]) {
 	$ReleaseTypeList = '|';
 	foreach ($_POST['releasetypes'.$FormID] as $ReleaseType) {
-		$ReleaseTypeList.=db_string(trim($ReleaseType)).'|';
+		$ReleaseTypeList.=\Gazelle\Util\Db::string(trim($ReleaseType)).'|';
 	}
 	$HasFilter = true;
 }
@@ -87,7 +87,7 @@ if ($_POST['releasetypes'.$FormID]) {
 if ($_POST['formats'.$FormID]) {
 	$FormatList = '|';
 	foreach ($_POST['formats'.$FormID] as $Format) {
-		$FormatList.=db_string(trim($Format)).'|';
+		$FormatList.=\Gazelle\Util\Db::string(trim($Format)).'|';
 	}
 	$HasFilter = true;
 }
@@ -96,7 +96,7 @@ if ($_POST['formats'.$FormID]) {
 if ($_POST['bitrates'.$FormID]) {
 	$EncodingList = '|';
 	foreach ($_POST['bitrates'.$FormID] as $Bitrate) {
-		$EncodingList.=db_string(trim($Bitrate)).'|';
+		$EncodingList.=\Gazelle\Util\Db::string(trim($Bitrate)).'|';
 	}
 	$HasFilter = true;
 }
@@ -104,7 +104,7 @@ if ($_POST['bitrates'.$FormID]) {
 if ($_POST['media'.$FormID]) {
 	$MediaList = '|';
 	foreach ($_POST['media'.$FormID] as $Medium) {
-		$MediaList.=db_string(trim($Medium)).'|';
+		$MediaList.=\Gazelle\Util\Db::string(trim($Medium)).'|';
 	}
 	$HasFilter = true;
 }
@@ -124,7 +124,7 @@ if ($_POST['users'.$FormID]) {
 	$Usernames = explode(',', $_POST['users'.$FormID]);
 	$EscapedUsernames = array();
 	foreach ($Usernames as $Username) {
-		$EscapedUsernames[] = db_string(trim($Username));;
+		$EscapedUsernames[] = \Gazelle\Util\Db::string(trim($Username));;
 	}
 
 	$DB->query("
@@ -182,7 +182,7 @@ if ($_POST['id'.$FormID] && is_number($_POST['id'.$FormID])) {
 		INSERT INTO users_notify_filters
 			(UserID, Label, Artists, ExcludeVA, NewGroupsOnly, Tags, NotTags, ReleaseTypes, Categories, Formats, Encodings, Media, FromYear, ToYear, Users)
 		VALUES
-			('$LoggedUser[ID]','".db_string($_POST['label'.$FormID])."','$ArtistList','$ExcludeVA','$NewGroupsOnly','$TagList', '$NotTagList', '$ReleaseTypeList','$CategoryList','$FormatList','$EncodingList','$MediaList', '$FromYear', '$ToYear', '$Users')");
+			('$LoggedUser[ID]','".\Gazelle\Util\Db::string($_POST['label'.$FormID])."','$ArtistList','$ExcludeVA','$NewGroupsOnly','$TagList', '$NotTagList', '$ReleaseTypeList','$CategoryList','$FormatList','$EncodingList','$MediaList', '$FromYear', '$ToYear', '$Users')");
 }
 
 $Cache->delete_value('notify_filters_'.$LoggedUser['ID']);

@@ -15,7 +15,7 @@ if ($Err) {
 }
 
 $P = array();
-$P = db_array($_POST);
+$P = \Gazelle\Util\Db::array($_POST);
 
 $Article = Wiki::get_article($ArticleID);
 list($OldRevision, $OldTitle, $OldBody, $CurRead, $CurEdit, $OldDate, $OldAuthor) = array_shift($Article);
@@ -50,13 +50,13 @@ $DB->query("
 	INSERT INTO wiki_revisions
 		(ID, Revision, Title, Body, Date, Author)
 	VALUES
-		('".db_string($ArticleID)."', '".db_string($OldRevision)."', '".db_string($OldTitle)."', '".db_string($OldBody)."', '".db_string($OldDate)."', '".db_string($OldAuthor)."')");
+		('".\Gazelle\Util\Db::string($ArticleID)."', '".\Gazelle\Util\Db::string($OldRevision)."', '".\Gazelle\Util\Db::string($OldTitle)."', '".\Gazelle\Util\Db::string($OldBody)."', '".\Gazelle\Util\Db::string($OldDate)."', '".\Gazelle\Util\Db::string($OldAuthor)."')");
 
 // Update wiki entry
 $SQL = "
 	UPDATE wiki_articles
 	SET
-		Revision = '".db_string($OldRevision + 1)."',
+		Revision = '".\Gazelle\Util\Db::string($OldRevision + 1)."',
 		Title = '$P[title]',
 		Body = '$P[body]',";
 if ($Read && $Edit) {

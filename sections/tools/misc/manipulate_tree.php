@@ -16,7 +16,7 @@ if ($_POST['id']) {
 	}
 	else {
 		$Comment = date('Y-m-d H:i:s') . " - ";
-		$Comment .= db_string($_POST['comment']);
+		$Comment .= \Gazelle\Util\Db::string($_POST['comment']);
 		$Comment .= "\n" . "Manipulate Tree used by " . $LoggedUser['Username'];
 	}
 	$UserID = $_POST['id'];

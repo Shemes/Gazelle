@@ -27,8 +27,8 @@ if (check_perms('admin_manage_blog')) {
 				if (is_number($_POST['blogid'])) {
 					$DB->query("
 						UPDATE staff_blog
-						SET Title = '".db_string($_POST['title'])."', Body = '".db_string($_POST['body'])."'
-						WHERE ID = '".db_string($_POST['blogid'])."'");
+						SET Title = '".\Gazelle\Util\Db::string($_POST['title'])."', Body = '".\Gazelle\Util\Db::string($_POST['body'])."'
+						WHERE ID = '".\Gazelle\Util\Db::string($_POST['blogid'])."'");
 					$Cache->delete_value('staff_blog');
 					$Cache->delete_value('staff_feed_blog');
 				}
@@ -49,7 +49,7 @@ if (check_perms('admin_manage_blog')) {
 					authorize();
 					$DB->query("
 						DELETE FROM staff_blog
-						WHERE ID = '".db_string($_GET['id'])."'");
+						WHERE ID = '".\Gazelle\Util\Db::string($_GET['id'])."'");
 					$Cache->delete_value('staff_blog');
 					$Cache->delete_value('staff_feed_blog');
 				}
@@ -61,14 +61,14 @@ if (check_perms('admin_manage_blog')) {
 				if (empty($_POST['title'])) {
 					error("Please enter a title.");
 				}
-				$Title = db_string($_POST['title']);
-				$Body = db_string($_POST['body']);
+				$Title = \Gazelle\Util\Db::string($_POST['title']);
+				$Body = \Gazelle\Util\Db::string($_POST['body']);
 
 				$DB->query("
 					INSERT INTO staff_blog
 						(UserID, Title, Body, Time)
 					VALUES
-						('$LoggedUser[ID]', '".db_string($_POST['title'])."', '".db_string($_POST['body'])."', NOW())");
+						('$LoggedUser[ID]', '".\Gazelle\Util\Db::string($_POST['title'])."', '".\Gazelle\Util\Db::string($_POST['body'])."', NOW())");
 				$Cache->delete_value('staff_blog');
 				$Cache->delete_value('staff_blog_latest_time');
 

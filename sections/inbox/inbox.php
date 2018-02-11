@@ -56,7 +56,7 @@ if (!empty($_GET['search']) && $_GET['searchtype'] === 'message') {
 }
 $sql .= ' WHERE ';
 if (!empty($_GET['search'])) {
-	$Search = db_string($_GET['search']);
+	$Search = \Gazelle\Util\Db::string($_GET['search']);
 	if ($_GET['searchtype'] === 'user') {
 		$sql .= "um.Username LIKE '$Search' AND ";
 	} elseif ($_GET['searchtype'] === 'subject') {

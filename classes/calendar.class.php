@@ -79,14 +79,14 @@ class Calendar {
 		if (empty($Title) || empty($Body) || !is_number($Category) || !is_number($Importance)  || !is_number($Team) || empty($StartDate)) {
 			error("Error adding event");
 		}
-		$Title = db_string($Title);
-		$Body = db_string($Body);
+		$Title = \Gazelle\Util\Db::string($Title);
+		$Body = \Gazelle\Util\Db::string($Body);
 		$Category = (int)$Category;
 		$Importance = (int)$Importance;
 		$UserID = (int)$UserID;
 		$Team = (int)$Team;
-		$StartDate = db_string($StartDate);
-		$EndDate = db_string($EndDate);
+		$StartDate = \Gazelle\Util\Db::string($StartDate);
+		$EndDate = \Gazelle\Util\Db::string($EndDate);
 
 		$QueryID = G::$DB->get_query_id();
 		G::$DB->query("
@@ -103,13 +103,13 @@ class Calendar {
 			error("Error updating event");
 		}
 		$ID = (int)$ID;
-		$Title = db_string($Title);
-		$Body = db_string($Body);
+		$Title = \Gazelle\Util\Db::string($Title);
+		$Body = \Gazelle\Util\Db::string($Body);
 		$Category = (int)$Category;
 		$Importance = (int)$Importance;
 		$Team = (int)$Team;
-		$StartDate = db_string($StartDate);
-		$EndDate = db_string($EndDate);
+		$StartDate = \Gazelle\Util\Db::string($StartDate);
+		$EndDate = \Gazelle\Util\Db::string($EndDate);
 		$QueryID = G::$DB->get_query_id();
 		G::$DB->query("
 						UPDATE calendar

@@ -334,8 +334,8 @@ if ($CategoryName === 'Music') {
 				UserID, TimeAdded, LastVote, CategoryID, Title, Year, Image, Description, RecordLabel,
 				CatalogueNumber, ReleaseType, BitrateList, FormatList, MediaList, LogCue, Visible, GroupID, OCLC)
 			VALUES
-				('.$LoggedUser['ID'].", '".sqltime()."', '".sqltime()."', $CategoryID, '".db_string($Title)."', $Year, '".db_string($Image)."', '".db_string($Description)."','".db_string($RecordLabel)."',
-						'".db_string($CatalogueNumber)."', $ReleaseType, '$BitrateList','$FormatList', '$MediaList', '$LogCue', '1', '$GroupID', '".db_string($OCLC)."')");
+				('.$LoggedUser['ID'].", '".sqltime()."', '".sqltime()."', $CategoryID, '".\Gazelle\Util\Db::string($Title)."', $Year, '".\Gazelle\Util\Db::string($Image)."', '".\Gazelle\Util\Db::string($Description)."','".\Gazelle\Util\Db::string($RecordLabel)."',
+						'".\Gazelle\Util\Db::string($CatalogueNumber)."', $ReleaseType, '$BitrateList','$FormatList', '$MediaList', '$LogCue', '1', '$GroupID', '".\Gazelle\Util\Db::string($OCLC)."')");
 
 		$RequestID = $DB->inserted_id();
 
@@ -343,19 +343,19 @@ if ($CategoryName === 'Music') {
 		$DB->query("
 			UPDATE requests
 			SET CategoryID = $CategoryID,
-				Title = '".db_string($Title)."',
+				Title = '".\Gazelle\Util\Db::string($Title)."',
 				Year = $Year,
-				Image = '".db_string($Image)."',
-				Description = '".db_string($Description)."',
-				CatalogueNumber = '".db_string($CatalogueNumber)."',
-				RecordLabel = '".db_string($RecordLabel)."',
+				Image = '".\Gazelle\Util\Db::string($Image)."',
+				Description = '".\Gazelle\Util\Db::string($Description)."',
+				CatalogueNumber = '".\Gazelle\Util\Db::string($CatalogueNumber)."',
+				RecordLabel = '".\Gazelle\Util\Db::string($RecordLabel)."',
 				ReleaseType = $ReleaseType,
 				BitrateList = '$BitrateList',
 				FormatList = '$FormatList',
 				MediaList = '$MediaList',
 				LogCue = '$LogCue',
 				GroupID = '$GroupID',
-				OCLC = '".db_string($OCLC)."'
+				OCLC = '".\Gazelle\Util\Db::string($OCLC)."'
 			WHERE ID = $RequestID");
 
 		// We need to be able to delete artists / tags
@@ -396,7 +396,7 @@ if ($CategoryName === 'Music') {
 					Name,
 					Redirect
 				FROM artists_alias
-				WHERE Name = '".db_string($Artist['name'])."'");
+				WHERE Name = '".\Gazelle\Util\Db::string($Artist['name'])."'");
 
 			while (list($ArtistID, $AliasID, $AliasName, $Redirect) = $DB->next_record(MYSQLI_NUM, false)) {
 				if (!strcasecmp($Artist['name'], $AliasName)) {
@@ -411,14 +411,14 @@ if ($CategoryName === 'Music') {
 				//2. For each artist that didn't exist, create an artist.
 				$DB->query("
 					INSERT INTO artists_group (Name)
-					VALUES ('".db_string($Artist['name'])."')");
+					VALUES ('".\Gazelle\Util\Db::string($Artist['name'])."')");
 				$ArtistID = $DB->inserted_id();
 
 				$Cache->increment('stats_artist_count');
 
 				$DB->query("
 					INSERT INTO artists_alias (ArtistID, Name)
-					VALUES ($ArtistID, '".db_string($Artist['name'])."')");
+					VALUES ($ArtistID, '".\Gazelle\Util\Db::string($Artist['name'])."')");
 				$AliasID = $DB->inserted_id();
 
 				$ArtistForm[$Importance][$Num] = array('id' => $ArtistID, 'aliasid' => $AliasID, 'name' => $Artist['name']);
@@ -490,7 +490,7 @@ if ($CategoryName === 'Music') {
 				INSERT INTO requests (
 					UserID, TimeAdded, LastVote, CategoryID, Title, Year, Image, Description, Visible, OCLC)
 				VALUES
-					(".$LoggedUser['ID'].", '".sqltime()."', '".sqltime()."', $CategoryID, '".db_string($Title)."', $Year, '".db_string($Image)."', '".db_string($Description)."', '1', '".db_string($OCLC)."')");
+					(".$LoggedUser['ID'].", '".sqltime()."', '".sqltime()."', $CategoryID, '".\Gazelle\Util\Db::string($Title)."', $Year, '".\Gazelle\Util\Db::string($Image)."', '".\Gazelle\Util\Db::string($Description)."', '1', '".\Gazelle\Util\Db::string($OCLC)."')");
 
 			$RequestID = $DB->inserted_id();
 
@@ -498,11 +498,11 @@ if ($CategoryName === 'Music') {
 			$DB->query("
 				UPDATE requests
 				SET CategoryID = $CategoryID,
-					Title = '".db_string($Title)."',
+					Title = '".\Gazelle\Util\Db::string($Title)."',
 					Year = $Year,
-					Image = '".db_string($Image)."',
-					Description = '".db_string($Description)."',
-					OCLC = '".db_string($OCLC)."'
+					Image = '".\Gazelle\Util\Db::string($Image)."',
+					Description = '".\Gazelle\Util\Db::string($Description)."',
+					OCLC = '".\Gazelle\Util\Db::string($OCLC)."'
 				WHERE ID = $RequestID");
 		}
 	} else {
@@ -511,7 +511,7 @@ if ($CategoryName === 'Music') {
 				INSERT INTO requests (
 					UserID, TimeAdded, LastVote, CategoryID, Title, Image, Description, Visible, OCLC)
 				VALUES
-					(".$LoggedUser['ID'].", '".sqltime()."', '".sqltime()."', $CategoryID, '".db_string($Title)."', '".db_string($Image)."', '".db_string($Description)."', '1', '".db_string($OCLC)."')");
+					(".$LoggedUser['ID'].", '".sqltime()."', '".sqltime()."', $CategoryID, '".\Gazelle\Util\Db::string($Title)."', '".\Gazelle\Util\Db::string($Image)."', '".\Gazelle\Util\Db::string($Description)."', '1', '".\Gazelle\Util\Db::string($OCLC)."')");
 
 			$RequestID = $DB->inserted_id();
 
@@ -519,10 +519,10 @@ if ($CategoryName === 'Music') {
 				$DB->query("
 					UPDATE requests
 					SET CategoryID = $CategoryID,
-						Title = '".db_string($Title)."',
-						Image = '".db_string($Image)."',
-						Description = '".db_string($Description)."',
-						OCLC = '".db_string($OCLC)."'
+						Title = '".\Gazelle\Util\Db::string($Title)."',
+						Image = '".\Gazelle\Util\Db::string($Image)."',
+						Description = '".\Gazelle\Util\Db::string($Description)."',
+						OCLC = '".\Gazelle\Util\Db::string($OCLC)."'
 					WHERE ID = $RequestID");
 		}
 	}

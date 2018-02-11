@@ -5,7 +5,7 @@ if (!check_perms('torrents_edit')) {
 
 $GroupID = $_POST['groupid'];
 $OldGroupID = $GroupID;
-$NewGroupID = db_string($_POST['targetgroupid']);
+$NewGroupID = \Gazelle\Util\Db::string($_POST['targetgroupid']);
 
 if (!$GroupID || !is_number($GroupID)) {
 	error(404);

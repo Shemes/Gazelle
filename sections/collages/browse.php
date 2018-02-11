@@ -21,13 +21,13 @@ if (!empty($_GET['type'])) {
 
 if (!empty($_GET['search'])) {
 	// What are we looking for? Let's make sure it isn't dangerous.
-	$Search = db_string(trim($_GET['search']));
+	$Search = \Gazelle\Util\Db::string(trim($_GET['search']));
 	// Break search string down into individual words
 	$Words = explode(' ', $Search);
 }
 
 if (!empty($_GET['tags'])) {
-	$Tags = explode(',', db_string(trim($_GET['tags'])));
+	$Tags = explode(',', \Gazelle\Util\Db::string(trim($_GET['tags'])));
 	foreach ($Tags as $ID => $Tag) {
 		$Tags[$ID] = Misc::sanitize_tag($Tag);
 	}
@@ -130,7 +130,7 @@ if (!empty($_GET['userid'])) {
 		if (empty($CollageIDs)) {
 			$SQL .= " AND 0";
 		} else {
-			$SQL .= " AND c.ID IN(".db_string(implode(',', $CollageIDs)).')';
+			$SQL .= " AND c.ID IN(".\Gazelle\Util\Db::string(implode(',', $CollageIDs)).')';
 		}
 	} else {
 		if (!check_paranoia('collages', $User['Paranoia'], $UserClass, $UserID)) {
@@ -142,7 +142,7 @@ if (!empty($_GET['userid'])) {
 }
 
 if (!empty($Categories)) {
-	$SQL .= " AND CategoryID IN(".db_string(implode(',', $Categories)).')';
+	$SQL .= " AND CategoryID IN(".\Gazelle\Util\Db::string(implode(',', $Categories)).')';
 }
 
 if (isset($_GET['action']) && $_GET['action'] === 'mine') {

@@ -7,10 +7,10 @@ $DB->query("
 		SET AuthKey =
 			MD5(
 				CONCAT(
-					AuthKey, RAND(), '".db_string(Users::make_secret())."',
+					AuthKey, RAND(), '".\Gazelle\Util\Db::string(Users::make_secret())."',
 					SHA1(
 						CONCAT(
-							RAND(), RAND(), '".db_string(Users::make_secret())."'
+							RAND(), RAND(), '".\Gazelle\Util\Db::string(Users::make_secret())."'
 						)
 					)
 				)

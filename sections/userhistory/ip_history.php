@@ -24,7 +24,7 @@ if (!check_perms('users_view_ips', $UserInfo['Class'])) {
 $UsersOnly = !empty($_GET['usersonly']);
 
 if (!empty($_GET['ip']) && trim($_GET['ip']) != '') {
-	$SearchIP = db_string(str_replace("*", "%", trim($_GET['ip'])));
+	$SearchIP = \Gazelle\Util\Db::string(str_replace("*", "%", trim($_GET['ip'])));
 	$SearchIPQuery = "AND IP LIKE '$SearchIP'";
 } else {
 	$SearchIPQuery = "";
@@ -83,7 +83,7 @@ if ($UsersOnly) {
 			$SearchIPQuery");
 
 	if ($DB->has_results()) {
-		$UserIPs = db_array($DB->collect('IP'), array(), true);
+		$UserIPs = \Gazelle\Util\Db::array($DB->collect('IP'), array(), true);
 		$DB->query("
 			SELECT DISTINCT IP
 			FROM users_history_ips
@@ -92,7 +92,7 @@ if ($UsersOnly) {
 		unset($UserIPs);
 
 		if ($DB->has_results()) {
-			$OtherIPs = db_array($DB->collect('IP'), array(), true);
+			$OtherIPs = \Gazelle\Util\Db::array($DB->collect('IP'), array(), true);
 			$QueryID = $DB->query("
 				SELECT
 					SQL_CALC_FOUND_ROWS
@@ -134,7 +134,7 @@ if (isset($QueryID)) {
 }
 
 if (!empty($Results)) {
-	$IPs = db_array($DB->collect('IP'), array(), true);
+	$IPs = \Gazelle\Util\Db::array($DB->collect('IP'), array(), true);
 	$DB->query("
 		SELECT
 			UserID,

@@ -52,7 +52,7 @@ class Donations {
 		if (G::$DB->has_results()) {
 			G::$Cache->InternalCache = false;
 			foreach ($Args as &$Arg) {
-				$Arg = db_string($Arg);
+				$Arg = \Gazelle\Util\Db::string($Arg);
 			}
 			extract($Args);
 
@@ -475,8 +475,8 @@ class Donations {
 
 	private static function add_profile_info_reward($Counter, &$Insert, &$Values, &$Update) {
 		if (isset($_POST["profile_title_" . $Counter]) && isset($_POST["profile_info_" . $Counter])) {
-			$ProfileTitle = db_string($_POST["profile_title_" . $Counter]);
-			$ProfileInfo = db_string($_POST["profile_info_" . $Counter]);
+			$ProfileTitle = \Gazelle\Util\Db::string($_POST["profile_title_" . $Counter]);
+			$ProfileInfo = \Gazelle\Util\Db::string($_POST["profile_info_" . $Counter]);
 			$ProfileInfoTitleSQL = "ProfileInfoTitle" . $Counter;
 			$ProfileInfoSQL = "ProfileInfo" . $Counter;
 			$Insert[] = "$ProfileInfoTitleSQL";
@@ -506,7 +506,7 @@ class Donations {
 		}
 		if ($Rank >= 2 || $HasAll) {
 			if (isset($_POST['donor_icon_mouse_over_text'])) {
-				$IconMouseOverText = db_string($_POST['donor_icon_mouse_over_text']);
+				$IconMouseOverText = \Gazelle\Util\Db::string($_POST['donor_icon_mouse_over_text']);
 				$Insert[] = "IconMouseOverText";
 				$Values[] = "'$IconMouseOverText'";
 				$Update[] = "IconMouseOverText = '$IconMouseOverText'";
@@ -515,7 +515,7 @@ class Donations {
 		}
 		if ($Rank >= 3 || $HasAll) {
 			if (isset($_POST['avatar_mouse_over_text'])) {
-				$AvatarMouseOverText = db_string($_POST['avatar_mouse_over_text']);
+				$AvatarMouseOverText = \Gazelle\Util\Db::string($_POST['avatar_mouse_over_text']);
 				$Insert[] = "AvatarMouseOverText";
 				$Values[] = "'$AvatarMouseOverText'";
 				$Update[] = "AvatarMouseOverText = '$AvatarMouseOverText'";
@@ -524,7 +524,7 @@ class Donations {
 		}
 		if ($Rank >= 4 || $HasAll) {
 			if (isset($_POST['donor_icon_link'])) {
-				$CustomIconLink = db_string($_POST['donor_icon_link']);
+				$CustomIconLink = \Gazelle\Util\Db::string($_POST['donor_icon_link']);
 				if (!Misc::is_valid_url($CustomIconLink)) {
 					$CustomIconLink = '';
 				}
@@ -536,7 +536,7 @@ class Donations {
 		}
 		if ($Rank >= MAX_RANK || $HasAll) {
 			if (isset($_POST['donor_icon_custom_url'])) {
-				$CustomIcon = db_string($_POST['donor_icon_custom_url']);
+				$CustomIcon = \Gazelle\Util\Db::string($_POST['donor_icon_custom_url']);
 				if (!Misc::is_valid_url($CustomIcon)) {
 					$CustomIcon = '';
 				}
@@ -552,7 +552,7 @@ class Donations {
 		}
 		if ($SpecialRank >= 2) {
 			if (isset($_POST['second_avatar'])) {
-				$SecondAvatar = db_string($_POST['second_avatar']);
+				$SecondAvatar = \Gazelle\Util\Db::string($_POST['second_avatar']);
 				if (!Misc::is_valid_url($SecondAvatar)) {
 					$SecondAvatar = '';
 				}
@@ -582,8 +582,8 @@ class Donations {
 
 	public static function update_titles($UserID, $Prefix, $Suffix, $UseComma) {
 		$QueryID = G::$DB->get_query_id();
-		$Prefix = trim(db_string($Prefix));
-		$Suffix = trim(db_string($Suffix));
+		$Prefix = trim(\Gazelle\Util\Db::string($Prefix));
+		$Suffix = trim(\Gazelle\Util\Db::string($Suffix));
 		$UseComma = empty($UseComma) ? true : false;
 		G::$DB->query("
 			INSERT INTO donor_forum_usernames

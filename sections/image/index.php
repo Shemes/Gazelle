@@ -89,7 +89,7 @@ function reset_image($UserID, $Type, $AdminComment, $PrivMessage) {
 	// write comment to staff notes
 	G::$DB->query("
 		UPDATE users_info
-		SET AdminComment = CONCAT('".sqltime().' - '.db_string($AdminComment)."\n\n', AdminComment)
+		SET AdminComment = CONCAT('".sqltime().' - '.\Gazelle\Util\Db::string($AdminComment)."\n\n', AdminComment)
 		WHERE UserID = '$UserID'");
 
 	// clear cache keys
@@ -127,9 +127,9 @@ if (isset($_GET['type']) && isset($_GET['userid'])) {
 		}
 
 		if (strlen($Data2) > $MaxFileSize || image_height($FileType, $Data2) > $MaxImageHeight) {
-			require_once(SERVER_ROOT.'/classes/mysql.class.php');
+			 
 			require_once(SERVER_ROOT.'/classes/time.class.php');
-			$DBURL = db_string($URL);
+			$DBURL = \Gazelle\Util\Db::string($URL);
 			$AdminComment = ucfirst($TypeName)." reset automatically (Size: ".number_format((strlen($Data)) / 1024)." kB, Height: ".$Height."px). Used to be $DBURL";
 			$PrivMessage = SITE_NAME." has the following requirements for {$TypeName}s:\n\n".
 				"[b]".ucfirst($TypeName)."s must not exceed ".($MaxFileSize / 1024)." kB or be vertically longer than {$MaxImageHeight}px.[/b]\n\n".

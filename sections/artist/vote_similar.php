@@ -1,8 +1,8 @@
 <?php
 $UserID = $LoggedUser['ID'];
-$SimilarID = db_string($_GET['similarid']);
-$ArtistID = db_string($_GET['artistid']);
-$Way = db_string($_GET['way']);
+$SimilarID = \Gazelle\Util\Db::string($_GET['similarid']);
+$ArtistID = \Gazelle\Util\Db::string($_GET['artistid']);
+$Way = \Gazelle\Util\Db::string($_GET['way']);
 
 if (!is_number($SimilarID) || !is_number($ArtistID)) {
 	error(404);

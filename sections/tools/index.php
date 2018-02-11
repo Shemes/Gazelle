@@ -150,9 +150,9 @@ switch ($_REQUEST['action']) {
 		if (is_number($_POST['newsid'])) {
 			$DB->query("
 				UPDATE news
-				SET Title = '".db_string($_POST['title'])."',
-					Body = '".db_string($_POST['body'])."'
-				WHERE ID = '".db_string($_POST['newsid'])."'");
+				SET Title = '".\Gazelle\Util\Db::string($_POST['title'])."',
+					Body = '".\Gazelle\Util\Db::string($_POST['body'])."'
+				WHERE ID = '".\Gazelle\Util\Db::string($_POST['newsid'])."'");
 			$Cache->delete_value('news');
 			$Cache->delete_value('feed_news');
 		}
@@ -167,7 +167,7 @@ switch ($_REQUEST['action']) {
 			authorize();
 			$DB->query("
 				DELETE FROM news
-				WHERE ID = '".db_string($_GET['id'])."'");
+				WHERE ID = '".\Gazelle\Util\Db::string($_GET['id'])."'");
 			$Cache->delete_value('news');
 			$Cache->delete_value('feed_news');
 
@@ -188,7 +188,7 @@ switch ($_REQUEST['action']) {
 
 		$DB->query("
 			INSERT INTO news (UserID, Title, Body, Time)
-			VALUES ('$LoggedUser[ID]', '".db_string($_POST['title'])."', '".db_string($_POST['body'])."', '".sqltime()."')");
+			VALUES ('$LoggedUser[ID]', '".\Gazelle\Util\Db::string($_POST['title'])."', '".\Gazelle\Util\Db::string($_POST['body'])."', '".sqltime()."')");
 		$Cache->delete_value('news_latest_id');
 		$Cache->delete_value('news_latest_title');
 		$Cache->delete_value('news');
@@ -252,7 +252,7 @@ switch ($_REQUEST['action']) {
 					SELECT p.ID, p.Name, p.Level, p.Secondary, p.PermittedForums, p.Values, p.DisplayStaff, COUNT(u.ID)
 					FROM permissions AS p
 						LEFT JOIN users_main AS u ON u.PermissionID = p.ID
-					WHERE p.ID = '".db_string($_REQUEST['id'])."'
+					WHERE p.ID = '".\Gazelle\Util\Db::string($_REQUEST['id'])."'
 					GROUP BY p.ID");
 				list($ID, $Name, $Level, $Secondary, $Forums, $Values, $DisplayStaff, $UserCount) = $DB->next_record(MYSQLI_NUM, array(5));
 
@@ -269,7 +269,7 @@ switch ($_REQUEST['action']) {
 					$DB->query("
 						SELECT ID
 						FROM permissions
-						WHERE Level = '".db_string($_REQUEST['level'])."'");
+						WHERE Level = '".\Gazelle\Util\Db::string($_REQUEST['level'])."'");
 					list($DupeCheck)=$DB->next_record();
 
 					if ($DupeCheck) {
@@ -295,28 +295,28 @@ switch ($_REQUEST['action']) {
 					if (!is_numeric($_REQUEST['id'])) {
 						$DB->query("
 							INSERT INTO permissions (Level, Name, Secondary, PermittedForums, `Values`, DisplayStaff)
-							VALUES ('".db_string($Level)."',
-									'".db_string($Name)."',
+							VALUES ('".\Gazelle\Util\Db::string($Level)."',
+									'".\Gazelle\Util\Db::string($Name)."',
 									$Secondary,
-									'".db_string($Forums)."',
-									'".db_string(serialize($Values))."',
-									'".db_string($DisplayStaff)."')");
+									'".\Gazelle\Util\Db::string($Forums)."',
+									'".\Gazelle\Util\Db::string(serialize($Values))."',
+									'".\Gazelle\Util\Db::string($DisplayStaff)."')");
 					} else {
 						$DB->query("
 							UPDATE permissions
-							SET Level = '".db_string($Level)."',
-								Name = '".db_string($Name)."',
+							SET Level = '".\Gazelle\Util\Db::string($Level)."',
+								Name = '".\Gazelle\Util\Db::string($Name)."',
 								Secondary = $Secondary,
-								PermittedForums = '".db_string($Forums)."',
-								`Values` = '".db_string(serialize($Values))."',
-								DisplayStaff = '".db_string($DisplayStaff)."'
-							WHERE ID = '".db_string($_REQUEST['id'])."'");
+								PermittedForums = '".\Gazelle\Util\Db::string($Forums)."',
+								`Values` = '".\Gazelle\Util\Db::string(serialize($Values))."',
+								DisplayStaff = '".\Gazelle\Util\Db::string($DisplayStaff)."'
+							WHERE ID = '".\Gazelle\Util\Db::string($_REQUEST['id'])."'");
 						$Cache->delete_value('perm_'.$_REQUEST['id']);
 						if ($Secondary) {
 							$DB->query("
 								SELECT DISTINCT UserID
 								FROM users_levels
-								WHERE PermissionID = ".db_string($_REQUEST['id']));
+								WHERE PermissionID = ".\Gazelle\Util\Db::string($_REQUEST['id']));
 							while ($UserID = $DB->next_record()) {
 								$Cache->delete_value("user_info_heavy_$UserID");
 							}
@@ -334,22 +334,22 @@ switch ($_REQUEST['action']) {
 			if (!empty($_REQUEST['removeid'])) {
 				$DB->query("
 					DELETE FROM permissions
-					WHERE ID = '".db_string($_REQUEST['removeid'])."'");
+					WHERE ID = '".\Gazelle\Util\Db::string($_REQUEST['removeid'])."'");
 				$DB->query("
 					SELECT UserID
 					FROM users_levels
-					WHERE PermissionID = '".db_string($_REQUEST['removeid'])."'");
+					WHERE PermissionID = '".\Gazelle\Util\Db::string($_REQUEST['removeid'])."'");
 				while (list($UserID) = $DB->next_record()) {
 					$Cache->delete_value("user_info_$UserID");
 					$Cache->delete_value("user_info_heavy_$UserID");
 				}
 				$DB->query("
 					DELETE FROM users_levels
-					WHERE PermissionID = '".db_string($_REQUEST['removeid'])."'");
+					WHERE PermissionID = '".\Gazelle\Util\Db::string($_REQUEST['removeid'])."'");
 				$DB->query("
 					SELECT ID
 					FROM users_main
-					WHERE PermissionID = '".db_string($_REQUEST['removeid'])."'");
+					WHERE PermissionID = '".\Gazelle\Util\Db::string($_REQUEST['removeid'])."'");
 				while (list($UserID) = $DB->next_record()) {
 					$Cache->delete_value("user_info_$UserID");
 					$Cache->delete_value("user_info_heavy_$UserID");
@@ -357,7 +357,7 @@ switch ($_REQUEST['action']) {
 				$DB->query("
 					UPDATE users_main
 					SET PermissionID = '".USER."'
-					WHERE PermissionID = '".db_string($_REQUEST['removeid'])."'");
+					WHERE PermissionID = '".\Gazelle\Util\Db::string($_REQUEST['removeid'])."'");
 
 				$Cache->delete_value('classes');
 			}

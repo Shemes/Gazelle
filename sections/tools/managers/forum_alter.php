@@ -4,7 +4,7 @@ authorize();
 if (!check_perms('admin_manage_forums')) {
 	error(403);
 }
-$P = db_array($_POST);
+$P = \Gazelle\Util\Db::array($_POST);
 if ($_POST['submit'] == 'Delete') { //Delete
 	if (!is_number($_POST['id']) || $_POST['id'] == '') {
 		error(0);

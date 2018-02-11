@@ -13,7 +13,7 @@ authorize();
 
 
 //Don't escape: Log message, Admin message
-$Escaped = db_array($_POST, array('log_message', 'admin_message', 'raw_name'));
+$Escaped = \Gazelle\Util\Db::array($_POST, array('log_message', 'admin_message', 'raw_name'));
 
 //If we're here from the delete torrent page instead of the reports page.
 if (!isset($Escaped['from_delete'])) {
@@ -286,7 +286,7 @@ if ($DB->affected_rows() > 0 || !$Report) {
 		if ($Upload) {
 			//They removed upload
 			$AdminComment .= 'Upload privileges removed by '.$LoggedUser['Username'];
-			$AdminComment .= "\nReason: Uploader of torrent ($TorrentID) ".db_string($RawName).' which was resolved with the preset: '.$ResolveType['title'].". (Report ID: $ReportID)";
+			$AdminComment .= "\nReason: Uploader of torrent ($TorrentID) ".\Gazelle\Util\Db::string($RawName).' which was resolved with the preset: '.$ResolveType['title'].". (Report ID: $ReportID)";
 		}
 		if ($Escaped['admin_message']) {
 			//They did nothing of note, but still want to mark it (Or upload and mark)
@@ -297,8 +297,8 @@ if ($DB->affected_rows() > 0 || !$Report) {
 
 			$DB->query("
 				UPDATE users_info
-				SET AdminComment = CONCAT('".db_string($AdminComment)."', AdminComment)
-				WHERE UserID = '".db_string($UploaderID)."'");
+				SET AdminComment = CONCAT('".\Gazelle\Util\Db::string($AdminComment)."', AdminComment)
+				WHERE UserID = '".\Gazelle\Util\Db::string($UploaderID)."'");
 		}
 	}
 
@@ -345,7 +345,7 @@ if ($DB->affected_rows() > 0 || !$Report) {
 			UPDATE reportsv2
 			SET
 				Type = '".$Escaped['resolve_type']."',
-				LogMessage = '".db_string($Log)."',
+				LogMessage = '".\Gazelle\Util\Db::string($Log)."',
 				ModComment = '".$Escaped['comment']."'
 			WHERE ID = $ReportID");
 	}

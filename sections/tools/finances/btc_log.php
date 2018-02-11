@@ -21,8 +21,8 @@ if (!empty($AfterDate) && !empty($BeforeDate)) {
 	if (!checkdate($M, $D, $Y)) {
 		error('Incorrect "before" date format');
 	}
-	$AfterDate = db_string($AfterDate);
-	$BeforeDate = db_string($BeforeDate);
+	$AfterDate = \Gazelle\Util\Db::string($AfterDate);
+	$BeforeDate = \Gazelle\Util\Db::string($BeforeDate);
 	$DateSearch = true;
 }
 
@@ -44,12 +44,12 @@ $SQL = "
 
 if (!empty($_GET['email'])) {
 	$SQL .= "
-	$Operator d.Email LIKE '%".db_string($_GET['email'])."%' ";
+	$Operator d.Email LIKE '%".\Gazelle\Util\Db::string($_GET['email'])."%' ";
 	$Operator = "AND";
 }
 if (!empty($_GET['username'])) {
 	$SQL .= "
-	$Operator m.Username LIKE '%".db_string($_GET['username'])."%' ";
+	$Operator m.Username LIKE '%".\Gazelle\Util\Db::string($_GET['username'])."%' ";
 	$Operator = "AND";
 }
 if ($DateSearch) {

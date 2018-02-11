@@ -19,7 +19,7 @@ if (isset($_POST['name'])) {
 	$DB->query("
 		SELECT ID, Deleted
 		FROM collages
-		WHERE Name = '".db_string($_POST['name'])."'
+		WHERE Name = '".\Gazelle\Util\Db::string($_POST['name'])."'
 			AND ID != '$CollageID'
 		LIMIT 1");
 	if ($DB->has_results()) {
@@ -41,7 +41,7 @@ foreach ($TagList as $ID => $Tag) {
 }
 $TagList = implode(' ', $TagList);
 
-$Updates = array("Description='".db_string($_POST['description'])."', TagList='".db_string($TagList)."'");
+$Updates = array("Description='".\Gazelle\Util\Db::string($_POST['description'])."', TagList='".\Gazelle\Util\Db::string($TagList)."'");
 
 if (!check_perms('site_collages_delete') && ($CategoryID == 0 && $UserID == $LoggedUser['ID'] && check_perms('site_collages_renamepersonal'))) {
 	if (!stristr($_POST['name'], $LoggedUser['Username'])) {
@@ -59,7 +59,7 @@ if (isset($_POST['featured']) && $CategoryID == 0 && (($LoggedUser['ID'] == $Use
 }
 
 if (check_perms('site_collages_delete') || ($CategoryID == 0 && $UserID == $LoggedUser['ID'] && check_perms('site_collages_renamepersonal'))) {
-	$Updates[] = "Name = '".db_string($_POST['name'])."'";
+	$Updates[] = "Name = '".\Gazelle\Util\Db::string($_POST['name'])."'";
 }
 
 if (isset($_POST['category']) && !empty($CollageCats[$_POST['category']]) && $_POST['category'] != $CategoryID && ($_POST['category'] != 0 || check_perms('site_collages_delete'))) {

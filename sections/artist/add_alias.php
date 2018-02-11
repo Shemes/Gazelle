@@ -7,7 +7,7 @@ if (!check_perms('torrents_edit')) {
 $ArtistID = $_POST['artistid'];
 $Redirect = $_POST['redirect'];
 $AliasName = Artists::normalise_artist_name($_POST['name']);
-$DBAliasName = db_string($AliasName);
+$DBAliasName = \Gazelle\Util\Db::string($AliasName);
 if (!$Redirect) {
 	$Redirect = 0;
 }
@@ -84,7 +84,7 @@ if (!$CloneAliasID) {
 		WHERE ArtistID = $ArtistID");
 	list($ArtistName) = $DB->next_record(MYSQLI_NUM, false);
 
-	Misc::write_log("The alias $AliasID ($DBAliasName) was added to the artist $ArtistID (".db_string($ArtistName).') by user '.$LoggedUser['ID'].' ('.$LoggedUser['Username'].')');
+	Misc::write_log("The alias $AliasID ($DBAliasName) was added to the artist $ArtistID (".\Gazelle\Util\Db::string($ArtistName).') by user '.$LoggedUser['ID'].' ('.$LoggedUser['Username'].')');
 }
 
 $Location = (empty($_SERVER['HTTP_REFERER'])) ? "artist.php?action=edit&artistid={$ArtistID}" : $_SERVER['HTTP_REFERER'];

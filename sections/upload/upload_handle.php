@@ -279,17 +279,17 @@ if ($Type == 'Music') {
                         $Err = 'Missing format for extra torrent.';
                         break;
                     } else {
-                        $ExtraTorrents[$ExtraTorrentName]['Format'] = db_string(trim($ExtraFormat));
+                        $ExtraTorrents[$ExtraTorrentName]['Format'] = \Gazelle\Util\Db::string(trim($ExtraFormat));
                     }
                     $ExtraBitrate = $_POST['extra_bitrate'][$j];
                     if (empty($ExtraBitrate)) {
                         $Err = 'Missing bitrate for extra torrent.';
                         break;
                     } else {
-                        $ExtraTorrents[$ExtraTorrentName]['Encoding'] = db_string(trim($ExtraBitrate));
+                        $ExtraTorrents[$ExtraTorrentName]['Encoding'] = \Gazelle\Util\Db::string(trim($ExtraBitrate));
                     }
                     $ExtraReleaseDescription = $_POST['extra_release_desc'][$j];
-                    $ExtraTorrents[$ExtraTorrentName]['TorrentDescription'] = db_string(trim($ExtraReleaseDescription));
+                    $ExtraTorrents[$ExtraTorrentName]['TorrentDescription'] = \Gazelle\Util\Db::string(trim($ExtraReleaseDescription));
                     $DupeNames[] = $ExtraFile['name'];
                 }
             }
@@ -362,7 +362,7 @@ ImageTools::blacklisted($Properties['Image']);
 // Shorten and escape $Properties for database input
 $T = array();
 foreach ($Properties as $Key => $Value) {
-	$T[$Key] = "'".db_string(trim($Value))."'";
+	$T[$Key] = "'".\Gazelle\Util\Db::string(trim($Value))."'";
 	if (!$T[$Key]) {
 		$T[$Key] = null;
 	}
@@ -375,13 +375,13 @@ foreach ($Properties as $Key => $Value) {
 $Tor = new BencodeTorrent($TorrentName, true);
 $PublicTorrent = $Tor->make_private(); // The torrent is now private.
 $UnsourcedTorrent = $Tor->set_source(); // The source is not APL
-$TorEnc = db_string($Tor->encode());
+$TorEnc = \Gazelle\Util\Db::string($Tor->encode());
 $InfoHash = pack('H*', $Tor->info_hash());
 
 $DB->query("
 	SELECT ID
 	FROM torrents
-	WHERE info_hash = '".db_string($InfoHash)."'");
+	WHERE info_hash = '".\Gazelle\Util\Db::string($InfoHash)."'");
 if ($DB->has_results()) {
 	list($ID) = $DB->next_record();
 	$DB->query("
@@ -436,8 +436,8 @@ if (count($TooLongPaths) > 0) {
 	$Names = implode(' <br />', $TooLongPaths);
 	$Err = "The torrent contained one or more files with too long a name:<br /> $Names";
 }
-$FilePath = db_string($DirName);
-$FileString = db_string(implode("\n", $TmpFileList));
+$FilePath = \Gazelle\Util\Db::string($DirName);
+$FileString = \Gazelle\Util\Db::string(implode("\n", $TmpFileList));
 $Debug->set_flag('upload: torrent decoded');
 
 if ($Type == 'Music') {
@@ -480,18 +480,18 @@ if ($Type == 'Music') {
 		}
 
 		// To be stored in the database
-		$ThisInsert['FilePath'] = db_string($ExtraDirName);
-		$ThisInsert['FileString'] = db_string(implode("\n", $ExtraTmpFileList));
+		$ThisInsert['FilePath'] = \Gazelle\Util\Db::string($ExtraDirName);
+		$ThisInsert['FileString'] = \Gazelle\Util\Db::string(implode("\n", $ExtraTmpFileList));
 		$ThisInsert['InfoHash'] = pack('H*', $ExtraTor->info_hash());
 		$ThisInsert['NumFiles'] = count($ExtraFileList);
-		$ThisInsert['TorEnc'] = db_string($ExtraTor->encode());
+		$ThisInsert['TorEnc'] = \Gazelle\Util\Db::string($ExtraTor->encode());
 		$ThisInsert['TotalSize'] = $ExtraTotalSize;
 
 		$Debug->set_flag('upload: torrent decoded');
 		$DB->query("
 			SELECT ID
 			FROM torrents
-			WHERE info_hash = '" . db_string($ThisInsert['InfoHash']) . "'");
+			WHERE info_hash = '" . \Gazelle\Util\Db::string($ThisInsert['InfoHash']) . "'");
 		if ($DB->has_results()) {
 			list($ExtraID) = $DB->next_record();
 			$DB->query("
@@ -550,7 +550,7 @@ if ($Type == 'Music') {
 			$Properties['TagList'] = str_replace(array(' ', '.', '_'), array(', ', '.', '.'), $Properties['TagList']);
 			if (!$Properties['Image'] && $WikiImage) {
 				$Properties['Image'] = $WikiImage;
-				$T['Image'] = "'".db_string($WikiImage)."'";
+				$T['Image'] = "'".\Gazelle\Util\Db::string($WikiImage)."'";
 			}
 			if (strlen($WikiBody) > strlen($Body)) {
 				$Body = $WikiBody;
@@ -573,7 +573,7 @@ if ($Type == 'Music') {
 					FROM torrents_group AS tg
 						LEFT JOIN torrents_artists AS ta ON ta.GroupID = tg.ID
 						LEFT JOIN artists_group AS ag ON ta.ArtistID = ag.ArtistID
-					WHERE ag.Name = '".db_string($Artist['name'])."'
+					WHERE ag.Name = '".\Gazelle\Util\Db::string($Artist['name'])."'
 						AND tg.Name = ".$T['Title']."
 						AND tg.ReleaseType = ".$T['ReleaseType']."
 						AND tg.Year = ".$T['Year']);
@@ -582,7 +582,7 @@ if ($Type == 'Music') {
 					list($GroupID, $WikiImage, $WikiBody, $RevisionID) = $DB->next_record();
 					if (!$Properties['Image'] && $WikiImage) {
 						$Properties['Image'] = $WikiImage;
-						$T['Image'] = "'".db_string($WikiImage)."'";
+						$T['Image'] = "'".\Gazelle\Util\Db::string($WikiImage)."'";
 					}
 					if (strlen($WikiBody) > strlen($Body)) {
 						$Body = $WikiBody;
@@ -603,7 +603,7 @@ if ($Type == 'Music') {
 							Name,
 							Redirect
 						FROM artists_alias
-						WHERE Name = '".db_string($Artist['name'])."'");
+						WHERE Name = '".\Gazelle\Util\Db::string($Artist['name'])."'");
 					if ($DB->has_results()) {
 						while (list($ArtistID, $AliasID, $AliasName, $Redirect) = $DB->next_record(MYSQLI_NUM, false)) {
 							if (!strcasecmp($Artist['name'], $AliasName)) {
@@ -640,14 +640,14 @@ if (!$GroupID && $Type == 'Music') {
 					// Create artist
 					$DB->query("
 						INSERT INTO artists_group (Name)
-						VALUES ('".db_string($Artist['name'])."')");
+						VALUES ('".\Gazelle\Util\Db::string($Artist['name'])."')");
 					$ArtistID = $DB->inserted_id();
 
 					$Cache->increment('stats_artist_count');
 
 					$DB->query("
 						INSERT INTO artists_alias (ArtistID, Name)
-						VALUES ($ArtistID, '".db_string($Artist['name'])."')");
+						VALUES ($ArtistID, '".\Gazelle\Util\Db::string($Artist['name'])."')");
 					$AliasID = $DB->inserted_id();
 
 					$ArtistForm[$Importance][$Num] = array('id' => $ArtistID, 'aliasid' => $AliasID, 'name' => $Artist['name']);
@@ -665,7 +665,7 @@ if (!$GroupID) {
 		INSERT INTO torrents_group
 			(ArtistID, CategoryID, Name, Year, RecordLabel, CatalogueNumber, Time, WikiBody, WikiImage, ReleaseType, VanityHouse)
 		VALUES
-			(0, $TypeID, ".$T['Title'].", $T[Year], $T[RecordLabel], $T[CatalogueNumber], '".sqltime()."', '".db_string($Body)."', $T[Image], $T[ReleaseType], $T[VanityHouse])");
+			(0, $TypeID, ".$T['Title'].", $T[Year], $T[RecordLabel], $T[CatalogueNumber], '".sqltime()."', '".\Gazelle\Util\Db::string($Body)."', $T[Image], $T[ReleaseType], $T[VanityHouse])");
 	$GroupID = $DB->inserted_id();
 	if ($Type == 'Music') {
 		foreach ($ArtistForm as $Importance => $Artists) {
@@ -782,7 +782,7 @@ $DB->query("
 	VALUES
 		($GroupID, $LoggedUser[ID], $T[Media], $T[Format], $T[Encoding],
 		$T[Remastered], $T[RemasterYear], $T[RemasterTitle], $T[RemasterRecordLabel], $T[RemasterCatalogueNumber],
-		$T[Scene], '$HasLog', '$HasCue', '$LogInDB', '$LogScore', '$LogChecksum','".db_string($InfoHash)."', $NumFiles, '$FileString', 
+		$T[Scene], '$HasLog', '$HasCue', '$LogInDB', '$LogScore', '$LogChecksum','".\Gazelle\Util\Db::string($InfoHash)."', $NumFiles, '$FileString', 
 		'$FilePath', $TotalSize, '".sqltime()."', $T[TorrentDescription], '$T[FreeLeech]', '$T[FreeLeechType]')");
 
 $Cache->increment('stats_torrent_count');
@@ -800,7 +800,7 @@ $Cache->cache_value("torrent_{$TorrentID}_lock", true, 600);
 
 foreach ($LogScores as $Pos => $Log) {
 	list($Score, $Details, $Checksum, $Text, $FileName) = $Log;
-	$DB->query("INSERT INTO torrents_logs (`TorrentID`, `Log`, `Details`, `Score`, `Checksum`, `FileName`) VALUES ($TorrentID, '".db_string($Text)."', '".db_string($Details)."', $Score, '".enum_boolean($Checksum)."', '".db_string($FileName)."')"); //set log scores
+	$DB->query("INSERT INTO torrents_logs (`TorrentID`, `Log`, `Details`, `Score`, `Checksum`, `FileName`) VALUES ($TorrentID, '".\Gazelle\Util\Db::string($Text)."', '".\Gazelle\Util\Db::string($Details)."', $Score, '".\Gazelle\Util\Db::enum_boolean($Checksum)."', '".\Gazelle\Util\Db::string($FileName)."')"); //set log scores
 	$LogID = $DB->inserted_id();
 	if (move_uploaded_file($_FILES['logfiles']['tmp_name'][$Pos], SERVER_ROOT . "/logs/{$TorrentID}_{$LogID}.log") === false) {
 		die("Could not copy logfile to the server.");
@@ -913,7 +913,7 @@ foreach ($ExtraTorrentsInsert as $ExtraTorrent) {
 	VALUES
 		($GroupID, $LoggedUser[ID], $T[Media], '$ExtraTorrent[Format]', '$ExtraTorrent[Encoding]',
 		$T[Remastered], $T[RemasterYear], $T[RemasterTitle], $T[RemasterRecordLabel], $T[RemasterCatalogueNumber],
-		$ExtraHasLog, $ExtraHasCue, '".db_string($ExtraTorrent['InfoHash'])."', $ExtraTorrent[NumFiles],
+		$ExtraHasLog, $ExtraHasCue, '".\Gazelle\Util\Db::string($ExtraTorrent['InfoHash'])."', $ExtraTorrent[NumFiles],
 		'$ExtraTorrent[FileString]', '$ExtraTorrent[FilePath]', $ExtraTorrent[TotalSize], '".sqltime()."',
 		'$ExtraTorrent[TorrentDescription]', $LogScore, '$T[FreeLeech]', '$T[FreeLeechType]')");
 
@@ -1004,7 +1004,7 @@ if ($Properties['LibraryImage'] != '') {
 		INSERT INTO reportsv2
 			(ReporterID, TorrentID, Type, UserComment, Status, ReportedTime, Track, Image, ExtraID, Link)
 		VALUES
-			(0, $TorrentID, 'library', '".db_string(($Properties['MultiDisc'] ? 'Multi-disc' : ''))."', 'New', '".sqltime()."', '', '".db_string($Properties['LibraryImage'])."', '', '')");
+			(0, $TorrentID, 'library', '".\Gazelle\Util\Db::string(($Properties['MultiDisc'] ? 'Multi-disc' : ''))."', 'New', '".sqltime()."', '', '".\Gazelle\Util\Db::string($Properties['LibraryImage'])."', '', '')");
 }
 
 //******************************************************************************//
@@ -1081,9 +1081,9 @@ if (!empty($ArtistsUnescaped)) {
 	foreach ($ArtistsUnescaped as $Importance => $Artists) {
 		foreach ($Artists as $Artist) {
 			if ($Importance == 1 || $Importance == 4 || $Importance == 5 || $Importance == 6) {
-				$ArtistNameList[] = "Artists LIKE '%|".db_string(str_replace('\\', '\\\\', $Artist['name']), true)."|%'";
+				$ArtistNameList[] = "Artists LIKE '%|".\Gazelle\Util\Db::string(str_replace('\\', '\\\\', $Artist['name']), true)."|%'";
 			} else {
-				$GuestArtistNameList[] = "Artists LIKE '%|".db_string(str_replace('\\', '\\\\', $Artist['name']), true)."|%'";
+				$GuestArtistNameList[] = "Artists LIKE '%|".\Gazelle\Util\Db::string(str_replace('\\', '\\\\', $Artist['name']), true)."|%'";
 			}
 		}
 	}
@@ -1110,18 +1110,18 @@ reset($Tags);
 $TagSQL = array();
 $NotTagSQL = array();
 foreach ($Tags as $Tag) {
-	$TagSQL[] = " Tags LIKE '%|".db_string(trim($Tag))."|%' ";
-	$NotTagSQL[] = " NotTags LIKE '%|".db_string(trim($Tag))."|%' ";
+	$TagSQL[] = " Tags LIKE '%|".\Gazelle\Util\Db::string(trim($Tag))."|%' ";
+	$NotTagSQL[] = " NotTags LIKE '%|".\Gazelle\Util\Db::string(trim($Tag))."|%' ";
 }
 $TagSQL[] = "Tags = ''";
 $SQL .= implode(' OR ', $TagSQL);
 
 $SQL .= ") AND !(".implode(' OR ', $NotTagSQL).')';
 
-$SQL .= " AND (Categories LIKE '%|".db_string(trim($Type))."|%' OR Categories = '') ";
+$SQL .= " AND (Categories LIKE '%|".\Gazelle\Util\Db::string(trim($Type))."|%' OR Categories = '') ";
 
 if ($Properties['ReleaseType']) {
-	$SQL .= " AND (ReleaseTypes LIKE '%|".db_string(trim($ReleaseTypes[$Properties['ReleaseType']]))."|%' OR ReleaseTypes = '') ";
+	$SQL .= " AND (ReleaseTypes LIKE '%|".\Gazelle\Util\Db::string(trim($ReleaseTypes[$Properties['ReleaseType']]))."|%' OR ReleaseTypes = '') ";
 } else {
 	$SQL .= " AND (ReleaseTypes = '') ";
 }
@@ -1134,19 +1134,19 @@ if ($Properties['ReleaseType']) {
 
 
 if ($Properties['Format']) {
-	$SQL .= " AND (Formats LIKE '%|".db_string(trim($Properties['Format']))."|%' OR Formats = '') ";
+	$SQL .= " AND (Formats LIKE '%|".\Gazelle\Util\Db::string(trim($Properties['Format']))."|%' OR Formats = '') ";
 } else {
 	$SQL .= " AND (Formats = '') ";
 }
 
 if ($_POST['bitrate']) {
-	$SQL .= " AND (Encodings LIKE '%|".db_string(trim($_POST['bitrate']))."|%' OR Encodings = '') ";
+	$SQL .= " AND (Encodings LIKE '%|".\Gazelle\Util\Db::string(trim($_POST['bitrate']))."|%' OR Encodings = '') ";
 } else {
 	$SQL .= " AND (Encodings = '') ";
 }
 
 if ($Properties['Media']) {
-	$SQL .= " AND (Media LIKE '%|".db_string(trim($Properties['Media']))."|%' OR Media = '') ";
+	$SQL .= " AND (Media LIKE '%|".\Gazelle\Util\Db::string(trim($Properties['Media']))."|%' OR Media = '') ";
 } else {
 	$SQL .= " AND (Media = '') ";
 }
@@ -1157,8 +1157,8 @@ $SQL .= "AND ((NewGroupsOnly = '0' ";
 $SQL .= ") OR ( NewGroupsOnly = '1' ";
 // Test the filter doesn't match any previous formatbitrate in the group
 foreach ($UsedFormatBitrates as $UsedFormatBitrate) {
-	$FormatReq = "(Formats LIKE '%|".db_string($UsedFormatBitrate['format'])."|%' OR Formats = '') ";
-	$BitrateReq = "(Encodings LIKE '%|".db_string($UsedFormatBitrate['bitrate'])."|%' OR Encodings = '') ";
+	$FormatReq = "(Formats LIKE '%|".\Gazelle\Util\Db::string($UsedFormatBitrate['format'])."|%' OR Formats = '') ";
+	$BitrateReq = "(Encodings LIKE '%|".\Gazelle\Util\Db::string($UsedFormatBitrate['bitrate'])."|%' OR Encodings = '') ";
 	$SQL .= "AND (NOT($FormatReq AND $BitrateReq)) ";
 }
 
@@ -1166,11 +1166,11 @@ $SQL .= '))';
 
 
 if ($Properties['Year'] && $Properties['RemasterYear']) {
-	$SQL .= " AND (('".db_string(trim($Properties['Year']))."' BETWEEN FromYear AND ToYear)
-			OR ('".db_string(trim($Properties['RemasterYear']))."' BETWEEN FromYear AND ToYear)
+	$SQL .= " AND (('".\Gazelle\Util\Db::string(trim($Properties['Year']))."' BETWEEN FromYear AND ToYear)
+			OR ('".\Gazelle\Util\Db::string(trim($Properties['RemasterYear']))."' BETWEEN FromYear AND ToYear)
 			OR (FromYear = 0 AND ToYear = 0)) ";
 } elseif ($Properties['Year'] || $Properties['RemasterYear']) {
-	$SQL .= " AND (('".db_string(trim(Max($Properties['Year'],$Properties['RemasterYear'])))."' BETWEEN FromYear AND ToYear)
+	$SQL .= " AND (('".\Gazelle\Util\Db::string(trim(Max($Properties['Year'],$Properties['RemasterYear'])))."' BETWEEN FromYear AND ToYear)
 			OR (FromYear = 0 AND ToYear = 0)) ";
 } else {
 	$SQL .= " AND (FromYear = 0 AND ToYear = 0) ";

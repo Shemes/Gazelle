@@ -14,7 +14,7 @@ class Requests {
 				JOIN requests_tags AS rt ON t.ID = rt.TagID
 			WHERE rt.RequestID = $RequestID");
 		$TagList = G::$DB->collect(0, false);
-		$TagList = db_string(implode(' ', $TagList));
+		$TagList = \Gazelle\Util\Db::string(implode(' ', $TagList));
 
 		G::$DB->query("
 			REPLACE INTO sphinx_requests_delta (

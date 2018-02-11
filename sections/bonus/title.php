@@ -28,7 +28,7 @@ elseif (isset($_POST['confirm'])) {
 		error('You cannot afford this item.');
 	}
 	$Title = ($BBCode === 'true') ? Text::full_format($_POST['title']) : Text::strip_bbcode($_POST['title']);
-	G::$DB->query("UPDATE users_main SET Title='".db_string($Title)."', BonusPoints=BonusPoints - {$Price} WHERE ID={$ID}");
+	G::$DB->query("UPDATE users_main SET Title='".\Gazelle\Util\Db::string($Title)."', BonusPoints=BonusPoints - {$Price} WHERE ID={$ID}");
 	G::$Cache->delete_value("user_info_{$ID}");
 	G::$Cache->delete_value("user_stats_{$ID}");
 	header('Location: bonus.php?complete');

@@ -102,10 +102,10 @@ class SiteHistory {
 	public static function get_events($Month, $Year, $Title, $Category, $SubCategory, $Tags, $Limit) {
 		$Month = (int)$Month;
 		$Year = (int)$Year;
-		$Title = db_string($Title);
+		$Title = \Gazelle\Util\Db::string($Title);
 		$Category = (int)$Category;
 		$SubCategory = (int)$SubCategory;
-		$Tags = db_string($Tags);
+		$Tags = \Gazelle\Util\Db::string($Tags);
 		$Limit = (int)$Limit;
 		$Where = array();
 		if (!empty($Month)) {
@@ -169,18 +169,18 @@ class SiteHistory {
 				error("Error");
 			}
 		}
-		$Title = db_string($Title);
-		$Link = db_string($Link);
+		$Title = \Gazelle\Util\Db::string($Title);
+		$Link = \Gazelle\Util\Db::string($Link);
 		$Category = (int)$Category;
 		$SubCategory = (int)$SubCategory;
-		$Tags = db_string(strtolower((preg_replace('/\s+/', '', $Tags))));
+		$Tags = \Gazelle\Util\Db::string(strtolower((preg_replace('/\s+/', '', $Tags))));
 		$ExplodedTags = explode(',', $Tags);
 		foreach ($ExplodedTags as $Tag) {
 			if (!in_array($Tag, self::get_tags())) {
 				error("Invalid tag");
 			}
 		}
-		$Body = db_string($Body);
+		$Body = \Gazelle\Util\Db::string($Body);
 		$UserID = (int)$UserID;
 
 		if (empty($Title) || empty($Category) || empty($SubCategory)) {
@@ -201,25 +201,25 @@ class SiteHistory {
 		if (empty($Date)) {
 			$Date = sqltime();
 		} else {
-			$Date = db_string($Date);
+			$Date = \Gazelle\Util\Db::string($Date);
 			list($Y, $M, $D) = explode('-', $Date);
 			if (!checkdate($M, $D, $Y)) {
 				error("Error");
 			}
 		}
 		$ID = (int)$ID;
-		$Title = db_string($Title);
-		$Link = db_string($Link);
+		$Title = \Gazelle\Util\Db::string($Title);
+		$Link = \Gazelle\Util\Db::string($Link);
 		$Category = (int)$Category;
 		$SubCategory = (int)$SubCategory;
-		$Tags = db_string(strtolower((preg_replace('/\s+/', '', $Tags))));
+		$Tags = \Gazelle\Util\Db::string(strtolower((preg_replace('/\s+/', '', $Tags))));
 		$ExplodedTags = explode(",", $Tags);
 		foreach ($ExplodedTags as $Tag) {
 			if (!in_array($Tag, self::get_tags())) {
 				error("Invalid tag");
 			}
 		}
-		$Body = db_string($Body);
+		$Body = \Gazelle\Util\Db::string($Body);
 		$UserID = (int)$UserID;
 
 		if (empty($ID) || empty($Title) || empty($Category) || empty($SubCategory)) {

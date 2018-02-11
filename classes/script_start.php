@@ -12,6 +12,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require 'config.php'; //The config contains all site wide configuration information
+
 //Deal with dumbasses
 if (isset($_REQUEST['info_hash']) && isset($_REQUEST['peer_id'])) {
     die('d14:failure reason40:Invalid .torrent, try downloading again.e');
@@ -72,7 +73,7 @@ ob_start(); //Start a buffer, mainly in case there is a mysql error
 
 set_include_path(SERVER_ROOT);
 
-require SERVER_ROOT . '/classes/mysql.class.php'; //Require the database wrapper
+ 
 require SERVER_ROOT . '/classes/cache.class.php'; //Require the caching class
 require SERVER_ROOT . '/classes/encrypt.class.php'; //Require the encryption class
 require SERVER_ROOT . '/classes/time.class.php'; //Require the time class
@@ -84,7 +85,7 @@ $Debug = new \Gazelle\Debug;
 $Debug->handle_errors();
 $Debug->set_flag('Debug constructed');
 
-$DB = new DB_MYSQL;
+$DB =  new Gazelle\DBMySQL;
 $Cache = new CACHE($MemcachedServers);
 $Enc = new CRYPT;
 
@@ -208,7 +209,7 @@ if (isset($LoginCookie)) {
 				OperatingSystem = '$OperatingSystem',
 				LastUpdate = '" . sqltime() . "'
 			WHERE UserID = '{$LoggedUser['ID']}'
-				AND SessionID = '" . db_string($SessionID) . "'");
+				AND SessionID = '" . \Gazelle\Util\Db::string($SessionID) . "'");
         $Cache->begin_transaction("users_sessions_$UserID");
         $Cache->delete_row($SessionID);
         $Cache->insert_front($SessionID, [
@@ -246,8 +247,8 @@ if (isset($LoginCookie)) {
             error('Your IP address has been banned.');
         }
 
-        $CurIP = db_string($LoggedUser['IP']);
-        $NewIP = db_string($_SERVER['REMOTE_ADDR']);
+        $CurIP = \Gazelle\Util\Db::string($LoggedUser['IP']);
+        $NewIP = \Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR']);
         $DB->query("
 			UPDATE users_history_ips
 			SET EndTime = '" . sqltime() . "'
@@ -308,7 +309,7 @@ function logout()
         G::$DB->query("
 			DELETE FROM users_sessions
 			WHERE UserID = '" . G::$LoggedUser['ID'] . "'
-				AND SessionID = '" . db_string($SessionID) . "'");
+				AND SessionID = '" . \Gazelle\Util\Db::string($SessionID) . "'");
 
         G::$Cache->begin_transaction('users_sessions_' . G::$LoggedUser['ID']);
         G::$Cache->delete_row($SessionID);

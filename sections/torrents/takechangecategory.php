@@ -10,7 +10,7 @@ if (!check_perms('users_mod')) {
 
 $OldGroupID = $_POST['oldgroupid'];
 $TorrentID = $_POST['torrentid'];
-$Title = db_string(trim($_POST['title']));
+$Title = \Gazelle\Util\Db::string(trim($_POST['title']));
 $OldCategoryID = $_POST['oldcategoryid'];
 $NewCategoryID = $_POST['newcategoryid'];
 if (!is_number($OldGroupID) || !is_number($TorrentID) || !$OldGroupID || !$TorrentID || empty($Title)) {
@@ -19,7 +19,7 @@ if (!is_number($OldGroupID) || !is_number($TorrentID) || !$OldGroupID || !$Torre
 
 switch ($Categories[$NewCategoryID-1]) {
 	case 'Music':
-		$ArtistName = db_string(trim($_POST['artist']));
+		$ArtistName = \Gazelle\Util\Db::string(trim($_POST['artist']));
 		$Year = trim($_POST['year']);
 		$ReleaseType = trim($_POST['releasetype']);
 		if (empty($Year) || empty($ArtistName) || !is_number($Year) || empty($ReleaseType) || !is_number($ReleaseType)) {

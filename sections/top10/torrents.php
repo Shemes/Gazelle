@@ -11,7 +11,7 @@ if (!empty($_GET['advanced']) && check_perms('site_advanced_top10')) {
 		foreach ($Tags as $Tag) {
 			$Tag = preg_replace('/[^a-z0-9_]/', '', $Tag);
 			if ($Tag != '') {
-				$TagWhere[] = "g.TagList REGEXP '[[:<:]]".db_string($Tag)."[[:>:]]'";
+				$TagWhere[] = "g.TagList REGEXP '[[:<:]]".\Gazelle\Util\Db::string($Tag)."[[:>:]]'";
 			}
 		}
 		if (!empty($TagWhere)) {
@@ -25,7 +25,7 @@ if (!empty($_GET['advanced']) && check_perms('site_advanced_top10')) {
 
 	if ($_GET['format']) {
 		if (in_array($_GET['format'], $Formats)) {
-			$Where[] = "t.Format='".db_string($_GET['format'])."'";
+			$Where[] = "t.Format='".\Gazelle\Util\Db::string($_GET['format'])."'";
 		}
 	}
 

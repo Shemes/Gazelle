@@ -28,9 +28,9 @@ if ($_GET['action'] === 'revert') { // if we're reverting to a previous revision
 		error(0);
 	}
 } else { // with edit, the variables are passed with POST
-	$Body = db_string($_POST['body']);
-	$Summary = db_string($_POST['summary']);
-	$Image = db_string($_POST['image']);
+	$Body = \Gazelle\Util\Db::string($_POST['body']);
+	$Summary = \Gazelle\Util\Db::string($_POST['summary']);
+	$Image = \Gazelle\Util\Db::string($_POST['image']);
 	ImageTools::blacklisted($Image);
 	// Trickery
 	if (!preg_match("/^".IMAGE_REGEX."$/i", $Image)) {

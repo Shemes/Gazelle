@@ -50,10 +50,10 @@ if (!isset($_POST['type'])) {
 }
 
 
-$ExtraID = db_string($_POST['otherid']);
+$ExtraID = \Gazelle\Util\Db::string($_POST['otherid']);
 
 if (!empty($_POST['extra'])) {
-	$Extra = db_string($_POST['extra']);
+	$Extra = \Gazelle\Util\Db::string($_POST['extra']);
 } else {
 	$Extra = '';
 }
@@ -67,7 +67,7 @@ $DB->query("
 	SELECT ID
 	FROM reportsv2
 	WHERE TorrentID = $TorrentID
-		AND ReporterID = ".db_string($LoggedUser['ID'])."
+		AND ReporterID = ".\Gazelle\Util\Db::string($LoggedUser['ID'])."
 		AND ReportedTime > '".time_minus(3)."'");
 if ($DB->has_results()) {
 	die();
@@ -77,7 +77,7 @@ $DB->query("
 	INSERT INTO reportsv2
 		(ReporterID, TorrentID, Type, UserComment, Status, ReportedTime, ExtraID)
 	VALUES
-		(".db_string($LoggedUser['ID']).", $TorrentID, '$Type', '$Extra', 'New', '".sqltime()."', '$ExtraID')");
+		(".\Gazelle\Util\Db::string($LoggedUser['ID']).", $TorrentID, '$Type', '$Extra', 'New', '".sqltime()."', '$ExtraID')");
 
 $ReportID = $DB->inserted_id();
 

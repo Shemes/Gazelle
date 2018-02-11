@@ -10,7 +10,7 @@ if (!empty($_GET['table'])) {
 	if (!in_array($_GET['table'], $Tables)) {
 		error(0);
 	}
-	$DB->query('SHOW CREATE TABLE '.db_string($_GET['table']));
+	$DB->query('SHOW CREATE TABLE '.\Gazelle\Util\Db::string($_GET['table']));
 	list(,$Schema) = $DB->next_record(MYSQLI_NUM, false);
 	header('Content-type: text/plain');
 	die($Schema);

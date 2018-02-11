@@ -50,7 +50,7 @@ if (isset($_POST['action'])) {
 	$Cache->commit_transaction(0);
 	$DB->query("
 		UPDATE users_main
-		SET CustomPermissions = '".db_string(serialize($Delta))."'
+		SET CustomPermissions = '".\Gazelle\Util\Db::string(serialize($Delta))."'
 		WHERE ID = '$UserID'");
 } elseif (!empty($Customs)) {
 	$Delta = unserialize($Customs);

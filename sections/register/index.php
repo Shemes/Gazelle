@@ -18,7 +18,7 @@ if (!empty($_REQUEST['confirm'])) {
 	$DB->query("
 		SELECT ID
 		FROM users_main
-		WHERE torrent_pass = '".db_string($_REQUEST['confirm'])."'
+		WHERE torrent_pass = '".\Gazelle\Util\Db::string($_REQUEST['confirm'])."'
 			AND Enabled = '0'");
 	list($UserID) = $DB->next_record();
 
@@ -58,7 +58,7 @@ if (!empty($_REQUEST['confirm'])) {
 			$DB->query("
 				SELECT COUNT(ID)
 				FROM users_main
-				WHERE Username LIKE '".db_string(trim($_POST['username']))."'");
+				WHERE Username LIKE '".\Gazelle\Util\Db::string(trim($_POST['username']))."'");
 			list($UserCount) = $DB->next_record();
 
 			if ($UserCount) {
@@ -70,7 +70,7 @@ if (!empty($_REQUEST['confirm'])) {
 				$DB->query("
 					SELECT InviterID, Email, Reason
 					FROM invites
-					WHERE InviteKey = '".db_string($_REQUEST['invite'])."'");
+					WHERE InviteKey = '".\Gazelle\Util\Db::string($_REQUEST['invite'])."'");
 				if (!$DB->has_results()) {
 					$Err = 'Invite does not exist.';
 					$InviterID = 0;
@@ -109,7 +109,7 @@ if (!empty($_REQUEST['confirm'])) {
 				INSERT INTO users_main
 					(Username, Email, PassHash, torrent_pass, IP, PermissionID, Enabled, Invites, Uploaded, ipcc)
 				VALUES
-					('".db_string(trim($_POST['username']))."', '".db_string($_POST['email'])."', '".db_string(Users::make_password_hash($_POST['password']))."', '".db_string($torrent_pass)."', '".db_string($_SERVER['REMOTE_ADDR'])."', '$Class', '$Enabled', '".STARTING_INVITES."', '3221225472', '$IPcc')");
+					('".\Gazelle\Util\Db::string(trim($_POST['username']))."', '".\Gazelle\Util\Db::string($_POST['email'])."', '".\Gazelle\Util\Db::string(Users::make_password_hash($_POST['password']))."', '".\Gazelle\Util\Db::string($torrent_pass)."', '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."', '$Class', '$Enabled', '".STARTING_INVITES."', '3221225472', '$IPcc')");
 
 			$UserID = $DB->inserted_id();
 
@@ -117,7 +117,7 @@ if (!empty($_REQUEST['confirm'])) {
 			// User created, delete invite. If things break after this point, then it's better to have a broken account to fix than a 'free' invite floating around that can be reused
 			$DB->query("
 				DELETE FROM invites
-				WHERE InviteKey = '".db_string($_REQUEST['invite'])."'");
+				WHERE InviteKey = '".\Gazelle\Util\Db::string($_REQUEST['invite'])."'");
 
 			$DB->query("
 				SELECT ID
@@ -127,19 +127,19 @@ if (!empty($_REQUEST['confirm'])) {
 			$AuthKey = Users::make_secret();
 
 			if ($InviteReason !== '') {
-				$InviteReason = db_string(sqltime()." - $InviteReason");
+				$InviteReason = \Gazelle\Util\Db::string(sqltime()." - $InviteReason");
 			}
 			$DB->query("
 				INSERT INTO users_info
 					(UserID, StyleID, AuthKey, Inviter, JoinDate, AdminComment)
 				VALUES
-					('$UserID', '$StyleID', '".db_string($AuthKey)."', '$InviterID', '".sqltime()."', '$InviteReason')");
+					('$UserID', '$StyleID', '".\Gazelle\Util\Db::string($AuthKey)."', '$InviterID', '".sqltime()."', '$InviteReason')");
 
 			$DB->query("
 				INSERT INTO users_history_ips
 					(UserID, IP, StartTime)
 				VALUES
-					('$UserID', '".db_string($_SERVER['REMOTE_ADDR'])."', '".sqltime()."')");
+					('$UserID', '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."', '".sqltime()."')");
 			$DB->query("
 				INSERT INTO users_notifications_settings
 					(UserID)
@@ -151,14 +151,14 @@ if (!empty($_REQUEST['confirm'])) {
 				INSERT INTO users_history_emails
 					(UserID, Email, Time, IP)
 				VALUES
-					('$UserID', '".db_string($_REQUEST['email'])."', '0000-00-00 00:00:00', '".db_string($_SERVER['REMOTE_ADDR'])."')");
+					('$UserID', '".\Gazelle\Util\Db::string($_REQUEST['email'])."', '0000-00-00 00:00:00', '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."')");
 
 			if ($_REQUEST['email'] != $InviteEmail) {
 				$DB->query("
 					INSERT INTO users_history_emails
 						(UserID, Email, Time, IP)
 					VALUES
-						('$UserID', '".db_string($InviteEmail)."', '".sqltime()."', '".db_string($_SERVER['REMOTE_ADDR'])."')");
+						('$UserID', '".\Gazelle\Util\Db::string($InviteEmail)."', '".sqltime()."', '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."')");
 			}
 
 
@@ -253,7 +253,7 @@ if (!empty($_REQUEST['confirm'])) {
 		$DB->query("
 			SELECT InviteKey
 			FROM invites
-			WHERE InviteKey = '".db_string($_GET['invite'])."'");
+			WHERE InviteKey = '".\Gazelle\Util\Db::string($_GET['invite'])."'");
 		if (!$DB->has_results()) {
 			error('Invite not found!');
 		}

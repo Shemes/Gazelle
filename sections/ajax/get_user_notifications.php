@@ -1,7 +1,7 @@
 <?
 
 $Skip = array();
-$Skip[] = db_string($_GET['skip']);
+$Skip[] = \Gazelle\Util\Db::string($_GET['skip']);
 $NotificationsManager = new NotificationsManager($LoggedUser['ID'], $Skip);
 
 json_die("success", $NotificationsManager->get_notifications());
