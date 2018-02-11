@@ -2,11 +2,10 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 require 'config.php'; //The config contains all site wide configuration information as well as memcached rules
-require SERVER_ROOT . '/classes/cache.class.php'; //Require the caching class
 require SERVER_ROOT . '/classes/encrypt.class.php'; //Require the caching class
 
 $Debug = new Gazelle\Debug;
-$Cache = new CACHE($MemcachedServers); //Load the caching class
+$Cache = new \Gazelle\Cache($MemcachedServers); //Load the caching class
 $Enc = new CRYPT; //Load the encryption class
 
 $SSL = $_SERVER['SERVER_PORT'] === '443';

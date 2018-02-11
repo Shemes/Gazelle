@@ -1,4 +1,6 @@
-<?
+<?php
+
+namespace Gazelle;
 /*************************************************************************|
 |--------------- Caching class -------------------------------------------|
 |*************************************************************************|
@@ -12,7 +14,7 @@ however, this class has page caching functions superior to those of
 memcache.
 
 Also, Memcache::get and Memcache::set have been wrapped by
-CACHE::get_value and CACHE::cache_value. get_value uses the same argument
+\Gazelle\Cache::get_value and \Gazelle\Cache::cache_value. get_value uses the same argument
 as get, but cache_value only takes the key, the value, and the duration
 (no zlib).
 
@@ -28,7 +30,7 @@ if (!extension_loaded('memcached')) {
 	die('memcached Extension not loaded.');
 }
 
-class CACHE extends Memcached {
+class Cache extends \Memcached {
 	/**
 	 * Torrent Group cache version
 	 */
@@ -141,13 +143,13 @@ class CACHE extends Memcached {
 			trigger_error('Cache retrieval failed for empty key');
 		}
 
-		if (!empty($_GET['clearcache']) && $this->CanClear && !isset($this->ClearedKeys[$Key]) && !Misc::in_array_partial($Key, $this->PersistentKeys)) {
+		if (!empty($_GET['clearcache']) && $this->CanClear && !isset($this->ClearedKeys[$Key]) && !\Misc::in_array_partial($Key, $this->PersistentKeys)) {
 			if ($_GET['clearcache'] === '1') {
 				// Because check_perms() isn't true until LoggedUser is pulled from the cache, we have to remove the entries loaded before the LoggedUser data
 				// Because of this, not user cache data will require a secondary pageload following the clearcache to update
 				if (count($this->CacheHits) > 0) {
 					foreach (array_keys($this->CacheHits) as $HitKey) {
-						if (!isset($this->ClearedKeys[$HitKey]) && !Misc::in_array_partial($HitKey, $this->PersistentKeys)) {
+						if (!isset($this->ClearedKeys[$HitKey]) && !\Misc::in_array_partial($HitKey, $this->PersistentKeys)) {
 							$this->delete($HitKey);
 							unset($this->CacheHits[$HitKey]);
 							$this->ClearedKeys[$HitKey] = true;
