@@ -274,6 +274,7 @@ class Time {
 		return date('Y-m-d H:i:s', $timestamp);
 	}
 
+	// NOTE: not in use. Deletable?
 	public static function validDate($date_string) {
 		$date_time = explode(' ', $date_string);
 		if (count($date_time) != 2) {

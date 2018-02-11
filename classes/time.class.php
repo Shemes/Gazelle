@@ -2,10 +2,6 @@
 
 use \Gazelle\Util\Time;
 
-function validDate($DateString) {
-	return Time::validDate($DateString);
-}
-
 function is_valid_date($Date) {
 	return Time::isValidDate($Date);
 }
