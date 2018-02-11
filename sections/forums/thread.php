@@ -456,7 +456,7 @@ foreach ($Thread as $Key => $Post) {
 		<td colspan="<?=Users::has_avatars_enabled() ? 2 : 1?>">
 			<div style="float: left;"><a class="post_id" href="forums.php?action=viewthread&amp;threadid=<?=$ThreadID?>&amp;postid=<?=$PostID?>#post<?=$PostID?>">#<?=$PostID?></a>
 				<?=Users::format_username($AuthorID, true, true, true, true, true, $IsDonorForum); echo "\n";?>
-				<?=time_diff($AddedTime, 2); echo "\n";?>
+				<?=\Gazelle\Util\Time::timeDiff($AddedTime, 2); echo "\n";?>
 				- <a href="#quickpost" id="quote_<?=$PostID?>" onclick="Quote('<?=$PostID?>', '<?=$Username?>', true);" class="brackets">Quote</a>
 <?	if ((!$ThreadInfo['IsLocked'] && Forums::check_forumperm($ForumID, 'Write') && $AuthorID == $LoggedUser['ID']) || check_perms('site_moderate_forums')) { ?>
 				- <a href="#post<?=$PostID?>" onclick="Edit_Form('<?=$PostID?>', '<?=$Key?>');" class="brackets">Edit</a>
@@ -519,7 +519,7 @@ foreach ($Thread as $Key => $Post) {
 				<a href="#content<?=$PostID?>" onclick="LoadEdit('forums', <?=$PostID?>, 1); return false;">&laquo;</a>
 <?		} ?>
 				Last edited by
-				<?=Users::format_username($EditedUserID, false, false, false, false, false, $IsDonorForum) ?> <?=time_diff($EditedTime, 2, true, true)?>
+				<?=Users::format_username($EditedUserID, false, false, false, false, false, $IsDonorForum) ?> <?=\Gazelle\Util\Time::timeDiff($EditedTime, 2, true, true)?>
 <?	} ?>
 			</div>
 		</td>
@@ -564,7 +564,7 @@ if (check_perms('site_moderate_forums')) {
 <?
 	foreach ($Notes as $Note) {
 ?>
-			<tr><td><?=Users::format_username($Note['AuthorID'])?> (<?=time_diff($Note['AddedTime'], 2, true, true)?>)</td><td><?=Text::full_format($Note['Body'])?></td></tr>
+			<tr><td><?=Users::format_username($Note['AuthorID'])?> (<?=\Gazelle\Util\Time::timeDiff($Note['AddedTime'], 2, true, true)?>)</td><td><?=Text::full_format($Note['Body'])?></td></tr>
 <?
 	}
 ?>

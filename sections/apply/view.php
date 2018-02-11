@@ -75,7 +75,7 @@ if ($IS_STAFF) {
 				<input type="hidden" name="auth" value="<?= $LoggedUser['AuthKey'] ?>"/>
 			</form>
 		</div>
-		<br />Application received from <?= Users::format_username($App->user_id(), true, true, true, true, true, false) ?> received <?= time_diff($App->created(), 2) ?>.
+		<br />Application received from <?= Users::format_username($App->user_id(), true, true, true, true, true, false) ?> received <?= \Gazelle\Util\Time::timeDiff($App->created(), 2) ?>.
 <?  } ?>
 	</div>
 
@@ -94,7 +94,7 @@ if ($IS_STAFF) {
 			<tr class="colhead_dark">
 				<td colspan="2">
 					<div style="float: left; padding-top: 10px;"><?= Users::format_username($note['user_id'], true, true, true, true, true, false) ?>
-					- <?=time_diff($note['created'], 2) ?></div>
+					- <?=\Gazelle\Util\Time::timeDiff($note['created'], 2) ?></div>
 				</td>
 			</tr>
 			<tr>
@@ -173,10 +173,10 @@ if ($IS_STAFF) {
 <?		if ($IS_STAFF) { ?>
 			<td><a href="/user.php?id=<?= $appl['UserID'] ?>"><?= $appl['Username'] ?></a></td>
 <?		} ?>
-			<td><?= time_diff($appl['Created'], 2) ?></td>
+			<td><?= \Gazelle\Util\Time::timeDiff($appl['Created'], 2) ?></td>
 			<td><?= $appl['nr_notes'] ?></td>
 			<td><a href="/user.php?id=<?= $appl['last_UserID'] ?>"><?= $appl['last_Username'] ?></a></td>
-			<td><?= strlen($appl['last_Created']) ? time_diff($appl['last_Created'], 2) : '' ?></td>
+			<td><?= strlen($appl['last_Created']) ? \Gazelle\Util\Time::timeDiff($appl['last_Created'], 2) : '' ?></td>
 		</tr>
 <?	} /* foreach */ ?>
 	</table>

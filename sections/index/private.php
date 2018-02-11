@@ -479,7 +479,7 @@ foreach ($News as $NewsItem) {
 ?>
 		<div id="news<?=$NewsID?>" class="box news_post">
 			<div class="head">
-				<strong><?=Text::full_format($Title)?></strong> <?=time_diff($NewsTime);?>
+				<strong><?=Text::full_format($Title)?></strong> <?=\Gazelle\Util\Time::timeDiff($NewsTime);?>
 <?	if (check_perms('admin_manage_news')) { ?>
 				- <a href="tools.php?action=editnews&amp;id=<?=$NewsID?>" class="brackets">Edit</a>
 <?	} ?>

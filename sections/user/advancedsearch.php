@@ -871,8 +871,8 @@ while (list($UserID, $Username, $Uploaded, $Downloaded, $Snatched, $Invitees, $C
 			<td><?=Format::get_ratio_html($Uploaded, $Downloaded)?></td>
 			<td><?=display_str($IP)?> (<?=Tools::get_country_code_by_ajax($IP)?>)</td>
 			<td><?=display_str($Email)?></td>
-			<td><?=time_diff($JoinDate)?></td>
-			<td><?=time_diff($LastAccess)?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($JoinDate)?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($LastAccess)?></td>
 			<td><?=Format::get_size($Uploaded)?></td>
 			<td><?=Format::get_size($Downloaded)?></td>
 <?			$DB->query("

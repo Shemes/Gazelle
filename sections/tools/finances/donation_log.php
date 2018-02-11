@@ -162,7 +162,7 @@ if (empty($_GET['email']) && empty($_GET['source']) && empty($_GET['username']) 
 			<td><?=display_str($Donation['Email'])?></td>
 			<td><?=display_str($Donation['Source'])?></td>
 			<td><?=display_str($Donation['Reason'])?></td>
-			<td><?=time_diff($Donation['Time'])?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($Donation['Time'])?></td>
 		</tr>
 <?	} ?>
 <tr class="colhead">

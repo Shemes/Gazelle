@@ -6,13 +6,6 @@ function time_ago($TimeStamp) {
 	return Time::timeAgo($TimeStamp);
 }
 
-/*
- * Returns a <span> by default but can optionally return the raw time
- * difference in text (e.g. "16 hours and 28 minutes", "1 day, 18 hours").
- */
-function time_diff($TimeStamp, $Levels = 2, $Span = true, $Lowercase = false, $StartTime = false) {
-	return Time::timeDiff($TimeStamp, $Levels, $Span, $Lowercase, $StartTime);
-}
 
 /**
  * Given a number of hours, convert it to a human readable time of

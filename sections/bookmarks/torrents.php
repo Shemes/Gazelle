@@ -100,7 +100,7 @@ foreach ($GroupIDs as $GroupID) {
 						<a href="#group_<?=$GroupID?>" class="brackets remove_bookmark" onclick="Unbookmark('torrent', <?=$GroupID?>, ''); return false;">Remove bookmark</a>
 						<br />
 <?		} ?>
-						<?=time_diff($AddedTime);?>
+						<?=\Gazelle\Util\Time::timeDiff($AddedTime);?>
 					</span>
 					<div class="tags"><?=$TorrentTags->format()?></div>
 				</td>
@@ -198,7 +198,7 @@ foreach ($GroupIDs as $GroupID) {
 <?		if (!$Sneaky) { ?>
 			<span class="float_right float_clear"><a href="#group_<?=$GroupID?>" class="brackets remove_bookmark" onclick="Unbookmark('torrent', <?=$GroupID?>, ''); return false;">Remove bookmark</a></span>
 <?		} ?>
-			<span class="float_right float_clear"><?=time_diff($AddedTime);?></span>
+			<span class="float_right float_clear"><?=\Gazelle\Util\Time::timeDiff($AddedTime);?></span>
 
 		</td>
 		<td class="number_column nobr"><?=Format::get_size($Torrent['Size'])?></td>

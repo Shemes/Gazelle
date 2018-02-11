@@ -72,10 +72,10 @@ if (isset($_POST['auth'])) {
 							<input style="margin-bottom: 10px;" type="submit" name="edit-<?= $info['id'] ?>" value="Edit" />
 						</div>
 						<?= $title ?> (<?=  $info['published'] ? 'published' : 'archived' ?>)
-						<br />Role created <?= time_diff($info['created'], 2) ?> by
+						<br />Role created <?= \Gazelle\Util\Time::timeDiff($info['created'], 2) ?> by
 						<?=
 							Users::format_username($info['user_id'])
-							. ($info['modified'] == $info['created'] ? '' : ', last modified ' . time_diff($info['modified'], 2))
+							. ($info['modified'] == $info['created'] ? '' : ', last modified ' . \Gazelle\Util\Time::timeDiff($info['modified'], 2))
 						?>.
 					</div>
 				</td>

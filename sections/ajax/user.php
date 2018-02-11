@@ -64,8 +64,8 @@ foreach ($Paranoia as $P) {
 }
 
 // Raw time is better for JSON.
-//$JoinedDate = time_diff($JoinDate);
-//$LastAccess = time_diff($LastAccess);
+//$JoinedDate = \Gazelle\Util\Time::timeDiff($JoinDate);
+//$LastAccess = \Gazelle\Util\Time::timeDiff($LastAccess);
 
 function check_paranoia_here($Setting) {
 	global $Paranoia, $Class, $UserID;

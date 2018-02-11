@@ -163,7 +163,7 @@ echo "\t\t$Pages\n";
 			} ?>
 					</td>
 					<td><?=Users::format_username($SenderID, true, true, true, true)?></td>
-					<td><?=time_diff($Date)?></td>
+					<td><?=\Gazelle\Util\Time::timeDiff($Date)?></td>
 <?			if (check_perms('users_mod')) { ?>
 					<td><?=(($ForwardedID && $ForwardedID != $LoggedUser['ID']) ? Users::format_username($ForwardedID, false, false, false) : '')?></td>
 <?			} ?>

@@ -55,7 +55,7 @@ $DB->query("
 	<tr class="rowa">
 		<td><?=display_str($OldPassKey)?></td>
 		<td><?=display_str($NewPassKey)?></td>
-		<td><?=time_diff($ChangeTime)?></td>
+		<td><?=\Gazelle\Util\Time::timeDiff($ChangeTime)?></td>
 		<td><?=display_str($ChangerIP)?> <a href="user.php?action=search&amp;ip_history=on&amp;ip=<?=display_str($ChangerIP)?>" class="brackets tooltip" title="Search">S</a><br /><?=display_str(Tools::get_host_by_ip($ChangerIP))?></td>
 	</tr>
 <? } ?>

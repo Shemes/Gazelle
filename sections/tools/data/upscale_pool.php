@@ -78,9 +78,9 @@ if ($DB->has_results()) {
 			<td class="number_column"><?=number_format($RequiredRatio, 2)?></td>
 			<td class="number_column"><? if (($Downloaded * $RequiredRatio) > $Uploaded) { echo Format::get_size(($Downloaded * $RequiredRatio) - $Uploaded);} ?></td>
 			<td class="number_column"><?=Format::get_size($Downloaded - $RatioWatchDownload)?></td>
-			<td><?=time_diff($Joined, 2)?></td>
-			<td><?=time_diff($RatioWatchEnds)?></td>
-			<td><?/*time_diff(strtotime($Joined), strtotime($RatioWatchEnds))*/?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($Joined, 2)?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($RatioWatchEnds)?></td>
+			<td><?/*\Gazelle\Util\Time::timeDiff(strtotime($Joined), strtotime($RatioWatchEnds))*/?></td>
 		</tr>
 <?	} ?>
 	</table>

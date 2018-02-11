@@ -56,7 +56,7 @@ while (list($ID, $IP, $UserID, $LastAttempt, $Attempts, $BannedUntil, $Bans) = $
 				<?=$Bans?>
 			</td>
 			<td>
-				<?=time_diff($BannedUntil)?>
+				<?=\Gazelle\Util\Time::timeDiff($BannedUntil)?>
 			</td>
 			<td>
 				<form class="manage_form" name="bans" action="" method="post">

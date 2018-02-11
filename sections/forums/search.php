@@ -340,10 +340,10 @@ while (list($ID, $Title, $ForumID, $ForumName, $LastTime, $PostID, $Body, $Threa
 <?	} ?>
 			</td>
 			<td>
-				<?=time_diff($ThreadCreatedTime)?>
+				<?=\Gazelle\Util\Time::timeDiff($ThreadCreatedTime)?>
 			</td>
 			<td>
-				<?=time_diff($LastTime)?>
+				<?=\Gazelle\Util\Time::timeDiff($LastTime)?>
 			</td>
 		</tr>
 <?	if ($Type == 'body') { ?>

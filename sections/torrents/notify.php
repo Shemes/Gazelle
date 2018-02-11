@@ -328,7 +328,7 @@ if (empty($Results)) {
 			</div>
 		</td>
 		<td><?=$TorrentInfo['FileCount']?></td>
-		<td class="number_column nobr"><?=time_diff($TorrentInfo['Time'])?></td>
+		<td class="number_column nobr"><?=\Gazelle\Util\Time::timeDiff($TorrentInfo['Time'])?></td>
 		<td class="number_column nobr"><?=Format::get_size($TorrentInfo['Size'])?></td>
 		<td class="number_column"><?=number_format($TorrentInfo['Snatched'])?></td>
 		<td class="number_column"><?=number_format($TorrentInfo['Seeders'])?></td>

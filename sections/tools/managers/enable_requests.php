@@ -272,7 +272,7 @@ if ($NumResults > 0) { ?>
             <td><?=display_str($IP)?></td>
             
             <td><?=display_str($UserAgent)?></td>
-            <td><?=time_diff($Timestamp)?></td>
+            <td><?=\Gazelle\Util\Time::timeDiff($Timestamp)?></td>
             <td><?=($BanReason == 3) ? '<b>Inactivity</b>' : 'Other'?></td>
 <?      if (!$HandledTimestamp) { ?>
             <td><input class="inputtext" type="text" id="comment<?=$ID?>" placeholder="Comment" /></td>

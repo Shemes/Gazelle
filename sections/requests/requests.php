@@ -616,7 +616,7 @@ View::show_header($Title, 'requests');
 			</td>
 			<td class="nobr">
 <?		if ($IsFilled) { ?>
-				<a href="torrents.php?<?=(strtotime($Request['TimeFilled']) < $TimeCompare ? 'id=' : 'torrentid=') . $Request['TorrentID']?>"><strong><?=time_diff($Request['TimeFilled'], 1)?></strong></a>
+				<a href="torrents.php?<?=(strtotime($Request['TimeFilled']) < $TimeCompare ? 'id=' : 'torrentid=') . $Request['TorrentID']?>"><strong><?=\Gazelle\Util\Time::timeDiff($Request['TimeFilled'], 1)?></strong></a>
 <?		} else { ?>
 				<strong>No</strong>
 <?		} ?>
@@ -632,10 +632,10 @@ View::show_header($Title, 'requests');
 				<a href="user.php?id=<?=$Request['UserID']?>"><?=Users::format_username($Request['UserID'], false, false, false)?></a>
 			</td>
 			<td class="nobr">
-				<?=time_diff($Request['TimeAdded'], 1)?>
+				<?=\Gazelle\Util\Time::timeDiff($Request['TimeAdded'], 1)?>
 			</td>
 			<td class="nobr">
-				<?=time_diff($Request['LastVote'], 1)?>
+				<?=\Gazelle\Util\Time::timeDiff($Request['LastVote'], 1)?>
 			</td>
 		</tr>
 <?

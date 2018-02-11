@@ -835,7 +835,7 @@ if ($NumRequests > 0) {
 				<span id="bounty_<?=$RequestID?>"><?=Format::get_size($Request['Bounty'])?></span>
 			</td>
 			<td>
-				<?=time_diff($Request['TimeAdded'])?>
+				<?=\Gazelle\Util\Time::timeDiff($Request['TimeAdded'])?>
 			</td>
 		</tr>
 <?	} ?>

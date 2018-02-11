@@ -75,7 +75,7 @@ View::show_header($Title);
 			<td><?=Users::format_username($User['UserID'], false, true, true, false, false, true)?></td>
 			<td><?=$User['Rank']?></td>
 			<td><?=$User['Hidden'] ? "Yes" : "No"?></td>
-			<td><?=time_diff($User['DonationTime'])?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($User['DonationTime'])?></td>
 			<td style="word-wrap: break-word;">
 				<?=$User['IconMouseOverText']?>
 			</td>

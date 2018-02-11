@@ -271,7 +271,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 			<tr>
 				<td class="label">Created</td>
 				<td>
-					<?=time_diff($Request['TimeAdded'])?> by <strong><?=Users::format_username($Request['UserID'], false, false, false)?></strong>
+					<?=\Gazelle\Util\Time::timeDiff($Request['TimeAdded'])?> by <strong><?=Users::format_username($Request['UserID'], false, false, false)?></strong>
 				</td>
 			</tr>
 <?	if ($CategoryName === 'Music') {
@@ -351,7 +351,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 <?	if ($Request['LastVote'] > $Request['TimeAdded']) { ?>
 			<tr>
 				<td class="label">Last voted</td>
-				<td><?=time_diff($Request['LastVote'])?></td>
+				<td><?=\Gazelle\Util\Time::timeDiff($Request['LastVote'])?></td>
 			</tr>
 <?
 	}

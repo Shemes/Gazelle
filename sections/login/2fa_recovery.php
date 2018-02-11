@@ -43,7 +43,7 @@ if (strtotime($BannedUntil) < time()) {
 	<?
 } else {
 	?>
-	<span class="warning">You are banned from logging in for another <?= time_diff($BannedUntil) ?>.</span>
+	<span class="warning">You are banned from logging in for another <?= \Gazelle\Util\Time::timeDiff($BannedUntil) ?>.</span>
 	<?
 }
 

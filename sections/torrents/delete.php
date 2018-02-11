@@ -184,7 +184,7 @@ if (check_perms('admin_reports')) {
 <?		} else { ?>
 						<?=$LinkName?>
 						<a href="torrents.php?action=download&amp;id=<?=$TorrentID?>&amp;authkey=<?=$LoggedUser['AuthKey']?>&amp;torrent_pass=<?=$LoggedUser['torrent_pass']?>" class="brackets tooltip" title="Download">DL</a>
-						uploaded by <a href="user.php?id=<?=$UploaderID?>"><?=$UploaderName?></a> <?=time_diff($Time)?>
+						uploaded by <a href="user.php?id=<?=$UploaderID?>"><?=$UploaderName?></a> <?=\Gazelle\Util\Time::timeDiff($Time)?>
 						<br />
 <?			$DB->query("
 				SELECT r.ID
@@ -227,7 +227,7 @@ if (check_perms('admin_reports')) {
 				while (list($RequestID, $FillerID, $FillerName, $FilledTime) = $DB->next_record()) {
 		?>
 						<div style="text-align: right;">
-							<strong class="important_text"><a href="user.php?id=<?=$FillerID?>"><?=$FillerName?></a> used this torrent to fill <a href="requests.php?action=viewrequest&amp;id=<?=$RequestID?>">this request</a> <?=time_diff($FilledTime)?></strong>
+							<strong class="important_text"><a href="user.php?id=<?=$FillerID?>"><?=$FillerName?></a> used this torrent to fill <a href="requests.php?action=viewrequest&amp;id=<?=$RequestID?>">this request</a> <?=\Gazelle\Util\Time::timeDiff($FilledTime)?></strong>
 						</div>
 <?				}
 			}

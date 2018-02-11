@@ -599,7 +599,7 @@ $ShowGroups = !(!empty($LoggedUser['TorrentGrouping']) && $LoggedUser['TorrentGr
 				<div class="tags"><?=$TorrentTags->format('torrents.php?'.$Action.'&amp;taglist=')?></div>
 			</div>
 		</td>
-		<td class="nobr"><?=time_diff($GroupTime, 1)?></td>
+		<td class="nobr"><?=\Gazelle\Util\Time::timeDiff($GroupTime, 1)?></td>
 		<td class="number_column nobr"><?=Format::get_size($MaxSize)?> (Max)</td>
 		<td class="number_column"><?=number_format($TotalSnatched)?></td>
 		<td class="number_column<?=($TotalSeeders == 0 ? ' r00' : '')?>"><?=number_format($TotalSeeders)?></td>
@@ -664,7 +664,7 @@ $ShowGroups = !(!empty($LoggedUser['TorrentGrouping']) && $LoggedUser['TorrentGr
 			&raquo; <a href="torrents.php?id=<?=$GroupID?>&amp;torrentid=<?=$TorrentID?>"><?=Torrents::torrent_info($Data)?><? if ($Reported) { ?> / <strong class="torrent_label tl_reported">Reported</strong><? } ?></a>
 		</td>
 		<td><?=$Data['FileCount']?></td>
-		<td class="nobr"><?=time_diff($Data['Time'], 1)?></td>
+		<td class="nobr"><?=\Gazelle\Util\Time::timeDiff($Data['Time'], 1)?></td>
 		<td class="number_column nobr"><?=Format::get_size($Data['Size'])?></td>
 		<td class="number_column"><?=number_format($Data['Snatched'])?></td>
 		<td class="number_column<?=($Data['Seeders'] == 0) ? ' r00' : ''?>"><?=number_format($Data['Seeders'])?></td>
@@ -719,7 +719,7 @@ $ShowGroups = !(!empty($LoggedUser['TorrentGrouping']) && $LoggedUser['TorrentGr
 			</div>
 		</td>
 		<td><?=$Data['FileCount']?></td>
-		<td class="nobr"><?=time_diff($Data['Time'], 1)?></td>
+		<td class="nobr"><?=\Gazelle\Util\Time::timeDiff($Data['Time'], 1)?></td>
 		<td class="number_column nobr"><?=Format::get_size($Data['Size'])?></td>
 		<td class="number_column"><?=number_format($Data['Snatched'])?></td>
 		<td class="number_column<?=($Data['Seeders'] == 0) ? ' r00' : ''?>"><?=number_format($Data['Seeders'])?></td>

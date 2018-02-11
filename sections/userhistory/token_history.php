@@ -121,7 +121,7 @@ foreach ($Tokens as $Token) {
 ?>
 	<tr class="<?=($i ? 'rowa' : 'rowb')?>">
 		<td><?=$Name?></td>
-		<td><?=time_diff($Time)?></td>
+		<td><?=\Gazelle\Util\Time::timeDiff($Time)?></td>
 		<td><?=($Expired ? 'Yes' : 'No')?><?=(check_perms('users_mod') && !$Expired) ? " <a href=\"userhistory.php?action=token_history&amp;expire=1&amp;userid=$UserID&amp;torrentid=$TorrentID\">(expire)</a>" : ''; ?>
 		</td>
 <?	if (check_perms('users_mod')) { ?>

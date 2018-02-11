@@ -30,7 +30,7 @@ View::show_header('Ask the Staff', 'bbcode');
 		<div class="head">
 			<span>
 				#<?=$Question['ID']?>
-				<?=Users::format_username($Question['UserID'])?> - <?=time_diff($Question['Date'])?>
+				<?=Users::format_username($Question['UserID'])?> - <?=\Gazelle\Util\Time::timeDiff($Question['Date'])?>
 			</span>
 		</div>
 		<div class="pad">

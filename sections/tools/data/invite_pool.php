@@ -94,7 +94,7 @@ $DB->set_query_id($RS);
 			<td><?=display_str($Email)?></td>
 			<td><?=Tools::display_ip($IP)?></td>
 			<td><?=display_str($InviteKey)?></td>
-			<td><?=time_diff($Expires)?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($Expires)?></td>
 <?		if (check_perms('users_edit_invites')) { ?>
 			<td>
 				<form class="delete_form" name="invite" action="" method="post">

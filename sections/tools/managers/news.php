@@ -75,7 +75,7 @@ while (list($NewsID, $Title, $Body, $NewsTime) = $DB->next_record()) {
 ?>
 	<div class="box vertical_space news_post">
 		<div class="head">
-			<strong><?=display_str($Title) ?></strong> - posted <?=time_diff($NewsTime) ?>
+			<strong><?=display_str($Title) ?></strong> - posted <?=\Gazelle\Util\Time::timeDiff($NewsTime) ?>
 			- <a href="tools.php?action=editnews&amp;id=<?=$NewsID?>" class="brackets">Edit</a>
 			<a href="tools.php?action=deletenews&amp;id=<?=$NewsID?>&amp;auth=<?=$LoggedUser['AuthKey']?>" class="brackets">Delete</a>
 		</div>

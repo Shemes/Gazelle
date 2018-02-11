@@ -39,7 +39,7 @@ View::show_header('Popular Questions', 'questions,bbcode');
 			<div class="head">
 				<span>
 					<a class="post_id" href="questions.php?action=popular_questions#question<?=$Question['ID']?>">#<?=$Question['ID']?></a>
-					Question by <?=Users::format_username($Question['UserID'])?> - <?=time_diff($Question['QuestionDate'])?>
+					Question by <?=Users::format_username($Question['UserID'])?> - <?=\Gazelle\Util\Time::timeDiff($Question['QuestionDate'])?>
 				</span>
 				<span style="float: right;">
 					<a href="#" id="<?=$Question['ID']?>" class="view_responses brackets"><?=$Question['Responses'] == 1 ? ("View " . $Question['Responses'] . " response") : ("View " . $Question['Responses'] . " responses")?></a>

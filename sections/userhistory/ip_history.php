@@ -272,14 +272,14 @@ foreach ($Results as $Index => $Result) {
 ?>
 			</td>
 			<td>
-				<span class="reltime"><?=time_diff($StartTime)?></span>
+				<span class="reltime"><?=\Gazelle\Util\Time::timeDiff($StartTime)?></span>
 				<span class="abstime hidden"><?=$StartTime?></span>
 			</td>
 			<td>
-				<span class="reltime"><?=time_diff($EndTime)?></span>
+				<span class="reltime"><?=\Gazelle\Util\Time::timeDiff($EndTime)?></span>
 				<span class="abstime hidden"><?=$EndTime?></span>
 			</td>
-			<td><?/*time_diff(strtotime($StartTime), strtotime($EndTime));*/ ?></td>
+			<td><?/*\Gazelle\Util\Time::timeDiff(strtotime($StartTime), strtotime($EndTime));*/ ?></td>
 		</tr>
 <?
 	if (!empty($OtherUsers) && ($FirstOccurrence || count($OtherUsers) < 100)) {
@@ -292,14 +292,14 @@ foreach ($Results as $Index => $Result) {
 		<tr class="rowb otherusers<?=$Index?><?=($HideMe ? ' hidden' : '')?>">
 			<td>&nbsp;&nbsp;&#187;&nbsp;<?=Users::format_username($OtherUser['UserID'], true, true, true)?></td>
 			<td>
-				<span class="reltime"><?=time_diff($OtherUser['StartTime'])?></span>
+				<span class="reltime"><?=\Gazelle\Util\Time::timeDiff($OtherUser['StartTime'])?></span>
 				<span class="hidden abstime"><?=$OtherUser['StartTime']?></span>
 			</td>
 			<td>
-				<span class="reltime"><?=time_diff($OtherUser['EndTime'])?></span>
+				<span class="reltime"><?=\Gazelle\Util\Time::timeDiff($OtherUser['EndTime'])?></span>
 				<span class="hidden abstime"><?=$OtherUser['EndTime']?></span>
 			</td>
-			<td><?/*time_diff(strtotime($OtherUser['StartTime']), strtotime($OtherUser['EndTime'])); */ ?></td>
+			<td><?/*\Gazelle\Util\Time::timeDiff(strtotime($OtherUser['StartTime']), strtotime($OtherUser['EndTime'])); */ ?></td>
 		</tr>
 <?
 		}

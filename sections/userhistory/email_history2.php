@@ -189,7 +189,7 @@ if ($Old) {
 		</tr>
 		<tr class="rowa">
 			<td><?=display_str($Current['Email'])?></td>
-			<td><?=time_diff($Current['StartTime'])?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($Current['StartTime'])?></td>
 			<td></td>
 			<td>
 				<?=display_str($Current['CurrentIP'])?>
@@ -216,7 +216,7 @@ if ($CurrentMatches) {
 		<tr class="rowb">
 			<td><?=$Match['Username']?></td>
 			<td></td>
-			<td><?=time_diff($Match['EndTime'])?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($Match['EndTime'])?></td>
 			<td></td>
 			<td>
 				<?=display_str($Match['IP'])?>
@@ -257,7 +257,7 @@ if ($Old) {
 		<tr class="rowb hidden" id="matches_<?=$j?>">
 			<td><?=$Match['Username']?></td>
 			<td></td>
-			<td><?=time_diff($Match['EndTime'])?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($Match['EndTime'])?></td>
 			<td></td>
 			<td>
 				<?=display_str($Match['IP'])?>
@@ -279,9 +279,9 @@ if ($Old) {
 ?>
 		<tr class="rowa">
 			<td><?=display_str($Record['Email'])?><?=(($MatchCount > 0) ? ' <a href="#" onclick="$(\'#matches_'.$j.'\').gtoggle(); return false;">('.$MatchCount.')</a>' : '')?></td>
-			<td><?=time_diff($Record['StartTime'])?></td>
-			<td><?=time_diff($Record['EndTime'])?></td>
-			<td><?=time_diff($Record['ElapsedTime'])?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($Record['StartTime'])?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($Record['EndTime'])?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($Record['ElapsedTime'])?></td>
 			<td>
 				<?=display_str($Record['IP'])?>
 				(<?=Tools::get_country_code_by_ajax($Record['IP'])?>)
@@ -323,7 +323,7 @@ if ($OldMatches) {
 		<tr class="rowb hidden" id="matches_invite">
 			<td><?=$Match['Username']?></td>
 			<td></td>
-			<td><?=time_diff($Match['EndTime'])?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($Match['EndTime'])?></td>
 			<td></td>
 			<td>
 				<?=display_str($Match['IP'])?>
@@ -345,8 +345,8 @@ if ($OldMatches) {
 		<tr class="rowa">
 			<td><?=display_str($Invite['Email'])?><?=(($MatchCount > 0) ? ' <a href="#" onclick="$(\'#matches_invite\').gtoggle(); return false;">('.$MatchCount.')</a>' : '')?></td>
 			<td>Never</td>
-			<td><?=time_diff($Invite['EndTime'])?></td>
-			<td><?=time_diff($Invite['AccountAge'])?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($Invite['EndTime'])?></td>
+			<td><?=\Gazelle\Util\Time::timeDiff($Invite['AccountAge'])?></td>
 			<td>
 				<?=display_str($Invite['IP'])?>
 				(<?=Tools::get_country_code_by_ajax($Invite['IP'])?>)

@@ -60,7 +60,7 @@ $DB->query("
 					</td>
 					<td>
 						<?=Users::format_username($UserID, false, false, false)?><br />
-						<?	echo time_diff($DNUTime, 1) . "\n"; ?>
+						<?	echo \Gazelle\Util\Time::timeDiff($DNUTime, 1) . "\n"; ?>
 					</td>
 					<td>
 						<input type="submit" name="submit" value="Edit" />

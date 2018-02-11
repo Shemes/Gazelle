@@ -56,7 +56,7 @@ foreach ($Results as $ID=>$Data) {
 	}
 ?>
 		<td><?=Users::format_username($SnatcherID, true, true, true, true)?></td>
-		<td><?=time_diff($Timestamp)?></td>
+		<td><?=\Gazelle\Util\Time::timeDiff($Timestamp)?></td>
 <?
 	$i++;
 }

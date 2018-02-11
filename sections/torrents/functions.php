@@ -315,7 +315,7 @@ function build_torrents_table($Cache, $DB, $LoggedUser, $GroupID, $GroupName, $G
 			}
 			$ReportInfo .= "
 			<tr>
-				<td>$ReportLinks ".time_diff($Report['ReportedTime'], 2, true, true).' for the reason "'.$ReportType['title'].'":
+				<td>$ReportLinks ".\Gazelle\Util\Time::timeDiff($Report['ReportedTime'], 2, true, true).' for the reason "'.$ReportType['title'].'":
 					<blockquote>'.Text::full_format($Report['UserComment']).'</blockquote>
 				</td>
 			</tr>';
@@ -492,12 +492,12 @@ function build_torrents_table($Cache, $DB, $LoggedUser, $GroupID, $GroupName, $G
 				<tr class="releases_<?=($ReleaseType)?> groupid_<?=($GroupID)?> edition_<?=($EditionID)?> torrentdetails pad<? if (!isset($_GET['torrentid']) || $_GET['torrentid'] != $TorrentID) { ?> hidden<? } ?>" id="torrent_<?=($TorrentID)?>">
 					<td colspan="5">
 						<blockquote>
-							Uploaded by <?=(Users::format_username($UserID, false, false, false))?> <?=time_diff($TorrentTime);?>
+							Uploaded by <?=(Users::format_username($UserID, false, false, false))?> <?=\Gazelle\Util\Time::timeDiff($TorrentTime);?>
 <?	if ($Seeders == 0) {
 		if ($LastActive != '0000-00-00 00:00:00' && time() - strtotime($LastActive) >= 1209600) { ?>
-								<br /><strong>Last active: <?=time_diff($LastActive);?></strong>
+								<br /><strong>Last active: <?=\Gazelle\Util\Time::timeDiff($LastActive);?></strong>
 <?		} else { ?>
-								<br />Last active: <?=time_diff($LastActive);?>
+								<br />Last active: <?=\Gazelle\Util\Time::timeDiff($LastActive);?>
 <?		}
 		if ($LastActive != '0000-00-00 00:00:00' && time() - strtotime($LastActive) >= 345678 && time() - strtotime($LastReseedRequest) >= 864000) { ?>
 								<br /><a href="torrents.php?action=reseed&amp;torrentid=<?=($TorrentID)?>&amp;groupid=<?=($GroupID)?>" class="brackets">Request re-seed</a>

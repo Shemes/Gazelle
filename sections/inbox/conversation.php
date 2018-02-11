@@ -86,7 +86,7 @@ while (list($SentDate, $SenderID, $Body, $MessageID) = $DB->next_record()) { ?>
 	<div class="box vertical_space">
 		<div class="head" style="overflow: hidden;">
 			<div style="float: left;">
-				<strong><?=$Users[(int)$SenderID]['UserStr']?></strong> <?=time_diff($SentDate)?>
+				<strong><?=$Users[(int)$SenderID]['UserStr']?></strong> <?=\Gazelle\Util\Time::timeDiff($SentDate)?>
 <?	if ($SenderID > 0) { ?>
 					- <a href="#quickpost" onclick="Quote('<?=$MessageID?>','<?=$Users[(int)$SenderID]['Username']?>');" class="brackets">Quote</a>
 <?	} ?>

@@ -97,7 +97,7 @@ if (!isset($_GET['action']) || $_GET['action'] !== 'editblog') {
 		?>
 		<div id="blog<?=$BlogID?>" class="box blog_post">
 			<div class="head">
-				<strong><?=$Title?></strong> - posted <?=time_diff($BlogTime);?> by <a href="user.php?id=<?=$AuthorID?>"><?=$Author?></a>
+				<strong><?=$Title?></strong> - posted <?=\Gazelle\Util\Time::timeDiff($BlogTime);?> by <a href="user.php?id=<?=$AuthorID?>"><?=$Author?></a>
 				<?php	if (check_perms('admin_manage_blog')) { ?>
 					- <a href="blog.php?action=editblog&amp;id=<?=$BlogID?>" class="brackets">Edit</a>
 					<a href="blog.php?action=deleteblog&amp;id=<?=$BlogID?>&amp;auth=<?=G::$LoggedUser['AuthKey']?>" class="brackets">Delete</a>

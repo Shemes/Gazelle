@@ -134,8 +134,8 @@ if ($DB->has_results()) {
 				<?=Tools::get_host_by_ajax($InviterIP)?>
 			</td>
 			<td>
-				<?=time_diff($Joined)?><br />
-				<?=time_diff($InviterJoined)?>
+				<?=\Gazelle\Util\Time::timeDiff($Joined)?><br />
+				<?=\Gazelle\Util\Time::timeDiff($InviterJoined)?>
 			</td>
 		</tr>
 <?	} ?>

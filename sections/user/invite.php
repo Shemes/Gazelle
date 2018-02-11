@@ -194,7 +194,7 @@ if (!empty($Pending)) {
 ?>
 			<tr class="row<?=$Row?>">
 				<td><?=display_str($Email)?></td>
-				<td><?=time_diff($Expires)?></td>
+				<td><?=\Gazelle\Util\Time::timeDiff($Expires)?></td>
 				<td><a href="register.php?invite=<?=$InviteKey?>">Invite link</a></td>
 				<td><a href="user.php?action=delete_invite&amp;invite=<?=$InviteKey?>&amp;auth=<?=$LoggedUser['AuthKey']?>" onclick="return confirm('Are you sure you want to delete this invite?');">Delete invite</a></td>
 			</tr>
@@ -226,8 +226,8 @@ if (!empty($Pending)) {
 			<tr class="row<?=$Row?>">
 				<td><?=Users::format_username($ID, true, true, true, true)?></td>
 				<td><?=display_str($Email)?></td>
-				<td><?=time_diff($JoinDate, 1)?></td>
-				<td><?=time_diff($LastAccess, 1);?></td>
+				<td><?=\Gazelle\Util\Time::timeDiff($JoinDate, 1)?></td>
+				<td><?=\Gazelle\Util\Time::timeDiff($LastAccess, 1);?></td>
 				<td><?=Format::get_size($Uploaded)?></td>
 				<td><?=Format::get_size($Downloaded)?></td>
 				<td><?=Format::get_ratio_html($Uploaded, $Downloaded)?></td>

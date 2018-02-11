@@ -257,7 +257,7 @@ if (count($Forum) === 0) {
 			</span>
 <?		} ?>
 			<span style="float: right;" class="last_poster">
-				by <?=Users::format_username($LastAuthorID, false, false, false, false, false, $IsDonorForum)?> <?=time_diff($LastTime,1)?>
+				by <?=Users::format_username($LastAuthorID, false, false, false, false, false, $IsDonorForum)?> <?=\Gazelle\Util\Time::timeDiff($LastTime,1)?>
 			</span>
 		</td>
 		<td class="number_column"><?=number_format($PostCount - 1)?></td>

@@ -111,7 +111,7 @@ foreach ($History as $Key => $Values) {
 ?>
 	<tr class="rowa">
 		<td><?=display_str($Values['Email'])?></td>
-		<td><?=time_diff($Values['Time'])?></td>
+		<td><?=\Gazelle\Util\Time::timeDiff($Values['Time'])?></td>
 		<td><?=display_str($Values['IP'])?> (<?=display_str($Values['Code'])?>) <a href="user.php?action=search&amp;ip_history=on&amp;ip=<?=display_str($Values['IP'])?>" class="brackets tooltip" title="Search">S</a></td>
 <?
 	if ($UsersOnly == 1) {
@@ -129,7 +129,7 @@ foreach ($History as $Key => $Values) {
 	</tr>
 	<tr>
 		<td></td>
-		<td><?=time_diff($Time)?></td>
+		<td><?=\Gazelle\Util\Time::timeDiff($Time)?></td>
 		<td><?=display_str($IP)?></td>
 <?
 			$UserURL = site_url()."user.php?id=$UserID2";

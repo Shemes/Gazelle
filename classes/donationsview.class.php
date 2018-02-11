@@ -80,7 +80,7 @@ class DonationsView {
 						Leaderboard position: <?=Donations::get_leaderboard_position($UserID)?>
 					</li>
 					<li>
-						Last donated: <?=time_diff(Donations::get_donation_time($UserID))?>
+						Last donated: <?=\Gazelle\Util\Time::timeDiff(Donations::get_donation_time($UserID))?>
 					</li>
 					<li>
 						Rank expires: <?=(Donations::get_rank_expiration($UserID))?>

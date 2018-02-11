@@ -84,7 +84,7 @@ list ($NumResults) = $DB->next_record();
 				<input type="email" name="email" value="<?=display_str($Result['Email'])?>" size="30" />
 			</td>
 			<td><input type="text" name="comment" value="<?=display_str($Result['Comment'])?>" size="60" /></td>
-			<td><?=Users::format_username($Result ['UserID'], false, false, false)?><br /><?=time_diff($Result ['Time'], 1)?></td>
+			<td><?=Users::format_username($Result ['UserID'], false, false, false)?><br /><?=\Gazelle\Util\Time::timeDiff($Result ['Time'], 1)?></td>
 			<td>
 				<input type="submit" name="submit" value="Edit" />
 				<input type="submit" name="submit" value="Delete" />

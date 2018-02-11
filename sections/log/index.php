@@ -192,7 +192,7 @@ while (list($ID, $Message, $LogTime) = $DB->next_record()) {
 ?>
 		<tr class="row<?=$Row?>" id="log_<?=$ID?>">
 			<td class="nobr">
-				<?=time_diff($LogTime)?>
+				<?=\Gazelle\Util\Time::timeDiff($LogTime)?>
 			</td>
 			<td>
 				<span<? if ($Color) { ?> style="color: <?=$Color?>;"<? } ?>><?=$Message?></span>

@@ -90,7 +90,7 @@ View::show_header($Title,'wiki,bbcode');
 					<ul>
 						<li>Version: r<?=$Revision?></li>
 						<li>Last edited by: <?=Users::format_username($AuthorID, false, false, false)?></li>
-						<li>Last updated: <?=time_diff($Date)?></li>
+						<li>Last updated: <?=\Gazelle\Util\Time::timeDiff($Date)?></li>
 					</ul>
 				</li>
 				<li>

@@ -79,7 +79,7 @@ foreach ($Results as $ID=>$Data) {
 	}
 ?>
 		<td><?=$User?></td>
-		<td><?=time_diff($Timestamp)?></td>
+		<td><?=\Gazelle\Util\Time::timeDiff($Timestamp)?></td>
 <?
 	$i++;
 }

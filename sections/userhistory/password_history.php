@@ -49,7 +49,7 @@ $DB->query("
 	</tr>
 <? while (list($ChangeTime, $ChangerIP) = $DB->next_record()) { ?>
 	<tr class="rowa">
-		<td><?=time_diff($ChangeTime)?></td>
+		<td><?=\Gazelle\Util\Time::timeDiff($ChangeTime)?></td>
 		<td><?=display_str($ChangerIP)?> <a href="/user.php?action=search&amp;ip_history=on&amp;ip=<?=display_str($ChangerIP)?>" class="brackets tooltip" title="Search">S</a><br /><?=Tools::get_host_by_ajax($ChangerIP)?></td>
 	</tr>
 <? } ?>

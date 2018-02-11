@@ -156,7 +156,7 @@ function generate_user_table($Caption, $Tag, $Details, $Limit) {
 		<td class="number_column tooltip" title="Download speed is reported in base 2 in bytes per second, not bits per second."><?=Format::get_size($Detail['DownSpeed'])?>/s</td>
 		<td class="number_column"><?=number_format($Detail['NumUploads'])?></td>
 		<td class="number_column"><?=Format::get_ratio_html($Detail['Uploaded'], $Detail['Downloaded'])?></td>
-		<td class="number_column"><?=time_diff($Detail['JoinDate'])?></td>
+		<td class="number_column"><?=\Gazelle\Util\Time::timeDiff($Detail['JoinDate'])?></td>
 	</tr>
 <?	} ?>
 </table><br />

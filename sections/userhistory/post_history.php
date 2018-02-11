@@ -225,7 +225,7 @@ if (empty($Results)) {
 		<tr class="colhead_dark">
 			<td colspan="<?=Users::has_avatars_enabled() ? 2 : 1 ?>">
 				<span style="float: left;">
-					<?=time_diff($AddedTime) ?>
+					<?=\Gazelle\Util\Time::timeDiff($AddedTime) ?>
 					in <a href="forums.php?action=viewthread&amp;threadid=<?=$TopicID?>&amp;postid=<?=$PostID?>#post<?=$PostID?>" class="tooltip" title="<?=display_str($ThreadTitle)?>"><?=Format::cut_string($ThreadTitle, 75)?></a>
 <?
 		if ($ViewingOwn) {
@@ -273,7 +273,7 @@ if (empty($Results)) {
 					<a href="#content<?=$PostID?>" onclick="LoadEdit(<?=$PostID?>, 1);">&laquo;</a>
 <? 				} ?>
 					Last edited by
-					<?=Users::format_username($EditedUserID, false, false, false) ?> <?=time_diff($EditedTime, 2, true, true)?>
+					<?=Users::format_username($EditedUserID, false, false, false) ?> <?=\Gazelle\Util\Time::timeDiff($EditedTime, 2, true, true)?>
 <?			} ?>
 				</div>
 			</td>

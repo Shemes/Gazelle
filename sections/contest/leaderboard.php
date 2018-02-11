@@ -141,7 +141,7 @@ END_STR
 			$row[0], $userinfo['Username'],
 			$artist_markup,
 			$row[2], $row[3], // torrent
-			time_diff($row[6], 1),
+			\Gazelle\Util\Time::timeDiff($row[6], 1),
 			$score
 		);
 	}

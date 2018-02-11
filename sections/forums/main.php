@@ -74,7 +74,7 @@ foreach ($Forums as $Forum) {
 				<a href="forums.php?action=viewthread&amp;threadid=<?=$LastTopicID?>&amp;page=<?=$LastRead[$LastTopicID]['Page']?>#post<?=$LastRead[$LastTopicID]['PostID']?>"></a>
 			</span>
 <? } ?>
-			<span style="float: right;" class="last_poster">by <?=Users::format_username($LastAuthorID, false, false, false)?> <?=time_diff($LastTime, 1)?></span>
+			<span style="float: right;" class="last_poster">by <?=Users::format_username($LastAuthorID, false, false, false)?> <?=\Gazelle\Util\Time::timeDiff($LastTime, 1)?></span>
 		</td>
 		<td class="number_column"><?=number_format($NumTopics)?></td>
 		<td class="number_column"><?=number_format($NumPosts)?></td>

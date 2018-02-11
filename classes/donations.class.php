@@ -624,7 +624,7 @@ class Donations {
 			if ($ExpireTime - time() < 60) {
 				$Return = 'Soon';
 			} else {
-				$Expiration = time_diff($ExpireTime); // 32 days
+				$Expiration = \Gazelle\Util\Time::timeDiff($ExpireTime); // 32 days
 				$Return = "in $Expiration";
 			}
 		} else {

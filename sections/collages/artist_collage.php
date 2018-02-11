@@ -137,7 +137,7 @@ View::show_header($Name, 'browse,collage,bbcode,voting,recommend');
 				<li>Artists: <?=number_format($NumGroups)?></li>
 				<li>Subscribers: <?=number_format((int)$Subscribers)?></li>
 				<li>Built by <?=number_format(count($UserAdditions))?> user<?=(count($UserAdditions) > 1 ? 's' : '')?></li>
-				<li>Last updated: <?=time_diff($Updated)?></li>
+				<li>Last updated: <?=\Gazelle\Util\Time::timeDiff($Updated)?></li>
 			</ul>
 		</div>
 		<div class="box box_contributors">
@@ -216,7 +216,7 @@ foreach ($CommentList as $Comment) {
 ?>
 		<div class="box comment">
 			<div class="head">
-				<?=Users::format_username($UserID, false, false, false) ?> <?=time_diff($CommentTime) ?>
+				<?=Users::format_username($UserID, false, false, false) ?> <?=\Gazelle\Util\Time::timeDiff($CommentTime) ?>
 				<br />
 				<a href="reports.php?action=report&amp;type=collages_comment&amp;id=<?=$CommentID?>" class="brackets">Report</a>
 			</div>

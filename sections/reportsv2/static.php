@@ -324,12 +324,12 @@ if (count($Reports) === 0) {
 <?			} else { ?>
 						<?=$LinkName?>
 						<a href="torrents.php?action=download&amp;id=<?=$TorrentID?>&amp;authkey=<?=$LoggedUser['AuthKey']?>&amp;torrent_pass=<?=$LoggedUser['torrent_pass']?>" title="Download" class="brackets tooltip">DL</a>
-						uploaded by <a href="user.php?id=<?=$UploaderID?>"><?=$UploaderName?></a> <?=time_diff($Time)?>
+						uploaded by <a href="user.php?id=<?=$UploaderID?>"><?=$UploaderName?></a> <?=\Gazelle\Util\Time::timeDiff($Time)?>
 						<br />
 <?				if ($ReporterName == '') {
 					$ReporterName = 'System';
 				} ?>
-						<div style="text-align: right;">was reported by <a href="user.php?id=<?=$ReporterID?>"><?=$ReporterName?></a> <?=time_diff($ReportedTime)?> for the reason: <strong><?=$ReportType['title']?></strong></div>
+						<div style="text-align: right;">was reported by <a href="user.php?id=<?=$ReporterID?>"><?=$ReporterName?></a> <?=\Gazelle\Util\Time::timeDiff($ReportedTime)?> for the reason: <strong><?=$ReportType['title']?></strong></div>
 <?				if ($Status != 'Resolved') {
 
 					$DB->query("
@@ -377,7 +377,7 @@ if (count($Reports) === 0) {
 						while (list($RequestID, $FillerID, $FillerName, $FilledTime) = $DB->next_record()) {
 ?>
 						<div style="text-align: right;">
-							<strong class="important_text"><a href="user.php?id=<?=$FillerID?>"><?=$FillerName?></a> used this torrent to fill <a href="requests.php?action=view&amp;id=<?=$RequestID?>">this request</a> <?=time_diff($FilledTime)?></strong>
+							<strong class="important_text"><a href="user.php?id=<?=$FillerID?>"><?=$FillerName?></a> used this torrent to fill <a href="requests.php?action=view&amp;id=<?=$RequestID?>">this request</a> <?=\Gazelle\Util\Time::timeDiff($FilledTime)?></strong>
 						</div>
 <?						}
 					}
@@ -476,7 +476,7 @@ if (count($Reports) === 0) {
 						<?=($First ? '' : '<br />')?>
 						<?=$ExtraLinkName?>
 						<a href="torrents.php?action=download&amp;id=<?=$ExtraID?>&amp;authkey=<?=$LoggedUser['AuthKey']?>&amp;torrent_pass=<?=$LoggedUser['torrent_pass']?>" title="Download" class="brackets tooltip">DL</a>
-						uploaded by <a href="user.php?id=<?=$ExtraUploaderID?>"><?=$ExtraUploaderName?></a> <?=time_diff($ExtraTime)?> <a href="#" onclick="Switch(<?=$ReportID?>, <?=$TorrentID?>, <?=$ExtraID?>); return false;" class="brackets">Switch</a>
+						uploaded by <a href="user.php?id=<?=$ExtraUploaderID?>"><?=$ExtraUploaderName?></a> <?=\Gazelle\Util\Time::timeDiff($ExtraTime)?> <a href="#" onclick="Switch(<?=$ReportID?>, <?=$TorrentID?>, <?=$ExtraID?>); return false;" class="brackets">Switch</a>
 <?
 						$First = false;
 					}
@@ -624,7 +624,7 @@ if (count($Reports) === 0) {
 				<tr>
 					<td class="label">Resolve time:</td>
 					<td colspan="3">
-						<?=time_diff($LastChangeTime); echo "\n"; ?>
+						<?=\Gazelle\Util\Time::timeDiff($LastChangeTime); echo "\n"; ?>
 					</td>
 				</tr>
 				<tr>

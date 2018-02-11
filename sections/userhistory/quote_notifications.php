@@ -152,7 +152,7 @@ foreach ($Results as $Result) {
 			<td colspan="2">
 				<span style="float: left;">
 					<?=$Links?>
-					&gt; Quoted by <?=Users::format_username($Result['QuoterID'], false, false, false, false) . ' ' . time_diff($Result['Date']) ?>
+					&gt; Quoted by <?=Users::format_username($Result['QuoterID'], false, false, false, false) . ' ' . \Gazelle\Util\Time::timeDiff($Result['Date']) ?>
 					<?=($Result['UnRead'] ? ' <span class="new">(New!)</span>' : '')?>
 				</span>
 				<span style="float: left;" class="tooltip last_read" title="Jump to quote">

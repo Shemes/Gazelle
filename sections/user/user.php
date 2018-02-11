@@ -196,8 +196,8 @@ foreach ($Paranoia as $P) {
 	}
 }
 
-$JoinedDate = time_diff($JoinDate);
-$LastAccess = time_diff($LastAccess);
+$JoinedDate = \Gazelle\Util\Time::timeDiff($JoinDate);
+$LastAccess = \Gazelle\Util\Time::timeDiff($LastAccess);
 
 function check_paranoia_here($Setting) {
 	global $Paranoia, $Class, $UserID, $Preview;
@@ -381,7 +381,7 @@ if ($Enabled == 1 && (count($FL_Other) || isset($FL_OTHER_success))) {
 	}
 	if (($OwnProfile || check_perms('users_mod')) && $Warned != '0000-00-00 00:00:00') {
 ?>
-				<li<?=($Override === 2 ? ' class="paranoia_override"' : '')?>>Warning expires in: <?=time_diff((date('Y-m-d H:i', strtotime($Warned))))?></li>
+				<li<?=($Override === 2 ? ' class="paranoia_override"' : '')?>>Warning expires in: <?=\Gazelle\Util\Time::timeDiff((date('Y-m-d H:i', strtotime($Warned))))?></li>
 <?	} ?>
 			</ul>
 		</div>
@@ -664,7 +664,7 @@ if ($OwnProfile || check_perms('users_mod')) {
 				LEFT JOIN users_history_passwords uhp ON uhp.UserID = $UserID
 				WHERE ui.UserID = $UserID");
 	list($PasswordHistory, $JoinDate) = G::$DB->next_record();
-	$Age = (empty($PasswordHistory)) ? time_diff($JoinDate) : time_diff($PasswordHistory);
+	$Age = (empty($PasswordHistory)) ? \Gazelle\Util\Time::timeDiff($JoinDate) : \Gazelle\Util\Time::timeDiff($PasswordHistory);
 	$PasswordAge = substr($Age, 0, strpos($Age, " ago"));
 ?>
 	<li>Password age: <?=$PasswordAge?></li>
@@ -686,7 +686,7 @@ if ($RatioWatchEnds != '0000-00-00 00:00:00'
 ?>
 		<div class="box">
 			<div class="head">Ratio watch</div>
-			<div class="pad">This user is currently on ratio watch and must upload <?=Format::get_size(($Downloaded * $RequiredRatio) - $Uploaded)?> in the next <?=time_diff($RatioWatchEnds)?>, or their leeching privileges will be revoked. Amount downloaded while on ratio watch: <?=Format::get_size($Downloaded - $RatioWatchDownload)?></div>
+			<div class="pad">This user is currently on ratio watch and must upload <?=Format::get_size(($Downloaded * $RequiredRatio) - $Uploaded)?> in the next <?=\Gazelle\Util\Time::timeDiff($RatioWatchEnds)?>, or their leeching privileges will be revoked. Amount downloaded while on ratio watch: <?=Format::get_size($Downloaded - $RatioWatchDownload)?></div>
 		</div>
 <?
 }
@@ -965,7 +965,7 @@ if (empty($LoggedUser['DisableRequests']) && check_paranoia_here('requestsvoted_
 							<span id="bounty_<?=$RequestID?>"><?=Format::get_size($Bounty)?></span>
 						</td>
 						<td>
-							<?=time_diff($Request['TimeAdded']) ?>
+							<?=\Gazelle\Util\Time::timeDiff($Request['TimeAdded']) ?>
 						</td>
 					</tr>
 <?		} ?>
@@ -1037,7 +1037,7 @@ if (check_perms('users_mod', $Class) || $IsFLS) {
 			?>
 				<tr>
 					<td><a href="staffpm.php?action=viewconv&amp;id=<?=$ID?>"><?=display_str($Subject)?></a></td>
-					<td><?=time_diff($Date, 2, true)?></td>
+					<td><?=\Gazelle\Util\Time::timeDiff($Date, 2, true)?></td>
 					<td><?=$Assigned?></td>
 					<td><?=$Replies - 1?></td>
 					<td><?=$Resolver?></td>

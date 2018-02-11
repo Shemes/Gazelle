@@ -83,7 +83,7 @@ function generate_user_table($Caption, $Results, $Limit) {
 		<td><?=$Result['Hidden'] && !$IsMod ? 'Hidden' : Users::format_username($Result['UserID'], false, false, false)?></td>
 		<td style="text-align: left;"><?=check_perms('users_mod') || $Position < 51 ? $Result['TotalRank'] : 'Hidden';?></td>
 		<td style="text-align: left;"><?=$Result['Hidden'] && !$IsMod ? 'Hidden' : DonationsView::render_rank($Result['Rank'], $Result['SpecialRank'])?></td>
-		<td style="text-align: left;"><?=$Result['Hidden'] && !$IsMod ? 'Hidden' : time_diff($Result['DonationTime'])?></td>
+		<td style="text-align: left;"><?=$Result['Hidden'] && !$IsMod ? 'Hidden' : \Gazelle\Util\Time::timeDiff($Result['DonationTime'])?></td>
 	</tr>
 <?	} ?>
 </table><br />

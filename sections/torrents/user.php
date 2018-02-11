@@ -546,7 +546,7 @@ foreach ($Categories as $CatKey => $CatName) {
 					<div class="tags"><?=$TorrentTags->format('torrents.php?type='.$Action.'&amp;userid='.$UserID.'&amp;tags=')?></div>
 				</div>
 			</td>
-			<td class="nobr"><?=time_diff($Time, 1)?></td>
+			<td class="nobr"><?=\Gazelle\Util\Time::timeDiff($Time, 1)?></td>
 			<td class="number_column nobr"><?=Format::get_size($Torrent['Size'])?></td>
 			<td class="number_column"><?=number_format($Torrent['Snatched'])?></td>
 			<td class="number_column<?=(($Torrent['Seeders'] == 0) ? ' r00' : '')?>"><?=number_format($Torrent['Seeders'])?></td>

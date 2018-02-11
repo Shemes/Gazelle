@@ -332,7 +332,7 @@ foreach ($Collages as $Collage) {
 		</td>
 		<td class="number_column"><?=number_format((int)$NumTorrents)?></td>
 		<td class="number_column"><?=number_format((int)$Subscribers)?></td>
-		<td class="nobr"><?=time_diff($Updated)?></td>
+		<td class="nobr"><?=\Gazelle\Util\Time::timeDiff($Updated)?></td>
 		<td><?=Users::format_username($UserID, false, false, false)?></td>
 	</tr>
 <?

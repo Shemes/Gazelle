@@ -31,7 +31,7 @@ foreach ($News as $NewsItem) {
 		array(
 			$NewsID,
 			Text::full_format($Title),
-			time_diff($NewsTime),
+			\Gazelle\Util\Time::timeDiff($NewsTime),
 			Text::full_format($Body)
 		)
 	);

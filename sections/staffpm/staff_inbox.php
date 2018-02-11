@@ -188,7 +188,7 @@ if (!$DB->has_results()) {
 <? 		} ?>
 					<td><a href="staffpm.php?action=viewconv&amp;id=<?=$ID?>"><?=display_str($Subject)?></a></td>
 					<td><?=$UserStr?></td>
-					<td><?=time_diff($Date, 2, true)?></td>
+					<td><?=\Gazelle\Util\Time::timeDiff($Date, 2, true)?></td>
 					<td><?=$Assigned?></td>
 					<td><?=$NumReplies - 1?></td>
 <?		if ($ViewString == 'Resolved') { ?>

@@ -98,7 +98,7 @@ $DB->set_query_id($Reports);
 				<tr>
 					<td><strong><a href="<?=$Reference?>">Report #<?=$ReportID?></a></strong></td>
 					<td>
-						<strong><?=$Type['title']?></strong> was reported by <a href="user.php?id=<?=$SnitchID?>"><?=$SnitchName?></a> <?=time_diff($ReportedTime)?>
+						<strong><?=$Type['title']?></strong> was reported by <a href="user.php?id=<?=$SnitchID?>"><?=$SnitchName?></a> <?=\Gazelle\Util\Time::timeDiff($ReportedTime)?>
 						<a href="reports.php?action=compose&amp;to=<?=$SnitchID?>&amp;reportid=<?=$ReportID?>&amp;type=<?=$Short?>&amp;thingid=<?=$ThingID?>" class="brackets">Contact</a>
 					</td>
 				</tr>

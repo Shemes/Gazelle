@@ -61,7 +61,7 @@ if ($TotalQuestions > QUESTIONS_PER_PAGE) { ?>
 		<div class="head">
 			<span>
 				<a class="post_id" href="questions.php#question<?=$Question['ID']?>">#<?=$Question['ID']?></a>
-				<?=Users::format_username($Question['UserID'])?> - <?=time_diff($Question['Date'])?>
+				<?=Users::format_username($Question['UserID'])?> - <?=\Gazelle\Util\Time::timeDiff($Question['Date'])?>
 			</span>
 			<span style="float: right;">
 <?				if ($Question['Responses'] > 0) { ?>

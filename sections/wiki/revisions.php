@@ -35,7 +35,7 @@ View::show_header("Revisions of ".$Title);
 				<td><?=$Revision?></td>
 				<td><?=$Title?></td>
 				<td><?=Users::format_username($AuthorID, false, false, false)?></td>
-				<td><?=time_diff($Date)?></td>
+				<td><?=\Gazelle\Util\Time::timeDiff($Date)?></td>
 				<td><input type="radio" name="old" value="<?=$Revision?>" disabled="disabled" /></td>
 				<td><input type="radio" name="new" value="<?=$Revision?>" checked="checked" /></td>
 			</tr>
@@ -54,7 +54,7 @@ while (list($Revision, $Title, $AuthorID, $Date) = $DB->next_record()) { ?>
 				<td><?=$Revision?></td>
 				<td><?=$Title?></td>
 				<td><?=Users::format_username($AuthorID, false, false, false)?></td>
-				<td><?=time_diff($Date)?></td>
+				<td><?=\Gazelle\Util\Time::timeDiff($Date)?></td>
 				<td><input type="radio" name="old" value="<?=$Revision?>" /></td>
 				<td><input type="radio" name="new" value="<?=$Revision?>" /></td>
 			</tr>

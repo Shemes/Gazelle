@@ -80,7 +80,7 @@ View::show_header($Username.' &gt; Sessions');
 				<td class="nobr"><?=$IP?></td>
 				<td><?=$Browser?></td>
 				<td><?=$OperatingSystem?></td>
-				<td><?=time_diff($LastUpdate)?></td>
+				<td><?=\Gazelle\Util\Time::timeDiff($LastUpdate)?></td>
 				<td>
 					<form class="delete_form" name="session" action="" method="post">
 						<input type="hidden" name="action" value="sessions" />

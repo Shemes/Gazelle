@@ -578,7 +578,7 @@ foreach ($TorrentList as $Torrent) {
 			}
 			$ReportInfo .= "
 			<tr>
-				<td>$ReportLinks ".time_diff($Report['ReportedTime'], 2, true, true).' for the reason "'.$ReportType['title'].'":
+				<td>$ReportLinks ".\Gazelle\Util\Time::timeDiff($Report['ReportedTime'], 2, true, true).' for the reason "'.$ReportType['title'].'":
 					<blockquote>'.Text::full_format($Report['UserComment']).'</blockquote>
 				</td>
 			</tr>';
@@ -699,7 +699,7 @@ foreach ($TorrentList as $Torrent) {
 				<td colspan="5">
 					<div id="release_<?=$TorrentID?>" class="no_overflow">
 						<blockquote>
-							Uploaded by <?=Users::format_username($UserID, false, false, false)?> <?=time_diff($TorrentTime);?>
+							Uploaded by <?=Users::format_username($UserID, false, false, false)?> <?=\Gazelle\Util\Time::timeDiff($TorrentTime);?>
 <?	if ($Seeders == 0) {
 		// If the last time this was seeded was 50 years ago, most likely it has never been seeded, so don't bother
 		// displaying "Last active: 2000+ years" as that's dumb
@@ -707,9 +707,9 @@ foreach ($TorrentList as $Torrent) {
 							<br />Last active: Never
 <?
 		} elseif ($LastActive != '0000-00-00 00:00:00' && time() - strtotime($LastActive) >= 1209600) { ?>
-							<br /><strong>Last active: <?=time_diff($LastActive); ?></strong>
+							<br /><strong>Last active: <?=\Gazelle\Util\Time::timeDiff($LastActive); ?></strong>
 <?		} else { ?>
-							<br />Last active: <?=time_diff($LastActive); ?>
+							<br />Last active: <?=\Gazelle\Util\Time::timeDiff($LastActive); ?>
 <?		}
 	}
 

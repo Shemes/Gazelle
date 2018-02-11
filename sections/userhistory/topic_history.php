@@ -74,8 +74,8 @@ $DB->set_query_id($QueryID);
 			<tr>
 				<td><a href="forums.php?action=viewforum&forumid=<?=$ForumID?>"><?=$ForumTitle?></a></td>
 				<td><a href="forums.php?action=viewthread&threadid=<?=$TopicID?>"><?=$Title?></td>
-				<td><?=time_diff($CreatedTime)?></td>
-				<td><?=time_diff($LastPostTime)?></td>
+				<td><?=\Gazelle\Util\Time::timeDiff($CreatedTime)?></td>
+				<td><?=\Gazelle\Util\Time::timeDiff($LastPostTime)?></td>
 			</tr>
 		<? 	} ?>
 		</table>

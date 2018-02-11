@@ -96,7 +96,7 @@ foreach ($Friends as $Friend) {
 <?	} ?>
 				</span>
 <?	if (check_paranoia('lastseen', $Paranoia, $Class, $FriendID)) { ?>
-				<span style="float: right;"><?=time_diff($LastAccess)?></span>
+				<span style="float: right;"><?=\Gazelle\Util\Time::timeDiff($LastAccess)?></span>
 <?	} ?>
 			</td>
 		</tr>

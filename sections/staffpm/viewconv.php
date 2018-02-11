@@ -99,7 +99,7 @@ if (!$IsStaff && !$IsFLS) {
 				<strong>
 					<?=$UserString?>
 				</strong>
-				<?=time_diff($SentDate, 2, true)?>
+				<?=\Gazelle\Util\Time::timeDiff($SentDate, 2, true)?>
 <?		if ($Status != 'Resolved') { ?>
 				- <a href="#quickpost" onclick="Quote('<?=$MessageID?>', '<?=$Username?>');" class="brackets">Quote</a>
 <?		} ?>

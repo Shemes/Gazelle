@@ -394,7 +394,7 @@ if ($NotificationsManager->is_traditional(NotificationsManager::INBOX)) {
 }
 
 if (G::$LoggedUser['RatioWatch']) {
-	$Alerts[] = '<a href="rules.php?p=ratio">Ratio Watch</a>: You have '.time_diff(G::$LoggedUser['RatioWatchEnds'], 3).' to get your ratio over your required ratio or your leeching abilities will be disabled.';
+	$Alerts[] = '<a href="rules.php?p=ratio">Ratio Watch</a>: You have '.\Gazelle\Util\Time::timeDiff(G::$LoggedUser['RatioWatchEnds'], 3).' to get your ratio over your required ratio or your leeching abilities will be disabled.';
 } elseif (G::$LoggedUser['CanLeech'] != 1) {
 	$Alerts[] = '<a href="rules.php?p=ratio">Ratio Watch</a>: Your downloading privileges are disabled until you meet your required ratio.';
 }

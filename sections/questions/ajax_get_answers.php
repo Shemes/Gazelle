@@ -23,7 +23,7 @@ foreach($Answers as $Answer) {
 	<div class="box box2">
 		<div class="head">
 			<span>
-				Answer by <?=Users::format_username($Answer['UserID'])?> - <?=time_diff($Answer['Date'])?>
+				Answer by <?=Users::format_username($Answer['UserID'])?> - <?=\Gazelle\Util\Time::timeDiff($Answer['Date'])?>
 			</span>
 		</div>
 		<div class="pad">
