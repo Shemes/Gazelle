@@ -15,20 +15,22 @@ if (isset($_REQUEST['info_hash']) && isset($_REQUEST['peer_id'])) {
 	die('d14:failure reason40:Invalid .torrent, try downloading again.e');
 }
 
-require(SERVER_ROOT.'/classes/proxies.class.php');
-
 // Get the user's actual IP address if they're proxied.
 if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])
-		&& proxyCheck($_SERVER['REMOTE_ADDR'])
-		&& filter_var($_SERVER['HTTP_X_FORWARDED_FOR'],
-				FILTER_VALIDATE_IP,
-				FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
-	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
-}
-else if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])
-		&& filter_var($_SERVER['HTTP_CF_CONNECTING_IP'], FILTER_VALIDATE_IP,
-			FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
-	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
+        && Proxy::check($_SERVER['REMOTE_ADDR'])
+        && filter_var(
+            $_SERVER['HTTP_X_FORWARDED_FOR'],
+                FILTER_VALIDATE_IP,
+                FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+        )) {
+    $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
+} elseif (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])
+        && filter_var(
+            $_SERVER['HTTP_CF_CONNECTING_IP'],
+            FILTER_VALIDATE_IP,
+            FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+        )) {
+    $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
 }
 
 $SSL = (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
