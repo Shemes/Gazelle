@@ -1,4 +1,7 @@
-<?
+<?php
+
+namespace Gazelle;
+
 /*************************************************************************|
 |--------------- Encryption class ----------------------------------------|
 |*************************************************************************|
@@ -11,7 +14,7 @@ if (!extension_loaded('mcrypt')) {
 	die('Mcrypt Extension not loaded.');
 }
 
-class CRYPT {
+class Crypt {
 	public function encrypt($Str, $Key = ENCKEY) {
 		srand();
 		$Str = str_pad($Str, 32 - strlen($Str));

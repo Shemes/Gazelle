@@ -73,7 +73,6 @@ ob_start(); //Start a buffer, mainly in case there is a mysql error
 
 set_include_path(SERVER_ROOT);
 
-require SERVER_ROOT . '/classes/encrypt.class.php'; //Require the encryption class
 require SERVER_ROOT . '/classes/time.class.php'; //Require the time class
 require SERVER_ROOT . '/classes/paranoia.class.php'; //Require the paranoia check_paranoia function
 require SERVER_ROOT . '/classes/regex.php';
@@ -83,9 +82,9 @@ $Debug = new \Gazelle\Debug;
 $Debug->handle_errors();
 $Debug->set_flag('Debug constructed');
 
-$DB =  new Gazelle\DBMySQL;
+$DB =  new \Gazelle\DBMySQL;
 $Cache = new \Gazelle\Cache($MemcachedServers);
-$Enc = new CRYPT;
+$Enc = new \Gazelle\Crypt;
 
 // Autoload classes.
 require SERVER_ROOT . '/classes/classloader.php';

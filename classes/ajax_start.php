@@ -2,11 +2,10 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 require 'config.php'; //The config contains all site wide configuration information as well as memcached rules
-require SERVER_ROOT . '/classes/encrypt.class.php'; //Require the caching class
 
-$Debug = new Gazelle\Debug;
+$Debug = new \Gazelle\Debug;
 $Cache = new \Gazelle\Cache($MemcachedServers); //Load the caching class
-$Enc = new CRYPT; //Load the encryption class
+$Enc = new \Gazelle\Crypt; //Load the encryption class
 
 $SSL = $_SERVER['SERVER_PORT'] === '443';
 
@@ -22,7 +21,7 @@ if (isset($LoginCookie)) {
 
     if (!$Enabled = $Cache->get_value("enabled_$UserID")) {
          
-        $DB =  new Gazelle\DBMySQL; //Load the database wrapper
+        $DB =  new \Gazelle\DBMySQL; //Load the database wrapper
         $DB->query("
 			SELECT Enabled
 			FROM users_main
