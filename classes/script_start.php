@@ -9,6 +9,8 @@
 /* generates the page are at the bottom.                */
 /*------------------------------------------------------*/
 /********************************************************/
+
+require_once __DIR__ . '/../vendor/autoload.php';
 require 'config.php'; //The config contains all site wide configuration information
 //Deal with dumbasses
 if (isset($_REQUEST['info_hash']) && isset($_REQUEST['peer_id'])) {
@@ -17,7 +19,7 @@ if (isset($_REQUEST['info_hash']) && isset($_REQUEST['peer_id'])) {
 
 // Get the user's actual IP address if they're proxied.
 if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])
-        && Proxy::check($_SERVER['REMOTE_ADDR'])
+        && \Gazelle\Proxy::check($_SERVER['REMOTE_ADDR'])
         && filter_var(
             $_SERVER['HTTP_X_FORWARDED_FOR'],
                 FILTER_VALIDATE_IP,
@@ -70,7 +72,6 @@ ob_start(); //Start a buffer, mainly in case there is a mysql error
 
 set_include_path(SERVER_ROOT);
 
-require SERVER_ROOT . '/classes/debug.class.php'; //Require the debug class
 require SERVER_ROOT . '/classes/mysql.class.php'; //Require the database wrapper
 require SERVER_ROOT . '/classes/cache.class.php'; //Require the caching class
 require SERVER_ROOT . '/classes/encrypt.class.php'; //Require the encryption class
@@ -79,7 +80,7 @@ require SERVER_ROOT . '/classes/paranoia.class.php'; //Require the paranoia chec
 require SERVER_ROOT . '/classes/regex.php';
 require SERVER_ROOT . '/classes/util.php';
 
-$Debug = new DEBUG;
+$Debug = new \Gazelle\Debug;
 $Debug->handle_errors();
 $Debug->set_flag('Debug constructed');
 

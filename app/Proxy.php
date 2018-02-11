@@ -1,5 +1,7 @@
 <?php
 
+namespace Gazelle;
+
 //Useful: http://www.robtex.com/cnet/
 class Proxy
 {
