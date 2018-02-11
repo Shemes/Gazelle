@@ -49,7 +49,7 @@ $OuterResults = array();
 
 if ($Details == 'all' || $Details == 'day') {
 	if (!$TopTorrentsActiveLastDay = $Cache->get_value('top10tor_day_'.$Limit.$WhereSum)) {
-		$DayAgo = time_minus(86400);
+		$DayAgo = \Gazelle\Util\Time::timeMinus(86400);
 		$Query = $BaseQuery.' WHERE t.Seeders>0 AND ';
 		if (!empty($Where)) { $Query .= $Where.' AND '; }
 		$Query .= "
@@ -64,7 +64,7 @@ if ($Details == 'all' || $Details == 'day') {
 }
 if ($Details == 'all' || $Details == 'week') {
 	if (!$TopTorrentsActiveLastWeek = $Cache->get_value('top10tor_week_'.$Limit.$WhereSum)) {
-		$WeekAgo = time_minus(604800);
+		$WeekAgo = \Gazelle\Util\Time::timeMinus(604800);
 		$Query = $BaseQuery.' WHERE ';
 		if (!empty($Where)) { $Query .= $Where.' AND '; }
 		$Query .= "

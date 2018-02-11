@@ -118,7 +118,7 @@ $DB->query("
 	FROM reportsv2
 	WHERE TorrentID = $TorrentID
 		AND ReporterID = ".\Gazelle\Util\Db::string($LoggedUser['ID'])."
-		AND ReportedTime > '".time_minus(3)."'");
+		AND ReportedTime > '".\Gazelle\Util\Time::timeMinus(3)."'");
 if ($DB->has_results()) {
 	header("Location: torrents.php?torrentid=$TorrentID");
 	die();

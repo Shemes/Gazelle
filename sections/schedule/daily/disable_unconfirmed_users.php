@@ -8,7 +8,7 @@ $DB->query("
 		FROM users_info AS ui
 			JOIN users_main AS um ON um.ID = ui.UserID
 		WHERE um.LastAccess = '0000-00-00 00:00:00'
-			AND ui.JoinDate < '".time_minus(60 * 60 * 24 * 7)."'
+			AND ui.JoinDate < '".\Gazelle\Util\Time::timeMinus(60 * 60 * 24 * 7)."'
 			AND um.Enabled != '2'");
 $UserIDs = $DB->collect('UserID');
 
@@ -21,7 +21,7 @@ $DB->query("
 			ui.BanReason = '3',
 			ui.AdminComment = CONCAT('$sqltime - Disabled for inactivity (never logged in)\n\n', ui.AdminComment)
 		WHERE um.LastAccess = '0000-00-00 00:00:00'
-			AND ui.JoinDate < '".time_minus(60 * 60 * 24 * 7)."'
+			AND ui.JoinDate < '".\Gazelle\Util\Time::timeMinus(60 * 60 * 24 * 7)."'
 			AND um.Enabled != '2'");
 $Cache->decrement('stats_user_count', $DB->affected_rows());
 

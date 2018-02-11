@@ -161,21 +161,21 @@ if (($UserStats = $Cache->get_value('stats_users')) === false) {
 		SELECT COUNT(ID)
 		FROM users_main
 		WHERE Enabled = '1'
-			AND LastAccess > '".time_minus(3600 * 24)."'");
+			AND LastAccess > '".\Gazelle\Util\Time::timeMinus(3600 * 24)."'");
 	list($UserStats['Day']) = $DB->next_record();
 
 	$DB->query("
 		SELECT COUNT(ID)
 		FROM users_main
 		WHERE Enabled = '1'
-			AND LastAccess > '".time_minus(3600 * 24 * 7)."'");
+			AND LastAccess > '".\Gazelle\Util\Time::timeMinus(3600 * 24 * 7)."'");
 	list($UserStats['Week']) = $DB->next_record();
 
 	$DB->query("
 		SELECT COUNT(ID)
 		FROM users_main
 		WHERE Enabled = '1'
-			AND LastAccess > '".time_minus(3600 * 24 * 30)."'");
+			AND LastAccess > '".\Gazelle\Util\Time::timeMinus(3600 * 24 * 30)."'");
 	list($UserStats['Month']) = $DB->next_record();
 
 	$Cache->cache_value('stats_users', $UserStats, 0);

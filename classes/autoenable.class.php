@@ -254,7 +254,7 @@ class AutoEnable {
 		if (G::$DB->has_results()) {
 			list($UserID, $Timestamp) = G::$DB->next_record();
 			G::$DB->query("UPDATE users_enable_requests SET Token = NULL WHERE Token = '$Token'");
-			if ($Timestamp < time_minus(3600 * 48)) {
+			if ($Timestamp < \Gazelle\Util\Time::timeMinus(3600 * 48)) {
 				// Old request
 				Tools::update_user_notes($UserID, sqltime() . " - Tried to use an expired enable token from ".$_SERVER['REMOTE_ADDR']."\n\n");
 				$Err = "Token has expired. Please visit ".BOT_DISABLED_CHAN." on ".BOT_SERVER." to discuss this with staff.";

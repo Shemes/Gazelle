@@ -3,8 +3,8 @@
 //------------- Remove dead sessions ---------------------------------------//
 sleep(3);
 
-$AgoMins = time_minus(60 * 30);
-$AgoDays = time_minus(3600 * 24 * 30);
+$AgoMins = \Gazelle\Util\Time::timeMinus(60 * 30);
+$AgoDays = \Gazelle\Util\Time::timeMinus(3600 * 24 * 30);
 
 $SessionQuery = $DB->query("
 			SELECT UserID, SessionID

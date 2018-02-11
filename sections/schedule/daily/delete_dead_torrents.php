@@ -17,9 +17,9 @@ $DB->query("
 		FROM torrents AS t
 			JOIN torrents_group AS tg ON tg.ID = t.GroupID
 		WHERE
-			(t.last_action < '".time_minus(3600 * 24 * 28)."' AND t.last_action != 0)
+			(t.last_action < '".\Gazelle\Util\Time::timeMinus(3600 * 24 * 28)."' AND t.last_action != 0)
 			OR
-			(t.Time < '".time_minus(3600 * 24 * 2)."' AND t.last_action = 0)");
+			(t.Time < '".\Gazelle\Util\Time::timeMinus(3600 * 24 * 2)."' AND t.last_action = 0)");
 $Torrents = $DB->to_array(false, MYSQLI_NUM, false);
 echo 'Found '.count($Torrents)." inactive torrents to be deleted.\n";
 

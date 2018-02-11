@@ -68,7 +68,7 @@ $RS = "
 if ($DateSearch) {
 	$RS .= " i.JoinDate BETWEEN '$AfterDate' AND '$BeforeDate' ";
 } else {
-	$RS .= " i.JoinDate > '".time_minus(3600 * 24 * 3)."'";
+	$RS .= " i.JoinDate > '".\Gazelle\Util\Time::timeMinus(3600 * 24 * 3)."'";
 }
 $RS .= "
 	ORDER BY i.Joindate DESC

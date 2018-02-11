@@ -1,13 +1,7 @@
 <?php
 
 use \Gazelle\Util\Time;
-
-
-/* SQL utility functions */
-function time_minus($Offset, $Fuzzy = false) {
-	return Time::timeMinus($Offset, $Fuzzy);
-}
-
+ 
 function sqltime($timestamp = false) {
 	return Time::sqlTime($timestamp);
 }

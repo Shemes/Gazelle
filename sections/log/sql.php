@@ -25,7 +25,7 @@ if (!check_perms('site_view_full_log')) {
 	} else {
 		$SQL .= ' WHERE ';
 	}
-	$SQL .= " Time>'".time_minus(3600 * 24 * 28)."' ";
+	$SQL .= " Time>'".\Gazelle\Util\Time::timeMinus(3600 * 24 * 28)."' ";
 }
 
 $SQL .= "

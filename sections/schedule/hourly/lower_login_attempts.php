@@ -7,4 +7,4 @@ $DB->query("
 		WHERE Attempts > 0");
 $DB->query("
 		DELETE FROM login_attempts
-		WHERE LastAttempt < '".time_minus(3600 * 24 * 90)."'");
+		WHERE LastAttempt < '".\Gazelle\Util\Time::timeMinus(3600 * 24 * 90)."'");
