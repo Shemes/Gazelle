@@ -27,7 +27,7 @@ if (!check_perms('admin_reports')) {
 $DB->query("
 	UPDATE reports
 	SET Status = 'Resolved',
-		ResolvedTime = '".sqltime()."',
+		ResolvedTime = '".\Gazelle\Util\Time::sqltime()."',
 		ResolverID = '".$LoggedUser['ID']."'
 	WHERE ID = '".\Gazelle\Util\Db::string($ReportID)."'");
 

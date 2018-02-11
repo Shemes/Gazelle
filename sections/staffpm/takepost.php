@@ -7,7 +7,7 @@ if ($Message = \Gazelle\Util\Db::string($_POST['message'])) {
 			INSERT INTO staff_pm_conversations
 				(Subject, Status, Level, UserID, Date)
 			VALUES
-				('$Subject', 'Unanswered', $_POST[level], $LoggedUser[ID], '".sqltime()."')"
+				('$Subject', 'Unanswered', $_POST[level], $LoggedUser[ID], '".\Gazelle\Util\Time::sqltime()."')"
 		);
 
 		// New message
@@ -16,7 +16,7 @@ if ($Message = \Gazelle\Util\Db::string($_POST['message'])) {
 			INSERT INTO staff_pm_messages
 				(UserID, SentDate, Message, ConvID)
 			VALUES
-				($LoggedUser[ID], '".sqltime()."', '$Message', $ConvID)"
+				($LoggedUser[ID], '".\Gazelle\Util\Time::sqltime()."', '$Message', $ConvID)"
 		);
 
 		header('Location: staffpm.php');
@@ -38,7 +38,7 @@ if ($Message = \Gazelle\Util\Db::string($_POST['message'])) {
 				INSERT INTO staff_pm_messages
 					(UserID, SentDate, Message, ConvID)
 				VALUES
-					(".$LoggedUser['ID'].", '".sqltime()."', '$Message', $ConvID)"
+					(".$LoggedUser['ID'].", '".\Gazelle\Util\Time::sqltime()."', '$Message', $ConvID)"
 			);
 
 			// Update conversation
@@ -46,7 +46,7 @@ if ($Message = \Gazelle\Util\Db::string($_POST['message'])) {
 				// FLS/Staff
 				$DB->query("
 					UPDATE staff_pm_conversations
-					SET Date = '".sqltime()."',
+					SET Date = '".\Gazelle\Util\Time::sqltime()."',
 						Unread = true,
 						Status = 'Open'
 					WHERE ID = $ConvID");
@@ -55,7 +55,7 @@ if ($Message = \Gazelle\Util\Db::string($_POST['message'])) {
 				// User
 				$DB->query("
 					UPDATE staff_pm_conversations
-					SET Date = '".sqltime()."',
+					SET Date = '".\Gazelle\Util\Time::sqltime()."',
 						Unread = true,
 						Status = 'Unanswered'
 					WHERE ID = $ConvID");

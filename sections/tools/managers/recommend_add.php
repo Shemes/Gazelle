@@ -30,7 +30,7 @@ if (empty($GroupID) || !is_number($GroupID)) {
 	 error(404);
 }
 
-$DB->query("INSERT INTO torrents_recommended (GroupID, UserID, Time) VALUES ('".\Gazelle\Util\Db::string($GroupID)."', $LoggedUser[ID], '".sqltime()."')");
+$DB->query("INSERT INTO torrents_recommended (GroupID, UserID, Time) VALUES ('".\Gazelle\Util\Db::string($GroupID)."', $LoggedUser[ID], '".\Gazelle\Util\Time::sqltime()."')");
 Torrents::freeleech_groups($GroupID, 2, 3);
 
 $Cache->delete_value('recommend');

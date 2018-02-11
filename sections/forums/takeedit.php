@@ -30,7 +30,7 @@ $UserID = $LoggedUser['ID'];
 $Body = $_POST['body']; //Don't URL Decode
 $PostID = $_POST['post'];
 $Key = $_POST['key'];
-$SQLTime = sqltime();
+$SQLTime = \Gazelle\Util\Time::sqltime();
 $DoPM = isset($_POST['pm']) ? $_POST['pm'] : 0;
 
 // Mainly

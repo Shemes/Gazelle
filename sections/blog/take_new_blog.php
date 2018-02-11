@@ -31,7 +31,7 @@ $DB->prepared_query("
 	INSERT INTO blog
 		(UserID, Title, Body, Time, ThreadID, Important)
 	VALUES
-		(?, ?, ?, ?, ?, ?)", G::$LoggedUser['ID'], $_POST['title'], $_POST['body'], sqltime(), $ThreadID, $Important);
+		(?, ?, ?, ?, ?, ?)", G::$LoggedUser['ID'], $_POST['title'], $_POST['body'], \Gazelle\Util\Time::sqltime(), $ThreadID, $Important);
 
 $Cache->delete_value('blog');
 if ($Important == '1') {

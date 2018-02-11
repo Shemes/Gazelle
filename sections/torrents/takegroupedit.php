@@ -91,7 +91,7 @@ if (empty($RevisionID)) { // edit
 		INSERT INTO wiki_torrents
 			(PageID, Body, Image, UserID, Summary, Time)
 		VALUES
-			('$GroupID', '".\Gazelle\Util\Db::string($Body)."', '".\Gazelle\Util\Db::string($Image)."', '$UserID', '$Summary', '".sqltime()."')");
+			('$GroupID', '".\Gazelle\Util\Db::string($Body)."', '".\Gazelle\Util\Db::string($Image)."', '$UserID', '$Summary', '".\Gazelle\Util\Time::sqltime()."')");
 
 	$DB->query("
 		UPDATE torrents_group
@@ -112,7 +112,7 @@ else { // revert
 	$DB->query("
 		INSERT INTO wiki_torrents
 			(PageID, Body, Image, UserID, Summary, Time)
-		SELECT '$GroupID', Body, Image, '$UserID', 'Reverted to revision $RevisionID', '".sqltime()."'
+		SELECT '$GroupID', Body, Image, '$UserID', 'Reverted to revision $RevisionID', '".\Gazelle\Util\Time::sqltime()."'
 		FROM wiki_artists
 		WHERE RevisionID = '$RevisionID'");
 }
@@ -137,7 +137,7 @@ if ($OldVH != $VanityHouse && check_perms('torrents_edit_vanityhouse')) {
 		INSERT INTO group_log
 			(GroupID, UserID, Time, Info)
 		VALUES
-			('$GroupID',".$LoggedUser['ID'].",'".sqltime()."','".\Gazelle\Util\Db::string('Vanity House status changed to '.($VanityHouse ? 'true' : 'false'))."')");
+			('$GroupID',".$LoggedUser['ID'].",'".\Gazelle\Util\Time::sqltime()."','".\Gazelle\Util\Db::string('Vanity House status changed to '.($VanityHouse ? 'true' : 'false'))."')");
 }
 
 // There we go, all done!

@@ -164,7 +164,7 @@ if ($CurEmail != $_POST['email']) {
 		$ChangerIP = \Gazelle\Util\Db::string($LoggedUser['IP']);
 		$DB->query("
 			UPDATE users_history_emails
-			SET Time = '".sqltime()."'
+			SET Time = '".\Gazelle\Util\Time::sqltime()."'
 			WHERE UserID = '$UserID'
 				AND Time = '0000-00-00 00:00:00'");
 		$DB->query("
@@ -350,7 +350,7 @@ if ($ResetPassword) {
 		INSERT INTO users_history_passwords
 			(UserID, ChangerIP, ChangeTime)
 		VALUES
-			('$UserID', '$ChangerIP', '".sqltime()."')");
+			('$UserID', '$ChangerIP', '".\Gazelle\Util\Time::sqltime()."')");
 
 }
 
@@ -365,7 +365,7 @@ if (isset($_POST['resetpasskey'])) {
 		INSERT INTO users_history_passkeys
 			(UserID, OldPassKey, NewPassKey, ChangerIP, ChangeTime)
 		VALUES
-			('$UserID', '$OldPassKey', '$NewPassKey', '$ChangerIP', '".sqltime()."')");
+			('$UserID', '$OldPassKey', '$NewPassKey', '$ChangerIP', '".\Gazelle\Util\Time::sqltime()."')");
 	$Cache->begin_transaction("user_info_heavy_$UserID");
 	$Cache->update_row(false, array('torrent_pass' => $NewPassKey));
 	$Cache->commit_transaction(0);

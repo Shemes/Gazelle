@@ -67,7 +67,7 @@ $DB->query('
 	INSERT INTO reports
 		(UserID, ThingID, Type, ReportedTime, Reason)
 	VALUES
-		('.\Gazelle\Util\Db::string($LoggedUser['ID']).", $ID, '$Short', '".sqltime()."', '".\Gazelle\Util\Db::string($Reason)."')");
+		('.\Gazelle\Util\Db::string($LoggedUser['ID']).", $ID, '$Short', '".\Gazelle\Util\Time::sqltime()."', '".\Gazelle\Util\Db::string($Reason)."')");
 $ReportID = $DB->inserted_id();
 
 $Channels = array();

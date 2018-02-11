@@ -26,7 +26,7 @@ $DB->query("
 	INSERT INTO group_log
 		(GroupID, UserID, Time, Info)
 	VALUES
-		('$GroupID', ".$LoggedUser['ID'].", '".sqltime()."', '".\Gazelle\Util\Db::string("Additional cover \"$Summary - $Image\" removed from group")."')");
+		('$GroupID', ".$LoggedUser['ID'].", '".\Gazelle\Util\Time::sqltime()."', '".\Gazelle\Util\Db::string("Additional cover \"$Summary - $Image\" removed from group")."')");
 
 $Cache->delete_value("torrents_cover_art_$GroupID");
 $Location = (empty($_SERVER['HTTP_REFERER'])) ? "torrents.php?id={$GroupID}" : $_SERVER['HTTP_REFERER'];

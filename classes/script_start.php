@@ -196,7 +196,7 @@ if (isset($LoginCookie)) {
     if (strtotime($UserSessions[$SessionID]['LastUpdate']) + 600 < time()) {
         $DB->query("
 			UPDATE users_main
-			SET LastAccess = '" . sqltime() . "'
+			SET LastAccess = '" . \Gazelle\Util\Time::sqltime() . "'
 			WHERE ID = '{$LoggedUser['ID']}'");
         $DB->query("
 			UPDATE users_sessions
@@ -204,7 +204,7 @@ if (isset($LoginCookie)) {
 				IP = '" . $_SERVER['REMOTE_ADDR'] . "',
 				Browser = '$Browser',
 				OperatingSystem = '$OperatingSystem',
-				LastUpdate = '" . sqltime() . "'
+				LastUpdate = '" . \Gazelle\Util\Time::sqltime() . "'
 			WHERE UserID = '{$LoggedUser['ID']}'
 				AND SessionID = '" . \Gazelle\Util\Db::string($SessionID) . "'");
         $Cache->begin_transaction("users_sessions_$UserID");
@@ -214,7 +214,7 @@ if (isset($LoginCookie)) {
                 'Browser' => $Browser,
                 'OperatingSystem' => $OperatingSystem,
                 'IP' => $_SERVER['REMOTE_ADDR'],
-                'LastUpdate' => sqltime(),
+                'LastUpdate' => \Gazelle\Util\Time::sqltime(),
                 ]);
         $Cache->commit_transaction(0);
     }
@@ -248,7 +248,7 @@ if (isset($LoginCookie)) {
         $NewIP = \Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR']);
         $DB->query("
 			UPDATE users_history_ips
-			SET EndTime = '" . sqltime() . "'
+			SET EndTime = '" . \Gazelle\Util\Time::sqltime() . "'
 			WHERE EndTime IS NULL
 				AND UserID = '{$LoggedUser['ID']}'
 				AND IP = '$CurIP'");
@@ -256,7 +256,7 @@ if (isset($LoginCookie)) {
 			INSERT IGNORE INTO users_history_ips
 				(UserID, IP, StartTime)
 			VALUES
-				('{$LoggedUser['ID']}', '$NewIP', '" . sqltime() . "')");
+				('{$LoggedUser['ID']}', '$NewIP', '" . \Gazelle\Util\Time::sqltime() . "')");
 
         $ipcc = Tools::geoip($NewIP);
         $DB->query("
@@ -386,7 +386,7 @@ $StripPostKeys = array_fill_keys(['password', 'cur_pass', 'new_pass_1', 'new_pas
 $Cache->cache_value(
     'php_' . getmypid(),
     [
-        'start' => sqltime(),
+        'start' => \Gazelle\Util\Time::sqltime(),
         'document' => $Document,
         'query' => $_SERVER['QUERY_STRING'],
         'get' => $_GET,

@@ -35,11 +35,11 @@ if (!$DB->has_results()) {
 		$Sort += 1;
 		$DB->query("
 			INSERT IGNORE INTO $Table (UserID, $Col, Time, Sort)
-			VALUES ('$LoggedUser[ID]', $PageID, '".sqltime()."', $Sort)");
+			VALUES ('$LoggedUser[ID]', $PageID, '".\Gazelle\Util\Time::sqltime()."', $Sort)");
 	} else {
 		$DB->query("
 			INSERT IGNORE INTO $Table (UserID, $Col, Time)
-			VALUES ('$LoggedUser[ID]', $PageID, '".sqltime()."')");
+			VALUES ('$LoggedUser[ID]', $PageID, '".\Gazelle\Util\Time::sqltime()."')");
 	}
 	$Cache->delete_value('bookmarks_'.$Type.'_'.$LoggedUser['ID']);
 	if ($Type == 'torrent') {

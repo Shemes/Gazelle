@@ -25,11 +25,11 @@ function add_torrent($CollageID, $GroupID) {
 			INSERT IGNORE INTO collages_torrents
 				(CollageID, GroupID, UserID, Sort, AddedOn)
 			VALUES
-				('$CollageID', '$GroupID', '$LoggedUser[ID]', '$Sort', '" . sqltime() . "')");
+				('$CollageID', '$GroupID', '$LoggedUser[ID]', '$Sort', '" . \Gazelle\Util\Time::sqltime() . "')");
 
 		$DB->query("
 			UPDATE collages
-			SET NumTorrents = NumTorrents + 1, Updated = '" . sqltime() . "'
+			SET NumTorrents = NumTorrents + 1, Updated = '" . \Gazelle\Util\Time::sqltime() . "'
 			WHERE ID = '$CollageID'");
 
 		$Cache->delete_value("collage_$CollageID");

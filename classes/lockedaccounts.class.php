@@ -28,7 +28,7 @@ class LockedAccounts
         G::$DB->query("
                 INSERT INTO locked_accounts (UserID, Type)
                 VALUES ('" . $UserID . "', " . $Type . ")");
-        Tools::update_user_notes($UserID, sqltime() . " - " . \Gazelle\Util\Db::string($Message) . " by $Username\nReason: " . \Gazelle\Util\Db::string($Reason) . "\n\n");
+        Tools::update_user_notes($UserID, \Gazelle\Util\Time::sqltime() . " - " . \Gazelle\Util\Db::string($Message) . " by $Username\nReason: " . \Gazelle\Util\Db::string($Reason) . "\n\n");
         G::$Cache->delete_value('user_info_' . $UserID);
     }
 
@@ -54,7 +54,7 @@ class LockedAccounts
 
         if (G::$DB->affected_rows() == 1) {
             G::$Cache->delete_value("user_info_" . $UserID);
-            Tools::update_user_notes($UserID, sqltime() . " - " . \Gazelle\Util\Db::string($Message) . " by $Username\nReason: " . \Gazelle\Util\Db::string($Reason) . "\n\n");
+            Tools::update_user_notes($UserID, \Gazelle\Util\Time::sqltime() . " - " . \Gazelle\Util\Db::string($Message) . " by $Username\nReason: " . \Gazelle\Util\Db::string($Reason) . "\n\n");
         }
     }
 }

@@ -111,13 +111,13 @@ class Misc {
 				INSERT INTO pm_conversations_users
 					(UserID, ConvID, InInbox, InSentbox, SentDate, ReceivedDate, UnRead)
 				VALUES
-					('$ToID', '$ConvID', '1','0','".sqltime()."', '".sqltime()."', '1')");
+					('$ToID', '$ConvID', '1','0','".\Gazelle\Util\Time::sqltime()."', '".\Gazelle\Util\Time::sqltime()."', '1')");
 			if ($FromID != 0) {
 				G::$DB->query("
 					INSERT INTO pm_conversations_users
 						(UserID, ConvID, InInbox, InSentbox, SentDate, ReceivedDate, UnRead)
 					VALUES
-						('$FromID', '$ConvID', '0','1','".sqltime()."', '".sqltime()."', '0')");
+						('$FromID', '$ConvID', '0','1','".\Gazelle\Util\Time::sqltime()."', '".\Gazelle\Util\Time::sqltime()."', '0')");
 			}
 			$ToID = array($ToID);
 		} else {
@@ -127,7 +127,7 @@ class Misc {
 				SET
 					InInbox = '1',
 					UnRead = '1',
-					ReceivedDate = '".sqltime()."'
+					ReceivedDate = '".\Gazelle\Util\Time::sqltime()."'
 				WHERE UserID IN (".implode(',', $ToID).")
 					AND ConvID = '$ConvID'");
 
@@ -135,7 +135,7 @@ class Misc {
 				UPDATE pm_conversations_users
 				SET
 					InSentbox = '1',
-					SentDate = '".sqltime()."'
+					SentDate = '".\Gazelle\Util\Time::sqltime()."'
 				WHERE UserID = '$FromID'
 					AND ConvID = '$ConvID'");
 		}
@@ -145,7 +145,7 @@ class Misc {
 			INSERT INTO pm_messages
 				(SenderID, ConvID, SentDate, Body)
 			VALUES
-				('$FromID', '$ConvID', '".sqltime()."', '$Body')");
+				('$FromID', '$ConvID', '".\Gazelle\Util\Time::sqltime()."', '$Body')");
 
 		// Update the cached new message count.
 		foreach ($ToID as $ID) {
@@ -217,7 +217,7 @@ class Misc {
 			INSERT INTO forums_topics
 				(Title, AuthorID, ForumID, LastPostTime, LastPostAuthorID, CreatedTime)
 			VALUES
-				('$Title', '$AuthorID', '$ForumID', '".sqltime()."', '$AuthorID', '".sqltime()."')");
+				('$Title', '$AuthorID', '$ForumID', '".\Gazelle\Util\Time::sqltime()."', '$AuthorID', '".\Gazelle\Util\Time::sqltime()."')");
 		$TopicID = G::$DB->inserted_id();
 		$Posts = 1;
 
@@ -225,7 +225,7 @@ class Misc {
 			INSERT INTO forums_posts
 				(TopicID, AuthorID, AddedTime, Body)
 			VALUES
-				('$TopicID', '$AuthorID', '".sqltime()."', '$PostBody')");
+				('$TopicID', '$AuthorID', '".\Gazelle\Util\Time::sqltime()."', '$PostBody')");
 		$PostID = G::$DB->inserted_id();
 
 		G::$DB->query("
@@ -236,7 +236,7 @@ class Misc {
 				LastPostID = '$PostID',
 				LastPostAuthorID = '$AuthorID',
 				LastPostTopicID = '$TopicID',
-				LastPostTime = '".sqltime()."'
+				LastPostTime = '".\Gazelle\Util\Time::sqltime()."'
 			WHERE ID = '$ForumID'");
 
 		G::$DB->query("
@@ -245,7 +245,7 @@ class Misc {
 				NumPosts = NumPosts + 1,
 				LastPostID = '$PostID',
 				LastPostAuthorID = '$AuthorID',
-				LastPostTime = '".sqltime()."'
+				LastPostTime = '".\Gazelle\Util\Time::sqltime()."'
 			WHERE ID = '$TopicID'");
 
 		// Bump this topic to head of the cache
@@ -269,7 +269,7 @@ class Misc {
 					'IsSticky' => $IsSticky,
 					'NumPosts' => $NumPosts,
 					'LastPostID' => $PostID,
-					'LastPostTime' => sqltime(),
+					'LastPostTime' => \Gazelle\Util\Time::sqltime(),
 					'LastPostAuthorID' => $AuthorID,
 					)
 				); //Bumped thread
@@ -299,7 +299,7 @@ class Misc {
 			'LastPostID' => $PostID,
 			'LastPostAuthorID' => $AuthorID,
 			'LastPostTopicID' => $TopicID,
-			'LastPostTime' => sqltime(),
+			'LastPostTime' => \Gazelle\Util\Time::sqltime(),
 			'Title' => $Title,
 			'IsLocked' => $ThreadInfo['IsLocked'],
 			'IsSticky' => $ThreadInfo['IsSticky']
@@ -315,7 +315,7 @@ class Misc {
 		$Post = array(
 			'ID' => $PostID,
 			'AuthorID' => G::$LoggedUser['ID'],
-			'AddedTime' => sqltime(),
+			'AddedTime' => \Gazelle\Util\Time::sqltime(),
 			'Body' => $PostBody,
 			'EditedUserID' => 0,
 			'EditedTime' => '0000-00-00 00:00:00',
@@ -453,7 +453,7 @@ class Misc {
 		$QueryID = G::$DB->get_query_id();
 		G::$DB->query("
 			INSERT INTO log (Message, Time)
-			VALUES ('" . \Gazelle\Util\Db::string($Message) . "', '" . sqltime() . "')");
+			VALUES ('" . \Gazelle\Util\Db::string($Message) . "', '" . \Gazelle\Util\Time::sqltime() . "')");
 		G::$DB->set_query_id($QueryID);
 	}
 

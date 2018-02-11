@@ -345,7 +345,7 @@ if (check_perms('users_mod')) {
     if (!$btID && $Properties['BadTags']) {
         $DB->query("
 			INSERT INTO torrents_bad_tags
-			VALUES ($TorrentID, $LoggedUser[ID], '" . sqltime() . "')");
+			VALUES ($TorrentID, $LoggedUser[ID], '" . \Gazelle\Util\Time::sqltime() . "')");
     }
     if ($btID && !$Properties['BadTags']) {
         $DB->query("
@@ -362,7 +362,7 @@ if (check_perms('users_mod')) {
     if (!$bfID && $Properties['BadFolders']) {
         $DB->query("
 			INSERT INTO torrents_bad_folders
-			VALUES ($TorrentID, $LoggedUser[ID], '" . sqltime() . "')");
+			VALUES ($TorrentID, $LoggedUser[ID], '" . \Gazelle\Util\Time::sqltime() . "')");
     }
     if ($bfID && !$Properties['BadFolders']) {
         $DB->query("
@@ -379,7 +379,7 @@ if (check_perms('users_mod')) {
     if (!$bfiID && $Properties['BadFiles']) {
         $DB->query("
 			INSERT INTO torrents_bad_files
-			VALUES ($TorrentID, $LoggedUser[ID], '" . sqltime() . "')");
+			VALUES ($TorrentID, $LoggedUser[ID], '" . \Gazelle\Util\Time::sqltime() . "')");
     }
     if ($bfiID && !$Properties['BadFiles']) {
         $DB->query("
@@ -396,7 +396,7 @@ if (check_perms('users_mod')) {
     if (!$mlID && $Properties['Lineage']) {
         $DB->query("
 			INSERT INTO torrents_missing_lineage
-			VALUES ($TorrentID, $LoggedUser[ID], '" . sqltime() . "')");
+			VALUES ($TorrentID, $LoggedUser[ID], '" . \Gazelle\Util\Time::sqltime() . "')");
     }
     if ($mlID && !$Properties['Lineage']) {
         $DB->query("
@@ -434,7 +434,7 @@ if (check_perms('users_mod')) {
     if (!$caID && $Properties['CassetteApproved']) {
         $DB->query("
 			INSERT INTO torrents_cassette_approved
-			VALUES ($TorrentID, $LoggedUser[ID], '" . sqltime() . "')");
+			VALUES ($TorrentID, $LoggedUser[ID], '" . \Gazelle\Util\Time::sqltime() . "')");
     }
     if ($caID && !$Properties['CassetteApproved']) {
         $DB->query("
@@ -451,7 +451,7 @@ if (check_perms('users_mod')) {
     if (!$lmaID && $Properties['LossymasterApproved']) {
         $DB->query("
 			INSERT INTO torrents_lossymaster_approved
-			VALUES ($TorrentID, $LoggedUser[ID], '" . sqltime() . "')");
+			VALUES ($TorrentID, $LoggedUser[ID], '" . \Gazelle\Util\Time::sqltime() . "')");
     }
     if ($lmaID && !$Properties['LossymasterApproved']) {
         $DB->query("
@@ -467,7 +467,7 @@ if (check_perms('users_mod')) {
     if (!$lwID && $Properties['LossywebApproved']) {
         $DB->query("
 			INSERT INTO torrents_lossyweb_approved
-			VALUES ($TorrentID, $LoggedUser[ID], '" . sqltime() . "')");
+			VALUES ($TorrentID, $LoggedUser[ID], '" . \Gazelle\Util\Time::sqltime() . "')");
     }
     if ($lwID && !$Properties['LossywebApproved']) {
         $DB->query("

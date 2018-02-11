@@ -11,7 +11,7 @@ $WarningLength = $_POST['length'];
 $PostID = (int)$_POST['postid'];
 $UserID = (int)$_POST['userid'];
 $Key = (int)$_POST['key'];
-$SQLTime = sqltime();
+$SQLTime = \Gazelle\Util\Time::sqltime();
 
 $UserInfo = Users::user_info($UserID);
 if ($UserInfo['Class'] > $LoggedUser['Class']) {

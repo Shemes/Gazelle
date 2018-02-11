@@ -31,11 +31,11 @@ $DB->query("
 	INSERT INTO staff_pm_messages
 		(UserID, SentDate, Message, ConvID)
 	VALUES
-		(".$LoggedUser['ID'].", '".sqltime()."', '".\Gazelle\Util\Db::string($Message)."', $ConvID)");
+		(".$LoggedUser['ID'].", '".\Gazelle\Util\Time::sqltime()."', '".\Gazelle\Util\Db::string($Message)."', $ConvID)");
 */
 $DB->query("
 	UPDATE staff_pm_conversations
-	SET Date = '".sqltime()."',
+	SET Date = '".\Gazelle\Util\Time::sqltime()."',
 		Unread = true,
 		Status = 'Resolved',
 		ResolverID = ".$LoggedUser['ID']."

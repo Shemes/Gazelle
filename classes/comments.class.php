@@ -29,7 +29,7 @@ class Comments {
 
 		G::$DB->query("
 			INSERT INTO comments (Page, PageID, AuthorID, AddedTime, Body)
-			VALUES ('$Page', $PageID, " . G::$LoggedUser['ID'] . ", '" . sqltime() . "', '" . \Gazelle\Util\Db::string($Body) . "')");
+			VALUES ('$Page', $PageID, " . G::$LoggedUser['ID'] . ", '" . \Gazelle\Util\Time::sqltime() . "', '" . \Gazelle\Util\Db::string($Body) . "')");
 		$PostID = G::$DB->inserted_id();
 
 		$CatalogueID = floor((TORRENT_COMMENTS_PER_PAGE * $Pages - TORRENT_COMMENTS_PER_PAGE) / THREAD_CATALOGUE);
@@ -86,7 +86,7 @@ class Comments {
 			SET
 				Body = '" . \Gazelle\Util\Db::string($NewBody) . "',
 				EditedUserID = " . G::$LoggedUser['ID'] . ",
-				EditedTime = '" . sqltime() . "'
+				EditedTime = '" . \Gazelle\Util\Time::sqltime() . "'
 			WHERE ID = $PostID");
 
 		// Update the cache
@@ -100,7 +100,7 @@ class Comments {
 
 		G::$DB->query("
 			INSERT INTO comments_edits (Page, PostID, EditUser, EditTime, Body)
-			VALUES ('$Page', $PostID, " . G::$LoggedUser['ID'] . ", '" . sqltime() . "', '" . \Gazelle\Util\Db::string($OldBody) . "')");
+			VALUES ('$Page', $PostID, " . G::$LoggedUser['ID'] . ", '" . \Gazelle\Util\Time::sqltime() . "', '" . \Gazelle\Util\Db::string($OldBody) . "')");
 
 		G::$DB->set_query_id($QueryID);
 

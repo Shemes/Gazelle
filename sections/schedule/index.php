@@ -123,7 +123,7 @@ else {
 	$ChooseRun = true;
 }
 
-$sqltime = sqltime();
+$sqltime = \Gazelle\Util\Time::sqltime();
 
 echo "Current Time: $sqltime{$LineEnd}{$LineEnd}";
 

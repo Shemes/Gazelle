@@ -41,7 +41,7 @@ if ($UsersOnly == 1) {
 	$DB->query("
 		SELECT
 			u.Email,
-			'".sqltime()."' AS Time,
+			'".\Gazelle\Util\Time::sqltime()."' AS Time,
 			u.IP,
 			c.Code
 		FROM users_main AS u
@@ -66,7 +66,7 @@ if ($UsersOnly == 1) {
 	$DB->query("
 		SELECT
 			u.Email,
-			'".sqltime()."' AS Time,
+			'".\Gazelle\Util\Time::sqltime()."' AS Time,
 			u.IP,
 			c.Code
 		FROM users_main AS u

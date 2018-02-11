@@ -77,7 +77,7 @@ $DB->query("
 	INSERT INTO reportsv2
 		(ReporterID, TorrentID, Type, UserComment, Status, ReportedTime, ExtraID)
 	VALUES
-		(".\Gazelle\Util\Db::string($LoggedUser['ID']).", $TorrentID, '$Type', '$Extra', 'New', '".sqltime()."', '$ExtraID')");
+		(".\Gazelle\Util\Db::string($LoggedUser['ID']).", $TorrentID, '$Type', '$Extra', 'New', '".\Gazelle\Util\Time::sqltime()."', '$ExtraID')");
 
 $ReportID = $DB->inserted_id();
 

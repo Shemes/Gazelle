@@ -63,7 +63,7 @@ $DB->query("
 if ($OldYear != $Year) {
 	$DB->query("
 		INSERT INTO group_log (GroupID, UserID, Time, Info)
-		VALUES ('$GroupID', ".$LoggedUser['ID'].", '".sqltime()."', '".\Gazelle\Util\Db::string("Year changed from $OldYear to $Year")."')");
+		VALUES ('$GroupID', ".$LoggedUser['ID'].", '".\Gazelle\Util\Time::sqltime()."', '".\Gazelle\Util\Db::string("Year changed from $OldYear to $Year")."')");
 }
 
 $DB->query("

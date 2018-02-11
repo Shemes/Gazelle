@@ -127,19 +127,19 @@ if (!empty($_REQUEST['confirm'])) {
 			$AuthKey = Users::make_secret();
 
 			if ($InviteReason !== '') {
-				$InviteReason = \Gazelle\Util\Db::string(sqltime()." - $InviteReason");
+				$InviteReason = \Gazelle\Util\Db::string(\Gazelle\Util\Time::sqltime()." - $InviteReason");
 			}
 			$DB->query("
 				INSERT INTO users_info
 					(UserID, StyleID, AuthKey, Inviter, JoinDate, AdminComment)
 				VALUES
-					('$UserID', '$StyleID', '".\Gazelle\Util\Db::string($AuthKey)."', '$InviterID', '".sqltime()."', '$InviteReason')");
+					('$UserID', '$StyleID', '".\Gazelle\Util\Db::string($AuthKey)."', '$InviterID', '".\Gazelle\Util\Time::sqltime()."', '$InviteReason')");
 
 			$DB->query("
 				INSERT INTO users_history_ips
 					(UserID, IP, StartTime)
 				VALUES
-					('$UserID', '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."', '".sqltime()."')");
+					('$UserID', '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."', '".\Gazelle\Util\Time::sqltime()."')");
 			$DB->query("
 				INSERT INTO users_notifications_settings
 					(UserID)
@@ -158,7 +158,7 @@ if (!empty($_REQUEST['confirm'])) {
 					INSERT INTO users_history_emails
 						(UserID, Email, Time, IP)
 					VALUES
-						('$UserID', '".\Gazelle\Util\Db::string($InviteEmail)."', '".sqltime()."', '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."')");
+						('$UserID', '".\Gazelle\Util\Db::string($InviteEmail)."', '".\Gazelle\Util\Time::sqltime()."', '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."')");
 			}
 
 

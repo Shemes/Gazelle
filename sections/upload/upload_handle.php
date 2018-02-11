@@ -665,7 +665,7 @@ if (!$GroupID) {
 		INSERT INTO torrents_group
 			(ArtistID, CategoryID, Name, Year, RecordLabel, CatalogueNumber, Time, WikiBody, WikiImage, ReleaseType, VanityHouse)
 		VALUES
-			(0, $TypeID, ".$T['Title'].", $T[Year], $T[RecordLabel], $T[CatalogueNumber], '".sqltime()."', '".\Gazelle\Util\Db::string($Body)."', $T[Image], $T[ReleaseType], $T[VanityHouse])");
+			(0, $TypeID, ".$T['Title'].", $T[Year], $T[RecordLabel], $T[CatalogueNumber], '".\Gazelle\Util\Time::sqltime()."', '".\Gazelle\Util\Db::string($Body)."', $T[Image], $T[ReleaseType], $T[VanityHouse])");
 	$GroupID = $DB->inserted_id();
 	if ($Type == 'Music') {
 		foreach ($ArtistForm as $Importance => $Artists) {
@@ -682,7 +682,7 @@ if (!$GroupID) {
 } else {
 	$DB->query("
 		UPDATE torrents_group
-		SET Time = '".sqltime()."'
+		SET Time = '".\Gazelle\Util\Time::sqltime()."'
 		WHERE ID = $GroupID");
 	$Cache->delete_value("torrent_group_$GroupID");
 	$Cache->delete_value("torrents_details_$GroupID");
@@ -702,7 +702,7 @@ if (!$NoRevision) {
 		INSERT INTO wiki_torrents
 			(PageID, Body, UserID, Summary, Time, Image)
 		VALUES
-			($GroupID, $T[GroupDescription], $LoggedUser[ID], 'Uploaded new torrent', '".sqltime()."', $T[Image])");
+			($GroupID, $T[GroupDescription], $LoggedUser[ID], 'Uploaded new torrent', '".\Gazelle\Util\Time::sqltime()."', $T[Image])");
 	$RevisionID = $DB->inserted_id();
 
 	// Revision ID
@@ -783,7 +783,7 @@ $DB->query("
 		($GroupID, $LoggedUser[ID], $T[Media], $T[Format], $T[Encoding],
 		$T[Remastered], $T[RemasterYear], $T[RemasterTitle], $T[RemasterRecordLabel], $T[RemasterCatalogueNumber],
 		$T[Scene], '$HasLog', '$HasCue', '$LogInDB', '$LogScore', '$LogChecksum','".\Gazelle\Util\Db::string($InfoHash)."', $NumFiles, '$FileString', 
-		'$FilePath', $TotalSize, '".sqltime()."', $T[TorrentDescription], '$T[FreeLeech]', '$T[FreeLeechType]')");
+		'$FilePath', $TotalSize, '".\Gazelle\Util\Time::sqltime()."', $T[TorrentDescription], '$T[FreeLeech]', '$T[FreeLeechType]')");
 
 $Cache->increment('stats_torrent_count');
 $TorrentID = $DB->inserted_id();
@@ -914,7 +914,7 @@ foreach ($ExtraTorrentsInsert as $ExtraTorrent) {
 		($GroupID, $LoggedUser[ID], $T[Media], '$ExtraTorrent[Format]', '$ExtraTorrent[Encoding]',
 		$T[Remastered], $T[RemasterYear], $T[RemasterTitle], $T[RemasterRecordLabel], $T[RemasterCatalogueNumber],
 		$ExtraHasLog, $ExtraHasCue, '".\Gazelle\Util\Db::string($ExtraTorrent['InfoHash'])."', $ExtraTorrent[NumFiles],
-		'$ExtraTorrent[FileString]', '$ExtraTorrent[FilePath]', $ExtraTorrent[TotalSize], '".sqltime()."',
+		'$ExtraTorrent[FileString]', '$ExtraTorrent[FilePath]', $ExtraTorrent[TotalSize], '".\Gazelle\Util\Time::sqltime()."',
 		'$ExtraTorrent[TorrentDescription]', $LogScore, '$T[FreeLeech]', '$T[FreeLeechType]')");
 
 	$Cache->increment('stats_torrent_count');
@@ -1004,7 +1004,7 @@ if ($Properties['LibraryImage'] != '') {
 		INSERT INTO reportsv2
 			(ReporterID, TorrentID, Type, UserComment, Status, ReportedTime, Track, Image, ExtraID, Link)
 		VALUES
-			(0, $TorrentID, 'library', '".\Gazelle\Util\Db::string(($Properties['MultiDisc'] ? 'Multi-disc' : ''))."', 'New', '".sqltime()."', '', '".\Gazelle\Util\Db::string($Properties['LibraryImage'])."', '', '')");
+			(0, $TorrentID, 'library', '".\Gazelle\Util\Db::string(($Properties['MultiDisc'] ? 'Multi-disc' : ''))."', 'New', '".\Gazelle\Util\Time::sqltime()."', '', '".\Gazelle\Util\Db::string($Properties['LibraryImage'])."', '', '')");
 }
 
 //******************************************************************************//

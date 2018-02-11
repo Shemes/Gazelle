@@ -33,12 +33,12 @@ if ($_POST['submit'] === 'Delete') { // Delete
 				Email = '$P[email]',
 				Comment = '$P[comment]',
 				UserID = '$LoggedUser[ID]',
-				Time = '".sqltime()."'
+				Time = '".\Gazelle\Util\Time::sqltime()."'
 			WHERE ID = '$P[id]'");
 	} else { // Create
 		$DB->query("
 			INSERT INTO email_blacklist (Email, Comment, UserID, Time)
-			VALUES ('$P[email]', '$P[comment]', '$LoggedUser[ID]', '".sqltime()."')");
+			VALUES ('$P[email]', '$P[comment]', '$LoggedUser[ID]', '".\Gazelle\Util\Time::sqltime()."')");
 	}
 }
 

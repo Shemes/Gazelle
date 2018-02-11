@@ -233,7 +233,7 @@ if ($Details == 'all' || $Details == 'month') {
 				$Query .= $Where.' AND ';
 			}
 			$Query .= "
-				t.Time>'".sqltime()."' - INTERVAL 1 MONTH
+				t.Time>'".\Gazelle\Util\Time::sqltime()."' - INTERVAL 1 MONTH
 				$GroupBy
 				ORDER BY (t.Seeders + t.Leechers) DESC
 				LIMIT $Limit;";
@@ -263,7 +263,7 @@ if ($Details == 'all' || $Details == 'year') {
 				$Query .= $Where.' AND ';
 			}
 			$Query .= "
-				t.Time>'".sqltime()."' - INTERVAL 1 YEAR
+				t.Time>'".\Gazelle\Util\Time::sqltime()."' - INTERVAL 1 YEAR
 				$GroupBy
 				ORDER BY (t.Seeders + t.Leechers) DESC
 				LIMIT $Limit;";

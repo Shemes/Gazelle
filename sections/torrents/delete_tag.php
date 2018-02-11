@@ -19,7 +19,7 @@ if (list($TagName) = $DB->next_record()) {
 		INSERT INTO group_log
 			(GroupID, UserID, Time, Info)
 		VALUES
-			('$GroupID',".$LoggedUser['ID'].",'".sqltime()."','".\Gazelle\Util\Db::string('Tag "'.$TagName.'" removed from group')."')");
+			('$GroupID',".$LoggedUser['ID'].",'".\Gazelle\Util\Time::sqltime()."','".\Gazelle\Util\Db::string('Tag "'.$TagName.'" removed from group')."')");
 }
 
 $DB->query("

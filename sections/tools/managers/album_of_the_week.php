@@ -52,7 +52,7 @@ if (isset($_POST['GroupID'])) {
 			INSERT INTO featured_albums
 				(GroupID,ThreadID,Started)
 			VALUES
-				('".\Gazelle\Util\Db::string($GroupID)."', '".\Gazelle\Util\Db::string($ThreadID)."', '".sqltime()."')");
+				('".\Gazelle\Util\Db::string($GroupID)."', '".\Gazelle\Util\Db::string($ThreadID)."', '".\Gazelle\Util\Time::sqltime()."')");
 
 
 		//Redirect to home page

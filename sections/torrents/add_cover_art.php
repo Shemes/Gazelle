@@ -9,7 +9,7 @@ $UserID = $LoggedUser['ID'];
 $GroupID = \Gazelle\Util\Db::string($_POST['groupid']);
 $Summaries = $_POST['summary'];
 $Images = $_POST['image'];
-$Time = sqltime();
+$Time = \Gazelle\Util\Time::sqltime();
 
 if (!is_number($GroupID) || !$GroupID) {
 	error(0);

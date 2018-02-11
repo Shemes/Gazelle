@@ -162,7 +162,7 @@ class SiteHistory {
 
 	public static function add_event($Date, $Title, $Link, $Category, $SubCategory, $Tags, $Body, $UserID) {
 		if (empty($Date)) {
-			$Date = sqltime();
+			$Date = \Gazelle\Util\Time::sqltime();
 		} else {
 			list($Y, $M, $D) = explode('-', $Date);
 			if (!checkdate($M, $D, $Y)) {
@@ -199,7 +199,7 @@ class SiteHistory {
 
 	public static function update_event($ID, $Date, $Title, $Link, $Category, $SubCategory, $Tags, $Body, $UserID) {
 		if (empty($Date)) {
-			$Date = sqltime();
+			$Date = \Gazelle\Util\Time::sqltime();
 		} else {
 			$Date = \Gazelle\Util\Db::string($Date);
 			list($Y, $M, $D) = explode('-', $Date);

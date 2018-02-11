@@ -1,10 +1,6 @@
 <?php
 
 use \Gazelle\Util\Time;
- 
-function sqltime($timestamp = false) {
-	return Time::sqlTime($timestamp);
-}
 
 function validDate($DateString) {
 	return Time::validDate($DateString);

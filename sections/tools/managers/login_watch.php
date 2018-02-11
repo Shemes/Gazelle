@@ -22,7 +22,7 @@ $DB->query('
 		BannedUntil,
 		Bans
 	FROM login_attempts
-	WHERE BannedUntil > "'.sqltime().'"
+	WHERE BannedUntil > "'.\Gazelle\Util\Time::sqltime().'"
 	ORDER BY BannedUntil ASC');
 ?>
 <div class="thin">

@@ -222,7 +222,7 @@ foreach ($Results as $Index => $Result) {
 	$StartTime = $Result['StartTime'];
 	$EndTime = $Result['EndTime'];
 	if (!$Result['EndTime']) {
-		$EndTime = sqltime();
+		$EndTime = \Gazelle\Util\Time::sqltime();
 	}
 	$OtherUsers = isset($IPMatches[$IP]) ? $IPMatches[$IP] : array();
 	$ElementID = 'ip_' . strtr($IP, '.', '-');
@@ -286,7 +286,7 @@ foreach ($Results as $Index => $Result) {
 		$HideMe = (count($OtherUsers) > 10);
 		foreach ($OtherUsers as $OtherUser) {
 			if (!$OtherUser['EndTime']) {
-				$OtherUser['EndTime'] = sqltime();
+				$OtherUser['EndTime'] = \Gazelle\Util\Time::sqltime();
 			}
 ?>
 		<tr class="rowb otherusers<?=$Index?><?=($HideMe ? ' hidden' : '')?>">

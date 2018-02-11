@@ -8,7 +8,7 @@ if (!check_perms("users_mod")) {
 
 $ID = $_POST['id'];
 $Answer = \Gazelle\Util\Db::string($_POST['answer']);
-$Date = sqltime();
+$Date = \Gazelle\Util\Time::sqltime();
 $UserID = $LoggedUser['ID'];
 
 if (!is_number($ID) || empty($Answer)) {

@@ -58,7 +58,7 @@ class Donations {
 
 			// We don't always get a date passed in.
 			if (empty($Date)) {
-				$Date = sqltime();
+				$Date = \Gazelle\Util\Time::sqltime();
 			}
 
 			// Get the ID of the staff member making the edit

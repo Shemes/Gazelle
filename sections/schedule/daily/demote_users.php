@@ -19,7 +19,7 @@ $DB->query('
 			JOIN users_main AS um ON um.ID = ui.UserID
 		SET
 			um.PermissionID = ' . MEMBER . ",
-			ui.AdminComment = CONCAT('" . sqltime() . ' - Class changed to ' . Users::make_class_string(MEMBER) . " by System\n\n', ui.AdminComment)
+			ui.AdminComment = CONCAT('" . \Gazelle\Util\Time::sqltime() . ' - Class changed to ' . Users::make_class_string(MEMBER) . " by System\n\n', ui.AdminComment)
 		WHERE um.PermissionID IN (" . implode(', ', $DemoteClasses) . ')
 			AND (
 				um.Uploaded / um.Downloaded < 0.95
@@ -49,7 +49,7 @@ $DB->query('
 			JOIN users_main AS um ON um.ID = ui.UserID
 		SET
 			um.PermissionID = ' . USER . ",
-			ui.AdminComment = CONCAT('" . sqltime() . ' - Class changed to ' . Users::make_class_string(USER) . " by System\n\n', ui.AdminComment)
+			ui.AdminComment = CONCAT('" . \Gazelle\Util\Time::sqltime() . ' - Class changed to ' . Users::make_class_string(USER) . " by System\n\n', ui.AdminComment)
 		WHERE um.PermissionID IN (" . implode(', ', $DemoteClasses) . ')
 			AND um.Uploaded / um.Downloaded < 0.65');
 $DB->set_query_id($Query);

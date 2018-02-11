@@ -11,13 +11,13 @@ if ($CanEdit && isset($_POST['perform'])) {
 		$Author = \Gazelle\Util\Db::string($_POST['author']);
 		$Date = \Gazelle\Util\Db::string($_POST['date']);
 		if (!is_valid_date($Date)) {
-			$Date = sqltime();
+			$Date = \Gazelle\Util\Time::sqltime();
 		}
 		$DB->query("
 			INSERT INTO changelog (Message, Author, Time)
 			VALUES ('$Message', '$Author', '$Date')");
 		$ID = $DB->inserted_id();
-	//	SiteHistory::add_event(sqltime(), "Change log $ID", "tools.php?action=change_log", 1, 3, "", $Message, $LoggedUser['ID']);
+	//	SiteHistory::add_event(\Gazelle\Util\Time::sqltime(), "Change log $ID", "tools.php?action=change_log", 1, 3, "", $Message, $LoggedUser['ID']);
 
 	}
 	if ($_POST['perform'] === 'remove' && !empty($_POST['change_id'])) {

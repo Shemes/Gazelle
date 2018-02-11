@@ -128,7 +128,7 @@ $DB->query("
 	INSERT INTO reportsv2
 		(ReporterID, TorrentID, Type, UserComment, Status, ReportedTime, Track, Image, ExtraID, Link)
 	VALUES
-		(".\Gazelle\Util\Db::string($LoggedUser['ID']).", $TorrentID, '".\Gazelle\Util\Db::string($Type)."', '$Extra', 'New', '".sqltime()."', '".\Gazelle\Util\Db::string($Tracks)."', '".\Gazelle\Util\Db::string($Images)."', '".\Gazelle\Util\Db::string($ExtraIDs)."', '".\Gazelle\Util\Db::string($Links)."')");
+		(".\Gazelle\Util\Db::string($LoggedUser['ID']).", $TorrentID, '".\Gazelle\Util\Db::string($Type)."', '$Extra', 'New', '".\Gazelle\Util\Time::sqltime()."', '".\Gazelle\Util\Db::string($Tracks)."', '".\Gazelle\Util\Db::string($Images)."', '".\Gazelle\Util\Db::string($ExtraIDs)."', '".\Gazelle\Util\Db::string($Links)."')");
 
 $ReportID = $DB->inserted_id();
 

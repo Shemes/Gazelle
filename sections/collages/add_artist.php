@@ -26,11 +26,11 @@ function add_artist($CollageID, $ArtistID) {
 			INSERT IGNORE INTO collages_artists
 				(CollageID, ArtistID, UserID, Sort, AddedOn)
 			VALUES
-				('$CollageID', '$ArtistID', '$LoggedUser[ID]', '$Sort', '" . sqltime() . "')");
+				('$CollageID', '$ArtistID', '$LoggedUser[ID]', '$Sort', '" . \Gazelle\Util\Time::sqltime() . "')");
 
 		$DB->query("
 			UPDATE collages
-			SET NumTorrents = NumTorrents + 1, Updated = '" . sqltime() . "'
+			SET NumTorrents = NumTorrents + 1, Updated = '" . \Gazelle\Util\Time::sqltime() . "'
 			WHERE ID = '$CollageID'");
 
 		$Cache->delete_value("collage_$CollageID");

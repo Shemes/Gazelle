@@ -168,7 +168,7 @@ $DB->query("
 	UPDATE requests
 	SET FillerID = $FillerID,
 		TorrentID = $TorrentID,
-		TimeFilled = '".sqltime()."'
+		TimeFilled = '".\Gazelle\Util\Time::sqltime()."'
 	WHERE ID = $RequestID");
 
 if ($CategoryName === 'Music') {

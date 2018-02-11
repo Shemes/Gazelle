@@ -188,7 +188,7 @@ switch ($_REQUEST['action']) {
 
 		$DB->query("
 			INSERT INTO news (UserID, Title, Body, Time)
-			VALUES ('$LoggedUser[ID]', '".\Gazelle\Util\Db::string($_POST['title'])."', '".\Gazelle\Util\Db::string($_POST['body'])."', '".sqltime()."')");
+			VALUES ('$LoggedUser[ID]', '".\Gazelle\Util\Db::string($_POST['title'])."', '".\Gazelle\Util\Db::string($_POST['body'])."', '".\Gazelle\Util\Time::sqltime()."')");
 		$Cache->delete_value('news_latest_id');
 		$Cache->delete_value('news_latest_title');
 		$Cache->delete_value('news');

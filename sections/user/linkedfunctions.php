@@ -71,7 +71,7 @@ function link_users($UserID, $TargetID, $IgnoreComments) {
 	}
 
 	if (!$IgnoreComments) {
-		$AdminComment = sqltime()." - Linked accounts updated: [user]".$UserInfo['Username']."[/user] and [user]".$TargetInfo['Username']."[/user] linked by ".$LoggedUser['Username'];
+		$AdminComment = \Gazelle\Util\Time::sqltime()." - Linked accounts updated: [user]".$UserInfo['Username']."[/user] and [user]".$TargetInfo['Username']."[/user] linked by ".$LoggedUser['Username'];
 		$DB->query("
 			UPDATE users_info AS i
 				JOIN users_dupes AS d ON d.UserID = i.UserID
@@ -95,7 +95,7 @@ function unlink_user($UserID) {
 	if ($UserInfo === false) {
 		return;
 	}
-	$AdminComment = sqltime()." - Linked accounts updated: [user]".$UserInfo['Username']."[/user] unlinked by ".$LoggedUser['Username'];
+	$AdminComment = \Gazelle\Util\Time::sqltime()." - Linked accounts updated: [user]".$UserInfo['Username']."[/user] unlinked by ".$LoggedUser['Username'];
 	$DB->query("
 		UPDATE users_info AS i
 			JOIN users_dupes AS d1 ON d1.UserID = i.UserID
@@ -144,7 +144,7 @@ function dupe_comments($GroupID, $Comments, $IgnoreComments) {
 	list($OldCommentHash) = $DB->next_record();
 	if ($OldCommentHash != sha1($Comments)) {
 		if (!$IgnoreComments) {
-			$AdminComment = sqltime()." - Linked accounts updated: Comments updated by ".$LoggedUser['Username'];
+			$AdminComment = \Gazelle\Util\Time::sqltime()." - Linked accounts updated: Comments updated by ".$LoggedUser['Username'];
 		}
 		if ($_POST['form_comment_hash'] == $OldCommentHash) {
 			$DB->query("

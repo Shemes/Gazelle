@@ -1,7 +1,7 @@
 <?php
 
 //------------- Expire old FL Tokens and clear cache where needed ------//
-$sqltime = sqltime();
+$sqltime = \Gazelle\Util\Time::sqltime();
 $DB->query("
 	SELECT DISTINCT UserID
 	FROM users_freeleeches

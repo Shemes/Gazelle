@@ -89,7 +89,7 @@ function reset_image($UserID, $Type, $AdminComment, $PrivMessage) {
 	// write comment to staff notes
 	G::$DB->query("
 		UPDATE users_info
-		SET AdminComment = CONCAT('".sqltime().' - '.\Gazelle\Util\Db::string($AdminComment)."\n\n', AdminComment)
+		SET AdminComment = CONCAT('".\Gazelle\Util\Time::sqltime().' - '.\Gazelle\Util\Db::string($AdminComment)."\n\n', AdminComment)
 		WHERE UserID = '$UserID'");
 
 	// clear cache keys

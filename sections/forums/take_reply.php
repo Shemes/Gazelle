@@ -53,7 +53,7 @@ if ($ThreadInfo === null) {
 	error(404);
 }
 $ForumID = $ThreadInfo['ForumID'];
-$SQLTime = sqltime();
+$SQLTime = \Gazelle\Util\Time::sqltime();
 
 if (!Forums::check_forumperm($ForumID)) {
 	error(403);

@@ -74,7 +74,7 @@ if (isset($_REQUEST['act']) && $_REQUEST['act'] == 'recover') {
 						INSERT INTO users_history_passwords
 							(UserID, ChangerIP, ChangeTime)
 						VALUES
-							('$UserID', '$_SERVER[REMOTE_ADDR]', '".sqltime()."')");
+							('$UserID', '$_SERVER[REMOTE_ADDR]', '".\Gazelle\Util\Time::sqltime()."')");
 					$Reset = true; // Past tense form of "to reset", meaning that password has now been reset
 					$LoggedUser['ID'] = $UserID; // Set $LoggedUser['ID'] for logout_all_sessions() to work
 
@@ -203,7 +203,7 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa_recovery') {
 				INSERT INTO users_sessions
 					(UserID, SessionID, KeepLogged, Browser, OperatingSystem, IP, LastUpdate, FullUA)
 				VALUES
-					('$UserID', '" . \Gazelle\Util\Db::string($SessionID) . "', '$KeepLogged', '$Browser', '$OperatingSystem', '" . \Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR']) . "', '" . sqltime() . "', '" . \Gazelle\Util\Db::string($_SERVER['HTTP_USER_AGENT']) . "')");
+					('$UserID', '" . \Gazelle\Util\Db::string($SessionID) . "', '$KeepLogged', '$Browser', '$OperatingSystem', '" . \Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR']) . "', '" . \Gazelle\Util\Time::sqltime() . "', '" . \Gazelle\Util\Db::string($_SERVER['HTTP_USER_AGENT']) . "')");
 
 			$Cache->begin_transaction("users_sessions_$UserID");
 			$Cache->insert_front($SessionID, array(
@@ -211,7 +211,7 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa_recovery') {
 				'Browser' => $Browser,
 				'OperatingSystem' => $OperatingSystem,
 				'IP' => $_SERVER['REMOTE_ADDR'],
-				'LastUpdate' => sqltime()
+				'LastUpdate' => \Gazelle\Util\Time::sqltime()
 			));
 			$Cache->commit_transaction(0);
 
@@ -220,8 +220,8 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa_recovery') {
 			$Sql = "
 				UPDATE users_main
 				SET
-					LastLogin = '" . sqltime() . "',
-					LastAccess = '" . sqltime() . "',
+					LastLogin = '" . \Gazelle\Util\Time::sqltime() . "',
+					LastAccess = '" . \Gazelle\Util\Time::sqltime() . "',
 					Recovery = '" . \Gazelle\Util\Db::string($Recovery) . "'
 				WHERE ID = '" . \Gazelle\Util\Db::string($UserID) . "'";
 
@@ -257,7 +257,7 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa_recovery') {
 						$DB->query("
 					UPDATE login_attempts
 					SET
-						LastAttempt = '".sqltime()."',
+						LastAttempt = '".\Gazelle\Util\Time::sqltime()."',
 						Attempts = '".\Gazelle\Util\Db::string($Attempts)."',
 						BannedUntil = '".\Gazelle\Util\Db::string($BannedUntil)."',
 						Bans = Bans + 1
@@ -293,7 +293,7 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa_recovery') {
 						$DB->query("
 					UPDATE login_attempts
 					SET
-						LastAttempt = '".sqltime()."',
+						LastAttempt = '".\Gazelle\Util\Time::sqltime()."',
 						Attempts = '".\Gazelle\Util\Db::string($Attempts)."',
 						BannedUntil = '0000-00-00 00:00:00'
 					WHERE ID = '".\Gazelle\Util\Db::string($AttemptID)."'");
@@ -304,7 +304,7 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa_recovery') {
 				INSERT INTO login_attempts
 					(UserID, IP, LastAttempt, Attempts)
 				VALUES
-					('".\Gazelle\Util\Db::string($UserID)."', '".\Gazelle\Util\Db::string($IPStr)."', '".sqltime()."', 1)");
+					('".\Gazelle\Util\Db::string($UserID)."', '".\Gazelle\Util\Db::string($IPStr)."', '".\Gazelle\Util\Time::sqltime()."', 1)");
 				}
 			} // end log_attempt function
 			log_attempt($UserID);
@@ -358,7 +358,7 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa') {
 							INSERT INTO users_sessions
 								(UserID, SessionID, KeepLogged, Browser, OperatingSystem, IP, LastUpdate, FullUA)
 							VALUES
-								('$UserID', '" . \Gazelle\Util\Db::string($SessionID) . "', '$KeepLogged', '$Browser', '$OperatingSystem', '" . \Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR']) . "', '" . sqltime() . "', '" . \Gazelle\Util\Db::string($_SERVER['HTTP_USER_AGENT']) . "')");
+								('$UserID', '" . \Gazelle\Util\Db::string($SessionID) . "', '$KeepLogged', '$Browser', '$OperatingSystem', '" . \Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR']) . "', '" . \Gazelle\Util\Time::sqltime() . "', '" . \Gazelle\Util\Db::string($_SERVER['HTTP_USER_AGENT']) . "')");
 
 			$Cache->begin_transaction("users_sessions_$UserID");
 			$Cache->insert_front($SessionID, array(
@@ -366,15 +366,15 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa') {
 				'Browser' => $Browser,
 				'OperatingSystem' => $OperatingSystem,
 				'IP' => $_SERVER['REMOTE_ADDR'],
-				'LastUpdate' => sqltime()
+				'LastUpdate' => \Gazelle\Util\Time::sqltime()
 			));
 			$Cache->commit_transaction(0);
 
 			$Sql = "
 							UPDATE users_main
 							SET
-								LastLogin = '" . sqltime() . "',
-								LastAccess = '" . sqltime() . "'
+								LastLogin = '" . \Gazelle\Util\Time::sqltime() . "',
+								LastAccess = '" . \Gazelle\Util\Time::sqltime() . "'
 							WHERE ID = '" . \Gazelle\Util\Db::string($UserID) . "'";
 
 			$DB->query($Sql);
@@ -420,7 +420,7 @@ else {
 				$DB->query("
 					UPDATE login_attempts
 					SET
-						LastAttempt = '".sqltime()."',
+						LastAttempt = '".\Gazelle\Util\Time::sqltime()."',
 						Attempts = '".\Gazelle\Util\Db::string($Attempts)."',
 						BannedUntil = '".\Gazelle\Util\Db::string($BannedUntil)."',
 						Bans = Bans + 1
@@ -456,7 +456,7 @@ else {
 				$DB->query("
 					UPDATE login_attempts
 					SET
-						LastAttempt = '".sqltime()."',
+						LastAttempt = '".\Gazelle\Util\Time::sqltime()."',
 						Attempts = '".\Gazelle\Util\Db::string($Attempts)."',
 						BannedUntil = '0000-00-00 00:00:00'
 					WHERE ID = '".\Gazelle\Util\Db::string($AttemptID)."'");
@@ -467,7 +467,7 @@ else {
 				INSERT INTO login_attempts
 					(UserID, IP, LastAttempt, Attempts)
 				VALUES
-					('".\Gazelle\Util\Db::string($UserID)."', '".\Gazelle\Util\Db::string($IPStr)."', '".sqltime()."', 1)");
+					('".\Gazelle\Util\Db::string($UserID)."', '".\Gazelle\Util\Db::string($IPStr)."', '".\Gazelle\Util\Time::sqltime()."', 1)");
 		}
 	} // end log_attempt function
 
@@ -538,7 +538,7 @@ else {
 							INSERT INTO users_sessions
 								(UserID, SessionID, KeepLogged, Browser, OperatingSystem, IP, LastUpdate, FullUA)
 							VALUES
-								('$UserID', '".\Gazelle\Util\Db::string($SessionID)."', '$KeepLogged', '$Browser', '$OperatingSystem', '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."', '".sqltime()."', '".\Gazelle\Util\Db::string($_SERVER['HTTP_USER_AGENT'])."')");
+								('$UserID', '".\Gazelle\Util\Db::string($SessionID)."', '$KeepLogged', '$Browser', '$OperatingSystem', '".\Gazelle\Util\Db::string($_SERVER['REMOTE_ADDR'])."', '".\Gazelle\Util\Time::sqltime()."', '".\Gazelle\Util\Db::string($_SERVER['HTTP_USER_AGENT'])."')");
 
 						$Cache->begin_transaction("users_sessions_$UserID");
 						$Cache->insert_front($SessionID, array(
@@ -546,15 +546,15 @@ else {
 								'Browser' => $Browser,
 								'OperatingSystem' => $OperatingSystem,
 								'IP' => $_SERVER['REMOTE_ADDR'],
-								'LastUpdate' => sqltime()
+								'LastUpdate' => \Gazelle\Util\Time::sqltime()
 								));
 						$Cache->commit_transaction(0);
 
 						$Sql = "
 							UPDATE users_main
 							SET
-								LastLogin = '".sqltime()."',
-								LastAccess = '".sqltime()."'
+								LastLogin = '".\Gazelle\Util\Time::sqltime()."',
+								LastAccess = '".\Gazelle\Util\Time::sqltime()."'
 							WHERE ID = '".\Gazelle\Util\Db::string($UserID)."'";
 
 						$DB->query($Sql);

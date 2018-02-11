@@ -23,11 +23,11 @@ if (!empty($_POST)) {
 
 	$DB->query("
 		UPDATE featured_merch
-		SET Ended = '".sqltime()."'
+		SET Ended = '".\Gazelle\Util\Time::sqltime()."'
 		WHERE Ended = 0");
 	$DB->query("
 		INSERT INTO featured_merch (ProductID, Title, Image, ArtistID, Started)
-		VALUES ($ProductID, '$Title', '$Image', '$ArtistID', '".sqltime()."')");
+		VALUES ($ProductID, '$Title', '$Image', '$ArtistID', '".\Gazelle\Util\Time::sqltime()."')");
 	$Cache->delete_value('featured_merch');
 	header('Location: index.php');
 	die();

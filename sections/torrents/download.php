@@ -176,7 +176,7 @@ if ($CategoryID == '1' && $Image != '') {
 
 $DB->query("
 	INSERT IGNORE INTO users_downloads (UserID, TorrentID, Time)
-	VALUES ('$UserID', '$TorrentID', '".sqltime()."')");
+	VALUES ('$UserID', '$TorrentID', '".\Gazelle\Util\Time::sqltime()."')");
 
 $DB->query("
 	SELECT File

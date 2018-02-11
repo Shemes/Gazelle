@@ -58,7 +58,7 @@ if (isset($_POST['Username'])) {
 			INSERT INTO users_info
 				(UserID, StyleID, AuthKey, JoinDate)
 			VALUES
-				('".\Gazelle\Util\Db::string($UserID)."', '".\Gazelle\Util\Db::string($StyleID)."', '".\Gazelle\Util\Db::string($AuthKey)."', '".sqltime()."')");
+				('".\Gazelle\Util\Db::string($UserID)."', '".\Gazelle\Util\Db::string($StyleID)."', '".\Gazelle\Util\Db::string($AuthKey)."', '".\Gazelle\Util\Time::sqltime()."')");
 
 		// Give the notification settings
 		$DB->query("INSERT INTO users_notifications_settings (UserID) VALUES ('$UserID')");

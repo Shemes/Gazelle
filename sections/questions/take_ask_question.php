@@ -16,7 +16,7 @@ if (empty($Question)) {
 }
 
 $UserID = $LoggedUser['ID'];
-$Date = sqltime();
+$Date = \Gazelle\Util\Time::sqltime();
 
 $DB->query("
 	INSERT INTO user_questions

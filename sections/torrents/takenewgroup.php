@@ -72,7 +72,7 @@ if (empty($_POST['confirm'])) {
 		INSERT INTO torrents_group
 			(ArtistID, CategoryID, Name, Year, Time, WikiBody, WikiImage)
 		VALUES
-			($ArtistID, '1', '$Title', '$Year', '".sqltime()."', '', '')");
+			($ArtistID, '1', '$Title', '$Year', '".\Gazelle\Util\Time::sqltime()."', '', '')");
 	$GroupID = $DB->inserted_id();
 
 	$DB->query("

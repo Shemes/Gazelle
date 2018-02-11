@@ -79,7 +79,7 @@ if (empty($_POST['question']) || empty($_POST['answers']) || !check_perms('forum
 	}
 }
 
-$sqltime = sqltime();
+$sqltime = \Gazelle\Util\Time::sqltime();
 
 $DB->query("
 	INSERT INTO forums_topics

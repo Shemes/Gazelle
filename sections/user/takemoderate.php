@@ -487,7 +487,7 @@ if ($Warned == 1 && $Cur['Warned'] == '0000-00-00 00:00:00' && check_perms('user
 	$Weeks = 'week' . ($WarnLength === 1 ? '' : 's');
 	Misc::send_pm($UserID, 0, 'You have received a warning', "You have been [url=".site_url()."wiki.php?action=article&amp;id=114]warned for $WarnLength {$Weeks}[/url] by [user]".$LoggedUser['Username']."[/user]. The reason given was:
 [quote]{$WarnReason}[/quote]");
-	$UpdateSet[] = "Warned = '".sqltime()."' + INTERVAL $WarnLength WEEK";
+	$UpdateSet[] = "Warned = '".\Gazelle\Util\Time::sqltime()."' + INTERVAL $WarnLength WEEK";
 	$Msg = "warned for $WarnLength $Weeks";
 	if ($WarnReason) {
 		$Msg .= " for \"$WarnReason\"";
@@ -721,7 +721,7 @@ if ($ResetPasskey == 1 && check_perms('users_edit_reset_keys')) {
 		INSERT INTO users_history_passkeys
 			(UserID, OldPassKey, NewPassKey, ChangerIP, ChangeTime)
 		VALUES
-			('$UserID', '".$Cur['torrent_pass']."', '$Passkey', '0.0.0.0', '".sqltime()."')");
+			('$UserID', '".$Cur['torrent_pass']."', '$Passkey', '0.0.0.0', '".\Gazelle\Util\Time::sqltime()."')");
 	Tracker::update_tracker('change_passkey', array('oldpasskey' => $Cur['torrent_pass'], 'newpasskey' => $Passkey));
 }
 
@@ -759,7 +759,7 @@ if ($MergeStatsFrom && check_perms('users_edit_ratio')) {
 			SET
 				um.Uploaded = 0,
 				um.Downloaded = 0,
-				ui.AdminComment = CONCAT('".sqltime().' - Stats (Uploaded: '.Format::get_size($MergeUploaded).', Downloaded: '.Format::get_size($MergeDownloaded).', Ratio: '.Format::get_ratio($MergeUploaded, $MergeDownloaded).') merged into '.site_url()."user.php?id=$UserID (".$Cur['Username'].') by '.$LoggedUser['Username']."\n\n', ui.AdminComment)
+				ui.AdminComment = CONCAT('".\Gazelle\Util\Time::sqltime().' - Stats (Uploaded: '.Format::get_size($MergeUploaded).', Downloaded: '.Format::get_size($MergeDownloaded).', Ratio: '.Format::get_ratio($MergeUploaded, $MergeDownloaded).') merged into '.site_url()."user.php?id=$UserID (".$Cur['Username'].') by '.$LoggedUser['Username']."\n\n', ui.AdminComment)
 			WHERE ID = $MergeID");
 		$UpdateSet[] = "Uploaded = Uploaded + '$MergeUploaded'";
 		$UpdateSet[] = "Downloaded = Downloaded + '$MergeDownloaded'";
@@ -827,7 +827,7 @@ $Summary = '';
 // Create edit summary
 if ($EditSummary) {
 	$Summary = implode(', ', $EditSummary) . ' by ' . $LoggedUser['Username'];
-	$Summary = sqltime() . ' - ' . ucfirst($Summary);
+	$Summary = \Gazelle\Util\Time::sqltime() . ' - ' . ucfirst($Summary);
 
 	if ($Reason) {
 		$Summary .= "\nReason: $Reason";
@@ -836,7 +836,7 @@ if ($EditSummary) {
 
 	$Summary .= "\n\n$AdminComment";
 } elseif (empty($UpdateSet) && empty($EditSummary) && $Cur['AdminComment'] == $_POST['AdminComment']) {
-	$Summary = sqltime() . ' - Comment added by ' . $LoggedUser['Username'] . ': ' . "$Reason\n\n";
+	$Summary = \Gazelle\Util\Time::sqltime() . ' - Comment added by ' . $LoggedUser['Username'] . ': ' . "$Reason\n\n";
 
 }
 

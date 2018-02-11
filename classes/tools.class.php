@@ -190,8 +190,8 @@ class Tools {
 				JOIN users_main AS m ON m.ID = i.UserID
 			SET m.Enabled = '2',
 				m.can_leech = '0',
-				i.AdminComment = CONCAT('".sqltime()." - ".($AdminComment ? $AdminComment : 'Disabled by system')."\n\n', i.AdminComment),
-				i.BanDate = '".sqltime()."',
+				i.AdminComment = CONCAT('".\Gazelle\Util\Time::sqltime()." - ".($AdminComment ? $AdminComment : 'Disabled by system')."\n\n', i.AdminComment),
+				i.BanDate = '".\Gazelle\Util\Time::sqltime()."',
 				i.BanReason = '$BanReason',
 				i.RatioWatchDownload = ".($BanReason == 2 ? 'm.Downloaded' : "'0'")."
 			WHERE m.ID IN(".implode(',', $UserIDs).') ');

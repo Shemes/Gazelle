@@ -334,7 +334,7 @@ if ($CategoryName === 'Music') {
 				UserID, TimeAdded, LastVote, CategoryID, Title, Year, Image, Description, RecordLabel,
 				CatalogueNumber, ReleaseType, BitrateList, FormatList, MediaList, LogCue, Visible, GroupID, OCLC)
 			VALUES
-				('.$LoggedUser['ID'].", '".sqltime()."', '".sqltime()."', $CategoryID, '".\Gazelle\Util\Db::string($Title)."', $Year, '".\Gazelle\Util\Db::string($Image)."', '".\Gazelle\Util\Db::string($Description)."','".\Gazelle\Util\Db::string($RecordLabel)."',
+				('.$LoggedUser['ID'].", '".\Gazelle\Util\Time::sqltime()."', '".\Gazelle\Util\Time::sqltime()."', $CategoryID, '".\Gazelle\Util\Db::string($Title)."', $Year, '".\Gazelle\Util\Db::string($Image)."', '".\Gazelle\Util\Db::string($Description)."','".\Gazelle\Util\Db::string($RecordLabel)."',
 						'".\Gazelle\Util\Db::string($CatalogueNumber)."', $ReleaseType, '$BitrateList','$FormatList', '$MediaList', '$LogCue', '1', '$GroupID', '".\Gazelle\Util\Db::string($OCLC)."')");
 
 		$RequestID = $DB->inserted_id();
@@ -490,7 +490,7 @@ if ($CategoryName === 'Music') {
 				INSERT INTO requests (
 					UserID, TimeAdded, LastVote, CategoryID, Title, Year, Image, Description, Visible, OCLC)
 				VALUES
-					(".$LoggedUser['ID'].", '".sqltime()."', '".sqltime()."', $CategoryID, '".\Gazelle\Util\Db::string($Title)."', $Year, '".\Gazelle\Util\Db::string($Image)."', '".\Gazelle\Util\Db::string($Description)."', '1', '".\Gazelle\Util\Db::string($OCLC)."')");
+					(".$LoggedUser['ID'].", '".\Gazelle\Util\Time::sqltime()."', '".\Gazelle\Util\Time::sqltime()."', $CategoryID, '".\Gazelle\Util\Db::string($Title)."', $Year, '".\Gazelle\Util\Db::string($Image)."', '".\Gazelle\Util\Db::string($Description)."', '1', '".\Gazelle\Util\Db::string($OCLC)."')");
 
 			$RequestID = $DB->inserted_id();
 
@@ -511,7 +511,7 @@ if ($CategoryName === 'Music') {
 				INSERT INTO requests (
 					UserID, TimeAdded, LastVote, CategoryID, Title, Image, Description, Visible, OCLC)
 				VALUES
-					(".$LoggedUser['ID'].", '".sqltime()."', '".sqltime()."', $CategoryID, '".\Gazelle\Util\Db::string($Title)."', '".\Gazelle\Util\Db::string($Image)."', '".\Gazelle\Util\Db::string($Description)."', '1', '".\Gazelle\Util\Db::string($OCLC)."')");
+					(".$LoggedUser['ID'].", '".\Gazelle\Util\Time::sqltime()."', '".\Gazelle\Util\Time::sqltime()."', $CategoryID, '".\Gazelle\Util\Db::string($Title)."', '".\Gazelle\Util\Db::string($Image)."', '".\Gazelle\Util\Db::string($Description)."', '1', '".\Gazelle\Util\Db::string($OCLC)."')");
 
 			$RequestID = $DB->inserted_id();
 

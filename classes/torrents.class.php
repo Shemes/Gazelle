@@ -236,7 +236,7 @@ class Torrents {
 			INSERT INTO group_log
 				(GroupID, TorrentID, UserID, Info, Time, Hidden)
 			VALUES
-				($GroupID, $TorrentID, $UserID, '".\Gazelle\Util\Db::string($Message)."', '".sqltime()."', $Hidden)");
+				($GroupID, $TorrentID, $UserID, '".\Gazelle\Util\Db::string($Message)."', '".\Gazelle\Util\Time::sqltime()."', $Hidden)");
 		G::$DB->set_query_id($QueryID);
 	}
 
@@ -315,7 +315,7 @@ class Torrents {
 			UPDATE reportsv2
 			SET
 				Status = 'Resolved',
-				LastChangeTime = '".sqltime()."',
+				LastChangeTime = '".\Gazelle\Util\Time::sqltime()."',
 				ModComment = 'Report already dealt with (torrent deleted)'
 			WHERE TorrentID = $ID
 				AND Status != 'Resolved'");

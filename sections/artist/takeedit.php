@@ -44,11 +44,11 @@ if (!$RevisionID) { // edit
 		INSERT INTO wiki_artists
 			(PageID, Body, Image, UserID, Summary, Time)
 		VALUES
-			('$ArtistID', '$Body', '$Image', '$UserID', '$Summary', '".sqltime()."')");
+			('$ArtistID', '$Body', '$Image', '$UserID', '$Summary', '".\Gazelle\Util\Time::sqltime()."')");
 } else { // revert
 	$DB->query("
 		INSERT INTO wiki_artists (PageID, Body, Image, UserID, Summary, Time)
-		SELECT '$ArtistID', Body, Image, '$UserID', 'Reverted to revision $RevisionID', '".sqltime()."'
+		SELECT '$ArtistID', Body, Image, '$UserID', 'Reverted to revision $RevisionID', '".\Gazelle\Util\Time::sqltime()."'
 		FROM wiki_artists
 		WHERE RevisionID = '$RevisionID'");
 }

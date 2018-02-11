@@ -40,11 +40,11 @@ if (!list($Question,$Answers,$Votes,$Featured,$Closed) = $Cache->get_value('poll
 
 if (isset($_POST['feature'])) {
 	if (!$Featured || $Featured == '0000-00-00 00:00:00') {
-		$Featured = sqltime();
+		$Featured = \Gazelle\Util\Time::sqltime();
 		$Cache->cache_value('polls_featured',$TopicID,0);
 		$DB->query('
 			UPDATE forums_polls
-			SET Featured=\''.sqltime().'\'
+			SET Featured=\''.\Gazelle\Util\Time::sqltime().'\'
 			WHERE TopicID=\''.$TopicID.'\'');
 	}
 }
