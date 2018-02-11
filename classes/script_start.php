@@ -73,7 +73,6 @@ ob_start(); //Start a buffer, mainly in case there is a mysql error
 
 set_include_path(SERVER_ROOT);
 
-require SERVER_ROOT . '/classes/time.class.php'; //Require the time class
 require SERVER_ROOT . '/classes/paranoia.class.php'; //Require the paranoia check_paranoia function
 require SERVER_ROOT . '/classes/regex.php';
 require SERVER_ROOT . '/classes/util.php';
