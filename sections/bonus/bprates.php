@@ -179,7 +179,7 @@ if ($TotalTorrents > 0) {
 		<td><?= $DisplayName ?></td>
 		<td><?= Format::get_size($Torrent['Size']) ?></td>
 		<td><?= number_format($Seeders) ?></td>
-		<td><?= convert_hours($Torrent['Seedtime'], 2) ?></td>
+		<td><?= \Gazelle\Util\Time::convertHours($Torrent['Seedtime'], 2) ?></td>
 		<td><?= number_format($HourlyPoints, 2) ?></td>
 		<td><?= number_format($DailyPoints, 2) ?></td>
 		<td><?= number_format($WeeklyPoints, 2) ?></td>

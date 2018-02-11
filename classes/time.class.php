@@ -2,23 +2,6 @@
 
 use \Gazelle\Util\Time;
 
-function time_ago($TimeStamp) {
-	return Time::timeAgo($TimeStamp);
-}
-
-
-/**
- * Given a number of hours, convert it to a human readable time of
- * years, months, days, etc.
- *
- * @param $Hours
- * @param int $Levels
- * @param bool $Span
- * @return string
- */
-function convert_hours($Hours,$Levels=2,$Span=true) {
-	return Time::convertHours($Hours, $Levels, $Span);
-}
 
 /* SQL utility functions */
 
