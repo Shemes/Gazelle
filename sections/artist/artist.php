@@ -7,8 +7,6 @@ function compare($X, $Y) {
 }
 
 // Similar Artist Map
-include(SERVER_ROOT.'/classes/artists_similar.class.php');
-
 $UserVotes = Votes::get_user_votes($LoggedUser['ID']);
 
 $ArtistID = $_GET['id'];
@@ -847,7 +845,7 @@ if ($NumRequests > 0) {
 
 if ($NumSimilar > 0) {
 	if ($SimilarData = $Cache->get_value("similar_positions_$ArtistID")) {
-		$Similar = new ARTISTS_SIMILAR($ArtistID, $Name);
+		$Similar = new \Gazelle\ArtistsSimilar($ArtistID, $Name);
 		$Similar->load_data($SimilarData);
 		if (!(current($Similar->Artists)->NameLength)) {
 			unset($Similar);
@@ -859,7 +857,7 @@ if ($NumSimilar > 0) {
 		$Img->create(WIDTH, HEIGHT);
 		$Img->color(255, 255, 255, 127);
 
-		$Similar = new ARTISTS_SIMILAR($ArtistID, $Name);
+		$Similar = new \Gazelle\ArtistsSimilar($ArtistID, $Name);
 		$Similar->set_up();
 		$Similar->set_positions();
 		$Similar->background_image();
