@@ -10,11 +10,11 @@ if (isset($_POST['auth'])) {
 	$edit = array_filter($_POST, function ($x) { return preg_match('/^edit-\d+$/', $x);}, ARRAY_FILTER_USE_KEY);
 	if (is_array($edit) && count($edit) == 1) {
 		$EDIT_ID = trim(array_keys($edit)[0], 'edit-');
-		$AppRole = ApplicantRole::factory($EDIT_ID);
+		$AppRole = \Gazelle\ApplicantRole::factory($EDIT_ID);
 	}
 	elseif (isset($_POST['edit']) && is_numeric($_POST['edit'])) {
 		$EDIT_ID = intval($_POST['edit']);
-		$AppRole = ApplicantRole::factory($EDIT_ID);
+		$AppRole = \Gazelle\ApplicantRole::factory($EDIT_ID);
 		if (isset($_POST['user_id']) && is_numeric($_POST['user_id'])) {
 			$user_id = intval($_POST['user_id']);
 			if ($user_id == $LoggedUser['ID']) {
@@ -29,7 +29,7 @@ if (isset($_POST['auth'])) {
 		}
 	}
 	else {
-		$AppRole = new ApplicantRole(
+		$AppRole = new \Gazelle\ApplicantRole(
 			$_POST['title'],
 			$_POST['description'],
 			(isset($_POST['status']) && is_numeric($_POST['status']) && $_POST['status'] == 1),
@@ -60,7 +60,7 @@ if (isset($_POST['auth'])) {
 <? } ?>
 
 <? if (!$EDIT_ID) {
-	$Roles = ApplicantRole::get_list(true);
+	$Roles = \Gazelle\ApplicantRole::get_list(true);
 	if (count($Roles)) {
 ?>
 		<table>

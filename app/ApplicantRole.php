@@ -1,4 +1,5 @@
 <?php
+namespace Gazelle;
 
 class ApplicantRole {
 	private $id;

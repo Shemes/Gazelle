@@ -43,7 +43,7 @@ View::show_header('Apply', 'apply');
 	</div>
 
 <?php
-$Roles = ApplicantRole::get_list();
+$Roles = \Gazelle\ApplicantRole::get_list();
 if (count($Roles)) { ?>
 	<div class="box">
 		<div class="head">Open Roles</div>
