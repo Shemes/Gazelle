@@ -273,7 +273,7 @@ class Tools {
 				WHERE UserID = \''.\Gazelle\Util\Db::string($UserID).'\'');
 		} else {
 			//Not changing, user was not already warned
-			$WarnTime = time_plus($Duration);
+			$WarnTime = \Gazelle\Util\Time::timePlus($Duration);
 
 			G::$Cache->begin_transaction("user_info_$UserID");
 			G::$Cache->update_row(false, array('Warned' => $WarnTime));

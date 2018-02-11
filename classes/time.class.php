@@ -4,11 +4,6 @@ use \Gazelle\Util\Time;
 
 
 /* SQL utility functions */
-
-function time_plus($Offset) {
-	return Time::timePlus($Offset);
-}
-
 function time_minus($Offset, $Fuzzy = false) {
 	return Time::timeMinus($Offset, $Fuzzy);
 }

@@ -345,7 +345,7 @@ class Referral {
         }
 
         // form invite data and populate template
-        $InviteExpires = time_plus(60 * 60 * 24 * 3); // 3 days
+        $InviteExpires = \Gazelle\Util\Time::timePlus(60 * 60 * 24 * 3); // 3 days
         $InviteReason = 'This user was referred to membership by their account at ' . $service . '. They verified their account on ' . date('Y-m-d H:i:s');
         $InviteKey = \Gazelle\Util\Db::string(Users::make_secret());
         $InviterId = $this->ExternalServices[$service]['inviter_id'];

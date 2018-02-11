@@ -25,7 +25,7 @@ if ($WarningLength !== 'verbal') {
 	$Subject = 'You have received a warning';
 	$PrivateMessage = "You have received a $WarningLength week warning for [url=$URL]this post[/url].\n\n" . $PrivateMessage;
 
-	$WarnTime = time_plus($Time);
+	$WarnTime = \Gazelle\Util\Time::timePlus($Time);
 	$AdminComment = date('Y-m-d') . " - Warned until $WarnTime by " . $LoggedUser['Username'] . " for $URL\nReason: $Reason\n\n";
 
 } else {

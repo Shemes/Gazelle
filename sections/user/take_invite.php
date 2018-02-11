@@ -43,7 +43,7 @@ $Email = $_POST['email'];
 $Username = $LoggedUser['Username'];
 $SiteName = SITE_NAME;
 $SiteURL = site_url();
-$InviteExpires = time_plus(60 * 60 * 24 * 3); // 3 days
+$InviteExpires = \Gazelle\Util\Time::timePlus(60 * 60 * 24 * 3); // 3 days
 $InviteReason = check_perms('users_invite_notes') ? \Gazelle\Util\Db::string($_POST['reason']) : '';
 
 //MultiInvite

@@ -253,7 +253,7 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa_recovery') {
 				if ($AttemptID) { // User has attempted to log in recently
 					$Attempts++;
 					if ($Attempts > 5) { // Only 6 allowed login attempts, ban user's IP
-						$BannedUntil = time_plus(60 * 60 * 6);
+						$BannedUntil = \Gazelle\Util\Time::timePlus(60 * 60 * 6);
 						$DB->query("
 					UPDATE login_attempts
 					SET
@@ -416,7 +416,7 @@ else {
 		if ($AttemptID) { // User has attempted to log in recently
 			$Attempts++;
 			if ($Attempts > 5) { // Only 6 allowed login attempts, ban user's IP
-				$BannedUntil = time_plus(60 * 60 * 6);
+				$BannedUntil = \Gazelle\Util\Time::timePlus(60 * 60 * 6);
 				$DB->query("
 					UPDATE login_attempts
 					SET

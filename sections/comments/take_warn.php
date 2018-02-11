@@ -30,7 +30,7 @@ if ($Length !== 'verbal') {
 	Tools::warn_user($AuthorID, $Time, "$URL - $Reason");
 	$Subject = 'You have received a warning';
 	$PrivateMessage = "You have received a $Length week warning for [url=$URL]this comment[/url].\n\n[quote]{$PrivateMessage}[/quote]";
-	$WarnTime = time_plus($Time);
+	$WarnTime = \Gazelle\Util\Time::timePlus($Time);
 	$AdminComment = date('Y-m-d') . " - Warned until $WarnTime by " . $LoggedUser['Username'] . "\nReason: $URL - $Reason\n\n";
 } else {
 	$Subject = 'You have received a verbal warning';

@@ -92,7 +92,7 @@ if (count($OnRatioWatch) > 0) {
 	$DB->query("
 			UPDATE users_info AS i
 				JOIN users_main AS m ON m.ID = i.UserID
-			SET i.RatioWatchEnds = '".time_plus(60 * 60 * 24 * 14)."',
+			SET i.RatioWatchEnds = '".\Gazelle\Util\Time::timePlus(60 * 60 * 24 * 14)."',
 				i.RatioWatchTimes = i.RatioWatchTimes + 1,
 				i.RatioWatchDownload = m.Downloaded
 			WHERE m.ID IN(".implode(',', $OnRatioWatch).')');
@@ -100,7 +100,7 @@ if (count($OnRatioWatch) > 0) {
 
 foreach ($OnRatioWatch as $UserID) {
 	$Cache->begin_transaction("user_info_heavy_$UserID");
-	$Cache->update_row(false, array('RatioWatchEnds' => time_plus(60 * 60 * 24 * 14), 'RatioWatchDownload' => 0));
+	$Cache->update_row(false, array('RatioWatchEnds' => \Gazelle\Util\Time::timePlus(60 * 60 * 24 * 14), 'RatioWatchDownload' => 0));
 	$Cache->commit_transaction(0);
 	Misc::send_pm($UserID, 0, 'You have been put on Ratio Watch', "This happens when your ratio falls below the requirements we have outlined in the rules located [url=".site_url()."rules.php?p=ratio]here[/url].\n For information about ratio watch, click the link above.");
 	echo "Ratio watch on: $UserID\n";

@@ -745,7 +745,7 @@ class Users {
 			UPDATE users_info
 			SET
 				ResetKey = '" . \Gazelle\Util\Db::string($ResetKey) . "',
-				ResetExpires = '" . time_plus(60 * 60) . "'
+				ResetExpires = '" . \Gazelle\Util\Time::timePlus(60 * 60) . "'
 			WHERE UserID = '$UserID'");
 
 		require(SERVER_ROOT . '/classes/templates.class.php');

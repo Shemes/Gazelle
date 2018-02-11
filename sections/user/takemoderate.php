@@ -493,7 +493,7 @@ if ($Warned == 1 && $Cur['Warned'] == '0000-00-00 00:00:00' && check_perms('user
 		$Msg .= " for \"$WarnReason\"";
 	}
 	$EditSummary[] = \Gazelle\Util\Db::string($Msg);
-	$LightUpdates['Warned'] = time_plus(3600 * 24 * 7 * $WarnLength);
+	$LightUpdates['Warned'] = \Gazelle\Util\Time::timePlus(3600 * 24 * 7 * $WarnLength);
 
 } elseif ($Warned == 0 && $Cur['Warned'] != '0000-00-00 00:00:00' && check_perms('users_warn')) {
 	$UpdateSet[] = "Warned = '0000-00-00 00:00:00'";
