@@ -87,7 +87,7 @@ class Debug
         if (empty($Report)) {
             $Report = $Message;
         }
-        $Identifier = Users::make_secret(5);
+        $Identifier = \Users::make_secret(5);
         \G::$Cache->cache_value(
             'analysis_' . $Identifier,
             [
@@ -122,7 +122,7 @@ class Debug
     public function log_var($Var, $VarName = false)
     {
         $BackTrace = debug_backtrace();
-        $ID = Users::make_secret(5);
+        $ID = \Users::make_secret(5);
         if (!$VarName) {
             $VarName = $ID;
         }
