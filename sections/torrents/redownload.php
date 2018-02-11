@@ -20,14 +20,14 @@ if (empty($_GET['type'])) {
 
 	switch ($_GET['type']) {
 		case 'uploads':
-			if (!check_paranoia('uploads', $User['Paranoia'], $UserClass, $UserID)) {
+			if (!\Gazelle\Paranoia::check('uploads', $User['Paranoia'], $UserClass, $UserID)) {
 				error(403);
 			}
 			$SQL = "WHERE t.UserID = '$UserID'";
 			$Month = "t.Time";
 			break;
 		case 'snatches':
-			if (!check_paranoia('snatched', $User['Paranoia'], $UserClass, $UserID)) {
+			if (!\Gazelle\Paranoia::check('snatched', $User['Paranoia'], $UserClass, $UserID)) {
 				error(403);
 			}
 			$SQL = "
@@ -36,7 +36,7 @@ if (empty($_GET['type'])) {
 			$Month = "FROM_UNIXTIME(x.tstamp)";
 			break;
 		case 'seeding':
-			if (!check_paranoia('seeding', $User['Paranoia'], $UserClass, $UserID)) {
+			if (!\Gazelle\Paranoia::check('seeding', $User['Paranoia'], $UserClass, $UserID)) {
 				error(403);
 			}
 			$SQL = "

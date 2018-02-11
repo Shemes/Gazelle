@@ -69,7 +69,7 @@ foreach ($Paranoia as $P) {
 
 function check_paranoia_here($Setting) {
 	global $Paranoia, $Class, $UserID;
-	return check_paranoia($Setting, $Paranoia, $Class, $UserID);
+	return \Gazelle\Paranoia::check($Setting, $Paranoia, $Class, $UserID);
 }
 
 $Friend = false;

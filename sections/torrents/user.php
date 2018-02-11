@@ -150,7 +150,7 @@ $UserClass = $Perms['Class'];
 
 switch ($_GET['type']) {
 	case 'snatched':
-		if (!check_paranoia('snatched', $User['Paranoia'], $UserClass, $UserID)) {
+		if (!\Gazelle\Paranoia::check('snatched', $User['Paranoia'], $UserClass, $UserID)) {
 			error(403);
 		}
 		$Time = 'xs.tstamp';
@@ -161,7 +161,7 @@ switch ($_GET['type']) {
 				JOIN torrents AS t ON t.ID = xs.fid";
 		break;
 	case 'seeding':
-		if (!check_paranoia('seeding', $User['Paranoia'], $UserClass, $UserID)) {
+		if (!\Gazelle\Paranoia::check('seeding', $User['Paranoia'], $UserClass, $UserID)) {
 			error(403);
 		}
 		$Time = '(xfu.mtime - xfu.timespent)';
@@ -185,7 +185,7 @@ switch ($_GET['type']) {
 		$From = 'torrents AS t';
 		break;
 	case 'leeching':
-		if (!check_paranoia('leeching', $User['Paranoia'], $UserClass, $UserID)) {
+		if (!\Gazelle\Paranoia::check('leeching', $User['Paranoia'], $UserClass, $UserID)) {
 			error(403);
 		}
 		$Time = '(xfu.mtime - xfu.timespent)';
@@ -198,7 +198,7 @@ switch ($_GET['type']) {
 				JOIN torrents AS t ON t.ID = xfu.fid";
 		break;
 	case 'uploaded':
-		if ((empty($_GET['filter']) || $_GET['filter'] !== 'perfectflac') && !check_paranoia('uploads', $User['Paranoia'], $UserClass, $UserID)) {
+		if ((empty($_GET['filter']) || $_GET['filter'] !== 'perfectflac') && !\Gazelle\Paranoia::check('uploads', $User['Paranoia'], $UserClass, $UserID)) {
 			error(403);
 		}
 		$Time = 'unix_timestamp(t.Time)';
@@ -223,7 +223,7 @@ switch ($_GET['type']) {
 
 if (!empty($_GET['filter'])) {
 	if ($_GET['filter'] === 'perfectflac') {
-		if (!check_paranoia('perfectflacs', $User['Paranoia'], $UserClass, $UserID)) {
+		if (!\Gazelle\Paranoia::check('perfectflacs', $User['Paranoia'], $UserClass, $UserID)) {
 			error(403);
 		}
 		$ExtraWhere .= " AND t.Format = 'FLAC'";
@@ -238,7 +238,7 @@ if (!empty($_GET['filter'])) {
 				AND t.LogScore = 100";
 		}
 	} elseif ($_GET['filter'] === 'uniquegroup') {
-		if (!check_paranoia('uniquegroups', $User['Paranoia'], $UserClass, $UserID)) {
+		if (!\Gazelle\Paranoia::check('uniquegroups', $User['Paranoia'], $UserClass, $UserID)) {
 			error(403);
 		}
 		$GroupBy = 'tg.ID';

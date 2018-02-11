@@ -21,7 +21,7 @@ function make_staff_row($Row, $ID, $Paranoia, $Class, $LastAccess, $Remark = '',
 				</td>
 				<td class=\"nobr\">
 					"; //used for proper indentation of HTML
-					if (check_paranoia('lastseen', $Paranoia, $Class)) {
+					if (\Gazelle\Paranoia::check('lastseen', $Paranoia, $Class)) {
 						echo \Gazelle\Util\Time::timeDiff($LastAccess);
 					} else {
 						echo "$HiddenBy";

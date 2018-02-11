@@ -10,10 +10,10 @@ if (isset($_GET['userid']) && is_number($_GET['userid'])) {
 		$UserPeerStats = Tracker::user_peer_count($TorrentPass);
 		$UserInfo = Users::user_info($_GET['userid']);
 		$UserLevel = $Classes[$UserInfo['PermissionID']]['Level'];
-		if (!check_paranoia('leeching+', $UserInfo['Paranoia'], $UserLevel, $_GET['userid'])) {
+		if (!\Gazelle\Paranoia::check('leeching+', $UserInfo['Paranoia'], $UserLevel, $_GET['userid'])) {
 			$UserPeerStats[0] = false;
 		}
-		if (!check_paranoia('seeding+', $UserInfo['Paranoia'], $UserLevel, $_GET['userid'])) {
+		if (!\Gazelle\Paranoia::check('seeding+', $UserInfo['Paranoia'], $UserLevel, $_GET['userid'])) {
 			$UserPeerStats[1] = false;
 		}
 	} else {

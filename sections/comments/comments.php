@@ -27,7 +27,7 @@ if (isset($_GET['id']) && is_number($_GET['id'])) {
 	}
 	$Perms = Permissions::get_permissions($UserInfo['PermissionID']);
 	$UserClass = $Perms['Class'];
-	if (!check_paranoia('torrentcomments', $UserInfo['Paranoia'], $UserClass, $UserID)) {
+	if (!\Gazelle\Paranoia::check('torrentcomments', $UserInfo['Paranoia'], $UserClass, $UserID)) {
 		error(403);
 	}
 } else {

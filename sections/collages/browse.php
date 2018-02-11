@@ -119,7 +119,7 @@ if (!empty($_GET['userid'])) {
 
 	$UserLink = '<a href="user.php?id='.$UserID.'">'.$User['Username'].'</a>';
 	if (!empty($_GET['contrib'])) {
-		if (!check_paranoia('collagecontribs', $User['Paranoia'], $UserClass, $UserID)) {
+		if (!\Gazelle\Paranoia::check('collagecontribs', $User['Paranoia'], $UserClass, $UserID)) {
 			error(403);
 		}
 		$DB->query("
@@ -133,7 +133,7 @@ if (!empty($_GET['userid'])) {
 			$SQL .= " AND c.ID IN(".\Gazelle\Util\Db::string(implode(',', $CollageIDs)).')';
 		}
 	} else {
-		if (!check_paranoia('collages', $User['Paranoia'], $UserClass, $UserID)) {
+		if (!\Gazelle\Paranoia::check('collages', $User['Paranoia'], $UserClass, $UserID)) {
 			error(403);
 		}
 		$SQL .= " AND UserID = '".$_GET['userid']."'";

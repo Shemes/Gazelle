@@ -18,7 +18,7 @@ $User = Users::user_info($UserID);
 
 function check_paranoia_here($Setting) {
 	global $User;
-	return check_paranoia($Setting, $User['Paranoia'], $User['Class'], $User['ID']);
+	return \Gazelle\Paranoia::check($Setting, $User['Paranoia'], $User['Class'], $User['ID']);
 }
 
 if (check_paranoia_here('seeding+') || check_paranoia_here('leeching+')) {
@@ -30,11 +30,11 @@ if (check_paranoia_here('seeding+') || check_paranoia_here('leeching+')) {
 			AND x.active = 1
 		GROUP BY Type");
 	$PeerCount = $DB->to_array(0, MYSQLI_NUM, false);
-	if (check_paranoia('seeding+')) {
+	if (\Gazelle\Paranoia::check('seeding+')) {
 		$Seeding = isset($PeerCount['Seeding']) ? $PeerCount['Seeding'][1] : 0;
 		$CommStats['seeding'] = number_format($Seeding);
 	}
-	if (check_paranoia('leeching+')) {
+	if (\Gazelle\Paranoia::check('leeching+')) {
 		$CommStats['leeching'] = isset($PeerCount['Leeching']) ? number_format($PeerCount['Leeching'][1]) : 0;
 	}
 }

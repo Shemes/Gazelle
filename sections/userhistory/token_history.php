@@ -22,7 +22,7 @@ $Perms = Permissions::get_permissions($UserInfo['PermissionID']);
 $UserClass = $Perms['Class'];
 
 if (!check_perms('users_mod')) {
-	if ($LoggedUser['ID'] != $UserID && !check_paranoia(false, $User['Paranoia'], $UserClass, $UserID)) {
+	if ($LoggedUser['ID'] != $UserID && !\Gazelle\Paranoia::check(false, $User['Paranoia'], $UserClass, $UserID)) {
 		error(403);
 	}
 }

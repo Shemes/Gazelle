@@ -9,9 +9,6 @@ much.
 
 // Number of users per page
 define('FRIENDS_PER_PAGE', '20');
-include_once(SERVER_ROOT.'/classes/paranoia.class.php');
-
-
 
 View::show_header('Friends','comments');
 
@@ -81,21 +78,21 @@ foreach ($Friends as $Friend) {
 		<tr class="colhead">
 			<td colspan="<?=(Users::has_avatars_enabled() ? 3 : 2)?>">
 				<span style="float: left;"><?=Users::format_username($FriendID, true, true, true, true)?>
-<?	if (check_paranoia('ratio', $Paranoia, $Class, $FriendID)) { ?>
+<?	if (\Gazelle\Paranoia::check('ratio', $Paranoia, $Class, $FriendID)) { ?>
 				&nbsp;Ratio: <strong><?=Format::get_ratio_html($Uploaded, $Downloaded)?></strong>
 <?
 	}
-	if (check_paranoia('uploaded', $Paranoia, $Class, $FriendID)) {
+	if (\Gazelle\Paranoia::check('uploaded', $Paranoia, $Class, $FriendID)) {
 ?>
 				&nbsp;Up: <strong><?=Format::get_size($Uploaded)?></strong>
 <?
 	}
-	if (check_paranoia('downloaded', $Paranoia, $Class, $FriendID)) {
+	if (\Gazelle\Paranoia::check('downloaded', $Paranoia, $Class, $FriendID)) {
 ?>
 				&nbsp;Down: <strong><?=Format::get_size($Downloaded)?></strong>
 <?	} ?>
 				</span>
-<?	if (check_paranoia('lastseen', $Paranoia, $Class, $FriendID)) { ?>
+<?	if (\Gazelle\Paranoia::check('lastseen', $Paranoia, $Class, $FriendID)) { ?>
 				<span style="float: right;"><?=\Gazelle\Util\Time::timeDiff($LastAccess)?></span>
 <?	} ?>
 			</td>
