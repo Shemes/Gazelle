@@ -27,7 +27,7 @@ $DB->query("
 	WHERE t.ID = '$TorrentID'");
 list($UserID, $GroupID, $Size, $InfoHash, $Name, $ArtistName, $Time, $Snatches) = $DB->next_record(MYSQLI_NUM, false);
 
-if (($LoggedUser['ID'] != $UserID || time_ago($Time) > 3600 * 24 * 7 || $Snatches > 4) && !check_perms('torrents_delete')) {
+if (($LoggedUser['ID'] != $UserID || \Gazelle\Util\Time::timeAgo($Time) > 3600 * 24 * 7 || $Snatches > 4) && !check_perms('torrents_delete')) {
 	error(403);
 }
 

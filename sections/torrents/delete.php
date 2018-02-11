@@ -35,7 +35,7 @@ if (isset($_SESSION['logged_user']['multi_delete']) && $_SESSION['logged_user'][
 	error('You have recently deleted 3 torrents. Please contact a staff member if you need to delete more.');
 }
 
-if (time_ago($Time) > 3600 * 24 * 7 && !check_perms('torrents_delete')) { // Should this be torrents_delete or torrents_delete_fast?
+if (\Gazelle\Util\Time::timeAgo($Time) > 3600 * 24 * 7 && !check_perms('torrents_delete')) { // Should this be torrents_delete or torrents_delete_fast?
 	error('You can no longer delete this torrent as it has been uploaded for over a week. If you now think there is a problem, please report the torrent instead.');
 }
 
