@@ -2,7 +2,7 @@
 /**
  * Torrent class that contains some convenient functions related to torrent meta data
  */
-class BencodeTorrent extends BencodeDecode {
+class BencodeTorrent extends \Gazelle\BencodeDecode {
 	private $PathKey = 'path';
 	public $Files = array();
 	public $Size = 0;
