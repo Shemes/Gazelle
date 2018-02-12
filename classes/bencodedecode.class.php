@@ -3,7 +3,7 @@
  * The decode class is simple and straightforward. The only thing to
  * note is that empty dictionaries are represented by boolean trues
  */
-class BencodeDecode extends Bencode {
+class BencodeDecode extends \Gazelle\Bencode {
 	private $Data;
 	private $Length;
 	private $Pos = 0;
@@ -88,7 +88,7 @@ class BencodeDecode extends Bencode {
 					return $this->error();
 				}
 				$this->Pos += strlen($Value) + 1;
-				return Int64::make($Value);
+				return \Gazelle\Int64::make($Value);
 
 			case 'l':
 				$Value = array();
@@ -142,8 +142,8 @@ class BencodeDecode extends Bencode {
 		if ($Data === false) {
 			$Data = $this->Dec;
 		}
-		if (Int64::is_int($Data)) {
-			return Int64::get($Data);
+		if (\Gazelle\Int64::is_int($Data)) {
+			return \Gazelle\Int64::get($Data);
 		}
 		if (is_bool($Data)) {
 			return array();

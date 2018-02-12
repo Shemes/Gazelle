@@ -19,8 +19,8 @@ class BencodeTorrent extends BencodeDecode {
 		$InfoDict =& $this->Dec['info'];
 		if (!isset($InfoDict['files'])) {
 			// Single-file torrent
-			$this->Size = (Int64::is_int($InfoDict['length'])
-				? Int64::get($InfoDict['length'])
+			$this->Size = (\Gazelle\Int64::is_int($InfoDict['length'])
+				? \Gazelle\Int64::get($InfoDict['length'])
 				: $InfoDict['length']);
 			$Name = (isset($InfoDict['name.utf-8'])
 				? $InfoDict['name.utf-8']
@@ -35,8 +35,8 @@ class BencodeTorrent extends BencodeDecode {
 				foreach ($File[$this->PathKey] as $SubPath) {
 					$TmpPath[] = $SubPath;
 				}
-				$CurSize = (Int64::is_int($File['length'])
-					? Int64::get($File['length'])
+				$CurSize = (\Gazelle\Int64::is_int($File['length'])
+					? \Gazelle\Int64::get($File['length'])
 					: $File['length']);
 				$this->Files[] = array($CurSize, implode('/', $TmpPath));
 				$this->Size += $CurSize;
@@ -87,7 +87,7 @@ class BencodeTorrent extends BencodeDecode {
 		if (empty($this->Dec)) {
 			return false;
 		}
-		return isset($this->Dec['info']['private']) && Int64::get($this->Dec['info']['private']) == 1;
+		return isset($this->Dec['info']['private']) && \Gazelle\Int64::get($this->Dec['info']['private']) == 1;
 	}
 	/**
 	 * Add the "private" flag to the torrent
@@ -101,7 +101,7 @@ class BencodeTorrent extends BencodeDecode {
 		if ($this->is_private()) {
 			return false;
 		}
-		$this->Dec['info']['private'] = Int64::make(1);
+		$this->Dec['info']['private'] = \Gazelle\Int64::make(1);
 		ksort($this->Dec['info']);
 		return true;
 	}
