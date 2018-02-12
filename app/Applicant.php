@@ -12,6 +12,8 @@ class Applicant
     private $created;
     private $modified;
 
+    public $body;
+
     const CACHE_KEY = 'applicant_%d';
     const CACHE_KEY_OPEN = 'applicant_list_open_%d';
     const CACHE_KEY_RESOLVED = 'applicant_list_resolved_%d';
@@ -34,7 +36,7 @@ class Applicant
         $this->thread = new \Gazelle\Thread('staff-role');
         $this->role_id = ApplicantRole::get_id($role);
         $this->body = $body;
-        $this->resovled = false;
+        $this->resolved = false;
         \G::$DB->prepared_query(
             '
 			INSERT INTO applicant (RoleID, UserID, ThreadID, Body)
@@ -143,10 +145,10 @@ class Applicant
         \G::$Cache->delete_value(sprintf(self::CACHE_KEY, $this->id));
         \G::$Cache->delete_value(self::CACHE_KEY_NEW_REPLY);
         \G::$Cache->delete_value(self::CACHE_KEY_NEW_COUNT);
-        if ($visibility == 'public' && Permissions::has_permission($poster_id, 'admin_manage_applicants')) {
-            $staff = Users::user_info($poster_id);
-            $mf = Users::user_info($this->user_id());
-            Misc::send_pm(
+        if ($visibility == 'public' && \Permissions::has_permission($poster_id, 'admin_manage_applicants')) {
+            $staff = \Users::user_info($poster_id);
+            $mf = \Users::user_info($this->user_id());
+            \Misc::send_pm(
                 $this->user_id(),
                 0,
                 sprintf('You have a reply to your %s application', $this->role_title()),
