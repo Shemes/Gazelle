@@ -16,11 +16,11 @@ if ($Type == "resolve") {
 
     // Error check and set things up
     if ($Status == "Approve" || $Status == "Approve Selected") {
-        $Status = AutoEnable::APPROVED;
+        $Status = \Gazelle\AutoEnable::APPROVED;
     } else if ($Status == "Reject" || $Status == "Reject Selected") {
-        $Status = AutoEnable::DENIED;
+        $Status = \Gazelle\AutoEnable::DENIED;
     } else if ($Status == "Discard" || $Status == "Discard Selected") {
-        $Status = AutoEnable::DISCARDED;
+        $Status = \Gazelle\AutoEnable::DISCARDED;
     } else {
         json_error("Invalid resolution option");
     }
@@ -32,10 +32,10 @@ if ($Type == "resolve") {
     }
 
     // Handle request
-    AutoEnable::handle_requests($IDs, $Status, $Comment);
+    \Gazelle\AutoEnable::handle_requests($IDs, $Status, $Comment);
 } else if ($Type == "unresolve") {
     $ID = (int) $_GET['id'];
-    AutoEnable::unresolve_request($ID);
+    \Gazelle\AutoEnable::unresolve_request($ID);
 } else {
     json_error("Invalid type");
 }

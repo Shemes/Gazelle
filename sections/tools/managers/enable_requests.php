@@ -82,7 +82,7 @@ if (isset($_GET['search'])) {
         $Joins[] = "JOIN users_main um2 ON um2.ID = uer.CheckedBy";
     }
 
-    $Where = array_merge($Where, AutoEnable::build_search_query($Username,
+    $Where = array_merge($Where, \Gazelle\AutoEnable::build_search_query($Username,
         $IP, $SubmittedBetween, $SubmittedTimestamp1, $SubmittedTimestamp2, $HandledUsername,
         $HandledBetween, $HandledTimestamp1, $HandledTimestamp2, $OutcomeSearch, $Checked));
 }
@@ -202,9 +202,9 @@ $DB->set_query_id($QueryID);
                 <td>
                     <select name="outcome_search">
                         <option value="">---</option>
-                        <option value="<?=AutoEnable::APPROVED?>" <?=$_GET['outcome_search'] == AutoEnable::APPROVED ? 'selected' : ''?>>Approved</option>
-                        <option value="<?=AutoEnable::DENIED?>" <?=$_GET['outcome_search'] == AutoEnable::DENIED ? 'selected' : ''?>>Denied</option>
-                        <option value="<?=AutoEnable::DISCARDED?>" <?=$_GET['outcome_search'] == AutoEnable::DISCARDED ? 'selected' : ''?>>Discarded</option>
+                        <option value="<?=\Gazelle\AutoEnable::APPROVED?>" <?=$_GET['outcome_search'] == \Gazelle\AutoEnable::APPROVED ? 'selected' : ''?>>Approved</option>
+                        <option value="<?=\Gazelle\AutoEnable::DENIED?>" <?=$_GET['outcome_search'] == \Gazelle\AutoEnable::DENIED ? 'selected' : ''?>>Denied</option>
+                        <option value="<?=\Gazelle\AutoEnable::DISCARDED?>" <?=$_GET['outcome_search'] == \Gazelle\AutoEnable::DISCARDED ? 'selected' : ''?>>Discarded</option>
                     </select>
                 </td>
             </tr>
@@ -287,8 +287,8 @@ if ($NumResults > 0) { ?>
 <?      }
 
         if ($ShowChecked) { ?>
-            <td><?=AutoEnable::get_outcome_string($Outcome)?>
-<?          if ($Outcome == AutoEnable::DISCARDED) { ?>
+            <td><?=\Gazelle\AutoEnable::get_outcome_string($Outcome)?>
+<?          if ($Outcome == \Gazelle\AutoEnable::DISCARDED) { ?>
                 <a href="" id="unresolve" onclick="return false;" class="brackets" data-id="<?=$ID?>">Unresolve</a>
 <?          } ?>
             </td>
