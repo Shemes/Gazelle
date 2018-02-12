@@ -31,7 +31,7 @@ class Applicant
             return;
         }
         $this->user_id = $user_id;
-        $this->thread = new Thread('staff-role');
+        $this->thread = new \Gazelle\Thread('staff-role');
         $this->role_id = ApplicantRole::get_id($role);
         $this->body = $body;
         $this->resovled = false;
@@ -211,7 +211,7 @@ END_MSG
         $applicant->id = $id;
         $applicant->role_id = $data['RoleID'];
         $applicant->user_id = $data['UserID'];
-        $applicant->thread = Thread::factory($data['ThreadID']);
+        $applicant->thread = \Gazelle\Thread::factory($data['ThreadID']);
         $applicant->body = $data['Body'];
         $applicant->resolved = $data['Resolved'];
         $applicant->created = $data['Created'];
