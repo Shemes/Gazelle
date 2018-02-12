@@ -372,7 +372,7 @@ foreach ($Properties as $Key => $Value) {
 //******************************************************************************//
 //--------------- Generate torrent file ----------------------------------------//
 
-$Tor = new BencodeTorrent($TorrentName, true);
+$Tor = new \Gazelle\BencodeTorrent($TorrentName, true);
 $PublicTorrent = $Tor->make_private(); // The torrent is now private.
 $UnsourcedTorrent = $Tor->set_source(); // The source is not APL
 $TorEnc = \Gazelle\Util\Db::string($Tor->encode());
@@ -446,7 +446,7 @@ if ($Type == 'Music') {
 		$Name = $ExtraTorrent['Name'];
 		$ExtraTorrentsInsert[$Name] = $ExtraTorrent;
 		$ThisInsert =& $ExtraTorrentsInsert[$Name];
-		$ExtraTor = new BencodeTorrent($Name, true);
+		$ExtraTor = new \Gazelle\BencodeTorrent($Name, true);
 		if (isset($ExtraTor->Dec['encrypted_files'])) {
 			$Err = 'At least one of the torrents contain an encrypted file list which is not supported here';
 			break;
