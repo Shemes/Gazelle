@@ -65,7 +65,7 @@ foreach ($Results as $Key => $GroupID) {
 	if (!empty($ExtendedArtists[1]) || !empty($ExtendedArtists[4]) || !empty($ExtendedArtists[5]) || !empty($ExtendedArtists[6])) {
 		unset($ExtendedArtists[2]);
 		unset($ExtendedArtists[3]);
-		$DisplayName = Artists::display_artists($ExtendedArtists, false, false, false);
+		$DisplayName = \Gazelle\Artists::display_artists($ExtendedArtists, false, false, false);
 		foreach ($ExtendedArtists[1] as $Artist) {
 			$JsonArtists[] = array(
 				'id' => (int)$Artist['id'],

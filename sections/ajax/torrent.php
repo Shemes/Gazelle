@@ -40,7 +40,7 @@ if (!isset($TorrentList[$TorrentID])) {
 
 $GroupID = $TorrentDetails['ID'];
 
-$ArtistForm = Artists::get_artist($GroupID);
+$ArtistForm = \Gazelle\Artists::get_artist($GroupID);
 if ($TorrentDetails['CategoryID'] == 0) {
 	$CategoryName = "Unknown";
 } else {

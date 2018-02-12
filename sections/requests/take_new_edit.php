@@ -471,7 +471,7 @@ if ($CategoryName === 'Music') {
 			list($GroupCount) = $DB->next_record();
 			if (($ReqCount + $GroupCount) == 0) {
 				//The only group to use this artist
-				Artists::delete_artist($ArtistID);
+				\Gazelle\Artists::delete_artist($ArtistID);
 			} else {
 				//Not the only group, still need to clear cache
 				$Cache->delete_value("artists_requests_$ArtistID");
@@ -574,7 +574,7 @@ if ($NewRequest) {
 
 
 	if ($CategoryName === 'Music') {
-		$Announce = "\"$Title\" - ".Artists::display_artists($ArtistForm, false, false).' '.site_url()."requests.php?action=view&id=$RequestID - ".implode(' ', $Tags);
+		$Announce = "\"$Title\" - ".\Gazelle\Artists::display_artists($ArtistForm, false, false).' '.site_url()."requests.php?action=view&id=$RequestID - ".implode(' ', $Tags);
 	} else {
 		$Announce = "\"$Title\" - ".site_url()."requests.php?action=view&id=$RequestID - ".implode(' ', $Tags);
 	}

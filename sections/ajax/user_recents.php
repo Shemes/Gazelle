@@ -25,7 +25,7 @@ if (check_paranoia_here('snatched')) {
 		ORDER BY s.tstamp DESC
 		LIMIT $Limit");
 	$RecentSnatches = $DB->to_array(false, MYSQLI_ASSOC);
-	$Artists = Artists::get_artists($DB->collect('ID'));
+	$Artists = \Gazelle\Artists::get_artists($DB->collect('ID'));
 	foreach ($RecentSnatches as $Key => $SnatchInfo) {
 		$RecentSnatches[$Key]['artists'][] = $Artists[$SnatchInfo['ID']];
 		$RecentSnatches[$Key]['ID'] = (int)$RecentSnatches[$Key]['ID'];
@@ -51,7 +51,7 @@ if (check_paranoia_here('uploads')) {
 		ORDER BY t.Time DESC
 		LIMIT $Limit");
 	$RecentUploads = $DB->to_array(false, MYSQLI_ASSOC);
-	$Artists = Artists::get_artists($DB->collect('ID'));
+	$Artists = \Gazelle\Artists::get_artists($DB->collect('ID'));
 	foreach ($RecentUploads as $Key => $UploadInfo) {
 		$RecentUploads[$Key]['artists'][] = $Artists[$UploadInfo['ID']];
 		$RecentUploads[$Key]['ID'] = (int)$RecentUploads[$Key]['ID'];

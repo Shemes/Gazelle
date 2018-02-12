@@ -661,7 +661,7 @@ class Text {
 							$Groups = Torrents::get_groups(array($GroupID), true, true, false);
 							if ($Groups[$GroupID]) {
 								$Group = $Groups[$GroupID];
-								$Str .= Artists::display_artists($Group['ExtendedArtists']).'<a href="torrents.php?id='.$GroupID.'">'.$Group['Name'].'</a>';
+								$Str .= \Gazelle\Artists::display_artists($Group['ExtendedArtists']).'<a href="torrents.php?id='.$GroupID.'">'.$Group['Name'].'</a>';
 							} else {
 								$Str .= '[torrent]'.str_replace('[inlineurl]', '', $Block['Val']).'[/torrent]';
 							}

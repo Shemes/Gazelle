@@ -582,7 +582,7 @@ View::show_header($Title, 'requests');
 
 		if ($CategoryName === 'Music') {
 			$ArtistForm = Requests::get_artists($RequestID);
-			$ArtistLink = Artists::display_artists($ArtistForm, true, true);
+			$ArtistLink = \Gazelle\Artists::display_artists($ArtistForm, true, true);
 			$FullName = "$ArtistLink<a href=\"requests.php?action=view&amp;id=$RequestID\"><span dir=\"ltr\">$Request[Title]</span> [$Request[Year]]</a>";
 		} elseif ($CategoryName === 'Audiobooks' || $CategoryName === 'Comedy') {
 			$FullName = "<a href=\"requests.php?action=view&amp;id=$RequestID\"><span dir=\"ltr\">$Request[Title]</span> [$Request[Year]]</a>";

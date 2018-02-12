@@ -156,7 +156,7 @@ function generate_torrent_json($Caption, $Tag, $Details, $Limit) {
 			$Format, $Encoding, $Media, $Scene, $HasLog, $HasCue, $HasLogDB, $LogScore, $LogChecksum, $Year, $GroupYear,
 			$RemasterTitle, $Snatched, $Seeders, $Leechers, $Data, $ReleaseType, $Size) = $Detail;
 
-		$Artist = Artists::display_artists(Artists::get_artist($GroupID), false, true);
+		$Artist = \Gazelle\Artists::display_artists(\Gazelle\Artists::get_artist($GroupID), false, true);
 		$TruncArtist = substr($Artist, 0, strlen($Artist) - 3);
 
 		$TagList = array();

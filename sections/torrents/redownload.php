@@ -69,7 +69,7 @@ $DownloadsQ = $DB->query("
 $Collector = new TorrentsDL($DownloadsQ, "$Username's ".ucfirst($_GET['type']));
 
 while (list($Downloads, $GroupIDs) = $Collector->get_downloads('TorrentID')) {
-	$Artists = Artists::get_artists($GroupIDs);
+	$Artists = \Gazelle\Artists::get_artists($GroupIDs);
 	$TorrentIDs = array_keys($GroupIDs);
 	$TorrentFilesQ = $DB->query('
 		SELECT TorrentID, File
@@ -79,14 +79,14 @@ while (list($Downloads, $GroupIDs) = $Collector->get_downloads('TorrentID')) {
 		// Query failed. Let's not create a broken zip archive
 		foreach ($TorrentIDs as $TorrentID) {
 			$Download =& $Downloads[$TorrentID];
-			$Download['Artist'] = Artists::display_artists($Artists[$Download['GroupID']], false, true, false);
+			$Download['Artist'] = \Gazelle\Artists::display_artists($Artists[$Download['GroupID']], false, true, false);
 			$Collector->fail_file($Download);
 		}
 		continue;
 	}
 	while (list($TorrentID, $TorrentFile) = $DB->next_record(MYSQLI_NUM, false)) {
 		$Download =& $Downloads[$TorrentID];
-		$Download['Artist'] = Artists::display_artists($Artists[$Download['GroupID']], false, true, false);
+		$Download['Artist'] = \Gazelle\Artists::display_artists($Artists[$Download['GroupID']], false, true, false);
 		$Collector->add_file($TorrentFile, $Download, $Download['Month']);
 		unset($Download);
 	}

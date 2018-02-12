@@ -350,9 +350,9 @@ foreach ($Importances as $Group) {
 			if (!empty($ExtendedArtists[1]) || !empty($ExtendedArtists[4]) || !empty($ExtendedArtists[5]) || !empty($ExtendedArtists[6])) {
 				unset($ExtendedArtists[2]);
 				unset($ExtendedArtists[3]);
-				$DisplayName = Artists::display_artists($ExtendedArtists).$DisplayName;
+				$DisplayName = \Gazelle\Artists::display_artists($ExtendedArtists).$DisplayName;
 			} elseif (count($GroupArtists) > 0) {
-				$DisplayName = Artists::display_artists(array(1 => $Artists), true, true).$DisplayName;
+				$DisplayName = \Gazelle\Artists::display_artists(array(1 => $Artists), true, true).$DisplayName;
 			}
 			break;
 		case 1022: // Show performers on composer pages
@@ -360,14 +360,14 @@ foreach ($Importances as $Group) {
 				unset($ExtendedArtists[4]);
 				unset($ExtendedArtists[3]);
 				unset($ExtendedArtists[6]);
-				$DisplayName = Artists::display_artists($ExtendedArtists).$DisplayName;
+				$DisplayName = \Gazelle\Artists::display_artists($ExtendedArtists).$DisplayName;
 			} elseif (count($GroupArtists) > 0) {
-				$DisplayName = Artists::display_artists(array(1 => $Artists), true, true).$DisplayName;
+				$DisplayName = \Gazelle\Artists::display_artists(array(1 => $Artists), true, true).$DisplayName;
 			}
 			break;
 		default: // Show composers otherwise
 			if (!empty($ExtendedArtists[4])) {
-				$DisplayName = Artists::display_artists(array(4 => $ExtendedArtists[4]), true, true).$DisplayName;
+				$DisplayName = \Gazelle\Artists::display_artists(array(4 => $ExtendedArtists[4]), true, true).$DisplayName;
 			}
 	}
 
@@ -799,7 +799,7 @@ if ($NumRequests > 0) {
 			$Title = display_str($Request['Title']);
 			if ($CategoryName == 'Music') {
 				$ArtistForm = Requests::get_artists($RequestID);
-				$ArtistLink = Artists::display_artists($ArtistForm, true, true);
+				$ArtistLink = \Gazelle\Artists::display_artists($ArtistForm, true, true);
 				$FullName = $ArtistLink."<a href=\"requests.php?action=view&amp;id=$RequestID\"><span dir=\"ltr\">$Title</span> [$Request[Year]]</a>";
 			} elseif ($CategoryName == 'Audiobooks' || $CategoryName == 'Comedy') {
 				$FullName = "<a href=\"requests.php?action=view&amp;id=$RequestID\"><span dir=\"ltr\">$Title</span> [$Request[Year]]</a>";

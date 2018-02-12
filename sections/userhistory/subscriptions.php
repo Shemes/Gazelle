@@ -167,7 +167,7 @@ if (!$NumResults) {
 
 				$Links = 'Request: ';
 				if ($CategoryName == 'Music' || $CategoryName == 'Audiobooks' || $CategoryName == 'Comedy') {
-					$Links .= ($CategoryName == 'Music' ? Artists::display_artists(Requests::get_artists($Result['PageID'])) : '') . '<a href="requests.php?action=view&amp;id=' . $Result['PageID'] . '" dir="ltr">' . $Request['Title'] . " [" . $Request['Year'] . "]</a>";
+					$Links .= ($CategoryName == 'Music' ? \Gazelle\Artists::display_artists(Requests::get_artists($Result['PageID'])) : '') . '<a href="requests.php?action=view&amp;id=' . $Result['PageID'] . '" dir="ltr">' . $Request['Title'] . " [" . $Request['Year'] . "]</a>";
 				} else {
 					$Links .= '<a href="requests.php?action=view&amp;id=' . $Result['PageID'] . '">' . $Request['Title'] . "</a>";
 				}
@@ -178,7 +178,7 @@ if (!$NumResults) {
 					continue;
 				}
 				$GroupInfo = $TorrentGroups[$Result['PageID']];
-				$Links = 'Torrent: ' . Artists::display_artists($GroupInfo['ExtendedArtists']) . '<a href="torrents.php?id=' . $GroupInfo['ID'] . '" dir="ltr">' . $GroupInfo['Name'] . '</a>';
+				$Links = 'Torrent: ' . \Gazelle\Artists::display_artists($GroupInfo['ExtendedArtists']) . '<a href="torrents.php?id=' . $GroupInfo['ID'] . '" dir="ltr">' . $GroupInfo['Name'] . '</a>';
 				if ($GroupInfo['Year'] > 0) {
 					$Links .= " [" . $GroupInfo['Year'] . "]";
 				}

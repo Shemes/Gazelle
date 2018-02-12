@@ -63,9 +63,9 @@ foreach ($GroupIDs as $GroupID) {
 	if (!empty($ExtendedArtists[1]) || !empty($ExtendedArtists[4]) || !empty($ExtendedArtists[5]) || !empty($ExtendedArtists[6])) {
 			unset($ExtendedArtists[2]);
 			unset($ExtendedArtists[3]);
-			$DisplayName = Artists::display_artists($ExtendedArtists);
+			$DisplayName = \Gazelle\Artists::display_artists($ExtendedArtists);
 	} elseif (count($Artists) > 0) {
-			$DisplayName = Artists::display_artists(array('1' => $Artists));
+			$DisplayName = \Gazelle\Artists::display_artists(array('1' => $Artists));
 	} else {
 		$DisplayName = '';
 	}
@@ -218,9 +218,9 @@ foreach ($GroupIDs as $GroupID) {
 	if (!empty($ExtendedArtists[1]) || !empty($ExtendedArtists[4]) || !empty($ExtendedArtists[5])|| !empty($ExtendedArtists[6])) {
 		unset($ExtendedArtists[2]);
 		unset($ExtendedArtists[3]);
-		$DisplayName .= Artists::display_artists($ExtendedArtists, false);
+		$DisplayName .= \Gazelle\Artists::display_artists($ExtendedArtists, false);
 	} elseif (count($Artists) > 0) {
-		$DisplayName .= Artists::display_artists(array('1' => $Artists), false);
+		$DisplayName .= \Gazelle\Artists::display_artists(array('1' => $Artists), false);
 	}
 	$DisplayName .= $GroupName;
 	if ($GroupYear > 0) {

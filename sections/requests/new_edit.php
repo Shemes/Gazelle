@@ -111,7 +111,7 @@ if ($NewRequest && !empty($_GET['artistid']) && is_number($_GET['artistid'])) {
 		3 => array()
 	);
 } elseif ($NewRequest && !empty($_GET['groupid']) && is_number($_GET['groupid'])) {
-	$ArtistForm = Artists::get_artist($_GET['groupid']);
+	$ArtistForm = \Gazelle\Artists::get_artist($_GET['groupid']);
 	$DB->query("
 		SELECT
 			tg.Name,

@@ -28,7 +28,7 @@ foreach ($TorrentIDs as $TorrentID) {
 
 	if (!array_key_exists($UserID, $TorrentAlerts))
 		$TorrentAlerts[$UserID] = array('Count' => 0, 'Msg' => '');
-	$ArtistName = Artists::display_artists(Artists::get_artist($GroupID), false, false, false);
+	$ArtistName = \Gazelle\Artists::display_artists(\Gazelle\Artists::get_artist($GroupID), false, false, false);
 	if ($ArtistName) {
 		$Name = "$ArtistName - $Name";
 	}

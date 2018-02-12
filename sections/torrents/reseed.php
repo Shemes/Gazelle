@@ -24,7 +24,7 @@ $DB->query("
 $Group = Torrents::get_groups(array($GroupID));
 extract(Torrents::array_group($Group[$GroupID]));
 
-$Name = Artists::display_artists(array('1' => $Artists), false, true);
+$Name = \Gazelle\Artists::display_artists(array('1' => $Artists), false, true);
 $Name .= $GroupName;
 
 $usersToNotify = array();

@@ -23,7 +23,7 @@
 authorize();
 
 $ArtistID = $_POST['artistid'];
-$NewName = Artists::normalise_artist_name($_POST['name']);
+$NewName = \Gazelle\Artists::normalise_artist_name($_POST['name']);
 
 if (!$ArtistID || !is_number($ArtistID)) {
 	error(404);

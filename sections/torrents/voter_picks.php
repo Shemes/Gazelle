@@ -52,7 +52,7 @@ if (count($Top10) > 0) {
 		}
 		$MatchGroup = $Groups[$MatchGroupID];
 		$i++;
-		$Str = Artists::display_artists($MatchGroup['ExtendedArtists']).'<a href="torrents.php?id='.$MatchGroupID.'">'.$MatchGroup['Name'].'</a>';
+		$Str = \Gazelle\Artists::display_artists($MatchGroup['ExtendedArtists']).'<a href="torrents.php?id='.$MatchGroupID.'">'.$MatchGroup['Name'].'</a>';
 ?>
 			<tr class="votes_rows hidden <?=($i & 1) ? 'rowb' : 'rowa'?>">
 				<td><span class="like_ranks"><?=$i?>.</span> <?=$Str?></td>

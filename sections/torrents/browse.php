@@ -548,7 +548,7 @@ foreach ($Results as $Key => $GroupID) {
 	) {
 		unset($ExtendedArtists[2]);
 		unset($ExtendedArtists[3]);
-		$DisplayName = Artists::display_artists($ExtendedArtists);
+		$DisplayName = \Gazelle\Artists::display_artists($ExtendedArtists);
 	} else {
 		$DisplayName = '';
 	}

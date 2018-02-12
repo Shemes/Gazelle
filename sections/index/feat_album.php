@@ -15,16 +15,16 @@ if ($FeaturedAlbum === false) {
 	$Cache->cache_value('featured_album', $FeaturedAlbum, 0);
 }
 if (is_number($FeaturedAlbum['GroupID'])) {
-	$Artists = Artists::get_artist($FeaturedAlbum['GroupID']);
+	$Artists = \Gazelle\Artists::get_artist($FeaturedAlbum['GroupID']);
 ?>
 		<div class="box">
 			<div class="head colhead_dark"><strong>Album of the Month</strong></div>
 			<div class="center pad">
-				<?=Artists::display_artists($Artists, true, true)?><a href="torrents.php?id=<?=$FeaturedAlbum['GroupID']?>"><?=$FeaturedAlbum['Name']?></a>
+				<?=\Gazelle\Artists::display_artists($Artists, true, true)?><a href="torrents.php?id=<?=$FeaturedAlbum['GroupID']?>"><?=$FeaturedAlbum['Name']?></a>
 			</div>
 			<div class="center pad">
-				<a href="torrents.php?id=<?=$FeaturedAlbum['GroupID']?>" class="tooltip" title="<?=Artists::display_artists($Artists, false, false)?> - <?=$FeaturedAlbum['Name']?>">
-					<img src="<?=ImageTools::process($FeaturedAlbum['WikiImage'], true)?>" alt="<?=Artists::display_artists($Artists, false, false)?> - <?=$FeaturedAlbum['Name']?>" width="100%" />
+				<a href="torrents.php?id=<?=$FeaturedAlbum['GroupID']?>" class="tooltip" title="<?=\Gazelle\Artists::display_artists($Artists, false, false)?> - <?=$FeaturedAlbum['Name']?>">
+					<img src="<?=ImageTools::process($FeaturedAlbum['WikiImage'], true)?>" alt="<?=\Gazelle\Artists::display_artists($Artists, false, false)?> - <?=$FeaturedAlbum['Name']?>" width="100%" />
 				</a>
 			</div>
 			<div class="center pad">

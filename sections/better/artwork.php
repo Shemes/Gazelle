@@ -17,7 +17,7 @@ WHERE CategoryID = 1 AND WikiImage = ''
 ORDER BY Name
 LIMIT {$limit} OFFSET {$offset}");
 $torrents = $DB->to_array('ID', MYSQLI_ASSOC);
-foreach (Artists::get_artists(array_keys($torrents)) as $group_id => $data) {
+foreach (\Gazelle\Artists::get_artists(array_keys($torrents)) as $group_id => $data) {
     $torrents[$group_id]['Artists'] = array();
     $torrents[$group_id]['ExtendedArtists'] = array();
     foreach(array(1, 4, 6) as $importance) {

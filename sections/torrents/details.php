@@ -30,11 +30,11 @@ $AltName = $GroupName; // Goes in the alt text of the image
 $Title = $GroupName; // goes in <title>
 $WikiBody = Text::full_format($WikiBody);
 
-$Artists = Artists::get_artist($GroupID);
+$Artists = \Gazelle\Artists::get_artist($GroupID);
 
 if ($Artists) {
-	$DisplayName = Artists::display_artists($Artists, true) . "$DisplayName";
-	$AltName = display_str(Artists::display_artists($Artists, false)) . $AltName;
+	$DisplayName = \Gazelle\Artists::display_artists($Artists, true) . "$DisplayName";
+	$AltName = display_str(\Gazelle\Artists::display_artists($Artists, false)) . $AltName;
 	$Title = $AltName;
 }
 
@@ -236,7 +236,7 @@ if ($Categories[$GroupCategoryID - 1] == 'Music') {
 		foreach ($Artists[4] as $Artist) {
 ?>
 				<li class="artists_composers">
-					<?=Artists::display_artist($Artist).' &lrm;'?>
+					<?=\Gazelle\Artists::display_artist($Artist).' &lrm;'?>
 <?
 			if (check_perms('torrents_edit')) {
 				$DB->query("
@@ -262,7 +262,7 @@ if ($Categories[$GroupCategoryID - 1] == 'Music') {
 		foreach ($Artists[6] as $Artist) {
 ?>
 				<li class="artists_dj">
-					<?=Artists::display_artist($Artist).' &lrm;'?>
+					<?=\Gazelle\Artists::display_artist($Artist).' &lrm;'?>
 <?			if (check_perms('torrents_edit')) {
 				$DB->query("
 					SELECT AliasID
@@ -290,7 +290,7 @@ if ($Categories[$GroupCategoryID - 1] == 'Music') {
 	foreach ($Artists[1] as $Artist) {
 ?>
 				<li class="artist_main">
-					<?=Artists::display_artist($Artist).' &lrm;'?>
+					<?=\Gazelle\Artists::display_artist($Artist).' &lrm;'?>
 <?
 		if (check_perms('torrents_edit')) {
 			$AliasID = $Artist['aliasid'];
@@ -309,7 +309,7 @@ if ($Categories[$GroupCategoryID - 1] == 'Music') {
 		foreach ($Artists[2] as $Artist) {
 ?>
 				<li class="artist_guest">
-					<?=Artists::display_artist($Artist).' &lrm;'?>
+					<?=\Gazelle\Artists::display_artist($Artist).' &lrm;'?>
 <?			if (check_perms('torrents_edit')) {
 				$DB->query("
 					SELECT AliasID
@@ -334,7 +334,7 @@ if ($Categories[$GroupCategoryID - 1] == 'Music') {
 		foreach ($Artists[5] as $Artist) {
 ?>
 				<li class="artists_conductors">
-					<?=Artists::display_artist($Artist).' &lrm;'?>
+					<?=\Gazelle\Artists::display_artist($Artist).' &lrm;'?>
 <?			if (check_perms('torrents_edit')) {
 				$DB->query("
 					SELECT AliasID
@@ -359,7 +359,7 @@ if ($Categories[$GroupCategoryID - 1] == 'Music') {
 		foreach ($Artists[3] as $Artist) {
 ?>
 				<li class="artists_remix">
-					<?=Artists::display_artist($Artist).' &lrm;'?>
+					<?=\Gazelle\Artists::display_artist($Artist).' &lrm;'?>
 <?			if (check_perms('torrents_edit')) {
 				$DB->query("
 					SELECT AliasID
@@ -384,7 +384,7 @@ if ($Categories[$GroupCategoryID - 1] == 'Music') {
 		foreach ($Artists[7] as $Artist) {
 ?>
 				<li class="artists_producer">
-					<?=Artists::display_artist($Artist).' &lrm;'?>
+					<?=\Gazelle\Artists::display_artist($Artist).' &lrm;'?>
 <?
 			if (check_perms('torrents_edit')) {
 				$DB->query("

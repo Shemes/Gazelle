@@ -453,7 +453,7 @@ function generate_torrent_table($Caption, $Tag, $Details, $Limit) {
 	foreach ($Details as $Detail) {
 		$GroupIDs[] = $Detail[1];
 	}
-	$Artists = Artists::get_artists($GroupIDs);
+	$Artists = \Gazelle\Artists::get_artists($GroupIDs);
 
 	foreach ($Details as $Detail) {
 		list($TorrentID, $GroupID, $GroupName, $GroupCategoryID, $WikiImage, $TagsList,
@@ -472,7 +472,7 @@ function generate_torrent_table($Caption, $Tag, $Details, $Limit) {
 
 
 		if (!empty($Artists[$GroupID])) {
-			$DisplayName = Artists::display_artists($Artists[$GroupID], true, true);
+			$DisplayName = \Gazelle\Artists::display_artists($Artists[$GroupID], true, true);
 		}
 
 		$DisplayName .= "<a href=\"torrents.php?id=$GroupID&amp;torrentid=$TorrentID\" class=\"tooltip\" title=\"View torrent\" dir=\"ltr\">$GroupName</a>";

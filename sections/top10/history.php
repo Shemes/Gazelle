@@ -115,10 +115,10 @@ if (!empty($_GET['date'])) {
 			// Group still exists
 			$DisplayName = '';
 
-			$Artists = Artists::get_artist($GroupID);
+			$Artists = \Gazelle\Artists::get_artist($GroupID);
 
 			if (!empty($Artists)) {
-				$DisplayName = Artists::display_artists($Artists, true, true);
+				$DisplayName = \Gazelle\Artists::display_artists($Artists, true, true);
 			}
 
 			$DisplayName .= "<a href=\"torrents.php?id=$GroupID&amp;torrentid=$TorrentID\" class=\"tooltip\" title=\"View torrent\" dir=\"ltr\">$GroupName</a>";

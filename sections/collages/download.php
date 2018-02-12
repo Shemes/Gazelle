@@ -132,7 +132,7 @@ $DownloadsQ = $DB->query($SQL);
 $Collector = new TorrentsDL($DownloadsQ, $CollageName);
 
 while (list($Downloads, $GroupIDs) = $Collector->get_downloads('GroupID')) {
-	$Artists = Artists::get_artists($GroupIDs);
+	$Artists = \Gazelle\Artists::get_artists($GroupIDs);
 	$TorrentFilesQ = $DB->query("
 		SELECT TorrentID, File
 		FROM torrents_files
@@ -141,7 +141,7 @@ while (list($Downloads, $GroupIDs) = $Collector->get_downloads('GroupID')) {
 		// Query failed. Let's not create a broken zip archive
 		foreach ($GroupIDs as $GroupID) {
 			$Download =& $Downloads[$GroupID];
-			$Download['Artist'] = Artists::display_artists($Artists[$GroupID], false, true, false);
+			$Download['Artist'] = \Gazelle\Artists::display_artists($Artists[$GroupID], false, true, false);
 			$Collector->fail_file($Download);
 		}
 		continue;
@@ -149,7 +149,7 @@ while (list($Downloads, $GroupIDs) = $Collector->get_downloads('GroupID')) {
 	while (list($TorrentID, $TorrentFile) = $DB->next_record(MYSQLI_NUM, false)) {
 		$GroupID = $GroupIDs[$TorrentID];
 		$Download =& $Downloads[$GroupID];
-		$Download['Artist'] = Artists::display_artists($Artists[$Download['GroupID']], false, true, false);
+		$Download['Artist'] = \Gazelle\Artists::display_artists($Artists[$Download['GroupID']], false, true, false);
 		if ($Download['Rank'] == 100) {
 			$Collector->skip_file($Download);
 			continue;

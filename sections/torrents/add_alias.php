@@ -22,7 +22,7 @@ list($GroupName) = $DB->next_record(MYSQLI_NUM, false);
 $Changed = false;
 
 for ($i = 0; $i < count($AliasNames); $i++) {
-	$AliasName = Artists::normalise_artist_name($AliasNames[$i]);
+	$AliasName = \Gazelle\Artists::normalise_artist_name($AliasNames[$i]);
 	$Importance = $Importances[$i];
 
 	if ($Importance != '1' && $Importance != '2' && $Importance != '3' && $Importance != '4' && $Importance != '5' && $Importance != '6' && $Importance != '7') {

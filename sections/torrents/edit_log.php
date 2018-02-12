@@ -18,9 +18,9 @@ $TorrentTags = new Tags($Group['TagList']);
 if (!empty($Group['ExtendedArtists'][1]) || !empty($Group['ExtendedArtists'][4]) || !empty($Group['ExtendedArtists'][5])) {
 	unset($Group['ExtendedArtists'][2]);
 	unset($Group['ExtendedArtists'][3]);
-	$DisplayName = Artists::display_artists($Group['ExtendedArtists']);
+	$DisplayName = \Gazelle\Artists::display_artists($Group['ExtendedArtists']);
 } elseif (!empty($Artists)) {
-	$DisplayName = Artists::display_artists(array(1 => $Group['Artists']));
+	$DisplayName = \Gazelle\Artists::display_artists(array(1 => $Group['Artists']));
 } else {
 	$DisplayName = '';
 }

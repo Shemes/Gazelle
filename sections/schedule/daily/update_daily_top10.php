@@ -49,10 +49,10 @@ foreach ($Top10 as $Torrent) {
 
 	$DisplayName = '';
 
-	$Artists = Artists::get_artist($GroupID);
+	$Artists = \Gazelle\Artists::get_artist($GroupID);
 
 	if (!empty($Artists)) {
-		$DisplayName = Artists::display_artists($Artists, false, true);
+		$DisplayName = \Gazelle\Artists::display_artists($Artists, false, true);
 	}
 
 	$DisplayName .= $GroupName;

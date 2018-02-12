@@ -24,7 +24,7 @@ if (!isset($_GET['id']) || !is_number($_GET['id'])) {
 		header("Location: log.php?search=Torrent+" . $TorrentID);
 		die();
 	}
-	$Artists = Artists::get_artist($GroupID);
+	$Artists = \Gazelle\Artists::get_artist($GroupID);
 	$TorrentCache = get_group_info($GroupID, true);
 	$GroupDetails = $TorrentCache[0];
 	$TorrentList = $TorrentCache[1];
@@ -47,10 +47,10 @@ if (!isset($_GET['id']) || !is_number($_GET['id'])) {
 	$WikiBody = Text::full_format($WikiBody);
 
 	//Get the artist name, group name etc.
-	$Artists = Artists::get_artist($GroupID);
+	$Artists = \Gazelle\Artists::get_artist($GroupID);
 	if ($Artists) {
-		$DisplayName = '<span dir="ltr">' . Artists::display_artists($Artists, true) . "<a href=\"torrents.php?torrentid=$TorrentID\">$DisplayName</a></span>";
-		$AltName = display_str(Artists::display_artists($Artists, false)) . $AltName;
+		$DisplayName = '<span dir="ltr">' . \Gazelle\Artists::display_artists($Artists, true) . "<a href=\"torrents.php?torrentid=$TorrentID\">$DisplayName</a></span>";
+		$AltName = display_str(\Gazelle\Artists::display_artists($Artists, false)) . $AltName;
 		$Title = $AltName;
 	}
 	if ($GroupYear > 0) {

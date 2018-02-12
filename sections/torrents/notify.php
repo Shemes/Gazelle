@@ -260,7 +260,7 @@ if (empty($Results)) {
 					}
 				}
 				$MatchingArtistsText = (!empty($MatchingArtists) ? 'Caught by filter for '.implode(', ', $MatchingArtists) : '');
-				$DisplayName = Artists::display_artists($GroupInfo['ExtendedArtists'], true, true);
+				$DisplayName = \Gazelle\Artists::display_artists($GroupInfo['ExtendedArtists'], true, true);
 			}
 			$DisplayName .= "<a href=\"torrents.php?id=$GroupID&amp;torrentid=$TorrentID#torrent$TorrentID\" class=\"tooltip\" title=\"View torrent\" dir=\"ltr\">" . $GroupInfo['Name'] . '</a>';
 

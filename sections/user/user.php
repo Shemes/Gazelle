@@ -730,9 +730,9 @@ if (check_paranoia_here('snatched')) {
 			LIMIT 5");
 		$RecentSnatches = $DB->to_array();
 
-		$Artists = Artists::get_artists($DB->collect('ID'));
+		$Artists = \Gazelle\Artists::get_artists($DB->collect('ID'));
 		foreach ($RecentSnatches as $Key => $SnatchInfo) {
-			$RecentSnatches[$Key]['Artist'] = Artists::display_artists($Artists[$SnatchInfo['ID']], false, true);
+			$RecentSnatches[$Key]['Artist'] = \Gazelle\Artists::display_artists($Artists[$SnatchInfo['ID']], false, true);
 		}
 		$Cache->cache_value("recent_snatches_$UserID", $RecentSnatches, 0); //inf cache
 	}
@@ -775,9 +775,9 @@ if (check_paranoia_here('uploads')) {
 			ORDER BY t.Time DESC
 			LIMIT 5");
 		$RecentUploads = $DB->to_array();
-		$Artists = Artists::get_artists($DB->collect('ID'));
+		$Artists = \Gazelle\Artists::get_artists($DB->collect('ID'));
 		foreach ($RecentUploads as $Key => $UploadInfo) {
-			$RecentUploads[$Key]['Artist'] = Artists::display_artists($Artists[$UploadInfo['ID']], false, true);
+			$RecentUploads[$Key]['Artist'] = \Gazelle\Artists::display_artists($Artists[$UploadInfo['ID']], false, true);
 		}
 		$Cache->cache_value("recent_uploads_$UserID", $RecentUploads, 0); //inf cache
 	}
@@ -843,7 +843,7 @@ foreach ($Collages as $CollageInfo) {
 			extract(Torrents::array_group($Group[$C['GroupID']]));
 
 			$Name = '';
-			$Name .= Artists::display_artists(array('1' => $Artists), false, true);
+			$Name .= \Gazelle\Artists::display_artists(array('1' => $Artists), false, true);
 			$Name .= $GroupName;
 ?>
 			<td>
@@ -932,7 +932,7 @@ if (empty($LoggedUser['DisableRequests']) && check_paranoia_here('requestsvoted_
 
 			if ($CategoryName == 'Music') {
 				$ArtistForm = Requests::get_artists($RequestID);
-				$ArtistLink = Artists::display_artists($ArtistForm, true, true);
+				$ArtistLink = \Gazelle\Artists::display_artists($ArtistForm, true, true);
 				$FullName = "$ArtistLink<a href=\"requests.php?action=view&amp;id=$RequestID\">$Request[Title] [$Request[Year]]</a>";
 			} elseif ($CategoryName == 'Audiobooks' || $CategoryName == 'Comedy') {
 				$FullName = "<a href=\"requests.php?action=view&amp;id=$RequestID\">$Request[Title] [$Request[Year]]</a>";

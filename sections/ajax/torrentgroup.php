@@ -35,7 +35,7 @@ if (!$TorrentCache) {
 
 list($TorrentDetails, $TorrentList) = $TorrentCache;
 
-$ArtistForm = Artists::get_artist($GroupID);
+$ArtistForm = \Gazelle\Artists::get_artist($GroupID);
 if ($TorrentDetails['CategoryID'] == 0) {
 	$CategoryName = 'Unknown';
 } else {

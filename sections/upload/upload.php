@@ -33,7 +33,7 @@ if (empty($Properties) && !empty($_GET['groupid']) && is_number($_GET['groupid']
 		list($Properties) = $DB->to_array(false, MYSQLI_BOTH);
 		$UploadForm = $Categories[$Properties['CategoryID'] - 1];
 		$Properties['CategoryName'] = $Categories[$Properties['CategoryID'] - 1];
-		$Properties['Artists'] = Artists::get_artist($_GET['groupid']);
+		$Properties['Artists'] = \Gazelle\Artists::get_artist($_GET['groupid']);
 
 		$DB->query("
 			SELECT

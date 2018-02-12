@@ -426,7 +426,7 @@ if (!is_array($Recommend) || !is_array($Recommend_artists)) {
 	$Recommend = $DB->to_array();
 	$Cache->cache_value('recommend', $Recommend, 1209600);
 
-	$Recommend_artists = Artists::get_artists($DB->collect('GroupID'));
+	$Recommend_artists = \Gazelle\Artists::get_artists($DB->collect('GroupID'));
 	$Cache->cache_value('recommend_artists', $Recommend_artists, 1209600);
 }
 
@@ -459,7 +459,7 @@ $Cache->increment('usage_index');
 ?>
 			<tr>
 				<td>
-					<?=Artists::display_artists($Recommend_artists[$GroupID]) ?>
+					<?=\Gazelle\Artists::display_artists($Recommend_artists[$GroupID]) ?>
 					<a href="torrents.php?id=<?=$GroupID?>"><?=$GroupName?></a> (by <?=Users::format_username($UserID, false, false, false)?>)
 					<?=$TagStr?>
 				</td>

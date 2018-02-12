@@ -10,7 +10,7 @@ class Torrents {
 	 * @param array $GroupIDs
 	 * @param boolean $Return if false, nothing is returned. For priming cache.
 	 * @param boolean $GetArtists if true, each group will contain the result of
-	 *	Artists::get_artists($GroupID), in result[$GroupID]['ExtendedArtists']
+	 *	\Gazelle\Artists::get_artists($GroupID), in result[$GroupID]['ExtendedArtists']
 	 * @param boolean $Torrents if true, each group contains a list of torrents, in result[$GroupID]['Torrents']
 	 *
 	 * @return array each row of the following format:
@@ -39,7 +39,7 @@ class Torrents {
 	 *		}
 	 *	}
 	 *	ExtendedArtists => {
-	 *		[1-6] => { // See documentation on Artists::get_artists
+	 *		[1-6] => { // See documentation on \Gazelle\Artists::get_artists
 	 *			id, name, aliasid
 	 *		}
 	 *	}
@@ -141,7 +141,7 @@ class Torrents {
 		$Found = array_filter($Found);
 
 		if ($GetArtists) {
-			$Artists = Artists::get_artists($GroupIDs);
+			$Artists = \Gazelle\Artists::get_artists($GroupIDs);
 		} else {
 			$Artists = array();
 		}
@@ -438,7 +438,7 @@ class Torrents {
 			list($GroupCount) = \G::$DB->next_record();
 			if (($ReqCount + $GroupCount) == 0) {
 				//The only group to use this artist
-				Artists::delete_artist($ArtistID);
+				\Gazelle\Artists::delete_artist($ArtistID);
 			} else {
 				//Not the only group, still need to clear cache
 				\G::$Cache->delete_value("artist_groups_$ArtistID");
@@ -550,7 +550,7 @@ class Torrents {
 		\G::$Cache->delete_value("torrent_group_$GroupID");
 		\G::$Cache->delete_value("torrent_group_light_$GroupID");
 
-		$ArtistInfo = Artists::get_artist($GroupID);
+		$ArtistInfo = \Gazelle\Artists::get_artist($GroupID);
 		foreach ($ArtistInfo as $Importances => $Importance) {
 			foreach ($Importance as $Artist) {
 				\G::$Cache->delete_value('artist_groups_'.$Artist['id']); //Needed for at least freeleech change, if not others.
@@ -970,7 +970,7 @@ class Torrents {
 				|| !empty($ExtendedArtists[6])
 			) {
 				unset($ExtendedArtists[2], $ExtendedArtists[3]);
-				$DisplayName = Artists::display_artists($ExtendedArtists, ($Mode & self::DISPLAYSTRING_LINKED));
+				$DisplayName = \Gazelle\Artists::display_artists($ExtendedArtists, ($Mode & self::DISPLAYSTRING_LINKED));
 			} else {
 				$DisplayName = '';
 			}

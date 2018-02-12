@@ -314,7 +314,7 @@ if (empty($Properties['GroupID']) && empty($ArtistForm) && $Type == 'Music') {
 	for ($i = 0, $il = count($Artists); $i < $il; $i++) {
 		if (trim($Artists[$i]) != '') {
 			if (!in_array($Artists[$i], $ArtistNames)) {
-				$ArtistForm[$Importance[$i]][] = array('name' => Artists::normalise_artist_name($Artists[$i]));
+				$ArtistForm[$Importance[$i]][] = array('name' => \Gazelle\Artists::normalise_artist_name($Artists[$i]));
 				if ($Importance[$i] == 1) {
 					$MainArtistCount++;
 				}
@@ -326,7 +326,7 @@ if (empty($Properties['GroupID']) && empty($ArtistForm) && $Type == 'Music') {
 		$Err = 'Please enter at least one main artist';
 		$ArtistForm = array();
 	}
-	$LogName .= Artists::display_artists($ArtistForm, false, true, false);
+	$LogName .= \Gazelle\Artists::display_artists($ArtistForm, false, true, false);
 } elseif ($Type == 'Music' && empty($ArtistForm)) {
 	$DB->query("
 		SELECT ta.ArtistID, aa.Name, ta.Importance
@@ -338,7 +338,7 @@ if (empty($Properties['GroupID']) && empty($ArtistForm) && $Type == 'Music') {
 		$ArtistForm[$ArtistImportance][] = array('id' => $ArtistID, 'name' => display_str($ArtistName));
 		$ArtistsUnescaped[$ArtistImportance][] = array('name' => $ArtistName);
 	}
-	$LogName .= Artists::display_artists($ArtistsUnescaped, false, true, false);
+	$LogName .= \Gazelle\Artists::display_artists($ArtistsUnescaped, false, true, false);
 }
 
 
@@ -558,7 +558,7 @@ if ($Type == 'Music') {
 					$NoRevision = true;
 				}
 			}
-			$Properties['Artist'] = Artists::display_artists(Artists::get_artist($GroupID), false, false);
+			$Properties['Artist'] = \Gazelle\Artists::display_artists(\Gazelle\Artists::get_artist($GroupID), false, false);
 		}
 	}
 	if (!$GroupID) {
@@ -590,7 +590,7 @@ if ($Type == 'Music') {
 							$NoRevision = true;
 						}
 					}
-					$ArtistForm = Artists::get_artist($GroupID);
+					$ArtistForm = \Gazelle\Artists::get_artist($GroupID);
 					//This torrent belongs in a group
 					break;
 
@@ -843,7 +843,7 @@ else {
 $Announce = '';
 
 if ($Type == 'Music') {
-	$Announce .= Artists::display_artists($ArtistForm, false);
+	$Announce .= \Gazelle\Artists::display_artists($ArtistForm, false);
 }
 $Announce .= trim($Properties['Title']).' ';
 $Details = "";
@@ -938,7 +938,7 @@ foreach ($ExtraTorrentsInsert as $ExtraTorrent) {
 
 	// IRC
 	$Announce = '';
-	$Announce .= Artists::display_artists($ArtistForm, false);
+	$Announce .= \Gazelle\Artists::display_artists($ArtistForm, false);
 	$Announce .= trim($Properties['Title']) . ' ';
 	$Announce .= '[' . trim($Properties['Year']) . ']';
 	if (($Properties['ReleaseType'] > 0)) {
@@ -990,7 +990,7 @@ if (trim($Properties['Image']) != '') {
 			array_unshift($RecentUploads, array(
 						'ID' => $GroupID,
 						'Name' => trim($Properties['Title']),
-						'Artist' => Artists::display_artists($ArtistForm, false, true),
+						'Artist' => \Gazelle\Artists::display_artists($ArtistForm, false, true),
 						'WikiImage' => trim($Properties['Image'])));
 			$Cache->cache_value("recent_uploads_$UserID", $RecentUploads, 0);
 		} while (0);

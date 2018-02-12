@@ -173,7 +173,7 @@ $DB->query("
 
 if ($CategoryName === 'Music') {
 	$ArtistForm = Requests::get_artists($RequestID);
-	$ArtistName = Artists::display_artists($ArtistForm, false, true);
+	$ArtistName = \Gazelle\Artists::display_artists($ArtistForm, false, true);
 	$FullName = $ArtistName.$Title;
 } else {
 	$FullName = $Title;

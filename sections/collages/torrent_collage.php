@@ -83,9 +83,9 @@ foreach ($GroupIDs as $GroupID) {
 	) {
 		unset($ExtendedArtists[2]);
 		unset($ExtendedArtists[3]);
-		$DisplayName .= Artists::display_artists($ExtendedArtists);
+		$DisplayName .= \Gazelle\Artists::display_artists($ExtendedArtists);
 	} elseif (count($GroupArtists) > 0) {
-		$DisplayName .= Artists::display_artists(array('1' => $GroupArtists));
+		$DisplayName .= \Gazelle\Artists::display_artists(array('1' => $GroupArtists));
 	}
 
 	$DisplayName .= "<a href=\"torrents.php?id=$GroupID\" class=\"tooltip\" title=\"View torrent group\" dir=\"ltr\">$GroupName</a>";
@@ -243,9 +243,9 @@ foreach ($GroupIDs as $GroupID) {
 	) {
 		unset($ExtendedArtists[2]);
 		unset($ExtendedArtists[3]);
-		$DisplayName .= Artists::display_artists($ExtendedArtists, false);
+		$DisplayName .= \Gazelle\Artists::display_artists($ExtendedArtists, false);
 	} elseif (count($GroupArtists) > 0) {
-		$DisplayName .= Artists::display_artists(array('1' => $GroupArtists), false);
+		$DisplayName .= \Gazelle\Artists::display_artists(array('1' => $GroupArtists), false);
 	}
 	$DisplayName .= $GroupName;
 	if ($GroupYear > 0) {

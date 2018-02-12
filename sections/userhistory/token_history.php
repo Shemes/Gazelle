@@ -100,7 +100,7 @@ $Pages = Format::get_pages($Page, $NumResults, 25);
 foreach ($Tokens as $Token) {
 	$GroupIDs[] = $Token['GroupID'];
 }
-$Artists = Artists::get_artists($GroupIDs);
+$Artists = \Gazelle\Artists::get_artists($GroupIDs);
 
 $i = true;
 foreach ($Tokens as $Token) {
@@ -111,7 +111,7 @@ foreach ($Tokens as $Token) {
     } else {
         $Name = "(<i>Deleted torrent <a href=\"log.php?search=Torrent+$TorrentID\">$TorrentID</a></i>)";
     }
-	$ArtistName = Artists::display_artists($Artists[$GroupID]);
+	$ArtistName = \Gazelle\Artists::display_artists($Artists[$GroupID]);
 	if ($ArtistName) {
 		$Name = $ArtistName.$Name;
 	}

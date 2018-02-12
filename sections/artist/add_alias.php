@@ -6,7 +6,7 @@ if (!check_perms('torrents_edit')) {
 }
 $ArtistID = $_POST['artistid'];
 $Redirect = $_POST['redirect'];
-$AliasName = Artists::normalise_artist_name($_POST['name']);
+$AliasName = \Gazelle\Artists::normalise_artist_name($_POST['name']);
 $DBAliasName = \Gazelle\Util\Db::string($AliasName);
 if (!$Redirect) {
 	$Redirect = 0;

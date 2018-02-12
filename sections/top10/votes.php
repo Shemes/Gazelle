@@ -174,9 +174,9 @@ foreach ($TopVotes as $GroupID => $Group) {
 	if (!empty($ExtendedArtists[1]) || !empty($ExtendedArtists[4]) || !empty($ExtendedArtists[5])|| !empty($ExtendedArtists[6])) {
 			unset($ExtendedArtists[2]);
 			unset($ExtendedArtists[3]);
-			$DisplayName .= Artists::display_artists($ExtendedArtists);
+			$DisplayName .= \Gazelle\Artists::display_artists($ExtendedArtists);
 	} elseif (count($Artists) > 0) {
-			$DisplayName .= Artists::display_artists(array('1' => $Artists));
+			$DisplayName .= \Gazelle\Artists::display_artists(array('1' => $Artists));
 	}
 
 	$DisplayName .= '<a href="torrents.php?id='.$GroupID.'" class="tooltip" title="View torrent group" dir="ltr">'.$GroupName.'</a>';

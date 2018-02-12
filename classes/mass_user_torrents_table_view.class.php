@@ -232,9 +232,9 @@ class MASS_USER_TORRENTS_TABLE_VIEW {
 		if (!empty($ExtendedArtists[1]) || !empty($ExtendedArtists[4])
 				|| !empty($ExtendedArtists[5]) || !empty($ExtendedArtists[6])) {
 			unset($ExtendedArtists[2], $ExtendedArtists[3]);
-			$DisplayName = Artists::display_artists($ExtendedArtists, true, false);
+			$DisplayName = \Gazelle\Artists::display_artists($ExtendedArtists, true, false);
 		} elseif (count($Artists) > 0) {
-			$DisplayName = Artists::display_artists(array('1'=>$Artists), true, false);
+			$DisplayName = \Gazelle\Artists::display_artists(array('1'=>$Artists), true, false);
 		}
 		if ($VanityHouse) {
 			$DisplayName .= ' [<abbr class="tooltip" title="This is a Vanity House release">VH</abbr>]';

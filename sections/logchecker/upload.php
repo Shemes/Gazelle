@@ -45,9 +45,9 @@ if ($DB->has_results()) {
 		if (!empty($ExtendedArtists[1]) || !empty($ExtendedArtists[4]) || !empty($ExtendedArtists[5])) {
 			unset($ExtendedArtists[2]);
 			unset($ExtendedArtists[3]);
-			$DisplayName = Artists::display_artists($ExtendedArtists);
+			$DisplayName = \Gazelle\Artists::display_artists($ExtendedArtists);
 		} elseif (!empty($Artists)) {
-			$DisplayName = Artists::display_artists(array(1 => $Artists));
+			$DisplayName = \Gazelle\Artists::display_artists(array(1 => $Artists));
 		} else {
 			$DisplayName = '';
 		}

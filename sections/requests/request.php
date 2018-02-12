@@ -30,8 +30,8 @@ if ($Request['CategoryID'] === '0') {
 //Do we need to get artists?
 if ($CategoryName === 'Music') {
 	$ArtistForm = Requests::get_artists($RequestID);
-	$ArtistName = Artists::display_artists($ArtistForm, false, true);
-	$ArtistLink = Artists::display_artists($ArtistForm, true, true);
+	$ArtistName = \Gazelle\Artists::display_artists($ArtistForm, false, true);
+	$ArtistLink = \Gazelle\Artists::display_artists($ArtistForm, true, true);
 
 	if ($IsFilled) {
 		$DisplayLink = "$ArtistLink<a href=\"torrents.php?torrentid=$Request[TorrentID]\" dir=\"ltr\">$Request[Title]</a> [$Request[Year]]";
@@ -142,7 +142,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 				<li class="artists_composer"><strong>Composers:</strong></li>
 <?			foreach ($ArtistForm[4] as $Artist) { ?>
 				<li class="artists_composer">
-					<?=Artists::display_artist($Artist)?>
+					<?=\Gazelle\Artists::display_artist($Artist)?>
 				</li>
 <?
 			}
@@ -152,7 +152,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 				<li class="artists_dj"><strong>DJ / Compiler:</strong></li>
 <?			foreach ($ArtistForm[6] as $Artist) { ?>
 				<li class="artists_dj">
-					<?=Artists::display_artist($Artist)?>
+					<?=\Gazelle\Artists::display_artist($Artist)?>
 				</li>
 <?
 			}
@@ -165,7 +165,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 		foreach ($ArtistForm[1] as $Artist) {
 ?>
 				<li class="artists_main">
-					<?=Artists::display_artist($Artist)?>
+					<?=\Gazelle\Artists::display_artist($Artist)?>
 				</li>
 <?
 		}
@@ -174,7 +174,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 				<li class="artists_with"><strong>With:</strong></li>
 <?			foreach ($ArtistForm[2] as $Artist) { ?>
 				<li class="artists_with">
-					<?=Artists::display_artist($Artist)?>
+					<?=\Gazelle\Artists::display_artist($Artist)?>
 				</li>
 <?
 			}
@@ -184,7 +184,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 				<li class="artists_conductor"><strong>Conducted by:</strong></li>
 <?			foreach ($ArtistForm[5] as $Artist) { ?>
 				<li class="artist_guest">
-					<?=Artists::display_artist($Artist)?>
+					<?=\Gazelle\Artists::display_artist($Artist)?>
 				</li>
 <?
 			}
@@ -194,7 +194,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 				<li class="artists_remix"><strong>Remixed by:</strong></li>
 <?			foreach ($ArtistForm[3] as $Artist) { ?>
 				<li class="artists_remix">
-					<?=Artists::display_artist($Artist)?>
+					<?=\Gazelle\Artists::display_artist($Artist)?>
 				</li>
 <?
 			}
@@ -204,7 +204,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 				<li class="artists_producer"><strong>Produced by:</strong></li>
 <?			foreach ($ArtistForm[7] as $Artist) { ?>
 				<li class="artists_remix">
-					<?=Artists::display_artist($Artist)?>
+					<?=\Gazelle\Artists::display_artist($Artist)?>
 				</li>
 <?
 			}
