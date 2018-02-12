@@ -7,7 +7,7 @@ class DonationsBitcoin {
 	 */
 	public static function get_received() {
 		if (defined('BITCOIN_RPC_URL')) {
-			$Donations = BitcoinRpc::listreceivedbyaddress();
+			$Donations = BitcoinRPC::listreceivedbyaddress();
 		}
 		if (empty($Donations)) {
 			return array();
@@ -26,7 +26,7 @@ class DonationsBitcoin {
 	 */
 	public static function get_balance() {
 		if (defined('BITCOIN_RPC_URL')) {
-			return BitcoinRpc::getbalance();
+			return BitcoinRPC::getbalance();
 		}
 	}
 
@@ -52,7 +52,7 @@ class DonationsBitcoin {
 			return $Addr;
 		} elseif ($GenAddress) {
 			if (defined('BITCOIN_RPC_URL')) {
-				$NewAddr = BitcoinRpc::getnewaddress();
+				$NewAddr = BitcoinRPC::getnewaddress();
 			}
 			if (empty($NewAddr)) {
 				error(0);
@@ -77,7 +77,7 @@ class DonationsBitcoin {
 	 */
 	public static function get_total_received() {
 		if (defined('BITCOIN_RPC_URL')) {
-			$Accounts = BitcoinRpc::listreceivedbyaccount();
+			$Accounts = BitcoinRPC::listreceivedbyaccount();
 		}
 		if (empty($Accounts)) {
 			return 0.0;
