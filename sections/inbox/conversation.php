@@ -78,7 +78,7 @@ $DB->query("
 <div class="thin">
 	<h2><?=$Subject.($ForwardedID > 0 ? " (Forwarded to $ForwardedName)" : '')?></h2>
 	<div class="linkbox">
-		<a href="<?=Inbox::get_inbox_link(); ?>" class="brackets">Back to inbox</a>
+		<a href="<?=\Gazelle\Inbox::get_inbox_link(); ?>" class="brackets">Back to inbox</a>
 	</div>
 <?
 

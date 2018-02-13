@@ -24,9 +24,9 @@ View::show_header('Inbox');
 	<div class="linkbox">
 <?
 if ($Section === 'inbox') { ?>
-		<a href="<?=Inbox::get_inbox_link('sentbox'); ?>" class="brackets">Sentbox</a>
+		<a href="<?=\Gazelle\Inbox::get_inbox_link('sentbox'); ?>" class="brackets">Sentbox</a>
 <? } elseif ($Section === 'sentbox') { ?>
-		<a href="<?=Inbox::get_inbox_link(); ?>" class="brackets">Inbox</a>
+		<a href="<?=\Gazelle\Inbox::get_inbox_link(); ?>" class="brackets">Inbox</a>
 <? }
 
 ?>

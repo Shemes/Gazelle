@@ -55,5 +55,5 @@ if (!empty($Err)) {
 $ConvID = Misc::send_pm($ToID, $LoggedUser['ID'], $Subject, $Body, $ConvID);
 
 
-header('Location: ' . Inbox::get_inbox_link());
+header('Location: ' . \Gazelle\Inbox::get_inbox_link());
 ?>

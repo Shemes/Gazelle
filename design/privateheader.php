@@ -261,7 +261,7 @@ if (check_perms('site_send_unlimited_invites')) {
 				<ul id="userinfo_minor"<?=$NewSubscriptions ? ' class="highlite"' : ''?>>
 					<li id="nav_inbox"<?=
 						Gazelle\Format::add_class($PageID, array('inbox'), 'active', true)?>>
-						<a href="<?=Inbox::get_inbox_link(); ?>">Inbox</a>
+						<a href="<?=\Gazelle\Inbox::get_inbox_link(); ?>">Inbox</a>
 					</li>
 					<li id="nav_staffinbox"<?=
 						Gazelle\Format::add_class($PageID, array('staffpm'), 'active', true)?>>

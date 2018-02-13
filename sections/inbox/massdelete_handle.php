@@ -14,7 +14,7 @@ if (!isset($_POST['messages']) || !is_array($_POST['messages'])) {
 		$Message = 'to mark as read';
 	}
 	error("You forgot to select messages {$Message}.");
-	header('Location: ' . Inbox::get_inbox_link());
+	header('Location: ' . \Gazelle\Inbox::get_inbox_link());
 	die();
 }
 
@@ -59,5 +59,5 @@ if (isset($_POST['delete'])) {
 }
 $Cache->delete_value('inbox_new_'.$UserID);
 
-header('Location: ' . Inbox::get_inbox_link());
+header('Location: ' . \Gazelle\Inbox::get_inbox_link());
 ?>

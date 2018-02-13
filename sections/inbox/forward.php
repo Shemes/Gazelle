@@ -42,7 +42,7 @@ if (!$DB->has_results()) {
 		WHERE ConvID = '$ConvID'
 			AND UserID = '$UserID'");
 	$Cache->delete_value("inbox_new_$ReceiverID");
-	header('Location: ' . Inbox::get_inbox_link());
+	header('Location: ' . \Gazelle\Inbox::get_inbox_link());
 } else {
 	error("$StaffIDs[$ReceiverID] already has this conversation in their inbox.");
 	header("Location: inbox.php?action=viewconv&id=$ConvID");
