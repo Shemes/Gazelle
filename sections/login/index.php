@@ -322,11 +322,9 @@ elseif (isset($_REQUEST['act']) && $_REQUEST['act'] === '2fa') {
 	if (empty($_POST['2fa'])) {
 		require('2fa.php');
 	} else {
-		include(SERVER_ROOT . '/classes/google_authenticator.class.php');
-
 		list($UserID, $PermissionID, $CustomPermissions, $PassHash, $Secret, $Enabled, $TFAKey, $Recovery) = $_SESSION['temp_user_data'];
 
-		if (!(new PHPGangsta_GoogleAuthenticator())->verifyCode($TFAKey, $_POST['2fa'], 2)) {
+		if (!(new Gazelle\GoogleAuthenticator)->verifyCode($TFAKey, $_POST['2fa'], 2)) {
 			// invalid 2fa key, log the user completely out
 			unset($_SESSION['temp_stay_logged'], $_SESSION['temp_user_data']);
 			header('Location: login.php?invalid2fa');

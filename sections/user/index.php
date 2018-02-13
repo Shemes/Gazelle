@@ -83,7 +83,7 @@ switch ($_REQUEST['action']) {
 				}
 
 				if (empty($_SESSION['private_key'])) {
-					$_SESSION['private_key'] = (new PHPGangsta_GoogleAuthenticator())->createSecret();
+					$_SESSION['private_key'] = (new Gazelle\GoogleAuthenticator)->createSecret();
 				}
 
 				include('2fa/step1.php');
@@ -103,7 +103,7 @@ switch ($_REQUEST['action']) {
 				if (empty($_POST['2fa'])) {
 					include('2fa/step2.php');
 				} else {
-					$works = (new PHPGangsta_GoogleAuthenticator())->verifyCode($_SESSION['private_key'], $_POST['2fa'], 2);
+					$works = (new Gazelle\GoogleAuthenticator)->verifyCode($_SESSION['private_key'], $_POST['2fa'], 2);
 
 					if (!$works) {
 						// user got their token wrong...
