@@ -852,8 +852,7 @@ if ($NumSimilar > 0) {
 		}
 	}
 	if (empty($Similar) || empty($Similar->Artists)) {
-		include(SERVER_ROOT.'/classes/image.class.php');
-		$Img = new IMAGE;
+		$Img = new \Gazelle\Image;
 		$Img->create(WIDTH, HEIGHT);
 		$Img->color(255, 255, 255, 127);
 
