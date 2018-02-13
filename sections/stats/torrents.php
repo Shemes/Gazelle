@@ -66,7 +66,7 @@ $DB->query("
 	GROUP BY tg.CategoryID
 	ORDER BY Torrents DESC");
 $Groups = $DB->to_array();
-$Pie = new PIE_CHART(750, 400, array('Other' => 1, 'Percentage' => 1));
+$Pie = new \Gazelle\PieChart(750, 400, array('Other' => 1, 'Percentage' => 1));
 foreach ($Groups as $Group) {
 	list($CategoryID, $Torrents) = $Group;
 	$CategoryName = $Categories[$CategoryID - 1];

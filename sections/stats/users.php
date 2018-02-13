@@ -48,7 +48,7 @@ if (!$ClassDistribution = $Cache->get_value('class_distribution')) {
 		GROUP BY p.Name
 		ORDER BY Users DESC");
 	$ClassSizes = $DB->to_array();
-	$Pie = new PIE_CHART(750, 400, array('Other' => 1, 'Percentage' => 1));
+	$Pie = new \Gazelle\PieChart(750, 400, array('Other' => 1, 'Percentage' => 1));
 	foreach ($ClassSizes as $ClassSize) {
 		list($Label, $Users) = $ClassSize;
 		$Pie->add($Label, $Users);
@@ -69,7 +69,7 @@ if (!$PlatformDistribution = $Cache->get_value('platform_distribution')) {
 		ORDER BY Users DESC");
 
 	$Platforms = $DB->to_array();
-	$Pie = new PIE_CHART(750, 400, array('Other' => 1, 'Percentage' => 1));
+	$Pie = new \Gazelle\PieChart(750, 400, array('Other' => 1, 'Percentage' => 1));
 	foreach ($Platforms as $Platform) {
 		list($Label, $Users) = $Platform;
 		$Pie->add($Label, $Users);
@@ -91,7 +91,7 @@ if (!$BrowserDistribution = $Cache->get_value('browser_distribution')) {
 		ORDER BY Users DESC");
 
 	$Browsers = $DB->to_array();
-	$Pie = new PIE_CHART(750, 400, array('Other' => 1, 'Percentage' => 1));
+	$Pie = new \Gazelle\PieChart(750, 400, array('Other' => 1, 'Percentage' => 1));
 	foreach ($Browsers as $Browser) {
 		list($Label, $Users) = $Browser;
 		$Pie->add($Label, $Users);
