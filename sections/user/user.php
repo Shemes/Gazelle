@@ -674,7 +674,7 @@ if ($OwnProfile || check_perms('users_mod')) {
 		</div>
 <?
 include(SERVER_ROOT.'/sections/user/community_stats.php');
-DonationsView::render_donor_stats($UserID);
+\Gazelle\DonationsView::render_donor_stats($UserID);
 ?>
 	</div>
 	<div class="main_column">
@@ -709,7 +709,7 @@ if (!$Info) {
 			</div>
 		</div>
 <?
-DonationsView::render_profile_rewards($EnabledRewards, $ProfileRewards);
+\Gazelle\DonationsView::render_profile_rewards($EnabledRewards, $ProfileRewards);
 
 if (check_paranoia_here('snatched')) {
 	$RecentSnatches = $Cache->get_value("recent_snatches_$UserID");
@@ -884,7 +884,7 @@ if ((check_perms('users_view_invites')) && $Invited > 0) {
 }
 
 if (check_perms('users_mod')) {
-	DonationsView::render_donation_history(Donations::get_donation_history($UserID));
+	\Gazelle\DonationsView::render_donation_history(Donations::get_donation_history($UserID));
 }
 
 // Requests
@@ -1482,7 +1482,7 @@ if (check_perms('users_mod', $Class)) { ?>
 <?
 	}
 	if (check_perms('users_mod')) {
-		DonationsView::render_mod_donations($UserID);
+		\Gazelle\DonationsView::render_mod_donations($UserID);
 	}
 ?>
 		<table class="layout" id="submit_box">

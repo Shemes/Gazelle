@@ -1,8 +1,12 @@
-<?
+<?php
 
-class DonationsView {
-	public static function render_mod_donations($UserID) {
-?>
+namespace Gazelle;
+
+class DonationsView
+{
+    public static function render_mod_donations($UserID)
+    {
+        ?>
 		<table class="layout" id="donation_box">
 			<tr class="colhead">
 				<td colspan="2">
@@ -39,11 +43,11 @@ class DonationsView {
 			</tr>
 			<tr>
 				<td class="label tooltip" title="Active points determine a user's Donor Rank and do expire.">Active points:</td>
-				<td><input type="text" name="donor_rank" onkeypress="return isNumberKey(event);" value="<?=Donations::get_rank($UserID)?>" /></td>
+				<td><input type="text" name="donor_rank" onkeypress="return isNumberKey(event);" value="<?=\Donations::get_rank($UserID)?>" /></td>
 			</tr>
 			<tr>
 				<td class="label tooltip" title="Total points represent a user's overall total and never expire. Total points determines a user's Special Rank and Donor Leaderboard placement.">Total points:</td>
-				<td><input type="text" name="total_donor_rank" onkeypress="return isNumberKey(event);" value="<?=Donations::get_total_rank($UserID)?>" /></td>
+				<td><input type="text" name="total_donor_rank" onkeypress="return isNumberKey(event);" value="<?=\Donations::get_total_rank($UserID)?>" /></td>
 			</tr>
 			<tr>
 				<td class="label">Reason:</td>
@@ -55,75 +59,81 @@ class DonationsView {
 				</td>
 			</tr>
 		</table>
-<?
-	}
+<?php
+    }
 
-	public static function render_donor_stats($UserID) {
-		$OwnProfile = \G::$LoggedUser['ID'] == $UserID;
-		if (check_perms("users_mod") || $OwnProfile || Donations::is_visible($UserID)) {
-?>
+    public static function render_donor_stats($UserID)
+    {
+        $OwnProfile = \G::$LoggedUser['ID'] == $UserID;
+        if (check_perms('users_mod') || $OwnProfile || \Donations::is_visible($UserID)) {
+            ?>
 			<div class="box box_info box_userinfo_donor_stats">
 				<div class="head colhead_dark">Donor Statistics</div>
 				<ul class="stats nobullet">
-<?
-			if (Donations::is_donor($UserID)) {
-				if (check_perms('users_mod') || $OwnProfile) {
-?>
+<?php
+            if (\Donations::is_donor($UserID)) {
+                if (check_perms('users_mod') || $OwnProfile) {
+                    ?>
 					<li>
-						Total donor points: <?=Donations::get_total_rank($UserID)?>
+						Total donor points: <?=\Donations::get_total_rank($UserID)?>
 					</li>
-<?				} ?>
+<?php
+                } ?>
 					<li>
-						Current donor rank: <?=self::render_rank(Donations::get_rank($UserID), Donations::get_special_rank($UserID), true)?>
-					</li>
-					<li>
-						Leaderboard position: <?=Donations::get_leaderboard_position($UserID)?>
+						Current donor rank: <?=self::render_rank(\Donations::get_rank($UserID), \Donations::get_special_rank($UserID), true)?>
 					</li>
 					<li>
-						Last donated: <?=\Gazelle\Util\Time::timeDiff(Donations::get_donation_time($UserID))?>
+						Leaderboard position: <?=\Donations::get_leaderboard_position($UserID)?>
 					</li>
 					<li>
-						Rank expires: <?=(Donations::get_rank_expiration($UserID))?>
+						Last donated: <?=\Gazelle\Util\Time::timeDiff(\Donations::get_donation_time($UserID))?>
 					</li>
-<?			} else { ?>
+					<li>
+						Rank expires: <?=(\Donations::get_rank_expiration($UserID))?>
+					</li>
+<?php
+            } else {
+                ?>
 					<li>
 						This user hasn't donated.
 					</li>
-<?			} ?>
+<?php
+            } ?>
 				</ul>
 			</div>
-<?
-		}
-	}
+<?php
+        }
+    }
 
-	public static function render_profile_rewards($EnabledRewards, $ProfileRewards) {
-		for ($i = 1; $i <= 4; $i++) {
-			if ($EnabledRewards['HasProfileInfo' . $i] && $ProfileRewards['ProfileInfo' . $i]) {
-?>
+    public static function render_profile_rewards($EnabledRewards, $ProfileRewards)
+    {
+        for ($i = 1; $i <= 4; $i++) {
+            if ($EnabledRewards['HasProfileInfo' . $i] && $ProfileRewards['ProfileInfo' . $i]) {
+                ?>
 			<div class="box">
 				<div class="head" style="height: 13px;">
-					<span style="float: left;"><?=!empty($ProfileRewards['ProfileInfoTitle' . $i]) ? display_str($ProfileRewards['ProfileInfoTitle' . $i]) : "Extra Profile " . ($i + 1)?></span>
+					<span style="float: left;"><?=!empty($ProfileRewards['ProfileInfoTitle' . $i]) ? display_str($ProfileRewards['ProfileInfoTitle' . $i]) : 'Extra Profile ' . ($i + 1)?></span>
 					<span style="float: right;"><a href="#" onclick="$('#profilediv_<?=$i?>').gtoggle(); this.innerHTML = (this.innerHTML == 'Hide' ? 'Show' : 'Hide'); return false;" class="brackets">Hide</a></span>
 				</div>
 				<div class="pad profileinfo" id="profilediv_<?=$i?>">
-<?					echo Text::full_format($ProfileRewards['ProfileInfo' . $i]); ?>
+<?php					echo \Text::full_format($ProfileRewards['ProfileInfo' . $i]); ?>
 				</div>
 			</div>
-<?
-			}
-		}
-	}
+<?php
+            }
+        }
+    }
 
-	public static function render_donation_history($DonationHistory) {
-		if (empty($DonationHistory)) {
-			return;
-		}
-?>
+    public static function render_donation_history($DonationHistory)
+    {
+        if (empty($DonationHistory)) {
+            return;
+        } ?>
 		<div class="box box2" id="donation_history_box">
 			<div class="head">
 				Donation History <a href="#" onclick="$('#donation_history').gtoggle(); return false;" class="brackets">View</a>
 			</div>
-<?		$Row = 'b'; ?>
+<?php		$Row = 'b'; ?>
 			<div class="hidden" id="donation_history">
 				<table cellpadding="6" cellspacing="1" border="0" class="border" width="100%">
 					<tbody>
@@ -150,10 +160,11 @@ class DonationsView {
 							<strong>Reason</strong>
 						</td>
 					</tr>
-<?		foreach ($DonationHistory as $Donation) { ?>
+<?php		foreach ($DonationHistory as $Donation) {
+            ?>
 					<tr class="row<?=$Row?>">
 						<td>
-							<?=display_str($Donation['Source'])?> (<?=Users::format_username($Donation['AddedBy'])?>)
+							<?=display_str($Donation['Source'])?> (<?=\Users::format_username($Donation['AddedBy'])?>)
 						</td>
 						<td>
 							<?=$Donation['Time']?>
@@ -174,43 +185,42 @@ class DonationsView {
 							<?=display_str($Donation['Reason'])?>
 						</td>
 					</tr>
-<?
-			$Row = $Row === 'b' ? 'a' : 'b';
-		}
-?>
+<?php
+            $Row = $Row === 'b' ? 'a' : 'b';
+        } ?>
 					</tbody>
 				</table>
 			</div>
 		</div>
-<?
-	}
+<?php
+    }
 
-	public static function render_rank($Rank, $SpecialRank, $ShowOverflow = false) {
-		if ($SpecialRank == 3) {
-			$Display = '∞ [Diamond]';
-		} else {
-			$CurrentRank = $Rank >= MAX_RANK ? MAX_RANK : $Rank;
-			$Overflow = $Rank - $CurrentRank;
-			$Display = $CurrentRank;
-			if ($Display == 5 || $Display == 6) {
-				$Display--;
-			}
-			if ($ShowOverflow && $Overflow) {
-				$Display .= " (+$Overflow)";
-			}
-			if ($Rank >= 6) {
-				$Display .= ' [Gold]';
-			} elseif ($Rank >= 4) {
-				$Display .= ' [Silver]';
-			} elseif ($Rank >= 3) {
-				$Display .= ' [Bronze]';
-			} elseif ($Rank >= 2) {
-				$Display .= ' [Copper]';
-			} elseif ($Rank >= 1) {
-				$Display .= ' [Red]';
-			}
-		}
-		echo $Display;
-	}
-
+    public static function render_rank($Rank, $SpecialRank, $ShowOverflow = false)
+    {
+        if ($SpecialRank == 3) {
+            $Display = '∞ [Diamond]';
+        } else {
+            $CurrentRank = $Rank >= MAX_RANK ? MAX_RANK : $Rank;
+            $Overflow = $Rank - $CurrentRank;
+            $Display = $CurrentRank;
+            if ($Display == 5 || $Display == 6) {
+                $Display--;
+            }
+            if ($ShowOverflow && $Overflow) {
+                $Display .= " (+$Overflow)";
+            }
+            if ($Rank >= 6) {
+                $Display .= ' [Gold]';
+            } elseif ($Rank >= 4) {
+                $Display .= ' [Silver]';
+            } elseif ($Rank >= 3) {
+                $Display .= ' [Bronze]';
+            } elseif ($Rank >= 2) {
+                $Display .= ' [Copper]';
+            } elseif ($Rank >= 1) {
+                $Display .= ' [Red]';
+            }
+        }
+        echo $Display;
+    }
 }
