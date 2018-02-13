@@ -75,7 +75,7 @@ if (!check_perms('site_moderate_forums')) {
 
 
 $ForumName = display_str($Forums[$ForumID]['Name']);
-if (!Forums::check_forumperm($ForumID)) {
+if (!\Gazelle\Forums::check_forumperm($ForumID)) {
 	error(403);
 }
 
@@ -85,7 +85,7 @@ View::show_header('Forums &gt; '. $Forums[$ForumID]['Name'], '', $IsDonorForum ?
 <div class="thin">
 	<h2><a href="forums.php">Forums</a> &gt; <?=$ForumName?></h2>
 	<div class="linkbox">
-<? if (Forums::check_forumperm($ForumID, 'Write') && Forums::check_forumperm($ForumID, 'Create')) { ?>
+<? if (\Gazelle\Forums::check_forumperm($ForumID, 'Write') && \Gazelle\Forums::check_forumperm($ForumID, 'Create')) { ?>
 		<a href="forums.php?action=new&amp;forumid=<?=$ForumID?>" class="brackets">New thread</a>
 <? } ?>
 		<a href="#" onclick="$('#searchforum').gtoggle(); this.innerHTML = (this.innerHTML == 'Search this forum' ? 'Hide search' : 'Search this forum'); return false;" class="brackets">Search this forum</a>
@@ -137,7 +137,7 @@ View::show_header('Forums &gt; '. $Forums[$ForumID]['Name'], '', $IsDonorForum ?
 	<div class="linkbox">
 			<strong>Forum Specific Rules</strong>
 <?		foreach ($Forums[$ForumID]['SpecificRules'] as $ThreadIDs) {
-			$Thread = Forums::get_thread_info($ThreadIDs);
+			$Thread = \Gazelle\Forums::get_thread_info($ThreadIDs);
 			if ($Thread === null) {
 				error(404);
 			}

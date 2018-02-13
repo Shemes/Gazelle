@@ -31,7 +31,7 @@ SELECT SQL_CALC_FOUND_ROWS
 	f.Name
 FROM forums_topics AS t
 	LEFT JOIN forums AS f ON f.ID = t.ForumID
-WHERE t.AuthorID = ? AND ".Forums::user_forums_sql()."
+WHERE t.AuthorID = ? AND ".\Gazelle\Forums::user_forums_sql()."
 ORDER BY t.ID DESC
 LIMIT {$Limit}", $UserID);
 

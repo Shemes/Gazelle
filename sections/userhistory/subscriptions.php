@@ -81,7 +81,7 @@ $DB->query("
 		LEFT JOIN users_info AS ui ON ui.UserID = um.ID
 	WHERE s.UserID = $LoggedUser[ID]" .
 		($ShowUnread ? " AND p.ID > IF(t.IsLocked = '1' AND t.IsSticky = '0'" . ", p.ID, IF(lr.PostID IS NULL, 0, lr.PostID))" : '') .
-		' AND ' . Forums::user_forums_sql() . "
+		' AND ' . \Gazelle\Forums::user_forums_sql() . "
 	GROUP BY t.ID)
 	ORDER BY LastPostTime DESC
 	LIMIT $Limit");

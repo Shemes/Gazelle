@@ -7,10 +7,10 @@ if (!empty($LoggedUser['DisableForums'])) {
 	die();
 } else {
 	// Replace the old hard-coded forum categories
-	$ForumCats = Forums::get_forum_categories();
+	$ForumCats = \Gazelle\Forums::get_forum_categories();
 
 	//This variable contains all our lovely forum data
-	$Forums = Forums::get_forums();
+	$Forums = \Gazelle\Forums::get_forums();
 
 	if (empty($_GET['type']) || $_GET['type'] == 'main') {
 		include(SERVER_ROOT.'/sections/ajax/forum/main.php');

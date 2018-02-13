@@ -48,17 +48,17 @@ if (!empty($LoggedUser['DisablePosting'])) {
 }
 
 $TopicID = $_POST['thread'];
-$ThreadInfo = Forums::get_thread_info($TopicID);
+$ThreadInfo = \Gazelle\Forums::get_thread_info($TopicID);
 if ($ThreadInfo === null) {
 	error(404);
 }
 $ForumID = $ThreadInfo['ForumID'];
 $SQLTime = \Gazelle\Util\Time::sqltime();
 
-if (!Forums::check_forumperm($ForumID)) {
+if (!\Gazelle\Forums::check_forumperm($ForumID)) {
 	error(403);
 }
-if (!Forums::check_forumperm($ForumID, 'Write') || $LoggedUser['DisablePosting'] || $ThreadInfo['IsLocked'] == '1' && !check_perms('site_moderate_forums')) {
+if (!\Gazelle\Forums::check_forumperm($ForumID, 'Write') || $LoggedUser['DisablePosting'] || $ThreadInfo['IsLocked'] == '1' && !check_perms('site_moderate_forums')) {
 	error(403);
 }
 

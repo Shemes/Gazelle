@@ -196,7 +196,7 @@ class Subscriptions {
 						LEFT JOIN forums_last_read_topics AS l ON l.UserID = s.UserID AND l.TopicID = s.TopicID
 						JOIN forums_topics AS t ON t.ID = s.TopicID
 						JOIN forums AS f ON f.ID = t.ForumID
-					WHERE " . Forums::user_forums_sql() . "
+					WHERE " . \Gazelle\Forums::user_forums_sql() . "
 						AND IF(t.IsLocked = '1' AND t.IsSticky = '0'" . ", t.LastPostID, IF(l.PostID IS NULL, 0, l.PostID)) < t.LastPostID
 						AND s.UserID = " . \G::$LoggedUser['ID']);
 			list($NewForumSubscriptions) = \G::$DB->next_record();
@@ -235,7 +235,7 @@ class Subscriptions {
 					LEFT JOIN collages AS c ON q.Page = 'collages' AND c.ID = q.PageID
 				WHERE q.UserID = " . \G::$LoggedUser['ID'] . "
 					AND q.UnRead
-					AND (q.Page != 'forums' OR " . Forums::user_forums_sql() . ")
+					AND (q.Page != 'forums' OR " . \Gazelle\Forums::user_forums_sql() . ")
 					AND (q.Page != 'collages' OR c.Deleted = '0')";
 			$QueryID = \G::$DB->get_query_id();
 			\G::$DB->query($sql);

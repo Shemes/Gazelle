@@ -90,7 +90,7 @@ if ($Cache->MemcacheDBArray[$Key]['ID'] != $PostID) {
 						'Username' => $LoggedUser['Username']));
 	$Cache->commit_transaction(3600 * 24 * 5);
 }
-$ThreadInfo = Forums::get_thread_info($TopicID);
+$ThreadInfo = \Gazelle\Forums::get_thread_info($TopicID);
 if ($ThreadInfo === null) {
 	error(404);
 }

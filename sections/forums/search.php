@@ -73,7 +73,7 @@ if (!empty($_GET['threadid']) && is_number($_GET['threadid'])) {
 		FROM forums_topics AS t
 			JOIN forums AS f ON f.ID = t.ForumID
 		WHERE t.ID = $ThreadID
-			AND " . Forums::user_forums_sql();
+			AND " . \Gazelle\Forums::user_forums_sql();
 	$DB->query($SQL);
 	if (list($Title) = $DB->next_record()) {
 		$Title = " &gt; <a href=\"forums.php?action=viewthread&amp;threadid=$ThreadID\">$Title</a>";
@@ -149,7 +149,7 @@ if (empty($ThreadID)) {
 	$Columns = 0;
 	$i = 0;
 	foreach ($Forums as $Forum) {
-		if (!Forums::check_forumperm($Forum['ID'])) {
+		if (!\Gazelle\Forums::check_forumperm($Forum['ID'])) {
 			continue;
 		}
 
@@ -226,7 +226,7 @@ if ($Type == 'body') {
 		FROM forums_posts AS p
 			JOIN forums_topics AS t ON t.ID = p.TopicID
 			JOIN forums AS f ON f.ID = t.ForumID
-		WHERE " . Forums::user_forums_sql() . ' AND ';
+		WHERE " . \Gazelle\Forums::user_forums_sql() . ' AND ';
 
 	//In tests, this is significantly faster than LOCATE
 	$SQL .= "p.Body LIKE '%";
@@ -277,7 +277,7 @@ if ($Type == 'body') {
 			t.CreatedTime
 		FROM forums_topics AS t
 			JOIN forums AS f ON f.ID = t.ForumID
-		WHERE " . Forums::user_forums_sql() . ' AND ';
+		WHERE " . \Gazelle\Forums::user_forums_sql() . ' AND ';
 	$SQL .= "t.Title LIKE '%";
 	$SQL .= implode("%' AND t.Title LIKE '%", $Words);
 	$SQL .= "%' ";

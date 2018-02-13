@@ -18,7 +18,7 @@ $DB->query("
 		JOIN forums AS f ON f.ID = t.ForumID
 	WHERE t.ID = $TopicID");
 list($ForumID) = $DB->next_record();
-if (!Forums::check_forumperm($ForumID)) {
+if (!\Gazelle\Forums::check_forumperm($ForumID)) {
 	die();
 }
 

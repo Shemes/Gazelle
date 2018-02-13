@@ -17,7 +17,7 @@ if (!$DB->has_results()) {
 }
 
 list($ForumID, $Body) = $DB->next_record();
-if (!Forums::check_forumperm($ForumID)) {
+if (!\Gazelle\Forums::check_forumperm($ForumID)) {
 	json_die("error", "assholes");
 }
 

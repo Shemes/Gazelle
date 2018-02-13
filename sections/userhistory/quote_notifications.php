@@ -44,7 +44,7 @@ $sql = "
 		LEFT JOIN artists_group AS a ON a.ArtistID = q.PageID
 		LEFT JOIN collages AS c ON c.ID = q.PageID
 	WHERE q.UserID = $LoggedUser[ID]
-		AND (q.Page != 'forums' OR " . Forums::user_forums_sql() . ")
+		AND (q.Page != 'forums' OR " . \Gazelle\Forums::user_forums_sql() . ")
 		AND (q.Page != 'collages' OR c.Deleted = '0')
 		$UnreadSQL
 	ORDER BY q.Date DESC

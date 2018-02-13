@@ -46,7 +46,7 @@ if (isset($LoggedUser['PostsPerPage'])) {
 //---------- Get some data to start processing
 
 // Thread information, constant across all pages
-$ThreadInfo = Forums::get_thread_info($ThreadID, true, true);
+$ThreadInfo = \Gazelle\Forums::get_thread_info($ThreadID, true, true);
 if ($ThreadInfo === null) {
 	error(404);
 }
@@ -55,7 +55,7 @@ $ForumID = $ThreadInfo['ForumID'];
 $IsDonorForum = $ForumID == DONOR_FORUM ? true : false;
 
 // Make sure they're allowed to look at the page
-if (!Forums::check_forumperm($ForumID)) {
+if (!\Gazelle\Forums::check_forumperm($ForumID)) {
 	error(403);
 }
 //Escape strings for later display
@@ -269,7 +269,7 @@ if ($ThreadInfo['NoPoll'] == 0) {
 		<div class="head colhead_dark"><strong>Poll<? if ($Closed) { echo ' [Closed]'; } ?><? if ($Featured && $Featured !== '0000-00-00 00:00:00') { echo ' [Featured]'; } ?></strong> <a href="#" onclick="$('#threadpoll').gtoggle(); log_hit(); return false;" class="brackets">View</a></div>
 		<div class="pad<? if (/*$LastRead !== null || */$ThreadInfo['IsLocked']) { echo ' hidden'; } ?>" id="threadpoll">
 			<p><strong><?=display_str($Question)?></strong></p>
-<?	if ($UserResponse !== null || $Closed || $ThreadInfo['IsLocked'] || !Forums::check_forumperm($ForumID)) { ?>
+<?	if ($UserResponse !== null || $Closed || $ThreadInfo['IsLocked'] || !\Gazelle\Forums::check_forumperm($ForumID)) { ?>
 			<ul class="poll nobullet">
 <?
 		if (!$RevealVoters) {
@@ -458,7 +458,7 @@ foreach ($Thread as $Key => $Post) {
 				<?=Users::format_username($AuthorID, true, true, true, true, true, $IsDonorForum); echo "\n";?>
 				<?=\Gazelle\Util\Time::timeDiff($AddedTime, 2); echo "\n";?>
 				- <a href="#quickpost" id="quote_<?=$PostID?>" onclick="Quote('<?=$PostID?>', '<?=$Username?>', true);" class="brackets">Quote</a>
-<?	if ((!$ThreadInfo['IsLocked'] && Forums::check_forumperm($ForumID, 'Write') && $AuthorID == $LoggedUser['ID']) || check_perms('site_moderate_forums')) { ?>
+<?	if ((!$ThreadInfo['IsLocked'] && \Gazelle\Forums::check_forumperm($ForumID, 'Write') && $AuthorID == $LoggedUser['ID']) || check_perms('site_moderate_forums')) { ?>
 				- <a href="#post<?=$PostID?>" onclick="Edit_Form('<?=$PostID?>', '<?=$Key?>');" class="brackets">Edit</a>
 <?
 	}
@@ -536,7 +536,7 @@ foreach ($Thread as $Key => $Post) {
 </div>
 <?
 if (!$ThreadInfo['IsLocked'] || check_perms('site_moderate_forums')) {
-	if (Forums::check_forumperm($ForumID, 'Write') && !$LoggedUser['DisablePosting']) {
+	if (\Gazelle\Forums::check_forumperm($ForumID, 'Write') && !$LoggedUser['DisablePosting']) {
 		View::parse('generic/reply/quickreply.php', array(
 			'InputTitle' => 'Post reply',
 			'InputName' => 'thread',

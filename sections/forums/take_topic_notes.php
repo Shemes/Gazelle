@@ -11,7 +11,7 @@ if (!isset($_POST['topicid'], $_POST['body']) || !is_number($_POST['topicid']) |
 
 $TopicID = (int)$_POST['topicid'];
 
-Forums::add_topic_note($TopicID, $_POST['body']);
+\Gazelle\Forums::add_topic_note($TopicID, $_POST['body']);
 
 header("Location: forums.php?action=viewthread&threadid=$TopicID#thread_notes");
 die();

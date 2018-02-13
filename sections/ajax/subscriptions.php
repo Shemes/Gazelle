@@ -27,7 +27,7 @@ $sql = '
 		LEFT JOIN forums_last_read_topics AS l ON p.TopicID = l.TopicID AND l.UserID = s.UserID
 	WHERE s.UserID = '.$LoggedUser['ID'].'
 		AND p.ID <= IFNULL(l.PostID, t.LastPostID)
-		AND ' . Forums::user_forums_sql();
+		AND ' . \Gazelle\Forums::user_forums_sql();
 if ($ShowUnread) {
 	$sql .= '
 		AND IF(l.PostID IS NULL OR (t.IsLocked = \'1\' && t.IsSticky = \'0\'), t.LastPostID, l.PostID) < t.LastPostID';

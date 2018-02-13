@@ -51,7 +51,7 @@ if (!isset($Forums[$ForumID])) {
 	error(404);
 }
 
-if (!Forums::check_forumperm($ForumID, 'Write') || !Forums::check_forumperm($ForumID, 'Create')) {
+if (!\Gazelle\Forums::check_forumperm($ForumID, 'Write') || !\Gazelle\Forums::check_forumperm($ForumID, 'Create')) {
 	error(403);
 }
 

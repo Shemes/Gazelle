@@ -1,5 +1,5 @@
 <?
-$LastRead = Forums::get_last_read($Forums);
+$LastRead = \Gazelle\Forums::get_last_read($Forums);
 View::show_header('Forums');
 ?>
 <div class="thin">
@@ -12,7 +12,7 @@ $LastCategoryID = 0;
 $OpenTable = false;
 foreach ($Forums as $Forum) {
 	list($ForumID, $CategoryID, $ForumName, $ForumDescription, $MinRead, $MinWrite, $MinCreate, $NumTopics, $NumPosts, $LastPostID, $LastAuthorID, $LastTopicID, $LastTime, $SpecificRules, $LastTopic, $Locked, $Sticky) = array_values($Forum);
-	if (!Forums::check_forumperm($ForumID)) {
+	if (!\Gazelle\Forums::check_forumperm($ForumID)) {
 		continue;
 	}
 	if ($ForumID == DONOR_FORUM) {
@@ -41,7 +41,7 @@ foreach ($Forums as $Forum) {
 		$OpenTable = true;
 	}
 
-	$Read = Forums::is_unread($Locked, $Sticky, $LastPostID, $LastRead, $LastTopicID, $LastTime) ? 'unread' : 'read';
+	$Read = \Gazelle\Forums::is_unread($Locked, $Sticky, $LastPostID, $LastRead, $LastTopicID, $LastTime) ? 'unread' : 'read';
 /* Removed per request, as distracting
 	if ($Locked) {
 		$Read .= '_locked';

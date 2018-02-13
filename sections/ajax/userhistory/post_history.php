@@ -48,7 +48,7 @@ if ($ShowGrouped) {
 	$SQL .= '
 			LEFT JOIN forums AS f ON f.ID = t.ForumID
 		WHERE p.AuthorID = '.$UserID.'
-			AND ' . Forums::user_forums_sql();
+			AND ' . \Gazelle\Forums::user_forums_sql();
 	if ($ShowUnread) {
 		$SQL .= '
 			AND ((t.IsLocked = \'0\' OR t.IsSticky = \'1\')
@@ -125,7 +125,7 @@ if ($ShowGrouped) {
 				JOIN forums AS f ON f.ID = t.ForumID
 				LEFT JOIN forums_last_read_topics AS l ON l.UserID = $UserID AND l.TopicID = t.ID
 			WHERE p.AuthorID = $UserID
-				AND " . Forums::user_forums_sql();
+				AND " . \Gazelle\Forums::user_forums_sql();
 
 	if ($ShowUnread) {
 		$SQL .= '

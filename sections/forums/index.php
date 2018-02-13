@@ -6,8 +6,8 @@ if (!empty($LoggedUser['DisableForums'])) {
 	error(403);
 }
 
-$Forums = Forums::get_forums();
-$ForumCats = Forums::get_forum_categories();
+$Forums = \Gazelle\Forums::get_forums();
+$ForumCats = \Gazelle\Forums::get_forum_categories();
 
 if (!empty($_POST['action'])) {
 	switch ($_POST['action']) {
