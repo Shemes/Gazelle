@@ -1,11 +1,12 @@
-<?
+<?php
+
+namespace Gazelle;
 
 /**
  * Class to manage locked accounts
  */
 class LockedAccounts
 {
-
     /**
      * Lock an account
      *
@@ -17,9 +18,8 @@ class LockedAccounts
      */
     public static function lock_account($UserID, $Type, $Message, $Reason, $LockedByUserID)
     {
-        
         if ($LockedByUserID == 0) {
-            $Username = "System";
+            $Username = 'System';
         } else {
             \Gazelle\G::$DB->query("SELECT Username FROM users_main WHERE ID = '" . $LockedByUserID . "'");
             list($Username) = \Gazelle\G::$DB->next_record();
@@ -27,8 +27,8 @@ class LockedAccounts
 
         \Gazelle\G::$DB->query("
                 INSERT INTO locked_accounts (UserID, Type)
-                VALUES ('" . $UserID . "', " . $Type . ")");
-        Tools::update_user_notes($UserID, \Gazelle\Util\Time::sqltime() . " - " . \Gazelle\Util\Db::string($Message) . " by $Username\nReason: " . \Gazelle\Util\Db::string($Reason) . "\n\n");
+                VALUES ('" . $UserID . "', " . $Type . ')');
+        Tools::update_user_notes($UserID, \Gazelle\Util\Time::sqltime() . ' - ' . \Gazelle\Util\Db::string($Message) . " by $Username\nReason: " . \Gazelle\Util\Db::string($Reason) . "\n\n");
         \Gazelle\G::$Cache->delete_value('user_info_' . $UserID);
     }
 
@@ -44,17 +44,17 @@ class LockedAccounts
     public static function unlock_account($UserID, $Type, $Message, $Reason, $UnlockedByUserID)
     {
         if ($UnlockedByUserID == 0) {
-            $Username = "System";
+            $Username = 'System';
         } else {
             \Gazelle\G::$DB->query("SELECT Username FROM users_main WHERE ID = '" . $UnlockedByUserID . "'");
             list($Username) = \Gazelle\G::$DB->next_record();
         }
 
-        \Gazelle\G::$DB->query("DELETE FROM locked_accounts WHERE UserID = '$UserID' AND Type = '". $Type ."'");
+        \Gazelle\G::$DB->query("DELETE FROM locked_accounts WHERE UserID = '$UserID' AND Type = '" . $Type . "'");
 
         if (\Gazelle\G::$DB->affected_rows() == 1) {
-            \Gazelle\G::$Cache->delete_value("user_info_" . $UserID);
-            Tools::update_user_notes($UserID, \Gazelle\Util\Time::sqltime() . " - " . \Gazelle\Util\Db::string($Message) . " by $Username\nReason: " . \Gazelle\Util\Db::string($Reason) . "\n\n");
+            \Gazelle\G::$Cache->delete_value('user_info_' . $UserID);
+            Tools::update_user_notes($UserID, \Gazelle\Util\Time::sqltime() . ' - ' . \Gazelle\Util\Db::string($Message) . " by $Username\nReason: " . \Gazelle\Util\Db::string($Reason) . "\n\n");
         }
     }
 }
