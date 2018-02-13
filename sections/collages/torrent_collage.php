@@ -115,7 +115,7 @@ foreach ($GroupIDs as $GroupID) {
 				</td>
 				<td colspan="5">
 					<strong><?=$DisplayName?></strong>
-<?		if (Bookmarks::has_bookmarked('torrent', $GroupID)) { ?>
+<?		if (\Gazelle\Bookmarks::has_bookmarked('torrent', $GroupID)) { ?>
 					<span class="remove_bookmark float_right">
 						<a style="float: right;" href="#" id="bookmarklink_torrent_<?=$GroupID?>" class="remove_bookmark brackets" onclick="Unbookmark('torrent', <?=$GroupID?>, 'Bookmark'); return false;">Remove bookmark</a>
 					</span>
@@ -325,7 +325,7 @@ View::show_header($Name, 'browse,collage,bbcode,voting,recommend');
 			<span class="brackets">Locked</span>
 <?
 	}
-	if (Bookmarks::has_bookmarked('collage', $CollageID)) {
+	if (\Gazelle\Bookmarks::has_bookmarked('collage', $CollageID)) {
 ?>
 			<a href="#" id="bookmarklink_collage_<?=$CollageID?>" class="brackets" onclick="Unbookmark('collage', <?=$CollageID?>, 'Bookmark'); return false;">Remove bookmark</a>
 <?	} else { ?>

@@ -77,7 +77,7 @@ $JsonTorrentDetails = array(
 	'categoryName' => $CategoryName,
 	'time' => $TorrentDetails['Time'],
 	'vanityHouse' => $TorrentDetails['VanityHouse'] == 1,
-	'isBookmarked' => Bookmarks::has_bookmarked('torrent', $GroupID),
+	'isBookmarked' => \Gazelle\Bookmarks::has_bookmarked('torrent', $GroupID),
 	'musicInfo' => $JsonMusicInfo,
 	'tags' => $TagList
 );

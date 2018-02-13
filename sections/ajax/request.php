@@ -116,7 +116,7 @@ json_print('success', array(
 	'requestId' => (int)$RequestID,
 	'requestorId' => (int)$Request['UserID'],
 	'requestorName' => $Requestor['Username'],
-	'isBookmarked' => Bookmarks::has_bookmarked('request', $RequestID),
+	'isBookmarked' => \Gazelle\Bookmarks::has_bookmarked('request', $RequestID),
 	'requestTax' => $RequestTax,
 	'timeAdded' => $Request['TimeAdded'],
 	'canEdit' => $CanEdit,

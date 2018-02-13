@@ -460,7 +460,7 @@ function generate_torrent_table($Caption, $Tag, $Details, $Limit) {
 			$Format, $Encoding, $Media, $Scene, $HasLog, $HasCue, $HasLogDB, $LogScore, $LogChecksum, $Year, $GroupYear,
 			$RemasterTitle, $Snatched, $Seeders, $Leechers, $Data, $ReleaseType, $Size) = $Detail;
 
-		$IsBookmarked = Bookmarks::has_bookmarked('torrent', $GroupID);
+		$IsBookmarked = \Gazelle\Bookmarks::has_bookmarked('torrent', $GroupID);
 		$IsSnatched = Torrents::has_snatched($TorrentID);
 
 		// highlight every other row

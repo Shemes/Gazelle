@@ -50,7 +50,7 @@ $JSON = array(
 	'locked'              => (bool)$Locked,
 	'maxGroups'           => (int)$MaxGroups,
 	'maxGroupsPerUser'    => (int)$MaxGroupsPerUser,
-	'hasBookmarked'       => Bookmarks::has_bookmarked('collage', $CollageID),
+	'hasBookmarked'       => \Gazelle\Bookmarks::has_bookmarked('collage', $CollageID),
 	'subscriberCount'     => (int)$Subscribers,
 	'torrentGroupIDList'  => $TorrentGroups
 );

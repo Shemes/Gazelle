@@ -30,7 +30,7 @@ if ($NumResults == 0) {
 	));
 }
 
-$Bookmarks = Bookmarks::all_bookmarks('torrent');
+$Bookmarks = \Gazelle\Bookmarks::all_bookmarks('torrent');
 
 $JsonGroups = array();
 foreach ($Results as $Key => $GroupID) {

@@ -2,7 +2,7 @@
 
 authorize();
 
-if ($UserID != $LoggedUser['ID'] || !Bookmarks::can_bookmark('torrent')) {
+if ($UserID != $LoggedUser['ID'] || !\Gazelle\Bookmarks::can_bookmark('torrent')) {
 	error(403);
 }
 

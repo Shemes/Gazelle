@@ -87,7 +87,7 @@ View::show_header("View request: $FullName", 'comments,requests,bbcode,subscript
 	if ($UserCanEdit || check_perms('users_mod')) { ?>
 			<a href="requests.php?action=delete&amp;id=<?=$RequestID?>" class="brackets">Delete</a>
 <?	}
-	if (Bookmarks::has_bookmarked('request', $RequestID)) { ?>
+	if (\Gazelle\Bookmarks::has_bookmarked('request', $RequestID)) { ?>
 			<a href="#" id="bookmarklink_request_<?=$RequestID?>" onclick="Unbookmark('request', <?=$RequestID?>, 'Bookmark'); return false;" class="brackets">Remove bookmark</a>
 <?	} else { ?>
 			<a href="#" id="bookmarklink_request_<?=$RequestID?>" onclick="Bookmark('request', <?=$RequestID?>, 'Remove bookmark'); return false;" class="brackets">Bookmark</a>

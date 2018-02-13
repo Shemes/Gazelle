@@ -127,7 +127,7 @@ if (check_perms('site_advanced_top10')) { ?>
 <?
 }
 
-$Bookmarks = Bookmarks::all_bookmarks('torrent');
+$Bookmarks = \Gazelle\Bookmarks::all_bookmarks('torrent');
 ?>
 	<h3>Top <?=$Limit?>
 <?

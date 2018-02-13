@@ -1,13 +1,13 @@
 <?
 authorize();
 
-if (!Bookmarks::can_bookmark($_GET['type'])) {
+if (!\Gazelle\Bookmarks::can_bookmark($_GET['type'])) {
 	error(404);
 }
 
 $Type = $_GET['type'];
 
-list($Table, $Col) = Bookmarks::bookmark_schema($Type);
+list($Table, $Col) = \Gazelle\Bookmarks::bookmark_schema($Type);
 
 if (!is_number($_GET['id'])) {
 	error(0);

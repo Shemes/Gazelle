@@ -478,7 +478,7 @@ View::show_footer();die();
 // List of pages
 $Pages = Format::get_pages($Page, $NumResults, TORRENTS_PER_PAGE);
 
-$Bookmarks = Bookmarks::all_bookmarks('torrent');
+$Bookmarks = \Gazelle\Bookmarks::all_bookmarks('torrent');
 ?>
 
 <div class="linkbox"><?=$Pages?></div>

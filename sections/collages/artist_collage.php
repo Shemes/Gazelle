@@ -105,7 +105,7 @@ View::show_header($Name, 'browse,collage,bbcode,voting,recommend');
 			<span class="brackets">Locked</span>
 <?
 	}
-	if (Bookmarks::has_bookmarked('collage', $CollageID)) {
+	if (\Gazelle\Bookmarks::has_bookmarked('collage', $CollageID)) {
 ?>
 			<a href="#" id="bookmarklink_collage_<?=$CollageID?>" class="brackets" onclick="Unbookmark('collage', <?=$CollageID?>, 'Bookmark'); return false;">Remove bookmark</a>
 <?	} else { ?>

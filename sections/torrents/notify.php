@@ -314,7 +314,7 @@ if (empty($Results)) {
 					<? if ($Result['UnRead']) {
 					echo '<strong class="new">New!</strong>';
 					} ?>
-<?				if (Bookmarks::has_bookmarked('torrent', $GroupID)) { ?>
+<?				if (\Gazelle\Bookmarks::has_bookmarked('torrent', $GroupID)) { ?>
 					<span class="remove_bookmark float_right">
 						<a href="#" id="bookmarklink_torrent_<?=$GroupID?>" class="brackets" onclick="Unbookmark('torrent', <?=$GroupID?>, 'Bookmark'); return false;">Remove bookmark</a>
 					</span>

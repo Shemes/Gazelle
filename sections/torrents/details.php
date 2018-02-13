@@ -108,7 +108,7 @@ View::show_header($Title, 'browse,comments,torrent,bbcode,recommend,cover_art,su
 			<a href="torrents.php?action=revert&amp;groupid=<?=$GroupID ?>&amp;revisionid=<?=$RevisionID ?>&amp;auth=<?=$LoggedUser['AuthKey']?>" class="brackets">Revert to this revision</a>
 <?
 	}
-	if (Bookmarks::has_bookmarked('torrent', $GroupID)) {
+	if (\Gazelle\Bookmarks::has_bookmarked('torrent', $GroupID)) {
 ?>
 			<a href="#" id="bookmarklink_torrent_<?=$GroupID?>" class="remove_bookmark brackets" onclick="Unbookmark('torrent', <?=$GroupID?>, 'Bookmark'); return false;">Remove bookmark</a>
 <?	} else { ?>

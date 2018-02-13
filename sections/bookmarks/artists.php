@@ -20,7 +20,7 @@ if (!empty($_GET['userid'])) {
 
 $Sneaky = $UserID !== $LoggedUser['ID'];
 
-//$ArtistList = Bookmarks::all_bookmarks('artist', $UserID);
+//$ArtistList = \Gazelle\Bookmarks::all_bookmarks('artist', $UserID);
 
 $DB->query("
 	SELECT ag.ArtistID, ag.Name
