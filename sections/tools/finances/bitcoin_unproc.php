@@ -6,7 +6,7 @@ $Title = "Unprocessed Bitcoin Donations";
 View::show_header($Title);
 
 // Find all donors
-$AllDonations = DonationsBitcoin::get_received();
+$AllDonations = \Gazelle\DonationsBitcoin::get_received();
 
 $DB->query("
 	SELECT BitcoinAddress, SUM(Amount)
@@ -49,7 +49,7 @@ foreach ($AllDonations as $Address => $Amount) {
 		</tr>
 <?
 if (!empty($NewDonations)) {
-	foreach (DonationsBitcoin::get_userids(array_keys($NewDonations)) as $Address => $UserID) {
+	foreach (\Gazelle\DonationsBitcoin::get_userids(array_keys($NewDonations)) as $Address => $UserID) {
 		$DonationEUR = \Gazelle\Donations::currency_exchange($NewDonations[$Address], 'BTC');
 ?>
 		<tr>

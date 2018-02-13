@@ -5,7 +5,7 @@ if (!check_perms('admin_donor_log')) {
 $Title = "Bitcoin Donation Balance";
 View::show_header($Title);
 
-$Balance = DonationsBitcoin::get_balance() . ' BTC';
+$Balance = \Gazelle\DonationsBitcoin::get_balance() . ' BTC';
 ?>
 <div class="header">
 	<h2><?=$Title?></h2>
@@ -20,7 +20,7 @@ if (empty($_GET['list'])) {
 	<a href="?action=<?=$_REQUEST['action']?>&amp;list=1" class="brackets">Show donor list</a>
 <?
 } else {
-	$BitcoinAddresses = DonationsBitcoin::get_received();
+	$BitcoinAddresses = \Gazelle\DonationsBitcoin::get_received();
 	$DB->query("
 		SELECT i.UserID, i.BitcoinAddress
 		FROM users_info AS i

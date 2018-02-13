@@ -218,7 +218,7 @@ class Donations
     {
         self::$IsSchedule = true;
 
-        DonationsBitcoin::find_new_donations();
+        \Gazelle\DonationsBitcoin::find_new_donations();
         self::expire_ranks();
         self::get_new_conversion_rates();
     }
