@@ -1,7 +1,7 @@
 <?php
 
 View::show_header('Apollo Euterpe FLAC Challenge');
-$Contest = Contest::get_current_contest();
+$Contest = \Gazelle\Contest::get_current_contest();
 
 if ($Contest !== false and strlen($Contest['Banner'])) {
 ?>

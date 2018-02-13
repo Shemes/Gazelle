@@ -1,17 +1,17 @@
 <?php
 enforce_login();
 if (isset($_POST['leaderboard']) && is_number($_POST['leaderboard'])) {
-	$Contest = Contest::get_contest(intval($_POST['leaderboard']));
+	$Contest = \Gazelle\Contest::get_contest(intval($_POST['leaderboard']));
 }
 elseif (isset($_GET['id']) && is_number($_GET['id'])) {
-	$Contest = Contest::get_contest(intval($_GET['id']));
+	$Contest = \Gazelle\Contest::get_contest(intval($_GET['id']));
 }
 else {
-	$Contest = Contest::get_current_contest();
+	$Contest = \Gazelle\Contest::get_current_contest();
 }
 
 if (!empty($Contest)) {
-	$Leaderboard = Contest::get_leaderboard($Contest['ID']);
+	$Leaderboard = \Gazelle\Contest::get_leaderboard($Contest['ID']);
 	View::show_header($Contest['Name'].' Leaderboard');
 }
 else {
@@ -36,7 +36,7 @@ if ($Contest['Banner']) {
 <div class="box pad" style="padding: 10px 10px 10px 20px;">
 
 <?
-$Prior = Contest::get_prior_contests();
+$Prior = \Gazelle\Contest::get_prior_contests();
 $Prior = []; // FIXME: no dropdown to see older contests (Blame Athena <3 )
 if (count($Prior)) {
 ?>
@@ -44,7 +44,7 @@ if (count($Prior)) {
 		<select name="leaderboard">
 <?
 	foreach ($Prior as $id) {
-		$prior_contest = Contest::get_contest($id[0]);
+		$prior_contest = \Gazelle\Contest::get_contest($id[0]);
 		$selected = $prior_contest['ID'] == $Contest['ID'] ? ' selected' : '';
 ?>
 			<option value="<?= $prior_contest['ID'] ?>"<?= $selected ?>><?= $prior_contest['Name'] ?></option>

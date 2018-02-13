@@ -1,9 +1,9 @@
 <?php
 if (isset($_GET['id']) && is_number($_GET['id'])) {
-	$Contest = Contest::get_contest(intval($_GET['id']));
+	$Contest = \Gazelle\Contest::get_contest(intval($_GET['id']));
 }
 else {
-	$Contest = Contest::get_current_contest();
+	$Contest = \Gazelle\Contest::get_current_contest();
 }
 
 $Saved = 0;
@@ -14,8 +14,8 @@ if (!check_perms('users_mod')) {
 
 if (!empty($_POST['name'])) {
 	authorize();
-	Contest::save($_POST);
-	$Contest = Contest::get_contest($_POST['cid']);
+	\Gazelle\Contest::save($_POST);
+	$Contest = \Gazelle\Contest::get_contest($_POST['cid']);
 	$Saved = 1;
 }
 
@@ -35,7 +35,7 @@ if ($Saved) {
 	echo "<p>Contest information saved.</p>";
 }
 
-Contest::init_admin();
+\Gazelle\Contest::init_admin();
 
 G::$DB->query("
 	SELECT c.ID, c.Name, c.DateBegin, c.DateEnd, t.ID as ContestType
@@ -58,7 +58,7 @@ if (G::$DB->has_results()) {
 ?>
 			<tr>
 				<td><a href="contest.php?action=admin&id=<?=$Row['ID']?>"><?=$Row['Name']?></a></td>
-				<td><?= Contest::contest_type()[$Row['ContestType']] ?></td>
+				<td><?= \Gazelle\Contest::contest_type()[$Row['ContestType']] ?></td>
 				<td><?=$Row['DateBegin']?></td>
 				<td><?=$Row['DateEnd']?></td>
 			</tr>
@@ -76,7 +76,7 @@ if (!empty($Contest)) {
 	<div class="box pad">
 		<h2>Request pairs</h2>
 <?
-		$Pairs = Contest::get_request_pairs();
+		$Pairs = \Gazelle\Contest::get_request_pairs();
 		if (!count($Pairs)) {
 ?>
 		<p>No members have filled out more than one request for the same member.</p>
@@ -128,7 +128,7 @@ if (!empty($Contest)) {
 					<p>Edit the type of the contest</p>
 					<select name="type">
 <?
-						foreach (Contest::contest_type() as $id => $name) {
+						foreach (\Gazelle\Contest::contest_type() as $id => $name) {
 							printf('					<option value="%d"%s>%s</option>',
 								$id,
 								($name == $Contest['ContestType']) ? ' selected' : '',

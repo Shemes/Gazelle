@@ -1,4 +1,4 @@
 <?php
 
-Contest::calculate_leaderboard();
-Contest::calculate_request_pairs();
+\Gazelle\Contest::calculate_leaderboard();
+\Gazelle\Contest::calculate_request_pairs();
