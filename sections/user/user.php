@@ -389,7 +389,7 @@ if ($Enabled == 1 && (count($FL_Other) || isset($FL_OTHER_success))) {
 // Last.fm statistics and comparability
 $LastFMUsername = \Gazelle\LastFM::get_lastfm_username($UserID);
 if ($LastFMUsername)  {
-	LastFMView::render_sidebar($LastFMUsername, $UserID, $OwnProfile);
+	\Gazelle\LastFMView::render_sidebar($LastFMUsername, $UserID, $OwnProfile);
 }
 
 if (check_paranoia_here('requestsfilled_count') || check_paranoia_here('requestsfilled_bounty')) {
