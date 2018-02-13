@@ -131,9 +131,9 @@ if (!isset($_POST['p_donor_heart'])) {
 }
 
 if (isset($_POST['p_donor_stats'])) {
-	Donations::show_stats($UserID);
+	\Gazelle\Donations::show_stats($UserID);
 } else {
-	Donations::hide_stats($UserID);
+	\Gazelle\Donations::hide_stats($UserID);
 }
 
 // End building $Paranoia
@@ -300,7 +300,7 @@ if ($DB->has_results()) {
 }
 G::$Cache->delete_value("lastfm_username_$UserID");
 
-Donations::update_rewards($UserID);
+\Gazelle\Donations::update_rewards($UserID);
 NotificationsManager::save_settings($UserID);
 
 // Information on how the user likes to download torrents is stored in cache

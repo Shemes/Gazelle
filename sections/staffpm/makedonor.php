@@ -41,7 +41,7 @@ $DB->query("
 		ResolverID = ".$LoggedUser['ID']."
 	WHERE ID = $ConvID");
 
-Donations::donate($UserID, array(
+\Gazelle\Donations::donate($UserID, array(
 							"Source" => "Staff PM",
 							"Price" => $_POST['donation_amount'],
 							"Currency" => $_POST['donation_currency'],

@@ -56,17 +56,17 @@ $SiteOptions = array_merge(Users::default_site_options(), $SiteOptions);
 
 View::show_header("$Username &gt; Settings", 'user,jquery-ui,release_sort,password_validate,validate,cssgallery,preview_paranoia,bbcode,user_settings,donor_titles');
 
-$DonorRank = Donations::get_rank($UserID);
-$DonorIsVisible = Donations::is_visible($UserID);
+$DonorRank = \Gazelle\Donations::get_rank($UserID);
+$DonorIsVisible = \Gazelle\Donations::is_visible($UserID);
 
 if ($DonorIsVisible === null) {
 	$DonorIsVisible = true;
 }
 
-extract(Donations::get_enabled_rewards($UserID));
-$Rewards = Donations::get_rewards($UserID);
-$ProfileRewards = Donations::get_profile_rewards($UserID);
-$DonorTitles = Donations::get_titles($UserID);
+extract(\Gazelle\Donations::get_enabled_rewards($UserID));
+$Rewards = \Gazelle\Donations::get_rewards($UserID);
+$ProfileRewards = \Gazelle\Donations::get_profile_rewards($UserID);
+$DonorTitles = \Gazelle\Donations::get_titles($UserID);
 
 $DB->query("
 	SELECT username

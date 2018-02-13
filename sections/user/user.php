@@ -37,8 +37,8 @@ if ($UserID == $LoggedUser['ID']) {
 	$Preview = 0;
 	$FL_Other = \Gazelle\Bonus::get_list_other(G::$LoggedUser['BonusPoints']);
 }
-$EnabledRewards = Donations::get_enabled_rewards($UserID);
-$ProfileRewards = Donations::get_profile_rewards($UserID);
+$EnabledRewards = \Gazelle\Donations::get_enabled_rewards($UserID);
+$ProfileRewards = \Gazelle\Donations::get_profile_rewards($UserID);
 $FA_Key = null;
 
 if (check_perms('users_mod')) { // Person viewing is a staff member
@@ -884,7 +884,7 @@ if ((check_perms('users_view_invites')) && $Invited > 0) {
 }
 
 if (check_perms('users_mod')) {
-	\Gazelle\DonationsView::render_donation_history(Donations::get_donation_history($UserID));
+	\Gazelle\DonationsView::render_donation_history(\Gazelle\Donations::get_donation_history($UserID));
 }
 
 // Requests

@@ -43,11 +43,11 @@ class DonationsView
 			</tr>
 			<tr>
 				<td class="label tooltip" title="Active points determine a user's Donor Rank and do expire.">Active points:</td>
-				<td><input type="text" name="donor_rank" onkeypress="return isNumberKey(event);" value="<?=\Donations::get_rank($UserID)?>" /></td>
+				<td><input type="text" name="donor_rank" onkeypress="return isNumberKey(event);" value="<?=\Gazelle\Donations::get_rank($UserID)?>" /></td>
 			</tr>
 			<tr>
 				<td class="label tooltip" title="Total points represent a user's overall total and never expire. Total points determines a user's Special Rank and Donor Leaderboard placement.">Total points:</td>
-				<td><input type="text" name="total_donor_rank" onkeypress="return isNumberKey(event);" value="<?=\Donations::get_total_rank($UserID)?>" /></td>
+				<td><input type="text" name="total_donor_rank" onkeypress="return isNumberKey(event);" value="<?=\Gazelle\Donations::get_total_rank($UserID)?>" /></td>
 			</tr>
 			<tr>
 				<td class="label">Reason:</td>
@@ -65,31 +65,31 @@ class DonationsView
     public static function render_donor_stats($UserID)
     {
         $OwnProfile = \G::$LoggedUser['ID'] == $UserID;
-        if (check_perms('users_mod') || $OwnProfile || \Donations::is_visible($UserID)) {
+        if (check_perms('users_mod') || $OwnProfile || \Gazelle\Donations::is_visible($UserID)) {
             ?>
 			<div class="box box_info box_userinfo_donor_stats">
 				<div class="head colhead_dark">Donor Statistics</div>
 				<ul class="stats nobullet">
 <?php
-            if (\Donations::is_donor($UserID)) {
+            if (\Gazelle\Donations::is_donor($UserID)) {
                 if (check_perms('users_mod') || $OwnProfile) {
                     ?>
 					<li>
-						Total donor points: <?=\Donations::get_total_rank($UserID)?>
+						Total donor points: <?=\Gazelle\Donations::get_total_rank($UserID)?>
 					</li>
 <?php
                 } ?>
 					<li>
-						Current donor rank: <?=self::render_rank(\Donations::get_rank($UserID), \Donations::get_special_rank($UserID), true)?>
+						Current donor rank: <?=self::render_rank(\Gazelle\Donations::get_rank($UserID), \Gazelle\Donations::get_special_rank($UserID), true)?>
 					</li>
 					<li>
-						Leaderboard position: <?=\Donations::get_leaderboard_position($UserID)?>
+						Leaderboard position: <?=\Gazelle\Donations::get_leaderboard_position($UserID)?>
 					</li>
 					<li>
-						Last donated: <?=\Gazelle\Util\Time::timeDiff(\Donations::get_donation_time($UserID))?>
+						Last donated: <?=\Gazelle\Util\Time::timeDiff(\Gazelle\Donations::get_donation_time($UserID))?>
 					</li>
 					<li>
-						Rank expires: <?=(\Donations::get_rank_expiration($UserID))?>
+						Rank expires: <?=(\Gazelle\Donations::get_rank_expiration($UserID))?>
 					</li>
 <?php
             } else {

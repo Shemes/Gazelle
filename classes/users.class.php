@@ -470,7 +470,7 @@ class Users {
 		$ShowDonorIcon = (!in_array('hide_donor_heart', $Paranoia) || $OverrideParanoia);
 
 		if ($IsDonorForum) {
-			list($Prefix, $Suffix, $HasComma) = Donations::get_titles($UserID);
+			list($Prefix, $Suffix, $HasComma) = \Gazelle\Donations::get_titles($UserID);
 			$Username = "$Prefix $Username" . ($HasComma ? ', ' : ' ') . "$Suffix ";
 		}
 
@@ -480,7 +480,7 @@ class Users {
 			$Str .= "<a href=\"user.php?id=$UserID\">$Username</a>";
 		}
 		if ($Badges) {
-			$DonorRank = Donations::get_rank($UserID);
+			$DonorRank = \Gazelle\Donations::get_rank($UserID);
 			if ($DonorRank == 0 && $UserInfo['Donor'] == 1) {
 				$DonorRank = 1;
 			}
@@ -489,9 +489,9 @@ class Users {
 				$IconImage = 'donor.png';
 				$IconText = 'Donor';
 				$DonorHeart = $DonorRank;
-				$SpecialRank = Donations::get_special_rank($UserID);
-				$EnabledRewards = Donations::get_enabled_rewards($UserID);
-				$DonorRewards = Donations::get_rewards($UserID);
+				$SpecialRank = \Gazelle\Donations::get_special_rank($UserID);
+				$EnabledRewards = \Gazelle\Donations::get_enabled_rewards($UserID);
+				$DonorRewards = \Gazelle\Donations::get_rewards($UserID);
 				if ($EnabledRewards['HasDonorIconMouseOverText'] && !empty($DonorRewards['IconMouseOverText'])) {
 					$IconText = display_str($DonorRewards['IconMouseOverText']);
 				}
@@ -615,10 +615,10 @@ class Users {
 		$AvatarMouseOverText = '';
 		$SecondAvatar = '';
 		$Class = 'class="double_avatar"';
-		$EnabledRewards = Donations::get_enabled_rewards($UserID);
+		$EnabledRewards = \Gazelle\Donations::get_enabled_rewards($UserID);
 
 		if ($EnabledRewards['HasAvatarMouseOverText']) {
-			$Rewards = Donations::get_rewards($UserID);
+			$Rewards = \Gazelle\Donations::get_rewards($UserID);
 			$AvatarMouseOverText = $Rewards['AvatarMouseOverText'];
 		}
 		if (!empty($AvatarMouseOverText)) {

@@ -16,7 +16,7 @@ foreach ($Forums as $Forum) {
 		continue;
 	}
 	if ($ForumID == DONOR_FORUM) {
-		$ForumDescription = Donations::get_forum_description();
+		$ForumDescription = \Gazelle\Donations::get_forum_description();
 	}
 	$Tooltip = $ForumID == DONOR_FORUM ? 'tooltip_gold' : 'tooltip';
 	$Row = $Row === 'a' ? 'b' : 'a';

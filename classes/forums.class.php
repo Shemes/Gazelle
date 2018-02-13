@@ -78,7 +78,7 @@ class Forums {
 		if (isset(\G::$LoggedUser['CustomForums'][$ForumID]) && \G::$LoggedUser['CustomForums'][$ForumID] == 1) {
 			return true;
 		}
-		if ($ForumID == DONOR_FORUM && Donations::has_donor_forum(\G::$LoggedUser['ID'])) {
+		if ($ForumID == DONOR_FORUM && \Gazelle\Donations::has_donor_forum(\G::$LoggedUser['ID'])) {
 			return true;
 		}
 		if ($Forums[$ForumID]['MinClass' . $Perm] > \G::$LoggedUser['Class'] && (!isset(\G::$LoggedUser['CustomForums'][$ForumID]) || \G::$LoggedUser['CustomForums'][$ForumID] == 0)) {
@@ -302,7 +302,7 @@ class Forums {
 		// I couldn't come up with a good name, please rename this if you can. -- Y
 		$RestrictedForums = self::get_restricted_forums();
 		$PermittedForums = self::get_permitted_forums();
-		if (Donations::has_donor_forum(\G::$LoggedUser['ID']) && !in_array(DONOR_FORUM, $PermittedForums)) {
+		if (\Gazelle\Donations::has_donor_forum(\G::$LoggedUser['ID']) && !in_array(DONOR_FORUM, $PermittedForums)) {
 			$PermittedForums[] = DONOR_FORUM;
 		}
 		$SQL = "((f.MinClassRead <= '" . \G::$LoggedUser['Class'] . "'";

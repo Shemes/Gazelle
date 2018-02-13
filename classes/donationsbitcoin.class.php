@@ -159,7 +159,7 @@ class DonationsBitcoin {
 			}
 			$Debug->log_var($NewDonations, '$NewDonations');
 			foreach (self::get_userids(array_keys($NewDonations)) as $Address => $UserID) {
-				Donations::regular_donate($UserID, $NewDonations[$Address], 'Bitcoin Parser', '', 'BTC');
+				\Gazelle\Donations::regular_donate($UserID, $NewDonations[$Address], 'Bitcoin Parser', '', 'BTC');
 				self::store_donation($Address, $NewDonations[$Address]);
 			}
 			\G::$Cache->cache_value('btc_total_received', $NewAmount, 0);
