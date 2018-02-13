@@ -16,7 +16,7 @@ if (!is_number($_GET['collageid'])) {
 }
 $CollageID = (int)$_GET['collageid'];
 
-list($NumComments, $Page, $Thread, $LastRead) = Comments::load('collages', $CollageID);
+list($NumComments, $Page, $Thread, $LastRead) = \Gazelle\Comments::load('collages', $CollageID);
 
 $DB->query("
 	SELECT Name

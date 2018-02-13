@@ -11,4 +11,4 @@ if (!check_perms('site_moderate_forums')) {
 	error(403);
 }
 
-Comments::delete((int)$_GET['postid']);
+\Gazelle\Comments::delete((int)$_GET['postid']);

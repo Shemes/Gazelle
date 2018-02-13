@@ -3,7 +3,7 @@ if (empty($_GET['id']) || !is_number($_GET['id'])) {
 	json_die("failure");
 }
 
-list($NumComments, $Page, $Thread) = Comments::load('torrents', (int)$_GET['id'], false);
+list($NumComments, $Page, $Thread) = \Gazelle\Comments::load('torrents', (int)$_GET['id'], false);
 
 //---------- Begin printing
 $JsonComments = array();

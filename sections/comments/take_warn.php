@@ -24,7 +24,7 @@ if ($UserInfo['Class'] > $LoggedUser['Class']) {
 	error(403);
 }
 
-$URL = site_url() . Comments::get_url_query($PostID);
+$URL = site_url() . \Gazelle\Comments::get_url_query($PostID);
 if ($Length !== 'verbal') {
 	$Time = (int)$Length * (7 * 24 * 60 * 60);
 	Tools::warn_user($AuthorID, $Time, "$URL - $Reason");
@@ -47,6 +47,6 @@ $DB->query("
 		Comment = CONCAT('" . \Gazelle\Util\Db::string($AdminComment) . "', Comment)");
 Misc::send_pm($AuthorID, $LoggedUser['ID'], $Subject, $PrivateMessage);
 
-Comments::edit($PostID, $Body);
+\Gazelle\Comments::edit($PostID, $Body);
 
 header("Location: $URL");

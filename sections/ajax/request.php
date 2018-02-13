@@ -85,7 +85,7 @@ for ($i = 0; $i < $VoteMax; $i++) {
 }
 reset($RequestVotes['Voters']);
 
-list($NumComments, $Page, $Thread) = Comments::load('requests', $RequestID, false);
+list($NumComments, $Page, $Thread) = \Gazelle\Comments::load('requests', $RequestID, false);
 
 $JsonRequestComments = array();
 foreach ($Thread as $Key => $Post) {

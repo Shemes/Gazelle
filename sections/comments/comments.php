@@ -247,7 +247,7 @@ View::show_header($Title, 'bbcode,comments');
 if ($Count > 0) {
 	$DB->set_query_id($Comments);
 	while (list($AuthorID, $Page, $PageID, $Name, $PostID, $Body, $AddedTime, $EditedTime, $EditedUserID) = $DB->next_record()) {
-		$Link = Comments::get_url($Page, $PageID, $PostID);
+		$Link = \Gazelle\Comments::get_url($Page, $PageID, $PostID);
 		switch ($Page) {
 			case 'artist':
 				$Header = " on <a href=\"artist.php?id=$PageID\">$Name</a>";

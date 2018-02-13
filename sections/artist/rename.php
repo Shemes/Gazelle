@@ -219,7 +219,7 @@ if (!$TargetAliasID || $TargetAliasID == $OldAliasID) {
 			}
 		}
 
-		Comments::merge('artist', $ArtistID, $TargetArtistID);
+		\Gazelle\Comments::merge('artist', $ArtistID, $TargetArtistID);
 	}
 }
 

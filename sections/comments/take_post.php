@@ -19,7 +19,7 @@ if (isset($_POST['subscribe']) && Subscriptions::has_subscribed_comments($Page, 
 	Subscriptions::subscribe_comments($Page, $PageID);
 }
 
-$PostID = Comments::post($Page, $PageID, $_POST['body']);
+$PostID = \Gazelle\Comments::post($Page, $PageID, $_POST['body']);
 
-header("Location: " . Comments::get_url($Page, $PageID, $PostID));
+header("Location: " . \Gazelle\Comments::get_url($Page, $PageID, $PostID));
 die();

@@ -39,7 +39,7 @@ if ($CategoryID == 0) {
 	$DB->query("
 		DELETE FROM collages_torrents
 		WHERE CollageID = '$CollageID'");
-	Comments::delete_page('collages', $CollageID);
+	\Gazelle\Comments::delete_page('collages', $CollageID);
 } else {
 	$DB->query("
 		UPDATE collages

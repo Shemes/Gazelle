@@ -72,7 +72,7 @@ $UserCanEdit = (!$IsFilled && $LoggedUser['ID'] === $Request['UserID'] && $VoteC
 $CanEdit = ($UserCanEdit || $ProjectCanEdit || check_perms('site_moderate_requests'));
 
 // Comments (must be loaded before View::show_header so that subscriptions and quote notifications are handled properly)
-list($NumComments, $Page, $Thread, $LastRead) = Comments::load('requests', $RequestID);
+list($NumComments, $Page, $Thread, $LastRead) = \Gazelle\Comments::load('requests', $RequestID);
 
 View::show_header("View request: $FullName", 'comments,requests,bbcode,subscriptions');
 

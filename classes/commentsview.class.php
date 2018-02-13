@@ -2,7 +2,7 @@
 class CommentsView {
 	/**
 	 * Render a thread of comments
-	 * @param array $Thread An array as returned by Comments::load
+	 * @param array $Thread An array as returned by \Gazelle\Comments::load
 	 * @param int $LastRead PostID of the last read post
 	 * @param string $Baselink Link to the site these comments are on
 	 */

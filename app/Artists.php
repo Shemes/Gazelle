@@ -256,7 +256,7 @@ class Artists
         \G::$DB->query('DELETE FROM artists_tags WHERE ArtistID=' . $ArtistID);
 
         // Delete artist comments, subscriptions and quote notifications
-        Comments::delete_page('artist', $ArtistID);
+        \Gazelle\Comments::delete_page('artist', $ArtistID);
 
         \G::$Cache->delete_value('artist_' . $ArtistID);
         \G::$Cache->delete_value('artist_groups_' . $ArtistID);

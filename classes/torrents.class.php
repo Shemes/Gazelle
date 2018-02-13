@@ -460,7 +460,7 @@ class Torrents
         }
 
         // comments
-        Comments::delete_page('torrents', $GroupID);
+        \Gazelle\Comments::delete_page('torrents', $GroupID);
 
         \G::$DB->query("
 			DELETE FROM torrents_group
