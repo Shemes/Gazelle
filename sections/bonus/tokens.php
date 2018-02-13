@@ -22,8 +22,8 @@ if ($Other === 'true') {
 	$Option .= '_other';
 }
 
-$Item = Bonus::$Items[$Option];
-$Price = Bonus::get_price($Item);
+$Item = \Gazelle\Bonus::$Items[$Option];
+$Price = \Gazelle\Bonus::get_price($Item);
 if ($Price > \G::$LoggedUser['BonusPoints']) {
 	error('You cannot afford this item.');
 }
@@ -41,7 +41,7 @@ if ($Other === 'true') {
 	if ($ID == \G::$LoggedUser['ID']) {
 		error('You cannot give yourself tokens.');
 	}
-    Bonus::send_pm_to_other(\G::$LoggedUser['Username'], $ID, $Amount);
+    \Gazelle\Bonus::send_pm_to_other(\G::$LoggedUser['Username'], $ID, $Amount);
 }
 else {
 	$ID = \G::$LoggedUser['ID'];

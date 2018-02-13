@@ -20,7 +20,7 @@ if (!empty($_POST)) {
 		error(403);
 	}
 	$FL_OTHER_tokens = explode('_', $_POST['fltype'])[0];
-	$FL_OTHER_success = Bonus::give_token($LoggedUser['ID'], $UserID, $_POST['fltype']);
+	$FL_OTHER_success = \Gazelle\Bonus::give_token($LoggedUser['ID'], $UserID, $_POST['fltype']);
 }
 $Preview = isset($_GET['preview']) ? $_GET['preview'] : 0;
 if ($UserID == $LoggedUser['ID']) {
@@ -35,7 +35,7 @@ if ($UserID == $LoggedUser['ID']) {
 	$OwnProfile = false;
 	//Don't allow any kind of previewing on others' profiles
 	$Preview = 0;
-	$FL_Other = Bonus::get_list_other(G::$LoggedUser['BonusPoints']);
+	$FL_Other = \Gazelle\Bonus::get_list_other(G::$LoggedUser['BonusPoints']);
 }
 $EnabledRewards = Donations::get_enabled_rewards($UserID);
 $ProfileRewards = Donations::get_profile_rewards($UserID);

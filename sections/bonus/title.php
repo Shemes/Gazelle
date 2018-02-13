@@ -3,8 +3,8 @@
 $ID = \G::$LoggedUser['ID'];
 $BBCode = (isset($_REQUEST['BBCode']) && $_REQUEST['BBCode'] === 'true') ? 'true' : 'false';
 $Option = (isset($_REQUEST['BBCode']) && $_REQUEST['BBCode'] === 'true') ? 'title_bbcode' : 'title_nobbcode';
-$Item = Bonus::$Items[$Option];
-$Price = Bonus::get_price($Item);
+$Item = \Gazelle\Bonus::$Items[$Option];
+$Price = \Gazelle\Bonus::get_price($Item);
 
 if (isset($_REQUEST['preview'])) {
 	$Title = ($BBCode === 'true') ? Text::full_format($_POST['title']) : Text::strip_bbcode($_POST['title']);

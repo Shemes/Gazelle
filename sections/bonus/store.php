@@ -33,9 +33,9 @@ HTML;
 <?php
 
 $Cnt = 1;
-foreach (Bonus::$Items as $Key => $Item) {
+foreach (\Gazelle\Bonus::$Items as $Key => $Item) {
 	$RowClass = ($Cnt % 2 === 0) ? 'rowb' : 'rowa';
-	$Price = Bonus::get_price($Item);
+	$Price = \Gazelle\Bonus::get_price($Item);
 	$FormattedPrice = number_format($Price);
 	print <<<HTML
 			<tr class="$RowClass">
