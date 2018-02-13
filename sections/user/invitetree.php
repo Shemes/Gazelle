@@ -21,9 +21,7 @@ if (isset($_GET['userid']) && check_perms('users_view_invites')) {
 }
 
 list($UserID, $Username, $PermissionID) = array_values(Users::user_info($UserID));
-
-include(SERVER_ROOT.'/classes/invite_tree.class.php');
-$Tree = new INVITE_TREE($UserID);
+$Tree = new \Gazelle\InviteTree($UserID);
 
 View::show_header($Username.' &gt; Invites &gt; Tree');
 ?>

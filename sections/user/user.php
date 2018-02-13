@@ -869,8 +869,7 @@ if (check_perms('users_mod')) {
 }
 
 if ((check_perms('users_view_invites')) && $Invited > 0) {
-	include(SERVER_ROOT.'/classes/invite_tree.class.php');
-	$Tree = new INVITE_TREE($UserID, array('visible' => false));
+	$Tree = new \Gazelle\InviteTree($UserID, array('visible' => false));
 ?>
 		<div class="box" id="invitetree_box">
 			<div class="head">
