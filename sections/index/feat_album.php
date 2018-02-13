@@ -24,7 +24,7 @@ if (is_number($FeaturedAlbum['GroupID'])) {
 			</div>
 			<div class="center pad">
 				<a href="torrents.php?id=<?=$FeaturedAlbum['GroupID']?>" class="tooltip" title="<?=\Gazelle\Artists::display_artists($Artists, false, false)?> - <?=$FeaturedAlbum['Name']?>">
-					<img src="<?=ImageTools::process($FeaturedAlbum['WikiImage'], true)?>" alt="<?=\Gazelle\Artists::display_artists($Artists, false, false)?> - <?=$FeaturedAlbum['Name']?>" width="100%" />
+					<img src="<?=\Gazelle\ImageTools::process($FeaturedAlbum['WikiImage'], true)?>" alt="<?=\Gazelle\Artists::display_artists($Artists, false, false)?> - <?=$FeaturedAlbum['Name']?>" width="100%" />
 				</a>
 			</div>
 			<div class="center pad">

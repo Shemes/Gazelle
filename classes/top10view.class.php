@@ -62,7 +62,7 @@ class Top10View {
 ?>
 			<li>
 				<a href="<?=$Url?><?=$Name?>">
-					<img class="tooltip large_tile" alt="<?=$Name?>" title="<?=$Name?>" src="<?=ImageTools::process($Image)?>" />
+					<img class="tooltip large_tile" alt="<?=$Name?>" title="<?=$Name?>" src="<?=\Gazelle\ImageTools::process($Image)?>" />
 				</a>
 			</li>
 <?
@@ -87,7 +87,7 @@ class Top10View {
 	private static function render_list($Url, $Name, $Image) {
 		if (!empty($Image)) {
 			$UseTooltipster = !isset(\Gazelle\G::$LoggedUser['Tooltipster']) || \Gazelle\G::$LoggedUser['Tooltipster'];
-			$Image = ImageTools::process($Image);
+			$Image = \Gazelle\ImageTools::process($Image);
 			$Title = "title=\"&lt;img class=&quot;large_tile&quot; src=&quot;$Image&quot; alt=&quot;&quot; /&gt;\"";
 			$Name = display_str($Name);
 ?>

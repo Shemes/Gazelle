@@ -19,7 +19,7 @@
 		<strong>Featured Product</strong>
 	</div>
 	<div class="center pad">
-		<a href="http://anonym.to/?<?=$FeaturedMerchURL . $FeaturedMerch['ProductID']?>"><img src="<?=ImageTools::process($FeaturedMerch['Image'])?>" width="100%" alt="Featured Product Image" /></a>
+		<a href="http://anonym.to/?<?=$FeaturedMerchURL . $FeaturedMerch['ProductID']?>"><img src="<?=\Gazelle\ImageTools::process($FeaturedMerch['Image'])?>" width="100%" alt="Featured Product Image" /></a>
 	</div>
 	<div class="center pad">
 		<a href="http://anonym.to/?<?=$FeaturedMerchURL . $FeaturedMerch['ProductID']?>"><em>Product Page</em></a>

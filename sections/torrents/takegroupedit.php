@@ -81,7 +81,7 @@ if (!empty($_GET['action']) && $_GET['action'] == 'revert') { // if we're revert
 	if (!preg_match("/^".IMAGE_REGEX."$/i", $Image)) {
 		$Image = '';
 	}
-	ImageTools::blacklisted($Image);
+	\Gazelle\ImageTools::blacklisted($Image);
 	$Summary = \Gazelle\Util\Db::string($_POST['summary']);
 }
 

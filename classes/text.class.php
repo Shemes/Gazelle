@@ -789,7 +789,7 @@ class Text {
 						if ($LocalURL) {
 							$Str .= '<img class="scale_image" onclick="lightbox.init(this, $(this).width());" alt="'.$Block['Val'].'" src="'.$LocalURL.'" />';
 						} else {
-							$Str .= '<img class="scale_image" onclick="lightbox.init(this, $(this).width());" alt="'.$Block['Val'].'" src="'.ImageTools::process($Block['Val']).'" />';
+							$Str .= '<img class="scale_image" onclick="lightbox.init(this, $(this).width());" alt="'.$Block['Val'].'" src="'.\Gazelle\ImageTools::process($Block['Val']).'" />';
 						}
 					}
 					break;

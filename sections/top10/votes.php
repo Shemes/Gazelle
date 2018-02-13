@@ -212,7 +212,7 @@ foreach ($TopVotes as $GroupID => $Group) {
 					<td class="big_info">
 <?		if ($LoggedUser['CoverArt']) { ?>
 						<div class="group_image float_left clear">
-							<? ImageTools::cover_thumb($WikiImage, $GroupCategoryID) ?>
+							<? \Gazelle\ImageTools::cover_thumb($WikiImage, $GroupCategoryID) ?>
 						</div>
 <?		} ?>
 						<div class="group_info clear">
@@ -335,7 +335,7 @@ foreach ($TopVotes as $GroupID => $Group) {
 			<td class="nobr big_info">
 <?		if ($LoggedUser['CoverArt']) { ?>
 				<div class="group_image float_left clear">
-					<? ImageTools::cover_thumb($WikiImage, $GroupCategoryID) ?>
+					<? \Gazelle\ImageTools::cover_thumb($WikiImage, $GroupCategoryID) ?>
 				</div>
 <?		} ?>
 				<div class="group_info clear">

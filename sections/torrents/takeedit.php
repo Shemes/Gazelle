@@ -212,7 +212,7 @@ $Matches = [];
 if (preg_match($AmazonReg, $Properties['Image'], $Matches)) {
     $Properties['Image'] = $Matches[1] . '.jpg';
 }
-ImageTools::blacklisted($Properties['Image']);
+\Gazelle\ImageTools::blacklisted($Properties['Image']);
 
 if ($Err) { // Show the upload form, with the data the user entered
     if (check_perms('site_debug')) {

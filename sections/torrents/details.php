@@ -165,7 +165,7 @@ View::show_header($Title, 'browse,comments,torrent,bbcode,recommend,cover_art,su
 <div id="covers">
 <div id="cover_div_<?=$Index?>" class="pad">
 <?	if ($WikiImage != '') { ?>
-			<p align="center"><img width="100%" src="<?=ImageTools::process($WikiImage, true)?>" alt="<?=$AltName?>" onclick="lightbox.init('<?=ImageTools::process($WikiImage)?>', 220);" /></p>
+			<p align="center"><img width="100%" src="<?=\Gazelle\ImageTools::process($WikiImage, true)?>" alt="<?=$AltName?>" onclick="lightbox.init('<?=\Gazelle\ImageTools::process($WikiImage)?>', 220);" /></p>
 <?	} else { ?>
 			<p align="center"><img width="100%" src="<?=STATIC_SERVER?>common/noartwork/<?=$CategoryIcons[$GroupCategoryID - 1]?>" alt="<?=$Categories[$GroupCategoryID - 1]?>" class="brackets tooltip" title="<?=$Categories[$GroupCategoryID - 1]?>" height="220" border="0" /></p>
 <?
@@ -180,12 +180,12 @@ $Index++;
 				<p align="center">
 <?
 					if (empty($LoggedUser['ShowExtraCovers'])) {
-						$Src = 'src="" data-gazelle-temp-src="' . ImageTools::process($Image, true) . '"';
+						$Src = 'src="" data-gazelle-temp-src="' . \Gazelle\ImageTools::process($Image, true) . '"';
 					} else {
-						$Src = 'src="' . ImageTools::process($Image, true) . '"';
+						$Src = 'src="' . \Gazelle\ImageTools::process($Image, true) . '"';
 					}
 ?>
-					<img id="cover_<?=$Index?>" width="100%" <?=$Src?> alt="<?=$Summary?>" onclick="lightbox.init('<?=ImageTools::process($Image)?>', 220);" />
+					<img id="cover_<?=$Index?>" width="100%" <?=$Src?> alt="<?=$Summary?>" onclick="lightbox.init('<?=\Gazelle\ImageTools::process($Image)?>', 220);" />
 				</p>
 				<ul class="stats nobullet">
 					<li>

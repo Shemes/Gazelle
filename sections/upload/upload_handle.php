@@ -352,7 +352,7 @@ $Matches = array();
 if (preg_match($RegX, $Properties['Image'], $Matches)) {
 	$Properties['Image'] = $Matches[1].'.jpg';
 }
-ImageTools::blacklisted($Properties['Image']);
+\Gazelle\ImageTools::blacklisted($Properties['Image']);
 
 //******************************************************************************//
 //--------------- Make variables ready for database input ----------------------//

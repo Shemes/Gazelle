@@ -1,5 +1,7 @@
 <?php
 
+
+namespace Gazelle;
 /**
  * ImageTools Class
  * Thumbnail aide, mostly

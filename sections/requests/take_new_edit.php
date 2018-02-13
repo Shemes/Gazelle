@@ -82,7 +82,7 @@ if ($NewRequest) {
 if (empty($_POST['image'])) {
 	$Image = '';
 } else {
-	ImageTools::blacklisted($_POST['image']);
+	\Gazelle\ImageTools::blacklisted($_POST['image']);
 	if (preg_match('/'.IMAGE_REGEX.'/', trim($_POST['image'])) > 0) {
 			$Image = trim($_POST['image']);
 	} else {

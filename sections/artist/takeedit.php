@@ -31,7 +31,7 @@ if ($_GET['action'] === 'revert') { // if we're reverting to a previous revision
 	$Body = \Gazelle\Util\Db::string($_POST['body']);
 	$Summary = \Gazelle\Util\Db::string($_POST['summary']);
 	$Image = \Gazelle\Util\Db::string($_POST['image']);
-	ImageTools::blacklisted($Image);
+	\Gazelle\ImageTools::blacklisted($Image);
 	// Trickery
 	if (!preg_match("/^".IMAGE_REGEX."$/i", $Image)) {
 		$Image = '';

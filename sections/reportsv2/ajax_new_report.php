@@ -318,7 +318,7 @@ $DB->query("
 				$Images = explode(' ', $Images);
 				foreach ($Images as $Image) {
 		?>
-							<img style="max-width: 200px;" onclick="lightbox.init(this, 200);" src="<?=ImageTools::process($Image)?>" alt="Relevant image" />
+							<img style="max-width: 200px;" onclick="lightbox.init(this, 200);" src="<?=\Gazelle\ImageTools::process($Image)?>" alt="Relevant image" />
 <?
 				} ?>
 						</td>

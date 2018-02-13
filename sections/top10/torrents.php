@@ -548,7 +548,7 @@ function generate_torrent_table($Caption, $Tag, $Details, $Limit) {
 		<td class="big_info">
 <?		if ($LoggedUser['CoverArt']) { ?>
 			<div class="group_image float_left clear">
-				<? ImageTools::cover_thumb($WikiImage, $GroupCategoryID) ?>
+				<? \Gazelle\ImageTools::cover_thumb($WikiImage, $GroupCategoryID) ?>
 			</div>
 <?		} ?>
 			<div class="group_info clear">

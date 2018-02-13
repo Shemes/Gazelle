@@ -172,7 +172,7 @@ $DisplayCustomTitle = $CustomTitle;
 if (check_perms('site_proxy_images') && !empty($CustomTitle)) {
 	$DisplayCustomTitle = preg_replace_callback('~src=("?)(http.+?)(["\s>])~',
 								function($Matches) {
-									return 'src=' . $Matches[1] . ImageTools::process($Matches[2]) . $Matches[3];
+									return 'src=' . $Matches[1] . \Gazelle\ImageTools::process($Matches[2]) . $Matches[3];
 								}, $CustomTitle);
 }
 
@@ -748,7 +748,7 @@ if (check_paranoia_here('snatched')) {
 <?		foreach ($RecentSnatches as $RS) { ?>
 			<td>
 				<a href="torrents.php?id=<?=$RS['ID']?>">
-					<img class="tooltip" title="<?=display_str($RS['Artist'])?><?=display_str($RS['Name'])?>" src="<?=ImageTools::process($RS['WikiImage'], true)?>" alt="<?=display_str($RS['Artist'])?><?=display_str($RS['Name'])?>" width="107" />
+					<img class="tooltip" title="<?=display_str($RS['Artist'])?><?=display_str($RS['Name'])?>" src="<?=\Gazelle\ImageTools::process($RS['WikiImage'], true)?>" alt="<?=display_str($RS['Artist'])?><?=display_str($RS['Name'])?>" width="107" />
 				</a>
 			</td>
 <?		} ?>
@@ -793,7 +793,7 @@ if (check_paranoia_here('uploads')) {
 <?		foreach ($RecentUploads as $RU) { ?>
 			<td>
 				<a href="torrents.php?id=<?=$RU['ID']?>">
-					<img class="tooltip" title="<?=$RU['Artist']?><?=$RU['Name']?>" src="<?=ImageTools::process($RU['WikiImage'], true)?>" alt="<?=$RU['Artist']?><?=$RU['Name']?>" width="107" />
+					<img class="tooltip" title="<?=$RU['Artist']?><?=$RU['Name']?>" src="<?=\Gazelle\ImageTools::process($RU['WikiImage'], true)?>" alt="<?=$RU['Artist']?><?=$RU['Name']?>" width="107" />
 				</a>
 			</td>
 <?		} ?>
@@ -848,7 +848,7 @@ foreach ($Collages as $CollageInfo) {
 ?>
 			<td>
 				<a href="torrents.php?id=<?=$GroupID?>">
-					<img class="tooltip" title="<?=$Name?>" src="<?=ImageTools::process($C['WikiImage'], true)?>" alt="<?=$Name?>" width="107" />
+					<img class="tooltip" title="<?=$Name?>" src="<?=\Gazelle\ImageTools::process($C['WikiImage'], true)?>" alt="<?=$Name?>" width="107" />
 				</a>
 			</td>
 <?	} ?>

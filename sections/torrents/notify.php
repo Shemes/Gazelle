@@ -294,7 +294,7 @@ if (empty($Results)) {
 		<td class="big_info">
 <? if ($LoggedUser['CoverArt']) { ?>
 			<div class="group_image float_left clear">
-				<? ImageTools::cover_thumb($GroupInfo['WikiImage'], $GroupCategoryID) ?>
+				<? \Gazelle\ImageTools::cover_thumb($GroupInfo['WikiImage'], $GroupCategoryID) ?>
 			</div>
 <? } ?>
 			<div class="group_info clear">
