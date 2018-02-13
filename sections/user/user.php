@@ -387,7 +387,7 @@ if ($Enabled == 1 && (count($FL_Other) || isset($FL_OTHER_success))) {
 		</div>
 <?
 // Last.fm statistics and comparability
-$LastFMUsername = LastFM::get_lastfm_username($UserID);
+$LastFMUsername = \Gazelle\LastFM::get_lastfm_username($UserID);
 if ($LastFMUsername)  {
 	LastFMView::render_sidebar($LastFMUsername, $UserID, $OwnProfile);
 }

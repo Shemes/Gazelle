@@ -13,10 +13,10 @@ $View = in_array($View, array('tiles', 'list')) ? $View : 'tiles';
 
 switch ($Category) {
 	case 'weekly':
-		$Artists = json_decode(LastFM::get_weekly_artists(LIMIT), true)['artists']['artist'];
+		$Artists = json_decode(\Gazelle\LastFM::get_weekly_artists(LIMIT), true)['artists']['artist'];
 		break;
 	case 'hyped':
-		$Artists = json_decode(LastFM::get_hyped_artists(LIMIT), true)['artists']['artist'];
+		$Artists = json_decode(\Gazelle\LastFM::get_hyped_artists(LIMIT), true)['artists']['artist'];
 		break;
 	default:
 		break;

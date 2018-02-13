@@ -9,7 +9,7 @@ class LastFMView {
 	 * @param $OwnProfile
 	 */
 	public static function render_sidebar($LastFMUsername, $UserID, $OwnProfile) {
-		$LastFMInfo = LastFM::get_user_info($LastFMUsername);
+		$LastFMInfo = \Gazelle\LastFM::get_user_info($LastFMUsername);
 ?>
 		<div class="box box_info box_lastfm">
 			<div class="head colhead_dark">Last.fm</div>
