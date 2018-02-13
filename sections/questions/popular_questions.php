@@ -1,7 +1,7 @@
 <?
 Text::$TOC = true;
 
-G::$DB->query("
+\Gazelle\G::$DB->query("
 		SELECT
 			q.ID,
 			q.Question,
@@ -17,7 +17,7 @@ G::$DB->query("
 		GROUP BY q.ID
 		ORDER BY Responses DESC");
 
-$Questions =\G::$DB->to_array();
+$Questions =\Gazelle\G::$DB->to_array();
 
 View::show_header('Popular Questions', 'questions,bbcode');
 

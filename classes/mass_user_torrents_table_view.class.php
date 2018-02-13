@@ -155,7 +155,7 @@ class MASS_USER_TORRENTS_TABLE_VIEW {
 		<div>
 			<input type="hidden" name="action" value="mass_edit" />
 			<input type="hidden" name="type" value="<?=display_str($this->EditType)?>" />
-			<input type="hidden" name="auth" value="<?=\G::$LoggedUser['AuthKey']?>" />
+			<input type="hidden" name="auth" value="<?=\Gazelle\G::$LoggedUser['AuthKey']?>" />
 		</div>
 	</form>
 </div>

@@ -12,14 +12,14 @@ class SiteOptions {
      * @param string $DefaultValue The value to default to if the name can't be found in the cache
      */
     public static function getSiteOption($Name, $DefaultValue) {
-        $Value = \G::$Cache->get_value('site_option_' . $Name);
+        $Value = \Gazelle\G::$Cache->get_value('site_option_' . $Name);
 
         if ($Value === false) {
-            \G::$DB->query("SELECT Value FROM site_options WHERE Name = '" . \Gazelle\Util\Db::string($Name) . "'");
+            \Gazelle\G::$DB->query("SELECT Value FROM site_options WHERE Name = '" . \Gazelle\Util\Db::string($Name) . "'");
 
-            if (\G::$DB->has_results()) {
-                list($Value) = \G::$DB->next_record();
-                \G::$Cache->cache_value('site_option_' . $Name, $Value);
+            if (\Gazelle\G::$DB->has_results()) {
+                list($Value) = \Gazelle\G::$DB->next_record();
+                \Gazelle\G::$Cache->cache_value('site_option_' . $Name, $Value);
             }
         }
 

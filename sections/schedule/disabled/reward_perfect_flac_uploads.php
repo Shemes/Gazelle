@@ -16,12 +16,12 @@ if ($DB->has_results()) {
 		$Invites = max(floor($Count / 20)-$Invites_Given, 0);
 		$SQL = "UPDATE users_main SET FLTokens = FLTokens + $FLTokens, Invites = Invites + $Invites, FLT_Given = FLT_Given + $FLTokens, Invites_Given = Invites_Given + $Invites WHERE ID = $UserID";
 		if ($FLTokens != 0) {
-			G::$DB->query_unb($SQL);
+			\Gazelle\G::$DB->query_unb($SQL);
 			$Invites = $Invites + $CurInvites;
 			$FLTokens = $FLTokens + $CurFLTokens;
-			G::$Cache->begin_transaction('user_info_heavy_'.$UserID);
-			G::$Cache->update_row(false, array('Invites' => $Invites, 'FLTokens' => $FLTokens));
-			G::$Cache->commit_transaction(0);
+			\Gazelle\G::$Cache->begin_transaction('user_info_heavy_'.$UserID);
+			\Gazelle\G::$Cache->update_row(false, array('Invites' => $Invites, 'FLTokens' => $FLTokens));
+			\Gazelle\G::$Cache->commit_transaction(0);
 		}
 	}
 }

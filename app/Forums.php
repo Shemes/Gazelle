@@ -17,9 +17,9 @@ class Forums
      */
     public static function get_thread_info($ThreadID, $Return = true, $SelectiveCache = false)
     {
-        if ((!$ThreadInfo = \G::$Cache->get_value('thread_' . $ThreadID . '_info')) || !isset($ThreadInfo['Ranking'])) {
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query("
+        if ((!$ThreadInfo = \Gazelle\G::$Cache->get_value('thread_' . $ThreadID . '_info')) || !isset($ThreadInfo['Ranking'])) {
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query("
 				SELECT
 					t.Title,
 					t.ForumID,
@@ -37,14 +37,14 @@ class Forums
 					LEFT JOIN forums_polls AS p ON p.TopicID = t.ID
 				WHERE t.ID = '$ThreadID'
 				GROUP BY fp.TopicID");
-            if (!\G::$DB->has_results()) {
-                \G::$DB->set_query_id($QueryID);
+            if (!\Gazelle\G::$DB->has_results()) {
+                \Gazelle\G::$DB->set_query_id($QueryID);
                 return null;
             }
-            $ThreadInfo = \G::$DB->next_record(MYSQLI_ASSOC, false);
+            $ThreadInfo = \Gazelle\G::$DB->next_record(MYSQLI_ASSOC, false);
             if ($ThreadInfo['StickyPostID']) {
                 $ThreadInfo['Posts']--;
-                \G::$DB->query(
+                \Gazelle\G::$DB->query(
                     "SELECT
 						p.ID,
 						p.AuthorID,
@@ -58,11 +58,11 @@ class Forums
 						WHERE p.TopicID = '$ThreadID'
 							AND p.ID = '" . $ThreadInfo['StickyPostID'] . "'"
                 );
-                list($ThreadInfo['StickyPost']) = \G::$DB->to_array(false, MYSQLI_ASSOC);
+                list($ThreadInfo['StickyPost']) = \Gazelle\G::$DB->to_array(false, MYSQLI_ASSOC);
             }
-            \G::$DB->set_query_id($QueryID);
+            \Gazelle\G::$DB->set_query_id($QueryID);
             if (!$SelectiveCache || !$ThreadInfo['IsLocked'] || $ThreadInfo['IsSticky']) {
-                \G::$Cache->cache_value('thread_' . $ThreadID . '_info', $ThreadInfo, 0);
+                \Gazelle\G::$Cache->cache_value('thread_' . $ThreadID . '_info', $ThreadInfo, 0);
             }
         }
         if ($Return) {
@@ -82,16 +82,16 @@ class Forums
     public static function check_forumperm($ForumID, $Perm = 'Read')
     {
         $Forums = self::get_forums();
-        if (isset(\G::$LoggedUser['CustomForums'][$ForumID]) && \G::$LoggedUser['CustomForums'][$ForumID] == 1) {
+        if (isset(\Gazelle\G::$LoggedUser['CustomForums'][$ForumID]) && \Gazelle\G::$LoggedUser['CustomForums'][$ForumID] == 1) {
             return true;
         }
-        if ($ForumID == DONOR_FORUM && \Gazelle\Donations::has_donor_forum(\G::$LoggedUser['ID'])) {
+        if ($ForumID == DONOR_FORUM && \Gazelle\Donations::has_donor_forum(\Gazelle\G::$LoggedUser['ID'])) {
             return true;
         }
-        if ($Forums[$ForumID]['MinClass' . $Perm] > \G::$LoggedUser['Class'] && (!isset(\G::$LoggedUser['CustomForums'][$ForumID]) || \G::$LoggedUser['CustomForums'][$ForumID] == 0)) {
+        if ($Forums[$ForumID]['MinClass' . $Perm] > \Gazelle\G::$LoggedUser['Class'] && (!isset(\Gazelle\G::$LoggedUser['CustomForums'][$ForumID]) || \Gazelle\G::$LoggedUser['CustomForums'][$ForumID] == 0)) {
             return false;
         }
-        if (isset(\G::$LoggedUser['CustomForums'][$ForumID]) && \G::$LoggedUser['CustomForums'][$ForumID] == 0) {
+        if (isset(\Gazelle\G::$LoggedUser['CustomForums'][$ForumID]) && \Gazelle\G::$LoggedUser['CustomForums'][$ForumID] == 0) {
             return false;
         }
         return true;
@@ -105,10 +105,10 @@ class Forums
      */
     public static function get_forum_info($ForumID)
     {
-        $Forum = \G::$Cache->get_value("ForumInfo_$ForumID");
+        $Forum = \Gazelle\G::$Cache->get_value("ForumInfo_$ForumID");
         if (!$Forum) {
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query("
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query("
 				SELECT
 					Name,
 					MinClassRead,
@@ -119,15 +119,15 @@ class Forums
 					LEFT JOIN forums_topics ON forums_topics.ForumID = forums.ID
 				WHERE forums.ID = '$ForumID'
 				GROUP BY ForumID");
-            if (!\G::$DB->has_results()) {
+            if (!\Gazelle\G::$DB->has_results()) {
                 return false;
             }
             // Makes an array, with $Forum['Name'], etc.
-            $Forum = \G::$DB->next_record(MYSQLI_ASSOC);
+            $Forum = \Gazelle\G::$DB->next_record(MYSQLI_ASSOC);
 
-            \G::$DB->set_query_id($QueryID);
+            \Gazelle\G::$DB->set_query_id($QueryID);
 
-            \G::$Cache->cache_value("ForumInfo_$ForumID", $Forum, 86400);
+            \Gazelle\G::$Cache->cache_value("ForumInfo_$ForumID", $Forum, 86400);
         }
         return $Forum;
     }
@@ -138,19 +138,19 @@ class Forums
      */
     public static function get_forum_categories()
     {
-        $ForumCats = \G::$Cache->get_value('forums_categories');
+        $ForumCats = \Gazelle\G::$Cache->get_value('forums_categories');
         if ($ForumCats === false) {
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query('
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query('
 				SELECT ID, Name
 				FROM forums_categories
 				ORDER BY Sort, Name');
             $ForumCats = [];
-            while (list($ID, $Name) = \G::$DB->next_record()) {
+            while (list($ID, $Name) = \Gazelle\G::$DB->next_record()) {
                 $ForumCats[$ID] = $Name;
             }
-            \G::$DB->set_query_id($QueryID);
-            \G::$Cache->cache_value('forums_categories', $ForumCats, 0);
+            \Gazelle\G::$DB->set_query_id($QueryID);
+            \Gazelle\G::$Cache->cache_value('forums_categories', $ForumCats, 0);
         }
         return $ForumCats;
     }
@@ -161,9 +161,9 @@ class Forums
      */
     public static function get_forums()
     {
-        if (!$Forums = \G::$Cache->get_value('forums_list')) {
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query('
+        if (!$Forums = \Gazelle\G::$Cache->get_value('forums_list')) {
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query('
 				SELECT
 					f.ID,
 					f.CategoryID,
@@ -187,16 +187,16 @@ class Forums
 					LEFT JOIN forums_topics AS t ON t.ID = f.LastPostTopicID
 				GROUP BY f.ID
 				ORDER BY fc.Sort, fc.Name, f.CategoryID, f.Sort, f.Name');
-            $Forums = \G::$DB->to_array('ID', MYSQLI_ASSOC, false);
+            $Forums = \Gazelle\G::$DB->to_array('ID', MYSQLI_ASSOC, false);
 
-            \G::$DB->query('
+            \Gazelle\G::$DB->query('
 				SELECT ForumID, ThreadID
 				FROM forums_specific_rules');
             $SpecificRules = [];
-            while (list($ForumID, $ThreadID) = \G::$DB->next_record(MYSQLI_NUM, false)) {
+            while (list($ForumID, $ThreadID) = \Gazelle\G::$DB->next_record(MYSQLI_NUM, false)) {
                 $SpecificRules[$ForumID][] = $ThreadID;
             }
-            \G::$DB->set_query_id($QueryID);
+            \Gazelle\G::$DB->set_query_id($QueryID);
             foreach ($Forums as $ForumID => &$Forum) {
                 if (isset($SpecificRules[$ForumID])) {
                     $Forum['SpecificRules'] = $SpecificRules[$ForumID];
@@ -204,7 +204,7 @@ class Forums
                     $Forum['SpecificRules'] = [];
                 }
             }
-            \G::$Cache->cache_value('forums_list', $Forums, 0);
+            \Gazelle\G::$Cache->cache_value('forums_list', $Forums, 0);
         }
         return $Forums;
     }
@@ -215,7 +215,7 @@ class Forums
      */
     public static function get_permitted_forums()
     {
-        return isset(\G::$LoggedUser['CustomForums']) ? array_keys(\G::$LoggedUser['CustomForums'], 1) : [];
+        return isset(\Gazelle\G::$LoggedUser['CustomForums']) ? array_keys(\Gazelle\G::$LoggedUser['CustomForums'], 1) : [];
     }
 
     /**
@@ -224,7 +224,7 @@ class Forums
      */
     public static function get_restricted_forums()
     {
-        return isset(\G::$LoggedUser['CustomForums']) ? array_keys(\G::$LoggedUser['CustomForums'], 0) : [];
+        return isset(\Gazelle\G::$LoggedUser['CustomForums']) ? array_keys(\Gazelle\G::$LoggedUser['CustomForums'], 0) : [];
     }
 
     /**
@@ -234,8 +234,8 @@ class Forums
      */
     public static function get_last_read($Forums)
     {
-        if (isset(\G::$LoggedUser['PostsPerPage'])) {
-            $PerPage = \G::$LoggedUser['PostsPerPage'];
+        if (isset(\Gazelle\G::$LoggedUser['PostsPerPage'])) {
+            $PerPage = \Gazelle\G::$LoggedUser['PostsPerPage'];
         } else {
             $PerPage = POSTS_PER_PAGE;
         }
@@ -246,8 +246,8 @@ class Forums
             }
         }
         if (!empty($TopicIDs)) {
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query("
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query("
 				SELECT
 					l.TopicID,
 					l.PostID,
@@ -262,9 +262,9 @@ class Forums
 					) AS Page
 				FROM forums_last_read_topics AS l
 				WHERE l.TopicID IN(" . implode(',', $TopicIDs) . ") AND
-					l.UserID = '" . \G::$LoggedUser['ID'] . "'");
-            $LastRead = \G::$DB->to_array('TopicID', MYSQLI_ASSOC);
-            \G::$DB->set_query_id($QueryID);
+					l.UserID = '" . \Gazelle\G::$LoggedUser['ID'] . "'");
+            $LastRead = \Gazelle\G::$DB->to_array('TopicID', MYSQLI_ASSOC);
+            \Gazelle\G::$DB->set_query_id($QueryID);
         } else {
             $LastRead = [];
         }
@@ -281,16 +281,16 @@ class Forums
     public static function add_topic_note($TopicID, $Note, $UserID = null)
     {
         if ($UserID === null) {
-            $UserID = \G::$LoggedUser['ID'];
+            $UserID = \Gazelle\G::$LoggedUser['ID'];
         }
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query("
 			INSERT INTO forums_topic_notes
 				(TopicID, AuthorID, AddedTime, Body)
 			VALUES
 				($TopicID, $UserID, '" . \Gazelle\Util\Time::sqltime() . "', '" . \Gazelle\Util\Db::string($Note) . "')");
-        \G::$DB->set_query_id($QueryID);
-        return (bool)\G::$DB->affected_rows();
+        \Gazelle\G::$DB->set_query_id($QueryID);
+        return (bool)\Gazelle\G::$DB->affected_rows();
     }
 
     /**
@@ -305,7 +305,7 @@ class Forums
      */
     public static function is_unread($Locked, $Sticky, $LastPostID, $LastRead, $LastTopicID, $LastTime)
     {
-        return (!$Locked || $Sticky) && $LastPostID != 0 && ((empty($LastRead[$LastTopicID]) || $LastRead[$LastTopicID]['PostID'] < $LastPostID) && strtotime($LastTime) > \G::$LoggedUser['CatchupTime']);
+        return (!$Locked || $Sticky) && $LastPostID != 0 && ((empty($LastRead[$LastTopicID]) || $LastRead[$LastTopicID]['PostID'] < $LastPostID) && strtotime($LastTime) > \Gazelle\G::$LoggedUser['CatchupTime']);
     }
 
     /**
@@ -318,10 +318,10 @@ class Forums
         // I couldn't come up with a good name, please rename this if you can. -- Y
         $RestrictedForums = self::get_restricted_forums();
         $PermittedForums = self::get_permitted_forums();
-        if (\Gazelle\Donations::has_donor_forum(\G::$LoggedUser['ID']) && !in_array(DONOR_FORUM, $PermittedForums)) {
+        if (\Gazelle\Donations::has_donor_forum(\Gazelle\G::$LoggedUser['ID']) && !in_array(DONOR_FORUM, $PermittedForums)) {
             $PermittedForums[] = DONOR_FORUM;
         }
-        $SQL = "((f.MinClassRead <= '" . \G::$LoggedUser['Class'] . "'";
+        $SQL = "((f.MinClassRead <= '" . \Gazelle\G::$LoggedUser['Class'] . "'";
         if (count($RestrictedForums)) {
             $SQL .= " AND f.ID NOT IN ('" . implode("', '", $RestrictedForums) . "')";
         }

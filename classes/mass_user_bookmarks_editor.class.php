@@ -16,16 +16,16 @@ class MASS_USER_BOOKMARKS_EDITOR extends MASS_USER_TORRENTS_EDITOR {
 	/**
 	 * Runs a SQL query and clears the Cache key
 	 *
-	 * \G::$Cache->delete_value didn't always work, but setting the key to null, did. (?)
+	 * \Gazelle\G::$Cache->delete_value didn't always work, but setting the key to null, did. (?)
 	 *
 	 * @param string $sql
 	 */
 	protected function query_and_clear_cache($sql) {
-		$QueryID = \G::$DB->get_query_id();
-		if (is_string($sql) && \G::$DB->query($sql)) {
-			\G::$Cache->delete_value('bookmarks_group_ids_' . \G::$LoggedUser['ID']);
+		$QueryID = \Gazelle\G::$DB->get_query_id();
+		if (is_string($sql) && \Gazelle\G::$DB->query($sql)) {
+			\Gazelle\G::$Cache->delete_value('bookmarks_group_ids_' . \Gazelle\G::$LoggedUser['ID']);
 		}
-		\G::$DB->set_query_id($QueryID);
+		\Gazelle\G::$DB->set_query_id($QueryID);
 	}
 
 	/**
@@ -47,7 +47,7 @@ class MASS_USER_BOOKMARKS_EDITOR extends MASS_USER_TORRENTS_EDITOR {
 					WHERE UserID = %d
 						AND GroupID IN (%s)',
 				$this->Table,
-				\G::$LoggedUser['ID'],
+				\Gazelle\G::$LoggedUser['ID'],
 				implode(', ', $SQL)
 			);
 			$this->query_and_clear_cache($SQL);
@@ -61,7 +61,7 @@ class MASS_USER_BOOKMARKS_EDITOR extends MASS_USER_TORRENTS_EDITOR {
 		$SQL = array();
 		foreach ($_POST['sort'] as $GroupID => $Sort) {
 			if (is_number($Sort) && is_number($GroupID)) {
-				$SQL[] = sprintf('(%d, %d, %d)', $GroupID, $Sort, \G::$LoggedUser['ID']);
+				$SQL[] = sprintf('(%d, %d, %d)', $GroupID, $Sort, \Gazelle\G::$LoggedUser['ID']);
 			}
 		}
 

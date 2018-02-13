@@ -35,7 +35,7 @@ if ($UserID == $LoggedUser['ID']) {
 	$OwnProfile = false;
 	//Don't allow any kind of previewing on others' profiles
 	$Preview = 0;
-	$FL_Other = \Gazelle\Bonus::get_list_other(G::$LoggedUser['BonusPoints']);
+	$FL_Other = \Gazelle\Bonus::get_list_other(\Gazelle\G::$LoggedUser['BonusPoints']);
 }
 $EnabledRewards = \Gazelle\Donations::get_enabled_rewards($UserID);
 $ProfileRewards = \Gazelle\Donations::get_profile_rewards($UserID);
@@ -663,7 +663,7 @@ if ($OwnProfile || check_perms('users_mod')) {
 				FROM users_info ui
 				LEFT JOIN users_history_passwords uhp ON uhp.UserID = $UserID
 				WHERE ui.UserID = $UserID");
-	list($PasswordHistory, $JoinDate) =\G::$DB->next_record();
+	list($PasswordHistory, $JoinDate) =\Gazelle\G::$DB->next_record();
 	$Age = (empty($PasswordHistory)) ? \Gazelle\Util\Time::timeDiff($JoinDate) : \Gazelle\Util\Time::timeDiff($PasswordHistory);
 	$PasswordAge = substr($Age, 0, strpos($Age, " ago"));
 ?>

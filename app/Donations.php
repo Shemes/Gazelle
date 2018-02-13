@@ -47,15 +47,15 @@ class Donations
     public static function donate($UserID, $Args)
     {
         $UserID = (int)$UserID;
-        $QueryID = \G::$DB->get_query_id();
+        $QueryID = \Gazelle\G::$DB->get_query_id();
 
-        \G::$DB->query("
+        \Gazelle\G::$DB->query("
 			SELECT 1
 			FROM users_main
 			WHERE ID = '$UserID'
 			LIMIT 1");
-        if (\G::$DB->has_results()) {
-            \G::$Cache->InternalCache = false;
+        if (\Gazelle\G::$DB->has_results()) {
+            \Gazelle\G::$Cache->InternalCache = false;
             foreach ($Args as &$Arg) {
                 $Arg = \Gazelle\Util\Db::string($Arg);
             }
@@ -69,22 +69,22 @@ class Donations
             // Get the ID of the staff member making the edit
             $AddedBy = 0;
             if (!self::$IsSchedule) {
-                $AddedBy = \G::$LoggedUser['ID'];
+                $AddedBy = \Gazelle\G::$LoggedUser['ID'];
             }
 
             // Legacy donor, should remove at some point
-            \G::$DB->query("
+            \Gazelle\G::$DB->query("
 				UPDATE users_info
 				SET Donor = '1'
 				WHERE UserID = '$UserID'");
             // Give them the extra invite
-            $ExtraInvite = \G::$DB->affected_rows();
+            $ExtraInvite = \Gazelle\G::$DB->affected_rows();
 
             // A staff member is directly manipulating donor points
             if (isset($Manipulation) && $Manipulation === 'Direct') {
                 $DonorPoints = $Rank;
                 $AdjustedRank = $Rank >= MAX_EXTRA_RANK ? MAX_EXTRA_RANK : $Rank;
-                \G::$DB->query("
+                \Gazelle\G::$DB->query("
 					INSERT INTO users_donor_ranks
 						(UserID, Rank, TotalRank, DonationTime, RankExpirationTime)
 					VALUES
@@ -114,7 +114,7 @@ class Donations
                 } else {
                     $AdjustedRank = $CurrentRank + $DonorPoints;
                 }
-                \G::$DB->query("
+                \Gazelle\G::$DB->query("
 					INSERT INTO users_donor_ranks
 						(UserID, Rank, TotalRank, DonationTime, RankExpirationTime)
 					VALUES
@@ -126,7 +126,7 @@ class Donations
 						RankExpirationTime = NOW()");
             }
             // Donor cache key is outdated
-            \G::$Cache->delete_value("donor_info_$UserID");
+            \Gazelle\G::$Cache->delete_value("donor_info_$UserID");
 
             // Get their rank
             $Rank = self::get_rank($UserID);
@@ -136,20 +136,20 @@ class Donations
             self::calculate_special_rank($UserID);
 
             // Hand out invites
-            \G::$DB->query("
+            \Gazelle\G::$DB->query("
 					SELECT InvitesRecievedRank
 					FROM users_donor_ranks
 					WHERE UserID = '$UserID'");
-            list($InvitesRecievedRank) = \G::$DB->next_record();
+            list($InvitesRecievedRank) = \Gazelle\G::$DB->next_record();
             $AdjustedRank = $Rank >= MAX_RANK ? (MAX_RANK - 1) : $Rank;
             $InviteRank = $AdjustedRank - $InvitesRecievedRank;
             if ($InviteRank > 0) {
                 $Invites = $ExtraInvite ? ($InviteRank + 1) : $InviteRank;
-                \G::$DB->query("
+                \Gazelle\G::$DB->query("
 						UPDATE users_main
 						SET Invites = Invites + '$Invites'
 						WHERE ID = $UserID");
-                \G::$DB->query("
+                \Gazelle\G::$DB->query("
 						UPDATE users_donor_ranks
 						SET InvitesRecievedRank = '$AdjustedRank'
 						WHERE UserID = '$UserID'");
@@ -163,32 +163,32 @@ class Donations
             }
 
             // Lastly, add this donation to our history
-            \G::$DB->query("
+            \Gazelle\G::$DB->query("
 				INSERT INTO donations
 					(UserID, Amount, Source, Reason, Currency, Email, Time, AddedBy, Rank, TotalRank)
 				VALUES
 					('$UserID', '$ConvertedPrice', '$Source', '$Reason', '$Currency', '', '$Date', '$AddedBy', '$DonorPoints', '$TotalRank')");
 
             // Clear their user cache keys because the users_info values has been modified
-            \G::$Cache->delete_value("user_info_$UserID");
-            \G::$Cache->delete_value("user_info_heavy_$UserID");
-            \G::$Cache->delete_value("donor_info_$UserID");
+            \Gazelle\G::$Cache->delete_value("user_info_$UserID");
+            \Gazelle\G::$Cache->delete_value("user_info_heavy_$UserID");
+            \Gazelle\G::$Cache->delete_value("donor_info_$UserID");
         }
-        \G::$DB->set_query_id($QueryID);
+        \Gazelle\G::$DB->set_query_id($QueryID);
     }
 
     private static function calculate_special_rank($UserID)
     {
         $UserID = (int)$UserID;
-        $QueryID = \G::$DB->get_query_id();
+        $QueryID = \Gazelle\G::$DB->get_query_id();
         // Are they are special?
-        \G::$DB->query("
+        \Gazelle\G::$DB->query("
 			SELECT TotalRank, SpecialRank
 			FROM users_donor_ranks
 			WHERE UserID = '$UserID'");
-        if (\G::$DB->has_results()) {
+        if (\Gazelle\G::$DB->has_results()) {
             // Adjust their special rank depending on the total rank.
-            list($TotalRank, $SpecialRank) = \G::$DB->next_record();
+            list($TotalRank, $SpecialRank) = \Gazelle\G::$DB->next_record();
             if ($TotalRank < 10) {
                 $SpecialRank = 0;
             }
@@ -205,13 +205,13 @@ class Donations
                 $SpecialRank = 3;
             }
             // Make them special
-            \G::$DB->query("
+            \Gazelle\G::$DB->query("
 				UPDATE users_donor_ranks
 				SET SpecialRank = '$SpecialRank'
 				WHERE UserID = '$UserID'");
-            \G::$Cache->delete_value("donor_info_$UserID");
+            \Gazelle\G::$Cache->delete_value("donor_info_$UserID");
         }
-        \G::$DB->set_query_id($QueryID);
+        \Gazelle\G::$DB->set_query_id($QueryID);
     }
 
     public static function schedule()
@@ -225,8 +225,8 @@ class Donations
 
     public static function expire_ranks()
     {
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query('
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query('
 			SELECT UserID, Rank
 			FROM users_donor_ranks
 			WHERE Rank > 1
@@ -234,21 +234,21 @@ class Donations
 				AND RankExpirationTime < NOW() - INTERVAL 766 HOUR');
         // 2 hours less than 32 days to account for schedule run times
 
-        if (\G::$DB->record_count() > 0) {
+        if (\Gazelle\G::$DB->record_count() > 0) {
             $UserIDs = [];
-            while (list($UserID, $Rank) = \G::$DB->next_record()) {
-                \G::$Cache->delete_value("donor_info_$UserID");
-                \G::$Cache->delete_value("donor_title_$UserID");
-                \G::$Cache->delete_value("donor_profile_rewards_$UserID");
+            while (list($UserID, $Rank) = \Gazelle\G::$DB->next_record()) {
+                \Gazelle\G::$Cache->delete_value("donor_info_$UserID");
+                \Gazelle\G::$Cache->delete_value("donor_title_$UserID");
+                \Gazelle\G::$Cache->delete_value("donor_profile_rewards_$UserID");
                 $UserIDs[] = $UserID;
             }
             $In = implode(',', $UserIDs);
-            \G::$DB->query('
+            \Gazelle\G::$DB->query('
 				UPDATE users_donor_ranks
 				SET Rank = Rank - IF(Rank = ' . MAX_RANK . ", 2, 1), RankExpirationTime = NOW()
 				WHERE UserID IN ($In)");
         }
-        \G::$DB->set_query_id($QueryID);
+        \Gazelle\G::$DB->set_query_id($QueryID);
     }
 
     private static function calculate_rank($Amount)
@@ -272,40 +272,40 @@ class Donations
 
     public static function hide_stats($UserID)
     {
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query("
 			INSERT INTO users_donor_ranks
 				(UserID, Hidden)
 			VALUES
 				('$UserID', '1')
 			ON DUPLICATE KEY UPDATE
 				Hidden = '1'");
-        \G::$DB->set_query_id($QueryID);
+        \Gazelle\G::$DB->set_query_id($QueryID);
     }
 
     public static function show_stats($UserID)
     {
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query("
 			INSERT INTO users_donor_ranks
 				(UserID, Hidden)
 			VALUES
 				('$UserID', '0')
 			ON DUPLICATE KEY UPDATE
 				Hidden = '0'");
-        \G::$DB->set_query_id($QueryID);
+        \Gazelle\G::$DB->set_query_id($QueryID);
     }
 
     public static function is_visible($UserID)
     {
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query("
 			SELECT Hidden
 			FROM users_donor_ranks
 			WHERE Hidden = '0'
 				AND UserID = '$UserID'");
-        $HasResults = \G::$DB->has_results();
-        \G::$DB->set_query_id($QueryID);
+        $HasResults = \Gazelle\G::$DB->has_results();
+        \Gazelle\G::$DB->set_query_id($QueryID);
         return $HasResults;
     }
 
@@ -320,10 +320,10 @@ class Donations
     public static function get_donor_info($UserID)
     {
         // Our cache class should prevent identical memcached requests
-        $DonorInfo = \G::$Cache->get_value("donor_info_$UserID");
+        $DonorInfo = \Gazelle\G::$Cache->get_value("donor_info_$UserID");
         if ($DonorInfo === false) {
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query("
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query("
 				SELECT
 					Rank,
 					SpecialRank,
@@ -333,8 +333,8 @@ class Donations
 				FROM users_donor_ranks
 				WHERE UserID = '$UserID'");
             // 2 hours less than 32 days to account for schedule run times
-            if (\G::$DB->has_results()) {
-                list($Rank, $SpecialRank, $TotalRank, $DonationTime, $ExpireTime) = \G::$DB->next_record(MYSQLI_NUM, false);
+            if (\Gazelle\G::$DB->has_results()) {
+                list($Rank, $SpecialRank, $TotalRank, $DonationTime, $ExpireTime) = \Gazelle\G::$DB->next_record(MYSQLI_NUM, false);
                 if ($DonationTime === null) {
                     $DonationTime = 0;
                 }
@@ -348,7 +348,7 @@ class Donations
                 $Rank = MAX_EXTRA_RANK;
                 $SpecialRank = MAX_SPECIAL_RANK;
             }
-            \G::$DB->query("
+            \Gazelle\G::$DB->query("
 				SELECT
 					IconMouseOverText,
 					AvatarMouseOverText,
@@ -357,8 +357,8 @@ class Donations
 					SecondAvatar
 				FROM donor_rewards
 				WHERE UserID = '$UserID'");
-            $Rewards = \G::$DB->next_record(MYSQLI_ASSOC);
-            \G::$DB->set_query_id($QueryID);
+            $Rewards = \Gazelle\G::$DB->next_record(MYSQLI_ASSOC);
+            \Gazelle\G::$DB->set_query_id($QueryID);
 
             $DonorInfo = [
                 'Rank' => (int)$Rank,
@@ -367,7 +367,7 @@ class Donations
                 'Time' => $DonationTime,
                 'ExpireTime' => $ExpireTime,
                 'Rewards' => $Rewards, ];
-            \G::$Cache->cache_value("donor_info_$UserID", $DonorInfo, 0);
+            \Gazelle\G::$Cache->cache_value("donor_info_$UserID", $DonorInfo, 0);
         }
         return $DonorInfo;
     }
@@ -405,16 +405,16 @@ class Donations
 
     public static function get_titles($UserID)
     {
-        $Results = \G::$Cache->get_value("donor_title_$UserID");
+        $Results = \Gazelle\G::$Cache->get_value("donor_title_$UserID");
         if ($Results === false) {
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query("
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query("
 				SELECT Prefix, Suffix, UseComma
 				FROM donor_forum_usernames
 				WHERE UserID = '$UserID'");
-            $Results = \G::$DB->next_record();
-            \G::$DB->set_query_id($QueryID);
-            \G::$Cache->cache_value("donor_title_$UserID", $Results, 0);
+            $Results = \Gazelle\G::$DB->next_record();
+            \Gazelle\G::$DB->set_query_id($QueryID);
+            \Gazelle\G::$Cache->cache_value("donor_title_$UserID", $Results, 0);
         }
         return $Results;
     }
@@ -471,10 +471,10 @@ class Donations
 
     public static function get_profile_rewards($UserID)
     {
-        $Results = \G::$Cache->get_value("donor_profile_rewards_$UserID");
+        $Results = \Gazelle\G::$Cache->get_value("donor_profile_rewards_$UserID");
         if ($Results === false) {
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query("
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query("
 				SELECT
 					ProfileInfo1,
 					ProfileInfoTitle1,
@@ -486,9 +486,9 @@ class Donations
 					ProfileInfoTitle4
 				FROM donor_rewards
 				WHERE UserID = '$UserID'");
-            $Results = \G::$DB->next_record();
-            \G::$DB->set_query_id($QueryID);
-            \G::$Cache->cache_value("donor_profile_rewards_$UserID", $Results, 0);
+            $Results = \Gazelle\G::$DB->next_record();
+            \Gazelle\G::$DB->set_query_id($QueryID);
+            \Gazelle\G::$Cache->cache_value("donor_profile_rewards_$UserID", $Results, 0);
         }
         return $Results;
     }
@@ -584,27 +584,27 @@ class Donations
         $Values = implode(', ', $Values);
         $Update = implode(', ', $Update);
         if ($Counter > 0) {
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query("
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query("
 				INSERT INTO donor_rewards
 					($Insert)
 				VALUES
 					($Values)
 				ON DUPLICATE KEY UPDATE
 					$Update");
-            \G::$DB->set_query_id($QueryID);
+            \Gazelle\G::$DB->set_query_id($QueryID);
         }
-        \G::$Cache->delete_value("donor_profile_rewards_$UserID");
-        \G::$Cache->delete_value("donor_info_$UserID");
+        \Gazelle\G::$Cache->delete_value("donor_profile_rewards_$UserID");
+        \Gazelle\G::$Cache->delete_value("donor_info_$UserID");
     }
 
     public static function update_titles($UserID, $Prefix, $Suffix, $UseComma)
     {
-        $QueryID = \G::$DB->get_query_id();
+        $QueryID = \Gazelle\G::$DB->get_query_id();
         $Prefix = trim(\Gazelle\Util\Db::string($Prefix));
         $Suffix = trim(\Gazelle\Util\Db::string($Suffix));
         $UseComma = empty($UseComma) ? true : false;
-        \G::$DB->query("
+        \Gazelle\G::$DB->query("
 			INSERT INTO donor_forum_usernames
 				(UserID, Prefix, Suffix, UseComma)
 			VALUES
@@ -613,8 +613,8 @@ class Donations
 				Prefix = '$Prefix',
 				Suffix = '$Suffix',
 				UseComma = '$UseComma'");
-        \G::$Cache->delete_value("donor_title_$UserID");
-        \G::$DB->set_query_id($QueryID);
+        \Gazelle\G::$Cache->delete_value("donor_title_$UserID");
+        \Gazelle\G::$DB->set_query_id($QueryID);
     }
 
     public static function get_donation_history($UserID)
@@ -623,14 +623,14 @@ class Donations
         if (empty($UserID)) {
             error(404);
         }
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query("
 			SELECT Amount, Email, Time, Currency, Reason, Source, AddedBy, Rank, TotalRank
 			FROM donations
 			WHERE UserID = '$UserID'
 			ORDER BY Time DESC");
-        $DonationHistory = \G::$DB->to_array(false, MYSQLI_ASSOC, false);
-        \G::$DB->set_query_id($QueryID);
+        $DonationHistory = \Gazelle\G::$DB->to_array(false, MYSQLI_ASSOC, false);
+        \Gazelle\G::$DB->set_query_id($QueryID);
         return $DonationHistory;
     }
 
@@ -656,9 +656,9 @@ class Donations
     public static function get_leaderboard_position($UserID)
     {
         $UserID = (int)$UserID;
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query('SET @RowNum := 0');
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query('SET @RowNum := 0');
+        \Gazelle\G::$DB->query("
 			SELECT Position
 			FROM (
 				SELECT d.UserID, @RowNum := @RowNum + 1 AS Position
@@ -666,12 +666,12 @@ class Donations
 				ORDER BY TotalRank DESC
 			) l
 			WHERE UserID = '$UserID'");
-        if (\G::$DB->has_results()) {
-            list($Position) = \G::$DB->next_record();
+        if (\Gazelle\G::$DB->has_results()) {
+            list($Position) = \Gazelle\G::$DB->next_record();
         } else {
             $Position = 0;
         }
-        \G::$DB->set_query_id($QueryID);
+        \Gazelle\G::$DB->set_query_id($QueryID);
         return $Position;
     }
 
@@ -705,40 +705,40 @@ class Donations
 
     public static function btc_to_euro($Amount)
     {
-        $Rate = \G::$Cache->get_value('btc_rate');
+        $Rate = \Gazelle\G::$Cache->get_value('btc_rate');
         if (empty($Rate)) {
             $Rate = self::get_stored_conversion_rate('BTC');
-            \G::$Cache->cache_value('btc_rate', $Rate, 86400);
+            \Gazelle\G::$Cache->cache_value('btc_rate', $Rate, 86400);
         }
         return $Rate * $Amount;
     }
 
     public static function usd_to_euro($Amount)
     {
-        $Rate = \G::$Cache->get_value('usd_rate');
+        $Rate = \Gazelle\G::$Cache->get_value('usd_rate');
         if (empty($Rate)) {
             $Rate = self::get_stored_conversion_rate('USD');
-            \G::$Cache->cache_value('usd_rate', $Rate, 86400);
+            \Gazelle\G::$Cache->cache_value('usd_rate', $Rate, 86400);
         }
         return $Rate * $Amount;
     }
 
     public static function get_stored_conversion_rate($Currency)
     {
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query("
 			SELECT Rate
 			FROM currency_conversion_rates
 			WHERE Currency = '$Currency'");
-        list($Rate) = \G::$DB->next_record(MYSQLI_NUM, false);
-        \G::$DB->set_query_id($QueryID);
+        list($Rate) = \Gazelle\G::$DB->next_record(MYSQLI_NUM, false);
+        \Gazelle\G::$DB->set_query_id($QueryID);
         return $Rate;
     }
 
     private static function set_stored_conversion_rate($Currency, $Rate)
     {
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query("
 			REPLACE INTO currency_conversion_rates
 				(Currency, Rate, Time)
 			VALUES
@@ -748,8 +748,8 @@ class Donations
         } elseif ($Currency == 'BTC') {
             $KeyName = 'btc_rate';
         }
-        \G::$Cache->cache_value($KeyName, $Rate, 86400);
-        \G::$DB->set_query_id($QueryID);
+        \Gazelle\G::$Cache->cache_value($KeyName, $Rate, 86400);
+        \Gazelle\G::$DB->set_query_id($QueryID);
     }
 
     private static function get_new_conversion_rates()

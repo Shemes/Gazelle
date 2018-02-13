@@ -25,13 +25,13 @@ class TorrentsDL {
 	 * @param string $AnnounceURL URL to add to the created torrents
 	 */
 	public function __construct(&$QueryResult, $Title) {
-		\G::$Cache->InternalCache = false; // The internal cache is almost completely useless for this
+		\Gazelle\G::$Cache->InternalCache = false; // The internal cache is almost completely useless for this
 		Zip::unlimit(); // Need more memory and longer timeout
 		$this->QueryResult = $QueryResult;
 		$this->Title = $Title;
-		$this->User = \G::$LoggedUser;
-		$AnnounceURL = (\G::$LoggedUser['HttpsTracker']) ? ANNOUNCE_HTTPS_URL : ANNOUNCE_HTTP_URL;
-		$this->AnnounceURL = $AnnounceURL . '/' . \G::$LoggedUser['torrent_pass'] . '/announce';
+		$this->User = \Gazelle\G::$LoggedUser;
+		$AnnounceURL = (\Gazelle\G::$LoggedUser['HttpsTracker']) ? ANNOUNCE_HTTPS_URL : ANNOUNCE_HTTP_URL;
+		$this->AnnounceURL = $AnnounceURL . '/' . \Gazelle\G::$LoggedUser['torrent_pass'] . '/announce';
 		$this->Zip = new Zip(Misc::file_string($Title));
 	}
 
@@ -43,17 +43,17 @@ class TorrentsDL {
 	 */
 	public function get_downloads($Key) {
 		$GroupIDs = $Downloads = array();
-		$OldQuery = \G::$DB->get_query_id();
-		\G::$DB->set_query_id($this->QueryResult);
+		$OldQuery = \Gazelle\G::$DB->get_query_id();
+		\Gazelle\G::$DB->set_query_id($this->QueryResult);
 		if (!isset($this->IDBoundaries)) {
 			if ($Key == 'TorrentID') {
 				$this->IDBoundaries = false;
 			} else {
-				$this->IDBoundaries = \G::$DB->to_pair($Key, 'TorrentID', false);
+				$this->IDBoundaries = \Gazelle\G::$DB->to_pair($Key, 'TorrentID', false);
 			}
 		}
 		$Found = 0;
-		while ($Download = \G::$DB->next_record(MYSQLI_ASSOC, false)) {
+		while ($Download = \Gazelle\G::$DB->next_record(MYSQLI_ASSOC, false)) {
 			if (!$this->IDBoundaries || $Download['TorrentID'] == $this->IDBoundaries[$Download[$Key]]) {
 				$Found++;
 				$Downloads[$Download[$Key]] = $Download;
@@ -64,7 +64,7 @@ class TorrentsDL {
 			}
 		}
 		$this->NumFound += $Found;
-		\G::$DB->set_query_id($OldQuery);
+		\Gazelle\G::$DB->set_query_id($OldQuery);
 		if (empty($Downloads)) {
 			return false;
 		}

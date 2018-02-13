@@ -12,7 +12,7 @@ $DB->query("
 	SELECT BitcoinAddress, SUM(Amount)
 	FROM donations_bitcoin
 	GROUP BY BitcoinAddress");
-$OldDonations =\G::$DB->to_pair(0, 1, false);
+$OldDonations =\Gazelle\G::$DB->to_pair(0, 1, false);
 ?>
 <div class="thin">
 	<div class="header">

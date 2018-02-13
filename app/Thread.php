@@ -24,12 +24,12 @@ class Thread
             return;
         }
         $this->type = $type;
-        \G::$DB->prepared_query('
+        \Gazelle\G::$DB->prepared_query('
 			INSERT INTO thread (ThreadTypeID) VALUES (
 				(SELECT ID FROM thread_type where Name = ?)
 			)
 		', $type);
-        $this->id = \G::$DB->inserted_id();
+        $this->id = \Gazelle\G::$DB->inserted_id();
         $this->story = [];
     }
 
@@ -64,7 +64,7 @@ class Thread
      */
     public function save_note($user_id, $body, $visibility)
     {
-        \G::$DB->prepared_query(
+        \Gazelle\G::$DB->prepared_query(
             'INSERT INTO thread_note (ThreadID, UserID, Body, Visibility) VALUES (?, ?, ?, ?)',
             $this->id,
             $user_id,
@@ -82,7 +82,7 @@ class Thread
      */
     public function update_note($id, $body, $visibility)
     {
-        \G::$DB->prepared_query(
+        \Gazelle\G::$DB->prepared_query(
             'UPDATE thread_note SET Body = ?, Visibility = ? WHERE ID = ?',
             $body,
             $visibility,
@@ -97,7 +97,7 @@ class Thread
      */
     public function delete_note($note_id)
     {
-        \G::$DB->prepared_query(
+        \Gazelle\G::$DB->prepared_query(
             'DELETE FROM thread_note WHERE ThreadID = ? AND ID = ?',
             $this->id(),
             $note_id
@@ -111,16 +111,16 @@ class Thread
     private function refresh()
     {
         $key = 'thread_story_' . $this->id;
-        \G::$DB->prepared_query('
+        \Gazelle\G::$DB->prepared_query('
 			SELECT ID, UserID, Visibility, Created, Body
 			FROM thread_note
 			WHERE ThreadID = ?
 			ORDER BY created;
 		', $this->id);
         $this->story = [];
-        if (\G::$DB->has_results()) {
+        if (\Gazelle\G::$DB->has_results()) {
             $user_cache = [];
-            while (($row = \G::$DB->next_record())) {
+            while (($row = \Gazelle\G::$DB->next_record())) {
                 if (!in_array($row['UserID'], $user_cache)) {
                     $user = Users::user_info($row['UserID']);
                     $user_cache[$row['UserID']] = $user['Username'];
@@ -135,7 +135,7 @@ class Thread
                 ];
             }
         }
-        \G::$Cache->cache_value($key, $this->story, 3600);
+        \Gazelle\G::$Cache->cache_value($key, $this->story, 3600);
         return $this;
     }
 
@@ -150,17 +150,17 @@ class Thread
     {
         $thread = new self();
         $key = "thread_$id";
-        $data = \G::$Cache->get_value($key);
+        $data = \Gazelle\G::$Cache->get_value($key);
         if ($data === false) {
-            \G::$DB->prepared_query('
+            \Gazelle\G::$DB->prepared_query('
 				SELECT tt.Name as ThreadType, t.Created
 				FROM thread t
 				INNER JOIN thread_type tt ON (tt.ID = t.ThreadTypeID)
 				WHERE t.ID = ?
 			', $id);
-            if (\G::$DB->has_results()) {
-                $data = \G::$DB->next_record();
-                \G::$Cache->cache_value($key, $data, 86400);
+            if (\Gazelle\G::$DB->has_results()) {
+                $data = \Gazelle\G::$DB->next_record();
+                \Gazelle\G::$Cache->cache_value($key, $data, 86400);
             }
         }
         $thread->id = $id;

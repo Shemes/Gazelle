@@ -9,7 +9,7 @@ if (!is_number($UserID)) {
 
 $UserInfo = Users::user_info($UserID);
 
-G::$DB->query("
+\Gazelle\G::$DB->query("
 		SELECT
 			u.Username,
 			q.ID,
@@ -30,7 +30,7 @@ G::$DB->query("
 		WHERE a.UserID = '$UserID'
 		ORDER BY AnswerDate DESC");
 
-$Questions =\G::$DB->to_array();
+$Questions =\Gazelle\G::$DB->to_array();
 
 View::show_header($UserInfo['Username'] . "'s answers", 'questions,bbcode');
 

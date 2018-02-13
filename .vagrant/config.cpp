@@ -48,12 +48,12 @@ void confval::set(const std::string &value) {
 	}
 }
 
-config::config() {
+confi\Gazelle\G::config() {
 	init();
 	dummy_setting = new confval(); // Safety value to use if we're accessing nonexistent settings
 }
 
-void config::init() {
+void confi\Gazelle\G::init() {
 	// Internal stuff
 	add("listen_port", 34000u);
 	add("max_connections", 1024u);
@@ -90,7 +90,7 @@ void config::init() {
 	add("readonly", false);
 }
 
-confval * config::get(const std::string &setting_name) {
+confval * confi\Gazelle\G::get(const std::string &setting_name) {
 	const auto setting = settings.find(setting_name);
 	if (setting == settings.end()) {
 		std::cout << "WARNING: Unrecognized setting '" << setting_name << "'" << std::endl;
@@ -99,32 +99,32 @@ confval * config::get(const std::string &setting_name) {
 	return &setting->second;
 }
 
-bool config::get_bool(const std::string &setting_name) {
+bool confi\Gazelle\G::get_bool(const std::string &setting_name) {
 	return get(setting_name)->get_bool();
 }
 
-unsigned int config::get_uint(const std::string &setting_name) {
+unsigned int confi\Gazelle\G::get_uint(const std::string &setting_name) {
 	return get(setting_name)->get_uint();
 }
 
-std::string config::get_str(const std::string &setting_name) {
+std::string confi\Gazelle\G::get_str(const std::string &setting_name) {
 	return get(setting_name)->get_str();
 }
 
-void config::set(const std::string &setting_name, const std::string &value) {
+void confi\Gazelle\G::set(const std::string &setting_name, const std::string &value) {
 	get(setting_name)->set(value);
 }
 
-void config::load(const std::string &conf_file_path, std::istream &conf_file) {
+void confi\Gazelle\G::load(const std::string &conf_file_path, std::istream &conf_file) {
 	load(conf_file);
 	add("conf_file_path", conf_file_path.c_str());
 }
 
-void config::load(std::istream &conf_file) {
+void confi\Gazelle\G::load(std::istream &conf_file) {
 	std::string line;
 	while (getline(conf_file, line)) {
 		size_t pos;
-		if (line[0] != '#' && (pos = line.find('=')) != std::string::npos) {
+		if (line[0] != '#' && (pos = line.find('=')) != std::strin\Gazelle\G::npos) {
 			std::string key(trim(line.substr(0, pos)));
 			std::string value(trim(line.substr(pos + 1)));
 			set(key, value);
@@ -132,7 +132,7 @@ void config::load(std::istream &conf_file) {
 	}
 }
 
-void config::reload() {
+void confi\Gazelle\G::reload() {
 	const std::string conf_file_path(get_str("conf_file_path"));
 	std::ifstream conf_file(conf_file_path);
 	if (conf_file.fail()) {
@@ -143,9 +143,9 @@ void config::reload() {
 	}
 }
 
-std::string config::trim(const std::string str) {
+std::string confi\Gazelle\G::trim(const std::string str) {
 	size_t ltrim = str.find_first_not_of(" \t");
-	if (ltrim == std::string::npos) {
+	if (ltrim == std::strin\Gazelle\G::npos) {
 		ltrim = 0;
 	}
 	size_t rtrim = str.find_last_not_of(" \t");

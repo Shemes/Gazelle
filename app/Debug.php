@@ -45,7 +45,7 @@ class Debug
             $Reason[] = \Gazelle\Format::get_size($Ram) . ' RAM used';
         }
 
-        \G::$DB->warnings(); // see comment in MYSQL::query
+        \Gazelle\G::$DB->warnings(); // see comment in MYSQL::query
         /*$Queries = $this->get_queries();
         $DBWarningCount = 0;
         foreach ($Queries as $Query) {
@@ -57,15 +57,15 @@ class Debug
             $Reason[] = $DBWarningCount . ' DB warning(s)';
         }*/
 
-        $CacheStatus = \G::$Cache->server_status();
-        if (in_array(0, $CacheStatus) && !\G::$Cache->get_value('cache_fail_reported')) {
+        $CacheStatus = \Gazelle\G::$Cache->server_status();
+        if (in_array(0, $CacheStatus) && !\Gazelle\G::$Cache->get_value('cache_fail_reported')) {
             // Limit to max one report every 15 minutes to avoid massive debug spam
-            \G::$Cache->cache_value('cache_fail_reported', true, 900);
+            \Gazelle\G::$Cache->cache_value('cache_fail_reported', true, 900);
             $Reason[] = 'Cache server error';
         }
 
         if (isset($_REQUEST['profile'])) {
-            $Reason[] = 'Requested by ' . \G::$LoggedUser['Username'];
+            $Reason[] = 'Requested by ' . \Gazelle\G::$LoggedUser['Username'];
         }
 
         $this->Perf['Memory usage'] = (($Ram >> 10) / 1024) . ' MB';
@@ -88,7 +88,7 @@ class Debug
             $Report = $Message;
         }
         $Identifier = \Users::make_secret(5);
-        \G::$Cache->cache_value(
+        \Gazelle\G::$Cache->cache_value(
             'analysis_' . $Identifier,
             [
                 'url' => $_SERVER['REQUEST_URI'],
@@ -295,12 +295,12 @@ class Debug
 
     public function get_cache_time()
     {
-        return \G::$Cache->Time;
+        return \Gazelle\G::$Cache->Time;
     }
 
     public function get_cache_keys()
     {
-        return array_keys(\G::$Cache->CacheHits);
+        return array_keys(\Gazelle\G::$Cache->CacheHits);
     }
 
     public function get_sphinxql_queries()
@@ -319,12 +319,12 @@ class Debug
 
     public function get_queries()
     {
-        return \G::$DB->Queries;
+        return \Gazelle\G::$DB->Queries;
     }
 
     public function get_query_time()
     {
-        return \G::$DB->Time;
+        return \Gazelle\G::$DB->Time;
     }
 
     public function get_logged_vars()
@@ -560,7 +560,7 @@ class Debug
 			</td>
 			<td align="left" class="debug_data debug_cache_data">
 				<pre id="debug_cache_<?=$Key?>" class="hidden">
-<?=					display_str(print_r(\G::$Cache->get_value($Key, true), true))?>
+<?=					display_str(print_r(\Gazelle\G::$Cache->get_value($Key, true), true))?>
 				</pre>
 			</td>
 		</tr>

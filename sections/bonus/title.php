@@ -1,6 +1,6 @@
 <?php
 
-$ID = \G::$LoggedUser['ID'];
+$ID = \Gazelle\G::$LoggedUser['ID'];
 $BBCode = (isset($_REQUEST['BBCode']) && $_REQUEST['BBCode'] === 'true') ? 'true' : 'false';
 $Option = (isset($_REQUEST['BBCode']) && $_REQUEST['BBCode'] === 'true') ? 'title_bbcode' : 'title_nobbcode';
 $Item = \Gazelle\Bonus::$Items[$Option];
@@ -13,9 +13,9 @@ if (isset($_REQUEST['preview'])) {
 }
 if (isset($_REQUEST['Remove']) && $_REQUEST['Remove'] === 'true') {
 	authorize();
-	\G::$DB->query("UPDATE users_main SET Title='' WHERE ID={$ID}");
-	\G::$Cache->delete_value("user_info_{$ID}");
-	\G::$Cache->delete_value("user_stats_{$ID}");
+	\Gazelle\G::$DB->query("UPDATE users_main SET Title='' WHERE ID={$ID}");
+	\Gazelle\G::$Cache->delete_value("user_info_{$ID}");
+	\Gazelle\G::$Cache->delete_value("user_stats_{$ID}");
 	header('Location: bonus.php?complete');
 }
 elseif (isset($_POST['confirm'])) {
@@ -24,13 +24,13 @@ elseif (isset($_POST['confirm'])) {
 		error(403);
 	}
 
-	if ($Price > \G::$LoggedUser['BonusPoints']) {
+	if ($Price > \Gazelle\G::$LoggedUser['BonusPoints']) {
 		error('You cannot afford this item.');
 	}
 	$Title = ($BBCode === 'true') ? Text::full_format($_POST['title']) : Text::strip_bbcode($_POST['title']);
-	\G::$DB->query("UPDATE users_main SET Title='".\Gazelle\Util\Db::string($Title)."', BonusPoints=BonusPoints - {$Price} WHERE ID={$ID}");
-	\G::$Cache->delete_value("user_info_{$ID}");
-	\G::$Cache->delete_value("user_stats_{$ID}");
+	\Gazelle\G::$DB->query("UPDATE users_main SET Title='".\Gazelle\Util\Db::string($Title)."', BonusPoints=BonusPoints - {$Price} WHERE ID={$ID}");
+	\Gazelle\G::$Cache->delete_value("user_info_{$ID}");
+	\Gazelle\G::$Cache->delete_value("user_stats_{$ID}");
 	header('Location: bonus.php?complete');
 }
 else {
@@ -50,7 +50,7 @@ else {
 			<tr>
 				<td>
 					<form action="bonus.php?action=title&BBCode=<?=$BBCode?>" method="post">
-						<input type="hidden" name="auth" value="<?=\G::$LoggedUser['AuthKey']?>" />
+						<input type="hidden" name="auth" value="<?=\Gazelle\G::$LoggedUser['AuthKey']?>" />
 						<input type="hidden" name="confirm" value="true" />
 						<input type="text" style="width: 98%" id="title" name="title" placeholder="Custom Title"/> <br />
 						<input type="submit" onclick="ConfirmPurchase(event, '<?=$Item['Title']?>')" value="Submit" />&nbsp;<input type="button" onclick="PreviewTitle(<?=$BBCode?>);" value="Preview" /><br /><br />

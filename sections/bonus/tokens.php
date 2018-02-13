@@ -24,7 +24,7 @@ if ($Other === 'true') {
 
 $Item = \Gazelle\Bonus::$Items[$Option];
 $Price = \Gazelle\Bonus::get_price($Item);
-if ($Price > \G::$LoggedUser['BonusPoints']) {
+if ($Price > \Gazelle\G::$LoggedUser['BonusPoints']) {
 	error('You cannot afford this item.');
 }
 
@@ -33,23 +33,23 @@ if ($Other === 'true') {
 		error('You have to enter a username to give tokens to.');
 	}
 	$User = urldecode($_GET['user']);
-	\G::$DB->query("SELECT ID FROM users_main WHERE Username='".\Gazelle\Util\Db::string($User)."'");
-	if (!\G::$DB->has_results()) {
+	\Gazelle\G::$DB->query("SELECT ID FROM users_main WHERE Username='".\Gazelle\Util\Db::string($User)."'");
+	if (!\Gazelle\G::$DB->has_results()) {
 		error('Invalid username. Please select a valid user');
 	}
-	list($ID) = \G::$DB->next_record();
-	if ($ID == \G::$LoggedUser['ID']) {
+	list($ID) = \Gazelle\G::$DB->next_record();
+	if ($ID == \Gazelle\G::$LoggedUser['ID']) {
 		error('You cannot give yourself tokens.');
 	}
-    \Gazelle\Bonus::send_pm_to_other(\G::$LoggedUser['Username'], $ID, $Amount);
+    \Gazelle\Bonus::send_pm_to_other(\Gazelle\G::$LoggedUser['Username'], $ID, $Amount);
 }
 else {
-	$ID = \G::$LoggedUser['ID'];
+	$ID = \Gazelle\G::$LoggedUser['ID'];
 }
 
-\G::$DB->query("UPDATE users_main SET BonusPoints = BonusPoints - {$Price} WHERE ID='".\G::$LoggedUser['ID']."'");
-\G::$Cache->delete_value('user_stats_'.\G::$LoggedUser['ID']);
+\Gazelle\G::$DB->query("UPDATE users_main SET BonusPoints = BonusPoints - {$Price} WHERE ID='".\Gazelle\G::$LoggedUser['ID']."'");
+\Gazelle\G::$Cache->delete_value('user_stats_'.\Gazelle\G::$LoggedUser['ID']);
 
-\G::$DB->query("UPDATE users_main SET FLTokens = FLTokens + {$Amount} WHERE ID='{$ID}'");
-\G::$Cache->delete_value("user_info_heavy_{$ID}");
+\Gazelle\G::$DB->query("UPDATE users_main SET FLTokens = FLTokens + {$Amount} WHERE ID='{$ID}'");
+\Gazelle\G::$Cache->delete_value("user_info_heavy_{$ID}");
 header('Location: bonus.php?complete');

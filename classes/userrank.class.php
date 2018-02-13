@@ -5,37 +5,37 @@ class UserRank {
 	// Returns a 101 row array (101 percentiles - 0 - 100), with the minimum value for that percentile as the value for each row
 	// BTW - ingenious
 	private static function build_table($MemKey, $Query) {
-		$QueryID = \G::$DB->get_query_id();
+		$QueryID = \Gazelle\G::$DB->get_query_id();
 
-		\G::$DB->query("
+		\Gazelle\G::$DB->query("
 			DROP TEMPORARY TABLE IF EXISTS temp_stats");
 
-		\G::$DB->query("
+		\Gazelle\G::$DB->query("
 			CREATE TEMPORARY TABLE temp_stats (
 				ID int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 				Val bigint(20) NOT NULL
 			);");
 
-		\G::$DB->query("
+		\Gazelle\G::$DB->query("
 			INSERT INTO temp_stats (Val) ".
 			$Query);
 
-		\G::$DB->query("
+		\Gazelle\G::$DB->query("
 			SELECT COUNT(ID)
 			FROM temp_stats");
-		list($UserCount) = \G::$DB->next_record();
+		list($UserCount) = \Gazelle\G::$DB->next_record();
 
-		\G::$DB->query("
+		\Gazelle\G::$DB->query("
 			SELECT MIN(Val)
 			FROM temp_stats
 			GROUP BY CEIL(ID / (".(int)$UserCount." / 100));");
 
-		$Table = \G::$DB->to_array();
+		$Table = \Gazelle\G::$DB->to_array();
 
-		\G::$DB->set_query_id($QueryID);
+		\Gazelle\G::$DB->set_query_id($QueryID);
 
 		// Give a little variation to the cache length, so all the tables don't expire at the same time
-		\G::$Cache->cache_value($MemKey, $Table, 3600 * 24 * rand(800, 1000) * 0.001);
+		\Gazelle\G::$Cache->cache_value($MemKey, $Table, 3600 * 24 * rand(800, 1000) * 0.001);
 
 		return $Table;
 	}
@@ -113,16 +113,16 @@ class UserRank {
 			return 0;
 		}
 
-		$Table = \G::$Cache->get_value(self::PREFIX.$TableName);
+		$Table = \Gazelle\G::$Cache->get_value(self::PREFIX.$TableName);
 		if (!$Table) {
 			//Cache lock!
-			$Lock = \G::$Cache->get_value(self::PREFIX.$TableName.'_lock');
+			$Lock = \Gazelle\G::$Cache->get_value(self::PREFIX.$TableName.'_lock');
 			if ($Lock) {
 				return false;
 			} else {
-				\G::$Cache->cache_value(self::PREFIX.$TableName.'_lock', '1', 300);
+				\Gazelle\G::$Cache->cache_value(self::PREFIX.$TableName.'_lock', '1', 300);
 				$Table = self::build_table(self::PREFIX.$TableName, self::table_query($TableName));
-				\G::$Cache->delete_value(self::PREFIX.$TableName.'_lock');
+				\Gazelle\G::$Cache->delete_value(self::PREFIX.$TableName.'_lock');
 			}
 		}
 		$LastPercentile = 0;

@@ -46,8 +46,8 @@ class Calendar
 
         $TeamsSQL = self::get_teams_query();
 
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query("
 						SELECT
 							ID, Team, Title, Category, Importance, DAY(StartDate) AS StartDay, DAY(EndDate) AS EndDay
 						FROM calendar
@@ -57,8 +57,8 @@ class Calendar
 							YEAR(StartDate) = '$Year'
 						AND
 							$TeamsSQL");
-        $Events = \G::$DB->to_array();
-        \G::$DB->set_query_id($QueryID);
+        $Events = \Gazelle\G::$DB->to_array();
+        \Gazelle\G::$DB->set_query_id($QueryID);
         return $Events;
     }
 
@@ -69,8 +69,8 @@ class Calendar
             error('Invalid ID');
         }
         $TeamsSQL = self::get_teams_query();
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query("
 						SELECT
 							ID, Team, Title, Body, Category, Importance, AddedBy, StartDate, EndDate
 						FROM calendar
@@ -78,8 +78,8 @@ class Calendar
 							ID = '$ID'
 						AND
 							$TeamsSQL");
-        $Event = \G::$DB->next_record(MYSQLI_ASSOC);
-        \G::$DB->set_query_id($QueryID);
+        $Event = \Gazelle\G::$DB->next_record(MYSQLI_ASSOC);
+        \Gazelle\G::$DB->set_query_id($QueryID);
         return $Event;
     }
 
@@ -97,13 +97,13 @@ class Calendar
         $StartDate = \Gazelle\Util\Db::string($StartDate);
         $EndDate = \Gazelle\Util\Db::string($EndDate);
 
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query("
 						INSERT INTO calendar
 							(Title, Body, Category, Importance, Team, StartDate, EndDate, AddedBy)
 						VALUES
 							('$Title', '$Body', '$Category', '$Importance', '$Team', '$StartDate', '$EndDate', '$UserID')");
-        \G::$DB->set_query_id($QueryID);
+        \Gazelle\G::$DB->set_query_id($QueryID);
         send_irc('PRIVMSG ' . ADMIN_CHAN . " :!mod New calendar event created! Event: $Title; Starts: $StartDate; Ends: $EndDate.");
     }
 
@@ -120,8 +120,8 @@ class Calendar
         $Team = (int)$Team;
         $StartDate = \Gazelle\Util\Db::string($StartDate);
         $EndDate = \Gazelle\Util\Db::string($EndDate);
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query("
 						UPDATE calendar
 						SET
 							Title = '$Title',
@@ -133,16 +133,16 @@ class Calendar
 							EndDate = '$EndDate'
 						WHERE
 							ID = '$ID'");
-        \G::$DB->set_query_id($QueryID);
+        \Gazelle\G::$DB->set_query_id($QueryID);
     }
 
     public static function remove_event($ID)
     {
         $ID = (int)$ID;
         if (!empty($ID)) {
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query("DELETE FROM calendar WHERE ID = '$ID'");
-            \G::$DB->set_query_id($QueryID);
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query("DELETE FROM calendar WHERE ID = '$ID'");
+            \Gazelle\G::$DB->set_query_id($QueryID);
         }
     }
 }

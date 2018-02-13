@@ -13,11 +13,11 @@ class Permissions {
 
 		$OverrideClass = 1000;
 
-		$Override = \G::$LoggedUser['EffectiveClass'] >= $OverrideClass;
+		$Override = \Gazelle\G::$LoggedUser['EffectiveClass'] >= $OverrideClass;
 		return ($PermissionName === null ||
-			(isset(\G::$LoggedUser['Permissions'][$PermissionName]) && \G::$LoggedUser['Permissions'][$PermissionName]))
-			&& (\G::$LoggedUser['Class'] >= $MinClass
-				|| \G::$LoggedUser['EffectiveClass'] >= $MinClass
+			(isset(\Gazelle\G::$LoggedUser['Permissions'][$PermissionName]) && \Gazelle\G::$LoggedUser['Permissions'][$PermissionName]))
+			&& (\Gazelle\G::$LoggedUser['Class'] >= $MinClass
+				|| \Gazelle\G::$LoggedUser['EffectiveClass'] >= $MinClass
 				|| $Override);
 	}
 
@@ -28,17 +28,17 @@ class Permissions {
 	 * @return array permissions
 	 */
 	public static function get_permissions($PermissionID) {
-		$Permission = \G::$Cache->get_value("perm_$PermissionID");
+		$Permission = \Gazelle\G::$Cache->get_value("perm_$PermissionID");
 		if (empty($Permission)) {
-			$QueryID = \G::$DB->get_query_id();
-			\G::$DB->query("
+			$QueryID = \Gazelle\G::$DB->get_query_id();
+			\Gazelle\G::$DB->query("
 				SELECT Level AS Class, `Values` AS Permissions, Secondary, PermittedForums
 				FROM permissions
 				WHERE ID = '$PermissionID'");
-			$Permission = \G::$DB->next_record(MYSQLI_ASSOC, array('Permissions'));
-			\G::$DB->set_query_id($QueryID);
+			$Permission = \Gazelle\G::$DB->next_record(MYSQLI_ASSOC, array('Permissions'));
+			\Gazelle\G::$DB->set_query_id($QueryID);
 			$Permission['Permissions'] = unserialize($Permission['Permissions']);
-			\G::$Cache->cache_value("perm_$PermissionID", $Permission, 2592000);
+			\Gazelle\G::$Cache->cache_value("perm_$PermissionID", $Permission, 2592000);
 		}
 		return $Permission;
 	}
@@ -57,13 +57,13 @@ class Permissions {
 
 		// Fetch custom permissions if they weren't passed in.
 		if ($CustomPermissions === false) {
-			$QueryID = \G::$DB->get_query_id();
-			\G::$DB->query('
+			$QueryID = \Gazelle\G::$DB->get_query_id();
+			\Gazelle\G::$DB->query('
 				SELECT CustomPermissions
 				FROM users_main
 				WHERE ID = ' . (int)$UserID);
-			list($CustomPermissions) = \G::$DB->next_record(MYSQLI_NUM, false);
-			\G::$DB->set_query_id($QueryID);
+			list($CustomPermissions) = \Gazelle\G::$DB->next_record(MYSQLI_NUM, false);
+			\Gazelle\G::$DB->set_query_id($QueryID);
 		}
 
 		if (!empty($CustomPermissions) && !is_array($CustomPermissions)) {

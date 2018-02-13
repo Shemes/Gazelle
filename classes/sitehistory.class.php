@@ -65,32 +65,32 @@ class SiteHistory {
 								"wiki");
 
 	public static function get_months() {
-		$Results = \G::$Cache->get_value("site_history_months");
+		$Results = \Gazelle\G::$Cache->get_value("site_history_months");
 		if (!$Results) {
-			$QueryID = \G::$DB->get_query_id();
-			\G::$DB->query("
+			$QueryID = \Gazelle\G::$DB->get_query_id();
+			\Gazelle\G::$DB->query("
 					SELECT DISTINCT
 						YEAR(DATE) AS Year, MONTH(Date) AS Month, MONTHNAME(Date) AS MonthName
 					FROM site_history
 					ORDER BY Date DESC");
-			$Results = \G::$DB->to_array();
-			\G::$DB->set_query_id($QueryID);
-			\G::$Cache->cache_value("site_history_months", $Results, 0);
+			$Results = \Gazelle\G::$DB->to_array();
+			\Gazelle\G::$DB->set_query_id($QueryID);
+			\Gazelle\G::$Cache->cache_value("site_history_months", $Results, 0);
 		}
 		return $Results;
 	}
 
 	public static function get_event($ID) {
 		if (!empty($ID)) {
-			$QueryID = \G::$DB->get_query_id();
-			\G::$DB->query("
+			$QueryID = \Gazelle\G::$DB->get_query_id();
+			\Gazelle\G::$DB->query("
 					SELECT
 						ID, Title, Url, Category, SubCategory, Tags, Body, AddedBy, Date
 					FROM site_history
 					WHERE ID = '$ID'
 					ORDER BY Date DESC");
-			$Event = \G::$DB->next_record();
-			\G::$DB->set_query_id($QueryID);
+			$Event = \Gazelle\G::$DB->next_record();
+			\Gazelle\G::$DB->set_query_id($QueryID);
 			return $Event;
 		}
 	}
@@ -147,16 +147,16 @@ class SiteHistory {
 			$Query = '';
 		}
 
-		$QueryID = \G::$DB->get_query_id();
-		\G::$DB->query("
+		$QueryID = \Gazelle\G::$DB->get_query_id();
+		\Gazelle\G::$DB->query("
 				SELECT
 					ID, Title, Url, Category, SubCategory, Tags, Body, AddedBy, Date
 				FROM site_history
 				$Query
 				ORDER BY Date DESC
 				$Limit");
-		$Events = \G::$DB->to_array();
-		\G::$DB->set_query_id($QueryID);
+		$Events = \Gazelle\G::$DB->to_array();
+		\Gazelle\G::$DB->set_query_id($QueryID);
 		return $Events;
 	}
 
@@ -187,14 +187,14 @@ class SiteHistory {
 			error("Error");
 		}
 
-		$QueryID = \G::$DB->get_query_id();
-		\G::$DB->query("
+		$QueryID = \Gazelle\G::$DB->get_query_id();
+		\Gazelle\G::$DB->query("
 				INSERT INTO site_history
 					(Title, Url, Category, SubCategory, Tags, Body, AddedBy, Date)
 				VALUES
 					('$Title', '$Link', '$Category', '$SubCategory', '$Tags', '$Body', '$UserID', '$Date')");
-		\G::$DB->set_query_id($QueryID);
-		\G::$Cache->delete_value("site_history_months");
+		\Gazelle\G::$DB->set_query_id($QueryID);
+		\Gazelle\G::$Cache->delete_value("site_history_months");
 	}
 
 	public static function update_event($ID, $Date, $Title, $Link, $Category, $SubCategory, $Tags, $Body, $UserID) {
@@ -226,8 +226,8 @@ class SiteHistory {
 			error("Error");
 		}
 
-		$QueryID = \G::$DB->get_query_id();
-		\G::$DB->query("
+		$QueryID = \Gazelle\G::$DB->get_query_id();
+		\Gazelle\G::$DB->query("
 				UPDATE site_history
 				SET
 					Title = '$Title',
@@ -239,20 +239,20 @@ class SiteHistory {
 					AddedBy = '$UserID',
 					Date = '$Date'
 				WHERE ID = '$ID'");
-		\G::$DB->set_query_id($QueryID);
-		\G::$Cache->delete_value("site_history_months");
+		\Gazelle\G::$DB->set_query_id($QueryID);
+		\Gazelle\G::$Cache->delete_value("site_history_months");
 	}
 
 	public static function delete_event($ID) {
 		if (!is_numeric($ID)) {
 			error(404);
 		}
-		$QueryID = \G::$DB->get_query_id();
-		\G::$DB->query("
+		$QueryID = \Gazelle\G::$DB->get_query_id();
+		\Gazelle\G::$DB->query("
 				DELETE FROM site_history
 				WHERE ID = '$ID'");
-		\G::$DB->set_query_id($QueryID);
-		\G::$Cache->delete_value("site_history_months");
+		\Gazelle\G::$DB->set_query_id($QueryID);
+		\Gazelle\G::$Cache->delete_value("site_history_months");
 	}
 
 	public static function get_categories() {

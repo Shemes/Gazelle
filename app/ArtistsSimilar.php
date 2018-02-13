@@ -27,7 +27,7 @@ class ArtistsSimilar extends Artist
 
     public function set_up()
     {
-        $QueryID = \G::$DB->get_query_id();
+        $QueryID = \Gazelle\G::$DB->get_query_id();
 
         $this->x = ceil(WIDTH / 2);
         $this->y = ceil(HEIGHT / 2);
@@ -37,7 +37,7 @@ class ArtistsSimilar extends Artist
 
         // Get artists that are directly similar to the artist
         $ArtistIDs = [];
-        \G::$DB->query('
+        \Gazelle\G::$DB->query('
 			SELECT
 				s2.ArtistID,
 				ag.Name,
@@ -50,12 +50,12 @@ class ArtistsSimilar extends Artist
 			ORDER BY ass.Score DESC
 			LIMIT 14');
 
-        if (!\G::$DB->has_results()) {
+        if (!\Gazelle\G::$DB->has_results()) {
             return;
         }
 
         // Build into array. Each artist is its own object in $this->Artists
-        while (list($ArtistID, $Name, $Score) = \G::$DB->next_record(MYSQLI_NUM, false)) {
+        while (list($ArtistID, $Name, $Score) = \Gazelle\G::$DB->next_record(MYSQLI_NUM, false)) {
             if ($Score < 0) {
                 continue;
             }
@@ -66,7 +66,7 @@ class ArtistsSimilar extends Artist
         }
 
         // Get similarities between artists on the map
-        \G::$DB->query('
+        \Gazelle\G::$DB->query('
 			SELECT
 				s1.ArtistID,
 				s2.ArtistID
@@ -78,7 +78,7 @@ class ArtistsSimilar extends Artist
 				AND s2.ArtistID IN(' . implode(',', $ArtistIDs) . ')');
 
         // Build into array
-        while (list($Artist1ID, $Artist2ID) = \G::$DB->next_record()) {
+        while (list($Artist1ID, $Artist2ID) = \Gazelle\G::$DB->next_record()) {
             $this->Artists[$Artist1ID]->Similar[$Artist2ID] = ['ID' => $Artist2ID];
         }
 
@@ -96,7 +96,7 @@ class ArtistsSimilar extends Artist
         }
         reset($this->Artists);
 
-        \G::$DB->set_query_id($QueryID);
+        \Gazelle\G::$DB->set_query_id($QueryID);
     }
 
     public function set_positions()

@@ -64,7 +64,7 @@ class DonationsView
 
     public static function render_donor_stats($UserID)
     {
-        $OwnProfile = \G::$LoggedUser['ID'] == $UserID;
+        $OwnProfile = \Gazelle\G::$LoggedUser['ID'] == $UserID;
         if (check_perms('users_mod') || $OwnProfile || \Gazelle\Donations::is_visible($UserID)) {
             ?>
 			<div class="box box_info box_userinfo_donor_stats">

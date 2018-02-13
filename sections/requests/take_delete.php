@@ -55,7 +55,7 @@ $DB->query("
 	WHERE RequestID = '$RequestID'");
 $Cache->delete_value("request_artists_$RequestID");
 
-G::$DB->query("
+\Gazelle\G::$DB->query("
 	REPLACE INTO sphinx_requests_delta
 		(ID)
 	VALUES

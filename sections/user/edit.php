@@ -829,7 +829,7 @@ list($ArtistsAdded) = $DB->next_record();
 
 					<br><br>
 
-					<a href="user.php?action=2fa&do=<?= $TwoFAKey ? 'disable' : 'enable'; ?>&userid=<?=\G::$LoggedUser['ID'] ?>">Click here to <?= $TwoFAKey ? 'disable' : 'enable'; ?></a>
+					<a href="user.php?action=2fa&do=<?= $TwoFAKey ? 'disable' : 'enable'; ?>&userid=<?=\Gazelle\G::$LoggedUser['ID'] ?>">Click here to <?= $TwoFAKey ? 'disable' : 'enable'; ?></a>
 				</td>
 			</tr>
 		</table>

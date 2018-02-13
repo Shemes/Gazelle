@@ -7,20 +7,20 @@ if ($TorrentID === 0 || $LogID === 0) {
 	error(404);
 }
 
-G::$DB->prepared_query("SELECT GroupID FROM torrents WHERE ID=?", $TorrentID);
-if (!G::$DB->has_results()) {
+\Gazelle\G::$DB->prepared_query("SELECT GroupID FROM torrents WHERE ID=?", $TorrentID);
+if (!\Gazelle\G::$DB->has_results()) {
 	error(404);
 }
-list($GroupID) =\G::$DB->fetch_record();
+list($GroupID) =\Gazelle\G::$DB->fetch_record();
 
 @unlink(SERVER_ROOT."logs/{$TorrentID}_{$LogID}.log");
-G::$DB->prepared_query("DELETE FROM torrents_logs WHERE TorrentID=? AND LogID=?", $TorrentID, $LogID);
+\Gazelle\G::$DB->prepared_query("DELETE FROM torrents_logs WHERE TorrentID=? AND LogID=?", $TorrentID, $LogID);
 
-G::$DB->prepared_query("SELECT COUNT(*) FROM torrents_logs WHERE TorrentID=?", $TorrentID);
-list($Count) =\G::$DB->fetch_record();
+\Gazelle\G::$DB->prepared_query("SELECT COUNT(*) FROM torrents_logs WHERE TorrentID=?", $TorrentID);
+list($Count) =\Gazelle\G::$DB->fetch_record();
 
 if ($Count > 0) {
-	G::$DB->prepared_query("
+	\Gazelle\G::$DB->prepared_query("
 UPDATE torrents AS t
 LEFT JOIN (
   SELECT
@@ -34,7 +34,7 @@ SET t.LogScore = tl.Score, t.LogChecksum=tl.Checksum
 WHERE t.ID = ?", $TorrentID);
 }
 else {
-	G::$DB->prepared_query("UPDATE torrents SET HasLogDB = 0, LogScore = 100, LogChecksum = 1 WHERE ID=?", $TorrentID);
+	\Gazelle\G::$DB->prepared_query("UPDATE torrents SET HasLogDB = 0, LogScore = 100, LogChecksum = 1 WHERE ID=?", $TorrentID);
 }
 
 $Cache->delete_value("torrent_group_{$GroupID}");

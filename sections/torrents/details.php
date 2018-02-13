@@ -717,7 +717,7 @@ foreach ($TorrentList as $Torrent) {
 							<br /><a href="torrents.php?action=reseed&amp;torrentid=<?=$TorrentID?>&amp;groupid=<?=$GroupID?>" class="brackets" onclick="return confirm('Are you sure you want to request a re-seed of this torrent?');">Request re-seed</a>
 <?	}
 
-	$NewRatio = Gazelle\Format::get_ratio_html(G::$LoggedUser['BytesUploaded'],\G::$LoggedUser['BytesDownloaded'] + $Size);
+	$NewRatio = Gazelle\Format::get_ratio_html(\Gazelle\G::$LoggedUser['BytesUploaded'],\Gazelle\G::$LoggedUser['BytesDownloaded'] + $Size);
 ?>
 							<br /><br />If you download this, your ratio will become <?=$NewRatio?>.
 						</blockquote>

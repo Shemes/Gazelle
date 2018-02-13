@@ -23,7 +23,7 @@ class LastFMView {
 					<a href="#" id="lastfm_expand" onclick="return false;" class="brackets">Show more info</a>
 <?
 		//Append the reload stats button only if allowed on the current user page.
-		$Response = \G::$Cache->get_value("lastfm_clear_cache_$UserID");
+		$Response = \Gazelle\G::$Cache->get_value("lastfm_clear_cache_$UserID");
 		if (empty($Response)) {
 ?>
 					<span id="lastfm_reload_container">

@@ -37,13 +37,13 @@ if ($Saved) {
 
 \Gazelle\Contest::init_admin();
 
-G::$DB->query("
+\Gazelle\G::$DB->query("
 	SELECT c.ID, c.Name, c.DateBegin, c.DateEnd, t.ID as ContestType
 	FROM contest c
 	INNER JOIN contest_type t ON (t.ID = c.ContestTypeID)
 	ORDER BY c.DateBegin
  ");
-if (G::$DB->has_results()) {
+if (\Gazelle\G::$DB->has_results()) {
 ?>
 	<div class="box pad">
 		<table>
@@ -54,7 +54,7 @@ if (G::$DB->has_results()) {
 				<td>Date Ends</td>
 			</tr>
 <?php
-	while ($Row =\G::$DB->next_record()) {
+	while ($Row =\Gazelle\G::$DB->next_record()) {
 ?>
 			<tr>
 				<td><a href="contest.php?action=admin&id=<?=$Row['ID']?>"><?=$Row['Name']?></a></td>

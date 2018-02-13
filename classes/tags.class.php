@@ -167,13 +167,13 @@ class Tags {
 	 * @return array
 	 */
 	public static function get_aliases() {
-		$TagAliases = \G::$Cache->get_value('tag_aliases_search');
+		$TagAliases = \Gazelle\G::$Cache->get_value('tag_aliases_search');
 		if ($TagAliases === false) {
-			\G::$DB->query('
+			\Gazelle\G::$DB->query('
 			SELECT ID, BadTag, AliasTag
 			FROM tag_aliases
 			ORDER BY BadTag');
-			$TagAliases = \G::$DB->to_array(false, MYSQLI_ASSOC, false);
+			$TagAliases = \Gazelle\G::$DB->to_array(false, MYSQLI_ASSOC, false);
 			// Unify tag aliases to be in_this_format as tags not in.this.format
 			array_walk_recursive($TagAliases, create_function('&$val', '$val = preg_replace("/\./","_", $val);'));
 			// Clean up the array for smaller cache size
@@ -184,7 +184,7 @@ class Tags {
 					}
 				}
 			}
-			\G::$Cache->cache_value('tag_aliases_search', $TagAliases, 3600 * 24 * 7); // cache for 7 days
+			\Gazelle\G::$Cache->cache_value('tag_aliases_search', $TagAliases, 3600 * 24 * 7); // cache for 7 days
 		}
 		return $TagAliases;
 	}

@@ -64,7 +64,7 @@ if (!count($Leaderboard)) {
 ?>
 	<div class="head">
         <h3>A grand total of <?=
-            \G::$Cache->get_value("contest_leaderboard_total_{$Contest['ID']}")
+            \Gazelle\G::$Cache->get_value("contest_leaderboard_total_{$Contest['ID']}")
             ?: "<span title=\"We will recalculate the numbers soon\">many, many, many</span>"
         ?> torrents have been uploaded.</h3>
     </div>

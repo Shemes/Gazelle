@@ -8,18 +8,18 @@ class Contest
 
     public static function get_contest($Id)
     {
-        $Contest = \G::$Cache->get_value("contest_{$Id}");
+        $Contest = \Gazelle\G::$Cache->get_value("contest_{$Id}");
         if ($Contest === false) {
-            \G::$DB->query("
+            \Gazelle\G::$DB->query("
 				SELECT c.ID, t.Name as ContestType, c.Name, c.Banner, c.WikiText, c.Display, c.MaxTracked, c.DateBegin, c.DateEnd,
 					CASE WHEN now() BETWEEN c.DateBegin AND c.DateEnd THEN 1 ELSE 0 END as is_open
 				FROM contest c
 				INNER JOIN contest_type t ON (t.ID = c.ContestTypeID)
 				WHERE c.ID={$Id}
 			");
-            if (\G::$DB->has_results()) {
-                $Contest = \G::$DB->next_record(MYSQLI_ASSOC);
-                \G::$Cache->cache_value("contest_{$Id}", $Contest, 86400 * 3);
+            if (\Gazelle\G::$DB->has_results()) {
+                $Contest = \Gazelle\G::$DB->next_record(MYSQLI_ASSOC);
+                \Gazelle\G::$Cache->cache_value("contest_{$Id}", $Contest, 86400 * 3);
             }
         }
         return $Contest;
@@ -27,20 +27,20 @@ class Contest
 
     public static function get_current_contest()
     {
-        $Contest = \G::$Cache->get_value('contest_current');
+        $Contest = \Gazelle\G::$Cache->get_value('contest_current');
         if ($Contest === false) {
-            \G::$DB->query('
+            \Gazelle\G::$DB->query('
 				SELECT c.ID, t.Name as ContestType, c.Name, c.Banner, c.WikiText, c.Display, c.MaxTracked, c.DateBegin, c.DateEnd,
 					CASE WHEN now() BETWEEN c.DateBegin AND c.DateEnd THEN 1 ELSE 0 END as is_open
 				FROM contest c
 				INNER JOIN contest_type t ON (t.ID = c.ContestTypeID)
 				WHERE c.DateEnd = (select max(DateEnd) from contest)
 			');
-            if (\G::$DB->has_results()) {
-                $Contest = \G::$DB->next_record(MYSQLI_ASSOC);
+            if (\Gazelle\G::$DB->has_results()) {
+                $Contest = \Gazelle\G::$DB->next_record(MYSQLI_ASSOC);
                 // Cache this for three days
-                \G::$Cache->cache_value("contest_{$Contest['ID']}", $Contest, 86400 * 3);
-                \G::$Cache->cache_value('contest_current', $Contest, 86400 * 3);
+                \Gazelle\G::$Cache->cache_value("contest_{$Contest['ID']}", $Contest, 86400 * 3);
+                \Gazelle\G::$Cache->cache_value('contest_current', $Contest, 86400 * 3);
             }
         }
         return $Contest;
@@ -48,18 +48,18 @@ class Contest
 
     public static function get_prior_contests()
     {
-        $Prior = \G::$Cache->get_value('contest_prior');
+        $Prior = \Gazelle\G::$Cache->get_value('contest_prior');
         if ($Prior === false) {
-            \G::$DB->query('
+            \Gazelle\G::$DB->query('
 				SELECT c.ID
 				FROM contest c
 				WHERE c.DateBegin < NOW()
 				/* AND ... we may want to think about excluding certain past contests */
 				ORDER BY c.DateBegin ASC
 			');
-            if (\G::$DB->has_results()) {
-                $Prior = \G::$DB->to_array(false, MYSQLI_BOTH);
-                \G::$Cache->cache_value('contest_prior', $Prior, 86400 * 3);
+            if (\Gazelle\G::$DB->has_results()) {
+                $Prior = \Gazelle\G::$DB->to_array(false, MYSQLI_BOTH);
+                \Gazelle\G::$Cache->cache_value('contest_prior', $Prior, 86400 * 3);
             }
         }
         return $Prior;
@@ -121,7 +121,7 @@ class Contest
 
     public static function calculate_leaderboard()
     {
-        \G::$DB->query('
+        \Gazelle\G::$DB->query('
 			SELECT c.ID
 			FROM contest c
 			INNER JOIN contest_type t ON (t.ID = c.ContestTypeID)
@@ -129,8 +129,8 @@ class Contest
 			ORDER BY c.DateEnd DESC
 		');
         $contest_id = [];
-        while (\G::$DB->has_results()) {
-            $c = \G::$DB->next_record();
+        while (\Gazelle\G::$DB->has_results()) {
+            $c = \Gazelle\G::$DB->next_record();
             if (isset($c['ID'])) {
                 $contest_id[] = $c['ID'];
             }
@@ -140,9 +140,9 @@ class Contest
             $subquery = self::leaderboard_query($Contest);
             if ($subquery) {
                 $begin = time();
-                \G::$DB->query('BEGIN');
-                \G::$DB->query("DELETE FROM contest_leaderboard where ContestID = $id");
-                \G::$DB->query("
+                \Gazelle\G::$DB->query('BEGIN');
+                \Gazelle\G::$DB->query("DELETE FROM contest_leaderboard where ContestID = $id");
+                \Gazelle\G::$DB->query("
 					INSERT INTO contest_leaderboard
 					SELECT $id, LADDER.userid,
 						LADDER.nr,
@@ -164,9 +164,9 @@ class Contest
 						TG.Name,
 						T.Time
 				");
-                \G::$DB->query('COMMIT');
-                \G::$Cache->delete_value('contest_leaderboard_' . $id);
-                \G::$DB->prepared_query(
+                \Gazelle\G::$DB->query('COMMIT');
+                \Gazelle\G::$Cache->delete_value('contest_leaderboard_' . $id);
+                \Gazelle\G::$DB->prepared_query(
                     "
 					SELECT count(*) AS nr
 					FROM torrents t
@@ -185,9 +185,9 @@ class Contest
                     $Contest['DateBegin'],
                     $Contest['DateEnd']
                 );
-                \G::$Cache->cache_value(
+                \Gazelle\G::$Cache->cache_value(
                     "contest_leaderboard_total_{$Contest['ID']}",
-                    \G::$DB->has_results() ? \G::$DB->next_record()[0] : 0,
+                    \Gazelle\G::$DB->has_results() ? \Gazelle\G::$DB->next_record()[0] : 0,
                     3600 * 6
                 );
                 self::get_leaderboard($id, false);
@@ -199,9 +199,9 @@ class Contest
     {
         $Contest = self::get_contest($Id);
         $Key = "contest_leaderboard_{$Contest['ID']}";
-        $Leaderboard = \G::$Cache->get_value($Key);
+        $Leaderboard = \Gazelle\G::$Cache->get_value($Key);
         if (!$UseCache || $Leaderboard === false) {
-            \G::$DB->query("
+            \Gazelle\G::$DB->query("
 			SELECT
 				l.UserID,
 				l.FlacCount,
@@ -214,8 +214,8 @@ class Contest
 			WHERE l.ContestID = {$Contest['ID']}
 			ORDER BY l.FlacCount DESC, l.LastUpload ASC, l.UserID ASC
 			LIMIT {$Contest['MaxTracked']}");
-            $Leaderboard = \G::$DB->to_array(false, MYSQLI_BOTH);
-            \G::$Cache->cache_value($Key, $Leaderboard, 60 * 20);
+            $Leaderboard = \Gazelle\G::$DB->to_array(false, MYSQLI_BOTH);
+            \Gazelle\G::$Cache->cache_value($Key, $Leaderboard, 60 * 20);
         }
         return $Leaderboard;
     }
@@ -226,7 +226,7 @@ class Contest
         if ($Contest['ContestType'] != 'request_fill') {
             $Pairs = [];
         } else {
-            \G::$DB->query("
+            \Gazelle\G::$DB->query("
 				SELECT r.FillerID, r.UserID, count(*) as nr
 				FROM requests r
 				WHERE r.TimeFilled BETWEEN '{$Contest['DateBegin']}' AND '{$Contest['DateEnd']}'
@@ -237,18 +237,18 @@ class Contest
 					count(*) DESC, r.FillerID ASC
 				LIMIT 100
 			");
-            $Pairs = \G::$DB->to_array(false, MYSQLI_BOTH);
+            $Pairs = \Gazelle\G::$DB->to_array(false, MYSQLI_BOTH);
         }
-        \G::$Cache->cache_value('contest_pairs_' . $Contest['ID'], $Pairs, 60 * 20);
+        \Gazelle\G::$Cache->cache_value('contest_pairs_' . $Contest['ID'], $Pairs, 60 * 20);
     }
 
     public static function get_request_pairs($UseCache = true)
     {
         $Contest = self::get_current_contest();
         $Key = "contest_pairs_{$Contest['ID']}";
-        if (($Pairs = \G::$Cache->get_value($Key)) === false) {
+        if (($Pairs = \Gazelle\G::$Cache->get_value($Key)) === false) {
             self::calculate_request_pairs();
-            $Pairs = \G::$Cache->get_value($Key);
+            $Pairs = \Gazelle\G::$Cache->get_value($Key);
         }
         return $Pairs;
     }
@@ -259,9 +259,9 @@ class Contest
          * since Gazelle doesn't allow multiple open db statements.
          */
         self::$contest_type = [];
-        \G::$DB->query('SELECT ID, Name FROM contest_type ORDER BY ID');
-        if (\G::$DB->has_results()) {
-            while ($Row = \G::$DB->next_record()) {
+        \Gazelle\G::$DB->query('SELECT ID, Name FROM contest_type ORDER BY ID');
+        if (\Gazelle\G::$DB->has_results()) {
+            while ($Row = \Gazelle\G::$DB->next_record()) {
                 self::$contest_type[$Row[0]] = $Row[1];
             }
         }
@@ -274,7 +274,7 @@ class Contest
 
     public static function save($params)
     {
-        \G::$DB->query("
+        \Gazelle\G::$DB->query("
 			UPDATE contest SET
 				Name		= '" . \Gazelle\Util\Db::string($params['name']) . "',
 				Display		= {$params['display']},
@@ -286,7 +286,7 @@ class Contest
 				WikiText	= '" . \Gazelle\Util\Db::string($params['intro']) . "'
 			WHERE ID = {$params['cid']}
 		");
-        \G::$Cache->delete_value('contest_current');
-        \G::$Cache->delete_value("contest_{$params['cid']}");
+        \Gazelle\G::$Cache->delete_value('contest_current');
+        \Gazelle\G::$Cache->delete_value("contest_{$params['cid']}");
     }
 }

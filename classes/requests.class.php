@@ -6,17 +6,17 @@ class Requests {
 	 * @param $RequestID
 	 */
 	public static function update_sphinx_requests($RequestID) {
-		$QueryID = \G::$DB->get_query_id();
+		$QueryID = \Gazelle\G::$DB->get_query_id();
 
-		\G::$DB->query("
+		\Gazelle\G::$DB->query("
 			SELECT REPLACE(t.Name, '.', '_')
 			FROM tags AS t
 				JOIN requests_tags AS rt ON t.ID = rt.TagID
 			WHERE rt.RequestID = $RequestID");
-		$TagList = \G::$DB->collect(0, false);
+		$TagList = \Gazelle\G::$DB->collect(0, false);
 		$TagList = \Gazelle\Util\Db::string(implode(' ', $TagList));
 
-		\G::$DB->query("
+		\Gazelle\G::$DB->query("
 			REPLACE INTO sphinx_requests_delta (
 				ID, UserID, TimeAdded, LastVote, CategoryID, Title, TagList,
 				Year, ReleaseType, CatalogueNumber, RecordLabel, BitrateList,
@@ -33,7 +33,7 @@ class Requests {
 				LEFT JOIN requests_votes AS rv ON rv.RequestID = r.ID
 			WHERE ID = $RequestID
 			GROUP BY r.ID");
-		\G::$DB->query("
+		\Gazelle\G::$DB->query("
 			UPDATE sphinx_requests_delta
 			SET ArtistList = (
 					SELECT GROUP_CONCAT(aa.Name SEPARATOR ' ')
@@ -43,9 +43,9 @@ class Requests {
 					GROUP BY NULL
 					)
 			WHERE ID = $RequestID");
-		\G::$DB->set_query_id($QueryID);
+		\Gazelle\G::$DB->set_query_id($QueryID);
 
-		\G::$Cache->delete_value("request_$RequestID");
+		\Gazelle\G::$Cache->delete_value("request_$RequestID");
 	}
 
 
@@ -69,7 +69,7 @@ class Requests {
 				unset($RequestIDs[$i], $Found[$GroupID], $NotFound[$GroupID]);
 				continue;
 			}
-			$Data = \G::$Cache->get_value("request_$RequestID");
+			$Data = \Gazelle\G::$Cache->get_value("request_$RequestID");
 			if (!empty($Data)) {
 				unset($NotFound[$RequestID]);
 				$Found[$RequestID] = $Data;
@@ -86,9 +86,9 @@ class Requests {
 		*/
 
 		if (count($NotFound) > 0) {
-			$QueryID = \G::$DB->get_query_id();
+			$QueryID = \Gazelle\G::$DB->get_query_id();
 
-			\G::$DB->query("
+			\Gazelle\G::$DB->query("
 				SELECT
 					ID,
 					UserID,
@@ -114,15 +114,15 @@ class Requests {
 				FROM requests
 				WHERE ID IN ($IDs)
 				ORDER BY ID");
-			$Requests = \G::$DB->to_array(false, MYSQLI_ASSOC, true);
-			$Tags = self::get_tags(\G::$DB->collect('ID', false));
+			$Requests = \Gazelle\G::$DB->to_array(false, MYSQLI_ASSOC, true);
+			$Tags = self::get_tags(\Gazelle\G::$DB->collect('ID', false));
 			foreach ($Requests as $Request) {
 				unset($NotFound[$Request['ID']]);
 				$Request['Tags'] = isset($Tags[$Request['ID']]) ? $Tags[$Request['ID']] : array();
 				$Found[$Request['ID']] = $Request;
-				\G::$Cache->cache_value('request_'.$Request['ID'], $Request, 0);
+				\Gazelle\G::$Cache->cache_value('request_'.$Request['ID'], $Request, 0);
 			}
-			\G::$DB->set_query_id($QueryID);
+			\Gazelle\G::$DB->set_query_id($QueryID);
 
 			// Orphan requests. There shouldn't ever be any
 			if (count($NotFound) > 0) {
@@ -152,13 +152,13 @@ class Requests {
 	}
 
 	public static function get_artists($RequestID) {
-		$Artists = \G::$Cache->get_value("request_artists_$RequestID");
+		$Artists = \Gazelle\G::$Cache->get_value("request_artists_$RequestID");
 		if (is_array($Artists)) {
 			$Results = $Artists;
 		} else {
 			$Results = array();
-			$QueryID = \G::$DB->get_query_id();
-			\G::$DB->query("
+			$QueryID = \Gazelle\G::$DB->get_query_id();
+			\Gazelle\G::$DB->query("
 				SELECT
 					ra.ArtistID,
 					aa.Name,
@@ -167,13 +167,13 @@ class Requests {
 					JOIN artists_alias AS aa ON ra.AliasID = aa.AliasID
 				WHERE ra.RequestID = $RequestID
 				ORDER BY ra.Importance ASC, aa.Name ASC;");
-			$ArtistRaw = \G::$DB->to_array();
-			\G::$DB->set_query_id($QueryID);
+			$ArtistRaw = \Gazelle\G::$DB->to_array();
+			\Gazelle\G::$DB->set_query_id($QueryID);
 			foreach ($ArtistRaw as $ArtistRow) {
 				list($ArtistID, $ArtistName, $ArtistImportance) = $ArtistRow;
 				$Results[$ArtistImportance][] = array('id' => $ArtistID, 'name' => $ArtistName);
 			}
-			\G::$Cache->cache_value("request_artists_$RequestID", $Results);
+			\Gazelle\G::$Cache->cache_value("request_artists_$RequestID", $Results);
 		}
 		return $Results;
 	}
@@ -185,8 +185,8 @@ class Requests {
 		if (is_array($RequestIDs)) {
 			$RequestIDs = implode(',', $RequestIDs);
 		}
-		$QueryID = \G::$DB->get_query_id();
-		\G::$DB->query("
+		$QueryID = \Gazelle\G::$DB->get_query_id();
+		\Gazelle\G::$DB->query("
 			SELECT
 				rt.RequestID,
 				rt.TagID,
@@ -195,8 +195,8 @@ class Requests {
 				JOIN tags AS t ON rt.TagID = t.ID
 			WHERE rt.RequestID IN ($RequestIDs)
 			ORDER BY rt.TagID ASC");
-		$Tags = \G::$DB->to_array(false, MYSQLI_NUM, false);
-		\G::$DB->set_query_id($QueryID);
+		$Tags = \Gazelle\G::$DB->to_array(false, MYSQLI_NUM, false);
+		\Gazelle\G::$DB->set_query_id($QueryID);
 		$Results = array();
 		foreach ($Tags as $TagsRow) {
 			list($RequestID, $TagID, $TagName) = $TagsRow;
@@ -206,10 +206,10 @@ class Requests {
 	}
 
 	public static function get_votes_array($RequestID) {
-		$RequestVotes = \G::$Cache->get_value("request_votes_$RequestID");
+		$RequestVotes = \Gazelle\G::$Cache->get_value("request_votes_$RequestID");
 		if (!is_array($RequestVotes)) {
-			$QueryID = \G::$DB->get_query_id();
-			\G::$DB->query("
+			$QueryID = \Gazelle\G::$DB->get_query_id();
+			\Gazelle\G::$DB->query("
 				SELECT
 					rv.UserID,
 					rv.Bounty,
@@ -218,15 +218,15 @@ class Requests {
 					LEFT JOIN users_main AS u ON u.ID = rv.UserID
 				WHERE rv.RequestID = $RequestID
 				ORDER BY rv.Bounty DESC");
-			if (!\G::$DB->has_results()) {
+			if (!\Gazelle\G::$DB->has_results()) {
 				return array(
 					'TotalBounty' => 0,
 					'Voters' => array());
 			}
-			$Votes = \G::$DB->to_array();
+			$Votes = \Gazelle\G::$DB->to_array();
 
 			$RequestVotes = array();
-			$RequestVotes['TotalBounty'] = array_sum(\G::$DB->collect('Bounty'));
+			$RequestVotes['TotalBounty'] = array_sum(\Gazelle\G::$DB->collect('Bounty'));
 
 			foreach ($Votes as $Vote) {
 				list($UserID, $Bounty, $Username) = $Vote;
@@ -235,8 +235,8 @@ class Requests {
 			}
 
 			$RequestVotes['Voters'] = $VotesArray;
-			\G::$Cache->cache_value("request_votes_$RequestID", $RequestVotes);
-			\G::$DB->set_query_id($QueryID);
+			\Gazelle\G::$Cache->cache_value("request_votes_$RequestID", $RequestVotes);
+			\Gazelle\G::$DB->set_query_id($QueryID);
 		}
 		return $RequestVotes;
 	}

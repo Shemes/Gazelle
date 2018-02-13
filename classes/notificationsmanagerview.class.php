@@ -44,7 +44,7 @@ class NotificationsManagerView {
 						<option value="<?= display_str($PushOptions['PushDevice'])?>" selected="selected"><?= display_str($PushOptions['PushDevice'])?></option>
 					</select>
 					<br />
-					<a href="user.php?action=take_push&amp;push=1&amp;userid=<?=\G::$LoggedUser['ID']?>&amp;auth=<?=\G::$LoggedUser['AuthKey']?>" class="brackets">Test push</a>
+					<a href="user.php?action=take_push&amp;push=1&amp;userid=<?=\Gazelle\G::$LoggedUser['ID']?>&amp;auth=<?=\Gazelle\G::$LoggedUser['AuthKey']?>" class="brackets">Test push</a>
 					<a href="wiki.php?action=article&amp;id=113" class="brackets">View wiki guide</a>
 				</div>
 			</td>

@@ -33,17 +33,17 @@ class AutoEnable
         }
 
         // Get the user's ID
-        \G::$DB->query("
+        \Gazelle\G::$DB->query("
 				SELECT um.ID
 				FROM users_main AS um
 				JOIN users_info ui ON ui.UserID = um.ID
 				WHERE um.Username = '$Username'
 				  AND um.Enabled = '2'");
 
-        if (\G::$DB->has_results()) {
+        if (\Gazelle\G::$DB->has_results()) {
             // Make sure the user can make another request
-            list($UserID) = \G::$DB->next_record();
-            \G::$DB->query("
+            list($UserID) = \Gazelle\G::$DB->next_record();
+            \Gazelle\G::$DB->query("
 			SELECT 1 FROM users_enable_requests
 			WHERE UserID = '$UserID'
 			  AND (
@@ -63,7 +63,7 @@ class AutoEnable
 
         $IP = $_SERVER['REMOTE_ADDR'];
 
-        if (\G::$DB->has_results() || !isset($UserID)) {
+        if (\Gazelle\G::$DB->has_results() || !isset($UserID)) {
             // User already has/had a pending activation request or username is invalid
             $Output = sprintf(self::REJECTED_MESSAGE, BOT_DISABLED_CHAN, BOT_SERVER);
             if (isset($UserID)) {
@@ -73,16 +73,16 @@ class AutoEnable
             // New disable activation request
             $UserAgent = \Gazelle\Util\Db::string($_SERVER['HTTP_USER_AGENT']);
 
-            \G::$DB->query("
+            \Gazelle\G::$DB->query("
 				INSERT INTO users_enable_requests
 				(UserID, Email, IP, UserAgent, Timestamp)
 				VALUES ('$UserID', '$Email', '$IP', '$UserAgent', '" . \Gazelle\Util\Time::sqltime() . "')");
 
             // Cache the number of requests for the modbar
-            \G::$Cache->increment_value(self::CACHE_KEY_NAME);
+            \Gazelle\G::$Cache->increment_value(self::CACHE_KEY_NAME);
             setcookie('username', '', time() - 60 * 60, '/', '', false);
             $Output = self::RECEIVED_MESSAGE;
-            Tools::update_user_notes($UserID, \Gazelle\Util\Time::sqltime() . ' - Enable request ' . \G::$DB->inserted_id() . " received from $IP\n\n");
+            Tools::update_user_notes($UserID, \Gazelle\Util\Time::sqltime() . ' - Enable request ' . \Gazelle\G::$DB->inserted_id() . " received from $IP\n\n");
         }
 
         return $Output;
@@ -114,11 +114,11 @@ class AutoEnable
             }
         }
 
-        \G::$DB->query('SELECT Email, ID, UserID
+        \Gazelle\G::$DB->query('SELECT Email, ID, UserID
 				FROM users_enable_requests
 				WHERE ID IN (' . implode(',', $IDs) . ')
 					AND Outcome IS NULL');
-        $Results = \G::$DB->to_array(false, MYSQLI_NUM);
+        $Results = \Gazelle\G::$DB->to_array(false, MYSQLI_NUM);
 
         if ($Status != self::DISCARDED) {
             // Prepare email
@@ -140,7 +140,7 @@ class AutoEnable
                 if ($Status == self::APPROVED) {
                     // Generate token
                     $Token = \Gazelle\Util\Db::string(Users::make_secret());
-                    \G::$DB->query("
+                    \Gazelle\G::$DB->query("
 						UPDATE users_enable_requests
 						SET Token = '$Token'
 						WHERE ID = '$ID'");
@@ -161,11 +161,11 @@ class AutoEnable
         }
 
         // User notes stuff
-        \G::$DB->query("
+        \Gazelle\G::$DB->query("
 			SELECT Username
 			FROM users_main
-			WHERE ID = '" . \G::$LoggedUser['ID'] . "'");
-        list($StaffUser) = \G::$DB->next_record();
+			WHERE ID = '" . \Gazelle\G::$LoggedUser['ID'] . "'");
+        list($StaffUser) = \Gazelle\G::$DB->next_record();
 
         foreach ($UserInfo as $User) {
             list($ID, $UserID) = $User;
@@ -175,13 +175,13 @@ class AutoEnable
         }
 
         // Update database values and decrement cache
-        \G::$DB->query("
+        \Gazelle\G::$DB->query("
 				UPDATE users_enable_requests
 				SET HandledTimestamp = '" . \Gazelle\Util\Time::sqltime() . "',
-					CheckedBy = '" . \G::$LoggedUser['ID'] . "',
+					CheckedBy = '" . \Gazelle\G::$LoggedUser['ID'] . "',
 					Outcome = '$Status'
 				WHERE ID IN (" . implode(',', $IDs) . ')');
-        \G::$Cache->decrement_value(self::CACHE_KEY_NAME, count($IDs));
+        \Gazelle\G::$Cache->decrement_value(self::CACHE_KEY_NAME, count($IDs));
     }
 
     /**
@@ -197,30 +197,30 @@ class AutoEnable
             error(404);
         }
 
-        \G::$DB->query("
+        \Gazelle\G::$DB->query("
 			SELECT UserID
 			FROM users_enable_requests
 			WHERE Outcome = '" . self::DISCARDED . "'
 			  AND ID = '$ID'");
 
-        if (!\G::$DB->has_results()) {
+        if (!\Gazelle\G::$DB->has_results()) {
             error(404);
         } else {
-            list($UserID) = \G::$DB->next_record();
+            list($UserID) = \Gazelle\G::$DB->next_record();
         }
 
-        \G::$DB->query("
+        \Gazelle\G::$DB->query("
 			SELECT Username
 			FROM users_main
-			WHERE ID = '" . \G::$LoggedUser['ID'] . "'");
-        list($StaffUser) = \G::$DB->next_record();
+			WHERE ID = '" . \Gazelle\G::$LoggedUser['ID'] . "'");
+        list($StaffUser) = \Gazelle\G::$DB->next_record();
 
         Tools::update_user_notes($UserID, \Gazelle\Util\Time::sqltime() . " - Enable request $ID unresolved by [user]" . $StaffUser . '[/user]' . "\n\n");
-        \G::$DB->query("
+        \Gazelle\G::$DB->query("
 			UPDATE users_enable_requests
 			SET Outcome = NULL, HandledTimestamp = NULL, CheckedBy = NULL
 			WHERE ID = '$ID'");
-        \G::$Cache->increment_value(self::CACHE_KEY_NAME);
+        \Gazelle\G::$Cache->increment_value(self::CACHE_KEY_NAME);
     }
 
     /**
@@ -253,25 +253,25 @@ class AutoEnable
     public static function handle_token($Token)
     {
         $Token = \Gazelle\Util\Db::string($Token);
-        \G::$DB->query("
+        \Gazelle\G::$DB->query("
 			SELECT UserID, HandledTimestamp
 			FROM users_enable_requests
 			WHERE Token = '$Token'");
 
-        if (\G::$DB->has_results()) {
-            list($UserID, $Timestamp) = \G::$DB->next_record();
-            \G::$DB->query("UPDATE users_enable_requests SET Token = NULL WHERE Token = '$Token'");
+        if (\Gazelle\G::$DB->has_results()) {
+            list($UserID, $Timestamp) = \Gazelle\G::$DB->next_record();
+            \Gazelle\G::$DB->query("UPDATE users_enable_requests SET Token = NULL WHERE Token = '$Token'");
             if ($Timestamp < \Gazelle\Util\Time::timeMinus(3600 * 48)) {
                 // Old request
                 Tools::update_user_notes($UserID, \Gazelle\Util\Time::sqltime() . ' - Tried to use an expired enable token from ' . $_SERVER['REMOTE_ADDR'] . "\n\n");
                 $Err = 'Token has expired. Please visit ' . BOT_DISABLED_CHAN . ' on ' . BOT_SERVER . ' to discuss this with staff.';
             } else {
                 // Good request, decrement cache value and enable account
-                \G::$Cache->decrement_value(\Gazelle\AutoEnable::CACHE_KEY_NAME);
-                \G::$DB->query("UPDATE users_main SET Enabled = '1', can_leech = '1' WHERE ID = '$UserID'");
-                \G::$DB->query("UPDATE users_info SET BanReason = '0' WHERE UserID = '$UserID'");
-                \G::$DB->query("SELECT torrent_pass FROM users_main WHERE ID='{$UserID}'");
-                list($TorrentPass) = \G::$DB->next_record();
+                \Gazelle\G::$Cache->decrement_value(\Gazelle\AutoEnable::CACHE_KEY_NAME);
+                \Gazelle\G::$DB->query("UPDATE users_main SET Enabled = '1', can_leech = '1' WHERE ID = '$UserID'");
+                \Gazelle\G::$DB->query("UPDATE users_info SET BanReason = '0' WHERE UserID = '$UserID'");
+                \Gazelle\G::$DB->query("SELECT torrent_pass FROM users_main WHERE ID='{$UserID}'");
+                list($TorrentPass) = \Gazelle\G::$DB->next_record();
                 Tracker::update_tracker('add_user', ['id' => $UserID, 'passkey' => $TorrentPass]);
                 $Err = 'Your account has been enabled. You may now log in.';
             }

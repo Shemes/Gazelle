@@ -68,7 +68,7 @@ class Paranoia
             }
             return $all;
         } else {
-            if (($UserID !== false) && (\G::$LoggedUser['ID'] == $UserID)) {
+            if (($UserID !== false) && (\Gazelle\G::$LoggedUser['ID'] == $UserID)) {
                 return PARANOIA_ALLOWED;
             }
 

@@ -967,7 +967,7 @@ foreach ($ExtraTorrentsInsert as $ExtraTorrent) {
 //******************************************************************************//
 //--------------- Give Bonus Points  -------------------------------------------//
 
-if (G::$LoggedUser['DisablePoints'] == 0) {
+if (\Gazelle\G::$LoggedUser['DisablePoints'] == 0) {
 	$DB->query("UPDATE users_main SET BonusPoints = BonusPoints + {$BonusPoints} WHERE ID=".$LoggedUser['ID']);
 	$Cache->delete_value('user_stats_'.$LoggedUser['ID']);
 }

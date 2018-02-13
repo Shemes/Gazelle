@@ -24,14 +24,14 @@ class ApplicantRole {
 		$this->user_id     = $user_id;
 		$this->created     = strftime('%Y-%m-%d %H:%M:%S', time());
 		$this->modified    = $this->created;
-		\G::$DB->prepared_query("
+		\Gazelle\G::$DB->prepared_query("
 			INSERT INTO applicant_role (Title, Description, Published, UserID, Created, Modified)
 			VALUES (?, ?, ?, ?, ?, ?)
 		", $this->title, $this->description, $this->published, $this->user_id, $this->created, $this->modified);
-		$this->id = \G::$DB->inserted_id();
-		\G::$Cache->delete_value(self::CACHE_KEY_ALL);
-		\G::$Cache->delete_value(self::CACHE_KEY_PUBLISHED);
-		\G::$Cache->cache_value(sprintf(self::CACHE_KEY, $this->id),
+		$this->id = \Gazelle\G::$DB->inserted_id();
+		\Gazelle\G::$Cache->delete_value(self::CACHE_KEY_ALL);
+		\Gazelle\G::$Cache->delete_value(self::CACHE_KEY_PUBLISHED);
+		\Gazelle\G::$Cache->cache_value(sprintf(self::CACHE_KEY, $this->id),
 			[
 				'Title'       => $this->title,
 				'Published'   => $this->published,
@@ -77,15 +77,15 @@ class ApplicantRole {
 		$this->published   = $published ? 1 : 0;
 		$this->modified    = strftime('%Y-%m-%d %H:%M:%S', time());
 
-		\G::$DB->prepared_query("
+		\Gazelle\G::$DB->prepared_query("
 			UPDATE applicant_role
 			SET Title = ?, Published = ?, Description = ?, Modified = ?
 			WHERE ID = ?
 		", $this->title, $this->published, $this->description, $this->modified,
 			$this->id);
-		\G::$Cache->delete_value(self::CACHE_KEY_ALL);
-		\G::$Cache->delete_value(self::CACHE_KEY_PUBLISHED);
-		\G::$Cache->replace_value(sprintf(self::CACHE_KEY, $this->id),
+		\Gazelle\G::$Cache->delete_value(self::CACHE_KEY_ALL);
+		\Gazelle\G::$Cache->delete_value(self::CACHE_KEY_PUBLISHED);
+		\Gazelle\G::$Cache->replace_value(sprintf(self::CACHE_KEY, $this->id),
 			[
 				'Title'	      => $this->title,
 				'Published'   => $this->published,
@@ -103,16 +103,16 @@ class ApplicantRole {
 	static public function factory($id) {
 		$approle = new self();
 		$key = sprintf(self::CACHE_KEY, $id);
-		$data = \G::$Cache->get_value($key);
+		$data = \Gazelle\G::$Cache->get_value($key);
 		if ($data === false) {
-			\G::$DB->prepared_query("
+			\Gazelle\G::$DB->prepared_query("
 				SELECT Title, Published, Description, UserID, Created, Modified
 				FROM applicant_role
 				WHERE ID = ?
 			", $id);
-			if (\G::$DB->has_results()) {
-				$data = \G::$DB->next_record(MYSQLI_ASSOC);
-				\G::$Cache->cache_value($key, $data, 86400);
+			if (\Gazelle\G::$DB->has_results()) {
+				$data = \Gazelle\G::$DB->next_record(MYSQLI_ASSOC);
+				\Gazelle\G::$Cache->cache_value($key, $data, 86400);
 			}
 		}
 		$approle->id		    = $id;
@@ -142,17 +142,17 @@ class ApplicantRole {
 
 	static public function get_list($all = false) {
 		$key = $all ? self::CACHE_KEY_ALL : self::CACHE_KEY_PUBLISHED;
-		$list = \G::$Cache->get_value($key);
+		$list = \Gazelle\G::$Cache->get_value($key);
 		if ($list === false) {
 			$where = $all ? '/* all */' : 'WHERE r.Published = 1';
-			\G::$DB->query("
+			\Gazelle\G::$DB->query("
 				SELECT r.ID as role_id, r.Title as role, r.Published, r.Description, r.UserID, r.Created, r.Modified
 				FROM applicant_role r
 				$where
 				ORDER BY r.Title
 			");
 			$list = [];
-			while (($row = \G::$DB->next_record(MYSQLI_ASSOC))) {
+			while (($row = \Gazelle\G::$DB->next_record(MYSQLI_ASSOC))) {
 				$list[$row['role']] = [
 					'id'		  => $row['role_id'],
 					'published'   => $row['Published'] ? 1 : 0,
@@ -162,7 +162,7 @@ class ApplicantRole {
 					'modified'    => $row['Modified']
 				];
 			}
-			\G::$Cache->cache_value($key, $list, 86400 * 10);
+			\Gazelle\G::$Cache->cache_value($key, $list, 86400 * 10);
 		}
 		return $list;
 	}

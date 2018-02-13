@@ -547,12 +547,12 @@ if (!$ThreadInfo['IsLocked'] || check_perms('site_moderate_forums')) {
 	}
 }
 if (check_perms('site_moderate_forums')) {
-	\G::$DB->query("
+	\Gazelle\G::$DB->query("
 			SELECT ID, AuthorID, AddedTime, Body
 			FROM forums_topic_notes
 			WHERE TopicID = $ThreadID
 			ORDER BY ID ASC");
-	$Notes = \G::$DB->to_array();
+	$Notes = \Gazelle\G::$DB->to_array();
 ?>
 	<br />
 	<h3 id="thread_notes">Thread notes</h3> <a href="#" onclick="$('#thread_notes_table').gtoggle(); return false;" class="brackets">Toggle</a>

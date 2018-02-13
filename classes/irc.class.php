@@ -159,7 +159,7 @@ abstract class IRC_BOT {
 	}*/
 
 	protected function listen() {
-		\G::$Cache->InternalCache = false;
+		\Gazelle\G::$Cache->InternalCache = false;
 		stream_set_timeout($this->Socket, 10000000000);
 		while ($this->State == 1) {
 			$NullSock = null;
@@ -175,8 +175,8 @@ abstract class IRC_BOT {
 					$this->listener_events();
 				}
 			}
-			\G::$DB->LinkID = false;
-			\G::$DB->Queries = array();
+			\Gazelle\G::$DB->LinkID = false;
+			\Gazelle\G::$DB->Queries = array();
 		}
 	}
 }

@@ -17,7 +17,7 @@ if ($ThreadID > 0) {
 	}
 }
 elseif ($ThreadID === '') {
-	$ThreadID = Misc::create_thread(ANNOUNCEMENT_FORUM_ID, \G::$LoggedUser['ID'], $_POST['title'], $_POST['body']);
+	$ThreadID = Misc::create_thread(ANNOUNCEMENT_FORUM_ID, \Gazelle\G::$LoggedUser['ID'], $_POST['title'], $_POST['body']);
 	if ($ThreadID < 1) {
 		error(0);
 	}
@@ -31,7 +31,7 @@ $DB->prepared_query("
 	INSERT INTO blog
 		(UserID, Title, Body, Time, ThreadID, Important)
 	VALUES
-		(?, ?, ?, ?, ?, ?)", \G::$LoggedUser['ID'], $_POST['title'], $_POST['body'], \Gazelle\Util\Time::sqltime(), $ThreadID, $Important);
+		(?, ?, ?, ?, ?, ?)", \Gazelle\G::$LoggedUser['ID'], $_POST['title'], $_POST['body'], \Gazelle\Util\Time::sqltime(), $ThreadID, $Important);
 
 $Cache->delete_value('blog');
 if ($Important == '1') {
@@ -40,8 +40,8 @@ if ($Important == '1') {
 if (isset($_POST['subscribe']) && $ThreadID !== null && $ThreadID > 0) {
 	$DB->prepared_query("
 		INSERT IGNORE INTO users_subscriptions
-		VALUES (?, ?)", \G::$LoggedUser['ID'], $ThreadID);
-	$Cache->delete_value('subscriptions_user_'.\G::$LoggedUser['ID']);
+		VALUES (?, ?)", \Gazelle\G::$LoggedUser['ID'], $ThreadID);
+	$Cache->delete_value('subscriptions_user_'.\Gazelle\G::$LoggedUser['ID']);
 }
 NotificationsManager::send_push(NotificationsManager::get_push_enabled_users(), $_POST['title'], $_POST['body'], site_url() . 'index.php', NotificationsManager::BLOG);
 

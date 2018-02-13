@@ -47,13 +47,13 @@ class DonationsBitcoin
     public static function get_address($UserID, $GenAddress = false)
     {
         $UserID = (int)$UserID;
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query("
 			SELECT BitcoinAddress
 			FROM users_info
 			WHERE UserID = '$UserID'");
-        list($Addr) = \G::$DB->next_record();
-        \G::$DB->set_query_id($QueryID);
+        list($Addr) = \Gazelle\G::$DB->next_record();
+        \Gazelle\G::$DB->set_query_id($QueryID);
 
         if (!empty($Addr)) {
             return $Addr;
@@ -64,13 +64,13 @@ class DonationsBitcoin
             if (empty($NewAddr)) {
                 error(0);
             }
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query("
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query("
 				UPDATE users_info
 				SET BitcoinAddress = '" . \Gazelle\Util\Db::string($NewAddr) . "'
 				WHERE UserID = '$UserID'
 					AND BitcoinAddress IS NULL");
-            \G::$DB->set_query_id($QueryID);
+            \Gazelle\G::$DB->set_query_id($QueryID);
             return $NewAddr;
         } else {
             return false;
@@ -109,17 +109,17 @@ class DonationsBitcoin
         if (!is_array($Addresses) || empty($Addresses)) {
             return false;
         }
-        $QueryID = \G::$DB->get_query_id();
-        \G::$DB->query("
+        $QueryID = \Gazelle\G::$DB->get_query_id();
+        \Gazelle\G::$DB->query("
 			SELECT BitcoinAddress, UserID
 			FROM users_info
 			WHERE BitcoinAddress IN ('" . implode("', '", $Addresses) . "')");
-        if (\G::$DB->has_results()) {
-            $UserIDs = \G::$DB->to_pair(0, 1);
+        if (\Gazelle\G::$DB->has_results()) {
+            $UserIDs = \Gazelle\G::$DB->to_pair(0, 1);
         } else {
             $UserIDs = [];
         }
-        \G::$DB->set_query_id($QueryID);
+        \Gazelle\G::$DB->set_query_id($QueryID);
         return $UserIDs;
     }
 
@@ -129,13 +129,13 @@ class DonationsBitcoin
     public static function find_new_donations()
     {
         global $Debug;
-        if (($OldAmount = \G::$Cache->get_value('btc_total_received')) === false) {
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query('
+        if (($OldAmount = \Gazelle\G::$Cache->get_value('btc_total_received')) === false) {
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query('
 				SELECT IFNULL(SUM(Amount), 0)
 				FROM donations_bitcoin');
-            list($OldAmount) = \G::$DB->next_record(MYSQLI_NUM, false);
-            \G::$DB->set_query_id($QueryID);
+            list($OldAmount) = \Gazelle\G::$DB->next_record(MYSQLI_NUM, false);
+            \Gazelle\G::$DB->set_query_id($QueryID);
         }
         $NewAmount = self::get_total_received();
         if ($NewAmount < $OldAmount) {
@@ -146,13 +146,13 @@ class DonationsBitcoin
         }
         if ($NewAmount > $OldAmount) {
             // I really wish we didn't have to do it like this
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query('
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query('
 				SELECT BitcoinAddress, SUM(Amount)
 				FROM donations_bitcoin
 				GROUP BY BitcoinAddress');
-            $OldDonations = \G::$DB->to_pair(0, 1, false);
-            \G::$DB->set_query_id($QueryID);
+            $OldDonations = \Gazelle\G::$DB->to_pair(0, 1, false);
+            \Gazelle\G::$DB->set_query_id($QueryID);
             $NewDonations = self::get_received();
             foreach ($NewDonations as $Address => &$Amount) {
                 if (isset($OldDonations[$Address])) {
@@ -172,7 +172,7 @@ class DonationsBitcoin
                 \Gazelle\Donations::regular_donate($UserID, $NewDonations[$Address], 'Bitcoin Parser', '', 'BTC');
                 self::store_donation($Address, $NewDonations[$Address]);
             }
-            \G::$Cache->cache_value('btc_total_received', $NewAmount, 0);
+            \Gazelle\G::$Cache->cache_value('btc_total_received', $NewAmount, 0);
         }
     }
 
@@ -188,7 +188,7 @@ class DonationsBitcoin
             // Panic!
             return false;
         }
-        \G::$DB->query("
+        \Gazelle\G::$DB->query("
 			INSERT INTO donations_bitcoin
 				(BitcoinAddress, Amount)
 			VALUES

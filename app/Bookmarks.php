@@ -75,7 +75,7 @@ class Bookmarks
 
     /**
      * Fetch all bookmarks of a certain type for a user.
-     * If UserID is false than defaults to \G::$LoggedUser['ID']
+     * If UserID is false than defaults to \Gazelle\G::$LoggedUser['ID']
      *
      * @param string $Type
      *        	type of bookmarks to fetch
@@ -86,19 +86,19 @@ class Bookmarks
     public static function all_bookmarks($Type, $UserID = false)
     {
         if ($UserID === false) {
-            $UserID = \G::$LoggedUser['ID'];
+            $UserID = \Gazelle\G::$LoggedUser['ID'];
         }
         $CacheKey = 'bookmarks_' . $Type . '_' . $UserID;
-        if (($Bookmarks = \G::$Cache->get_value($CacheKey)) === false) {
+        if (($Bookmarks = \Gazelle\G::$Cache->get_value($CacheKey)) === false) {
             list($Table, $Col) = self::bookmark_schema($Type);
-            $QueryID = \G::$DB->get_query_id();
-            \G::$DB->query("
+            $QueryID = \Gazelle\G::$DB->get_query_id();
+            \Gazelle\G::$DB->query("
 				SELECT $Col
 				FROM $Table
 				WHERE UserID = '$UserID'");
-            $Bookmarks = \G::$DB->collect($Col);
-            \G::$DB->set_query_id($QueryID);
-            \G::$Cache->cache_value($CacheKey, $Bookmarks, 0);
+            $Bookmarks = \Gazelle\G::$DB->collect($Col);
+            \Gazelle\G::$DB->set_query_id($QueryID);
+            \Gazelle\G::$Cache->cache_value($CacheKey, $Bookmarks, 0);
         }
         return $Bookmarks;
     }

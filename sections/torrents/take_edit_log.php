@@ -22,7 +22,7 @@ $Log = $DB->next_record(MYSQLI_ASSOC);
 $Adjusted = isset($_POST['adjusted']) ? '1' : '0';
 $AdjustedScore = 100;
 $AdjustedChecksum = isset($_POST['adjusted_checksum']) ? '1' : '0';
-$AdjustedBy =\G::$LoggedUser['ID'];
+$AdjustedBy =\Gazelle\G::$LoggedUser['ID'];
 $AdjustmentReason = $_POST['adjustment_reason'];
 $AdjustmentDetails = array();
 

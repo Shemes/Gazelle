@@ -47,14 +47,14 @@ class TORRENT_FORM {
 	}
 
 	function head() {
-		$AnnounceURL = (\G::$LoggedUser['HttpsTracker']) ? ANNOUNCE_HTTPS_URL : ANNOUNCE_HTTP_URL;
+		$AnnounceURL = (\Gazelle\G::$LoggedUser['HttpsTracker']) ? ANNOUNCE_HTTPS_URL : ANNOUNCE_HTTP_URL;
 ?>
 
 <div class="thin">
 <?		if ($this->NewTorrent) { ?>
 	<p style="text-align: center;">
 		Your personal announce URL is:<br />
-		<input type="text" value="<?= $AnnounceURL . '/' . \G::$LoggedUser['torrent_pass'] . '/announce'?>" size="71" onclick="this.select();" readonly="readonly" />
+		<input type="text" value="<?= $AnnounceURL . '/' . \Gazelle\G::$LoggedUser['torrent_pass'] . '/announce'?>" size="71" onclick="this.select();" readonly="readonly" />
 	</p>
 <?		}
 		if ($this->Error) {
@@ -64,7 +64,7 @@ class TORRENT_FORM {
 	<form class="create_form" name="torrent" action="" enctype="multipart/form-data" method="post" id="upload_table" onsubmit="$('#post').raw().disabled = 'disabled';">
 		<div>
 			<input type="hidden" name="submit" value="true" />
-			<input type="hidden" name="auth" value="<?=\G::$LoggedUser['AuthKey']?>" />
+			<input type="hidden" name="auth" value="<?=\Gazelle\G::$LoggedUser['AuthKey']?>" />
 <?		if (!$this->NewTorrent) { ?>
 			<input type="hidden" name="action" value="takeedit" />
 			<input type="hidden" name="torrentid" value="<?=display_str($this->TorrentID)?>" />
@@ -170,13 +170,13 @@ class TORRENT_FORM {
 
 
 	function music_form($GenreTags) {
-		$QueryID = \G::$DB->get_query_id();
+		$QueryID = \Gazelle\G::$DB->get_query_id();
 		$Torrent = $this->Torrent;
 		$IsRemaster = !empty($Torrent['Remastered']);
 		$UnknownRelease = !$this->NewTorrent && $IsRemaster && !$Torrent['RemasterYear'];
 
 		if ($Torrent['GroupID']) {
-			\G::$DB->query('
+			\Gazelle\G::$DB->query('
 				SELECT
 					ID,
 					RemasterYear,
@@ -192,8 +192,8 @@ class TORRENT_FORM {
 					RemasterRecordLabel DESC,
 					RemasterCatalogueNumber DESC");
 
-			if (\G::$DB->has_results()) {
-				$GroupRemasters = \G::$DB->to_array(false, MYSQLI_BOTH, false);
+			if (\Gazelle\G::$DB->has_results()) {
+				$GroupRemasters = \Gazelle\G::$DB->to_array(false, MYSQLI_BOTH, false);
 			}
 		}
 
@@ -358,7 +358,7 @@ function show() {
 					<input type="checkbox" id="remaster" name="remaster"<? if ($IsRemaster) { echo ' checked="checked"'; } ?> onclick="Remaster();<? if ($this->NewTorrent) { ?> CheckYear();<? } ?>" />
 					<label for="remaster">Check this box if this torrent is a different release to the original, for example a limited or country specific edition or a release that includes additional bonus tracks or is a bonus disc.</label>
 					<div id="remaster_true"<? if (!$IsRemaster) { echo ' class="hidden"';} ?>>
-<?	if (check_perms('edit_unknowns') || \G::$LoggedUser['ID'] == $Torrent['UserID']) { ?>
+<?	if (check_perms('edit_unknowns') || \Gazelle\G::$LoggedUser['ID'] == $Torrent['UserID']) { ?>
 						<br />
 						<input type="checkbox" id="unknown" name="unknown"<? if ($UnknownRelease) { echo ' checked="checked"'; } ?> onclick="<? if ($this->NewTorrent) { ?>CheckYear(); <? } ?>ToggleUnknown();" /> <label for="unknown">Unknown Release</label>
 <?	} ?>
@@ -620,7 +620,7 @@ function show() {
 		if ($_SERVER['SCRIPT_NAME'] === '/ajax.php')
 			TEXTAREA_PREVIEW::JavaScript(false);
 
-		\G::$DB->set_query_id($QueryID);
+		\Gazelle\G::$DB->set_query_id($QueryID);
 	}//function music_form
 
 

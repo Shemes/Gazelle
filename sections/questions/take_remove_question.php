@@ -11,7 +11,7 @@ if (!is_number($ID)) {
 	error(404);
 }
 
-G::$DB->query("
+\Gazelle\G::$DB->query("
 	DELETE FROM user_questions
 	WHERE ID = '$ID'");
 

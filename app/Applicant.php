@@ -37,7 +37,7 @@ class Applicant
         $this->role_id = ApplicantRole::get_id($role);
         $this->body = $body;
         $this->resolved = false;
-        \G::$DB->prepared_query(
+        \Gazelle\G::$DB->prepared_query(
             '
 			INSERT INTO applicant (RoleID, UserID, ThreadID, Body)
 			VALUES (?, ?, ?, ?)
@@ -47,14 +47,14 @@ class Applicant
             $this->thread->id(),
             $this->body
         );
-        $this->id = \G::$DB->inserted_id();
-        \G::$Cache->delete_value(self::CACHE_KEY_NEW_COUNT);
+        $this->id = \Gazelle\G::$DB->inserted_id();
+        \Gazelle\G::$Cache->delete_value(self::CACHE_KEY_NEW_COUNT);
         $this->flush_applicant_list_cache();
     }
 
     private function flush_applicant_list_cache()
     {
-        \G::$Cache->delete_value('user_is_applicant.' . $this->user_id);
+        \Gazelle\G::$Cache->delete_value('user_is_applicant.' . $this->user_id);
         for ($page = 1; $page; ++$page) {
             $hit = 0;
             $cache_key = [
@@ -64,9 +64,9 @@ class Applicant
                 sprintf(self::CACHE_KEY_RESOLVED . ".$this->user_id", $page),
             ];
             foreach ($cache_key as $key) {
-                if (\G::$Cache->get_value($key) !== false) {
+                if (\Gazelle\G::$Cache->get_value($key) !== false) {
                     ++$hit;
-                    \G::$Cache->delete_value($key);
+                    \Gazelle\G::$Cache->delete_value($key);
                 }
             }
             if (!$hit) {
@@ -114,18 +114,18 @@ class Applicant
     public function resolve($resolved = true)
     {
         $this->resolved = $resolved;
-        \G::$DB->prepared_query('
+        \Gazelle\G::$DB->prepared_query('
 			UPDATE applicant
 			SET Resolved = ?
 			WHERE ID = ?
 		', $this->resolved, $this->id);
         $key = sprintf(self::CACHE_KEY, $this->id);
-        $data = \G::$Cache->get_value($key);
+        $data = \Gazelle\G::$Cache->get_value($key);
         if ($data !== false) {
             $data['Resolved'] = $this->resolved;
-            \G::$Cache->replace_value($key, $data, 86400);
+            \Gazelle\G::$Cache->replace_value($key, $data, 86400);
         }
-        \G::$Cache->delete_value('user_is_applicant.' . $this->user_id);
+        \Gazelle\G::$Cache->delete_value('user_is_applicant.' . $this->user_id);
         return $this->flush_applicant_list_cache();
     }
 
@@ -142,9 +142,9 @@ class Applicant
     public function save_note($poster_id, $body, $visibility)
     {
         $this->thread->save_note($poster_id, $body, $visibility);
-        \G::$Cache->delete_value(sprintf(self::CACHE_KEY, $this->id));
-        \G::$Cache->delete_value(self::CACHE_KEY_NEW_REPLY);
-        \G::$Cache->delete_value(self::CACHE_KEY_NEW_COUNT);
+        \Gazelle\G::$Cache->delete_value(sprintf(self::CACHE_KEY, $this->id));
+        \Gazelle\G::$Cache->delete_value(self::CACHE_KEY_NEW_REPLY);
+        \Gazelle\G::$Cache->delete_value(self::CACHE_KEY_NEW_COUNT);
         if ($visibility == 'public' && \Permissions::has_permission($poster_id, 'admin_manage_applicants')) {
             $staff = \Users::user_info($poster_id);
             $mf = \Users::user_info($this->user_id());
@@ -174,7 +174,7 @@ END_MSG
 
     public function delete_note($note_id)
     {
-        \G::$Cache->delete_value(self::CACHE_KEY_NEW_REPLY);
+        \Gazelle\G::$Cache->delete_value(self::CACHE_KEY_NEW_REPLY);
         $this->thread()->delete_note($note_id);
         return $this->flush_applicant_list_cache();
     }
@@ -198,16 +198,16 @@ END_MSG
     {
         $applicant = new self();
         $key = sprintf(self::CACHE_KEY, $id);
-        $data = \G::$Cache->get_value($key);
+        $data = \Gazelle\G::$Cache->get_value($key);
         if ($data === false) {
-            \G::$DB->prepared_query('
+            \Gazelle\G::$DB->prepared_query('
 				SELECT a.RoleID, a.UserID, a.ThreadID, a.Body, a.Resolved, a.Created, a.Modified
 				FROM applicant a
 				WHERE a.ID = ?
 			', $id);
-            if (\G::$DB->has_results()) {
-                $data = \G::$DB->next_record();
-                \G::$Cache->cache_value($key, $data, 86400);
+            if (\Gazelle\G::$DB->has_results()) {
+                $data = \Gazelle\G::$DB->next_record();
+                \Gazelle\G::$Cache->cache_value($key, $data, 86400);
             }
         }
         $applicant->id = $id;
@@ -246,10 +246,10 @@ END_MSG
         if ($user_id) {
             $key .= ".$user_id";
         }
-        $list = \G::$Cache->get_value($key);
+        $list = \Gazelle\G::$Cache->get_value($key);
         if ($list === false) {
             $user_condition = $user_id ? 'a.UserID = ?' : '0 = ? /* manager */';
-            \G::$DB->prepared_query($sql = <<<END_SQL
+            \Gazelle\G::$DB->prepared_query($sql = <<<END_SQL
 SELECT APP.ID, r.Title as Role, APP.UserID, u.Username, APP.Created, APP.Modified, APP.nr_notes,
 	last.UserID as last_UserID, ulast.Username as last_Username, last.Created as last_Created
 FROM
@@ -272,8 +272,8 @@ ORDER by r.Modified DESC,
 LIMIT ? OFFSET ?
 END_SQL
             , $resolved ? 1 : 0, $user_id, self::ENTRIES_PER_PAGE, ($page - 1) * self::ENTRIES_PER_PAGE);
-            $list = \G::$DB->has_results() ? \G::$DB->to_array() : [];
-            \G::$Cache->cache_value($key, $list, 86400);
+            $list = \Gazelle\G::$DB->has_results() ? \Gazelle\G::$DB->to_array() : [];
+            \Gazelle\G::$Cache->cache_value($key, $list, 86400);
         }
         return $list;
     }
@@ -281,17 +281,17 @@ END_SQL
     public static function user_is_applicant($user_id)
     {
         $key = 'user_is_applicant.' . $user_id;
-        $has_application = \G::$Cache->get_value($key);
+        $has_application = \Gazelle\G::$Cache->get_value($key);
         if ($has_application === false) {
             $has_application = -1;
-            \G::$DB->prepared_query('SELECT 1 FROM applicant WHERE UserID = ? LIMIT 1', $user_id);
-            if (\G::$DB->has_results()) {
-                $data = \G::$DB->next_record();
+            \Gazelle\G::$DB->prepared_query('SELECT 1 FROM applicant WHERE UserID = ? LIMIT 1', $user_id);
+            if (\Gazelle\G::$DB->has_results()) {
+                $data = \Gazelle\G::$DB->next_record();
                 if ($data[0] == 1) {
                     $has_application = 1;
                 }
             }
-            \G::$Cache->cache_value($key, $has_application, 86400);
+            \Gazelle\G::$Cache->cache_value($key, $has_application, 86400);
         }
         return $has_application > 0;
     }
@@ -299,9 +299,9 @@ END_SQL
     public static function new_applicant_count()
     {
         $key = self::CACHE_KEY_NEW_COUNT;
-        $applicant_count = \G::$Cache->get_value($key);
+        $applicant_count = \Gazelle\G::$Cache->get_value($key);
         if ($applicant_count === false) {
-            \G::$DB->prepared_query(
+            \Gazelle\G::$DB->prepared_query(
                 '
 				SELECT count(a.ID) as nr
 				FROM applicant a
@@ -314,11 +314,11 @@ END_SQL
 				',
                 'staff-role'
             );
-            if (\G::$DB->has_results()) {
-                $data = \G::$DB->next_record();
+            if (\Gazelle\G::$DB->has_results()) {
+                $data = \Gazelle\G::$DB->next_record();
                 $applicant_count = $data['nr'];
             }
-            \G::$Cache->cache_value($key, $applicant_count, 3600);
+            \Gazelle\G::$Cache->cache_value($key, $applicant_count, 3600);
         }
         return $applicant_count;
     }
@@ -326,9 +326,9 @@ END_SQL
     public static function new_reply_count()
     {
         $key = self::CACHE_KEY_NEW_REPLY;
-        $reply_count = \G::$Cache->get_value($key);
+        $reply_count = \Gazelle\G::$Cache->get_value($key);
         if ($reply_count === false) {
-            \G::$DB->prepared_query(
+            \Gazelle\G::$DB->prepared_query(
                 '
 				SELECT count(*) AS nr
 				FROM applicant a
@@ -348,11 +348,11 @@ END_SQL
 				',
                 'staff-role'
             );
-            if (\G::$DB->has_results()) {
-                $data = \G::$DB->next_record();
+            if (\Gazelle\G::$DB->has_results()) {
+                $data = \Gazelle\G::$DB->next_record();
                 $reply_count = $data['nr'];
             }
-            \G::$Cache->cache_value($key, $reply_count, 3600);
+            \Gazelle\G::$Cache->cache_value($key, $reply_count, 3600);
         }
         return $reply_count;
     }
