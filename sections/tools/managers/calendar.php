@@ -1,5 +1,5 @@
 <?
-if (!Calendar::can_view()) {
+if (!\Gazelle\Calendar::can_view()) {
 	error(404);
 }
 
@@ -12,7 +12,7 @@ if (empty($Month) || empty($Year)) {
 	$Year = $Date['year'];
 }
 
-$Events = Calendar::get_events($Month, $Year);
+$Events = \Gazelle\Calendar::get_events($Month, $Year);
 View::show_header("Calendar", "jquery.validate,form_validate,calendar", "calendar");
 
 CalendarView::render_title($Month, $Year);

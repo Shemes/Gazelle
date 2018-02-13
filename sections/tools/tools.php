@@ -60,7 +60,7 @@ View::show_header('Staff Tools');
 
 	// begin Announcements category
 	$ToolsHTML = "";
-	create_row("Calendar", "tools.php?action=calendar", Calendar::can_view());
+	create_row("Calendar", "tools.php?action=calendar", \Gazelle\Calendar::can_view());
 	create_row("Change log", "tools.php?action=change_log", check_perms("users_mod"));
 	create_row("Global notification", "tools.php?action=global_notification", check_perms("users_mod"));
 	create_row("Mass PM", "tools.php?action=mass_pm", check_perms("users_mod"));

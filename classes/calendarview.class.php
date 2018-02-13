@@ -46,9 +46,9 @@ class CalendarView {
 	private static function render_events_day($Day, $Events) {
 		$Events = self::get_events_on($Day, $Events);
 		foreach ($Events as $Event) {
-			$Color = Calendar::$Colors[Calendar::$Importances[$Event['Importance']]];
-			$Category = Calendar::$Categories[$Event['Category']];
-			$Tooltip = $Event['Title'] . " - " . Calendar::$Categories[$Event['Category']] . " - " . Calendar::$Importances[$Event['Importance']];
+			$Color = \Gazelle\Calendar::$Colors[\Gazelle\Calendar::$Importances[$Event['Importance']]];
+			$Category = \Gazelle\Calendar::$Categories[$Event['Category']];
+			$Tooltip = $Event['Title'] . " - " . \Gazelle\Calendar::$Categories[$Event['Category']] . " - " . \Gazelle\Calendar::$Importances[$Event['Importance']];
 ?>
 			<p><a href="#" class="event_day tooltip" title="<?=$Tooltip?>" data-gazelle-id="<?=$Event['ID']?>" style="color: <?=$Color?>;"><?=Format::cut_string($Event['Title'], 8, true)?></a></p>
 <?
