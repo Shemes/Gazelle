@@ -963,7 +963,7 @@ $Pages = Format::get_pages($Page, $NumComments, TORRENT_COMMENTS_PER_PAGE, 9, '#
 <?
 
 //---------- Begin printing
-CommentsView::render_comments($Thread, $LastRead, "artist.php?id=$ArtistID");
+\Gazelle\CommentsView::render_comments($Thread, $LastRead, "artist.php?id=$ArtistID");
 ?>
 		<div class="linkbox">
 			<?=($Pages)?>

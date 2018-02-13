@@ -921,7 +921,7 @@ $Pages = Format::get_pages($Page, $NumComments, TORRENT_COMMENTS_PER_PAGE, 9, '#
 			<?=$Pages?>
 		</div>
 <?
-CommentsView::render_comments($Thread, $LastRead, "torrents.php?id=$GroupID");
+\Gazelle\CommentsView::render_comments($Thread, $LastRead, "torrents.php?id=$GroupID");
 ?>
 		<div class="linkbox">
 			<?=$Pages?>

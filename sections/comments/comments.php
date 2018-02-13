@@ -262,7 +262,7 @@ if ($Count > 0) {
 				$Header = ' on ' . \Gazelle\Artists::display_artists($Artists[$PageID]) . " <a href=\"torrents.php?id=$PageID\">$Name</a>";
 				break;
 		}
-		CommentsView::render_comment($AuthorID, $PostID, $Body, $AddedTime, $EditedUserID, $EditedTime, $Link, false, $Header, false);
+		\Gazelle\CommentsView::render_comment($AuthorID, $PostID, $Body, $AddedTime, $EditedUserID, $EditedTime, $Link, false, $Header, false);
 	}
 } else { ?>
 	<div class="center">No results.</div>

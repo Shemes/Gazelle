@@ -46,7 +46,7 @@ if ($Pages) {
 <?
 
 //---------- Begin printing
-CommentsView::render_comments($Thread, $LastRead, "collages.php?action=comments&amp;collageid=$CollageID");
+\Gazelle\CommentsView::render_comments($Thread, $LastRead, "collages.php?action=comments&amp;collageid=$CollageID");
 if (!$ThreadInfo['IsLocked'] || check_perms('site_moderate_forums')) {
 	if ($ThreadInfo['MinClassWrite'] <= $LoggedUser['Class'] && !$LoggedUser['DisablePosting']) {
 		View::parse('generic/reply/quickreply.php', array(

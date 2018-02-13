@@ -453,7 +453,7 @@ echo $Pages;
 <?
 
 //---------- Begin printing
-CommentsView::render_comments($Thread, $LastRead, "requests.php?action=view&amp;id=$RequestID");
+\Gazelle\CommentsView::render_comments($Thread, $LastRead, "requests.php?action=view&amp;id=$RequestID");
 
 if ($Pages) { ?>
 		<div class="linkbox pager"><?=$Pages?></div>
