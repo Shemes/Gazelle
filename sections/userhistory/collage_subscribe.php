@@ -23,7 +23,7 @@ if (($Key = array_search($CollageID, $UserSubscriptions)) !== false) {
 		WHERE UserID = '.\Gazelle\Util\Db::string($LoggedUser['ID'])."
 			AND CollageID = $CollageID");
 	unset($UserSubscriptions[$Key]);
-	Collages::decrease_subscriptions($CollageID);
+	\Gazelle\Collages::decrease_subscriptions($CollageID);
 } else {
 	$DB->query("
 		INSERT IGNORE INTO users_collage_subs
@@ -31,7 +31,7 @@ if (($Key = array_search($CollageID, $UserSubscriptions)) !== false) {
 		VALUES
 			($LoggedUser[ID], $CollageID, NOW())");
 	array_push($UserSubscriptions, $CollageID);
-	Collages::increase_subscriptions($CollageID);
+	\Gazelle\Collages::increase_subscriptions($CollageID);
 }
 $Cache->replace_value('collage_subs_user_'.$LoggedUser['ID'], $UserSubscriptions, 0);
 $Cache->delete_value('collage_subs_user_new_'.$LoggedUser['ID']);
