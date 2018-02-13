@@ -23,7 +23,7 @@ authorize();
 
 
 $Validate = new VALIDATE;
-$Feed = new FEED;
+$Feed = new \Gazelle\Feed;
 
 define('QUERY_EXCEPTION', true); // Shut up debugging
 

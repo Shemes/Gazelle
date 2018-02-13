@@ -44,7 +44,7 @@ include(SERVER_ROOT.'/classes/validate.class.php');
 $Val = new VALIDATE;
 
 include(SERVER_ROOT.'/classes/feed.class.php');
-$Feed = new FEED;
+$Feed = new \Gazelle\Feed;
 
 switch ($_REQUEST['action']) {
 	case 'phpinfo':

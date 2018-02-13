@@ -1,12 +1,10 @@
 <?
-include(SERVER_ROOT.'/classes/feed.class.php'); // RSS feeds
-
 authorize();
 
 if (!\Gazelle\Bookmarks::can_bookmark($_GET['type'])) {
 	error(404);
 }
-$Feed = new FEED;
+$Feed = new \Gazelle\Feed;
 
 $Type = $_GET['type'];
 
