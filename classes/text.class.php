@@ -643,14 +643,14 @@ class Text {
 					$Str .= '<a href="user.php?action=search&amp;search='.urlencode($Block['Val']).'">'.$Block['Val'].'</a>';
 					break;
 				case 'artist':
-					$Str .= '<a href="artist.php?artistname='.urlencode(Format::undisplay_str($Block['Val'])).'">'.$Block['Val'].'</a>';
+					$Str .= '<a href="artist.php?artistname='.urlencode(Gazelle\Format::undisplay_str($Block['Val'])).'">'.$Block['Val'].'</a>';
 					break;
 				case 'rule':
 					$Rule = trim(strtolower($Block['Val']));
 					if ($Rule[0] != 'r' && $Rule[0] != 'h') {
 						$Rule = 'r'.$Rule;
 					}
-					$Str .= '<a href="rules.php?p=upload#'.urlencode(Format::undisplay_str($Rule)).'">'.preg_replace('/[aA-zZ]/', '', $Block['Val']).'</a>';
+					$Str .= '<a href="rules.php?p=upload#'.urlencode(Gazelle\Format::undisplay_str($Rule)).'">'.preg_replace('/[aA-zZ]/', '', $Block['Val']).'</a>';
 					break;
 				case 'torrent':
 					$Pattern = '/('.NONSSL_SITE_URL.'\/torrents\.php.*[\?&]id=)?(\d+)($|&|\#).*/i';

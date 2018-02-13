@@ -213,9 +213,9 @@ class SiteHistoryView {
 				<li>
 					<a href="sitehistory.php?action=search&amp;category=<?=$Event['Category']?>" class="brackets"><?=$Categories[$Event['Category']]?></a>
 <?			if (!empty($Event['Url'])) { ?>
-					<a href="<?=$Event['Url']?>"><?=Format::cut_string($Event['Title'], 20)?></a>
+					<a href="<?=$Event['Url']?>"><?=Gazelle\Format::cut_string($Event['Title'], 20)?></a>
 <?			} else { ?>
-					<?=Format::cut_string($Event['Title'], 20)?>
+					<?=Gazelle\Format::cut_string($Event['Title'], 20)?>
 <?			} ?>
 				</li>
 <?		} ?>

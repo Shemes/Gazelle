@@ -582,10 +582,10 @@ class Torrents
             list($GroupID, $Contents) = \G::$DB->next_record(MYSQLI_NUM, false);
             if (Misc::is_new_torrent($Contents)) {
                 $Tor = new \Gazelle\BencodeTorrent($Contents);
-                $FilePath = (isset($Tor->Dec['info']['files']) ? Format::make_utf8($Tor->get_name()) : '');
+                $FilePath = (isset($Tor->Dec['info']['files']) ? Gazelle\Format::make_utf8($Tor->get_name()) : '');
             } else {
                 $Tor = new TORRENT(unserialize(base64_decode($Contents)), true);
-                $FilePath = (isset($Tor->Val['info']->Val['files']) ? Format::make_utf8($Tor->get_name()) : '');
+                $FilePath = (isset($Tor->Val['info']->Val['files']) ? Gazelle\Format::make_utf8($Tor->get_name()) : '');
             }
             list($TotalSize, $FileList) = $Tor->file_list();
             foreach ($FileList as $File) {
@@ -622,7 +622,7 @@ class Torrents
     public static function filelist_format_file($File)
     {
         list($Size, $Name) = $File;
-        $Name = Format::make_utf8(strtr($Name, "\n\r\t", '   '));
+        $Name = Gazelle\Format::make_utf8(strtr($Name, "\n\r\t", '   '));
         $ExtPos = strrpos($Name, '.');
         // Should not be $ExtPos !== false. Extensionless files that start with a . should not get extensions
         $Ext = ($ExtPos ? trim(substr($Name, $ExtPos + 1)) : '');
@@ -709,16 +709,16 @@ class Torrents
             }
         }
         if ($Data['IsSnatched']) {
-            $Info[] = Format::torrent_label('Snatched!');
+            $Info[] = Gazelle\Format::torrent_label('Snatched!');
         }
         if ($Data['FreeTorrent'] == '1') {
-            $Info[] = Format::torrent_label('Freeleech!');
+            $Info[] = Gazelle\Format::torrent_label('Freeleech!');
         }
         if ($Data['FreeTorrent'] == '2') {
-            $Info[] = Format::torrent_label('Neutral Leech!');
+            $Info[] = Gazelle\Format::torrent_label('Neutral Leech!');
         }
         if ($Data['PersonalFL']) {
-            $Info[] = Format::torrent_label('Personal Freeleech!');
+            $Info[] = Gazelle\Format::torrent_label('Personal Freeleech!');
         }
         return implode(' / ', $Info);
     }

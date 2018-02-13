@@ -78,7 +78,7 @@ switch ($CurrentOrder) {
 		break;
 }
 
-$CurrentURL = Format::get_url(array('action', 'order', 'sort'));
+$CurrentURL = Gazelle\Format::get_url(array('action', 'order', 'sort'));
 
 $DB->query("
 	SELECT
@@ -228,9 +228,9 @@ if (!empty($Pending)) {
 				<td><?=display_str($Email)?></td>
 				<td><?=\Gazelle\Util\Time::timeDiff($JoinDate, 1)?></td>
 				<td><?=\Gazelle\Util\Time::timeDiff($LastAccess, 1);?></td>
-				<td><?=Format::get_size($Uploaded)?></td>
-				<td><?=Format::get_size($Downloaded)?></td>
-				<td><?=Format::get_ratio_html($Uploaded, $Downloaded)?></td>
+				<td><?=Gazelle\Format::get_size($Uploaded)?></td>
+				<td><?=Gazelle\Format::get_size($Downloaded)?></td>
+				<td><?=Gazelle\Format::get_ratio_html($Uploaded, $Downloaded)?></td>
 			</tr>
 <?	} ?>
 		</table>

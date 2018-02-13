@@ -194,13 +194,13 @@ if ($NotificationsManager->is_skipped(NotificationsManager::SUBSCRIPTIONS)) {
 			</div>
 			<div id="userinfo">
 				<ul id="userinfo_username">
-					<li id="nav_userinfo" <?=Format::add_class($PageID, array('user', false, false), 'active', true, 'id')?>>
+					<li id="nav_userinfo" <?=Gazelle\Format::add_class($PageID, array('user', false, false), 'active', true, 'id')?>>
 						<a href="user.php?id=<?=\G::$LoggedUser['ID']?>" class="username"><?=\G::$LoggedUser['Username']?></a>
 					</li>
 					<li id="nav_userclass">
 						<span class="hidden userclass"><?=$ClassLevels[\G::$LoggedUser['Class']]['Name']?></span>
 					</li>
-					<li id="nav_useredit" class="brackets<?=Format::add_class($PageID, array('user','edit'), 'active', false)?>">
+					<li id="nav_useredit" class="brackets<?=Gazelle\Format::add_class($PageID, array('user','edit'), 'active', false)?>">
 						<a href="user.php?action=edit&amp;userid=<?=\G::$LoggedUser['ID']?>">Edit</a>
 					</li>
 					<li id="nav_logout" class="brackets">
@@ -208,10 +208,10 @@ if ($NotificationsManager->is_skipped(NotificationsManager::SUBSCRIPTIONS)) {
 					</li>
 				</ul>
 				<ul id="userinfo_major">
-					<li id="nav_upload" class="brackets<?=Format::add_class($PageID, array('upload'), 'active', false)?>">
+					<li id="nav_upload" class="brackets<?=Gazelle\Format::add_class($PageID, array('upload'), 'active', false)?>">
 						<a href="upload.php" title="Upload">Upload</a>
 					</li>
-					<li id="nav_bonus" class="brackets<?=Format::add_class($PageID, array('user', 'bonus'), 'active', false)?>">
+					<li id="nav_bonus" class="brackets<?=Gazelle\Format::add_class($PageID, array('user', 'bonus'), 'active', false)?>">
 						<a href="bonus.php" class='tooltip' title="Bonus (<?=number_format(\G::$LoggedUser['BonusPoints'])?>)">Bonus (<?=number_format(\G::$LoggedUser['BonusPoints'])?>)</a>
 					</li>
 <?
@@ -223,10 +223,10 @@ if (check_perms('site_send_unlimited_invites')) {
 	$Invites = '';
 }
 ?>
-					<li id="nav_invite" class="brackets<?=Format::add_class($PageID, array('user','invite'), 'active', false)?>">
+					<li id="nav_invite" class="brackets<?=Gazelle\Format::add_class($PageID, array('user','invite'), 'active', false)?>">
 						<a href="user.php?action=invite" class='tooltip' title="Invite<?=$Invites?>">Invite<?=$Invites?></a>
 					</li>
-					<li id="nav_donate" class="brackets<?=Format::add_class($PageID, array('donate'), 'active', false)?>">
+					<li id="nav_donate" class="brackets<?=Gazelle\Format::add_class($PageID, array('donate'), 'active', false)?>">
 						<a href="donate.php" class='tooltip' title="Donate">Donate</a>
 					</li>
 
@@ -234,14 +234,14 @@ if (check_perms('site_send_unlimited_invites')) {
 				<ul id="userinfo_stats">
 					<li id="stats_seeding">
 						<a href="torrents.php?type=seeding&amp;userid=<?=\G::$LoggedUser['ID']?>">Up</a>:
-						<span class="stat tooltip" title="<?=Format::get_size(\G::$LoggedUser['BytesUploaded'], 5)?>"><?=Format::get_size(\G::$LoggedUser['BytesUploaded'])?></span>
+						<span class="stat tooltip" title="<?=Gazelle\Format::get_size(\G::$LoggedUser['BytesUploaded'], 5)?>"><?=Gazelle\Format::get_size(\G::$LoggedUser['BytesUploaded'])?></span>
 					</li>
 					<li id="stats_leeching">
 						<a href="torrents.php?type=leeching&amp;userid=<?=\G::$LoggedUser['ID']?>">Down</a>:
-						<span class="stat tooltip" title="<?=Format::get_size(\G::$LoggedUser['BytesDownloaded'], 5)?>"><?=Format::get_size(\G::$LoggedUser['BytesDownloaded'])?></span>
+						<span class="stat tooltip" title="<?=Gazelle\Format::get_size(\G::$LoggedUser['BytesDownloaded'], 5)?>"><?=Gazelle\Format::get_size(\G::$LoggedUser['BytesDownloaded'])?></span>
 					</li>
 					<li id="stats_ratio">
-						Ratio: <span class="stat"><?=Format::get_ratio_html(\G::$LoggedUser['BytesUploaded'], \G::$LoggedUser['BytesDownloaded'])?></span>
+						Ratio: <span class="stat"><?=Gazelle\Format::get_ratio_html(\G::$LoggedUser['BytesUploaded'], \G::$LoggedUser['BytesDownloaded'])?></span>
 					</li>
 <?	if (!empty(\G::$LoggedUser['RequiredRatio'])) { ?>
 					<li id="stats_required">
@@ -260,44 +260,44 @@ if (check_perms('site_send_unlimited_invites')) {
 				</ul>
 				<ul id="userinfo_minor"<?=$NewSubscriptions ? ' class="highlite"' : ''?>>
 					<li id="nav_inbox"<?=
-						Format::add_class($PageID, array('inbox'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('inbox'), 'active', true)?>>
 						<a href="<?=Inbox::get_inbox_link(); ?>">Inbox</a>
 					</li>
 					<li id="nav_staffinbox"<?=
-						Format::add_class($PageID, array('staffpm'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('staffpm'), 'active', true)?>>
 						<a href="staffpm.php">Staff Inbox</a>
 					</li>
 					<li id="nav_uploaded"<?=
-						Format::add_class($PageID, array('torrents', false, 'uploaded'), 'active', true, 'userid')?>>
+						Gazelle\Format::add_class($PageID, array('torrents', false, 'uploaded'), 'active', true, 'userid')?>>
 						<a href="torrents.php?type=uploaded&amp;userid=<?=\G::$LoggedUser['ID']?>">Uploads</a>
 					</li>
 					<li id="nav_bookmarks"<?=
-						Format::add_class($PageID, array('bookmarks'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('bookmarks'), 'active', true)?>>
 						<a href="bookmarks.php?type=torrents">Bookmarks</a>
 					</li>
 <?	if (check_perms('site_torrents_notify')) { ?>
 					<li id="nav_notifications"<?=
-						Format::add_class($PageID, array(array('torrents', 'notify'), array('user', 'notify')), 'active', true, 'userid')?>>
+						Gazelle\Format::add_class($PageID, array(array('torrents', 'notify'), array('user', 'notify')), 'active', true, 'userid')?>>
 						<a href="user.php?action=notify">Notifications</a>
 					</li>
 <?	}
 	$ClassNames = $NewSubscriptions ? 'new-subscriptions' : '';
-	$ClassNames = trim($ClassNames.Format::add_class($PageID, array('userhistory', 'subscriptions'), 'active', false));
+	$ClassNames = trim($ClassNames.Gazelle\Format::add_class($PageID, array('userhistory', 'subscriptions'), 'active', false));
 ?>
 					<li id="nav_subscriptions"<?=$ClassNames ? " class=\"$ClassNames\"" : ''?>>
 						<a href="userhistory.php?action=subscriptions">Subscriptions</a>
 					</li>
 					<li id="nav_comments"<?=
-						Format::add_class($PageID, array('comments'), 'active', true, 'userid')?>>
+						Gazelle\Format::add_class($PageID, array('comments'), 'active', true, 'userid')?>>
 						<a href="comments.php">Comments</a></li>
 					<li id="nav_friends"<?=
-						Format::add_class($PageID, array('friends'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('friends'), 'active', true)?>>
 						<a href="friends.php">Friends</a></li>
 					<li id="nav_better"<?=
-						Format::add_class($PageID, array('better'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('better'), 'active', true)?>>
 						<a href="better.php">Better</a></li>
 					<li id="nav_random"<?=
-						Format::add_class($PageID, array('random'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('random'), 'active', true)?>>
 						<a href="random.php">Random Album</a></li>
 				</ul>
 			</div>
@@ -305,43 +305,43 @@ if (check_perms('site_send_unlimited_invites')) {
 				<h4 class="hidden">Site Menu</h4>
 				<ul>
 					<li id="nav_index"<?=
-						Format::add_class($PageID, array('index'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('index'), 'active', true)?>>
 						<a href="index.php">Home</a>
 					</li>
 					<li id="nav_torrents"<?=
-						Format::add_class($PageID, array('torrents', false, false), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('torrents', false, false), 'active', true)?>>
 						<a href="torrents.php">Torrents</a>
 					</li>
 					<li id="nav_collages"<?=
-						Format::add_class($PageID, array('collages'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('collages'), 'active', true)?>>
 						<a href="collages.php">Collages</a>
 					</li>
 					<li id="nav_requests"<?=
-						Format::add_class($PageID, array('requests'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('requests'), 'active', true)?>>
 						<a href="requests.php">Requests</a>
 					</li>
 					<li id="nav_forums"<?=
-						Format::add_class($PageID, array('forums'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('forums'), 'active', true)?>>
 						<a href="forums.php">Forums</a>
 					</li>
 					<li id="nav_irc"<?=
-						Format::add_class($PageID, array('chat'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('chat'), 'active', true)?>>
 						<a href="wiki.php?action=article&name=irc">IRC</a>
 					</li>
 					<li id="nav_top10"<?=
-						Format::add_class($PageID, array('top10'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('top10'), 'active', true)?>>
 						<a href="top10.php">Top 10</a>
 					</li>
 					<li id="nav_rules"<?=
-						Format::add_class($PageID, array('rules'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('rules'), 'active', true)?>>
 						<a href="rules.php">Rules</a>
 					</li>
 					<li id="nav_wiki"<?=
-						Format::add_class($PageID, array('wiki'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('wiki'), 'active', true)?>>
 						<a href="wiki.php">Wiki</a>
 					</li>
 					<li id="nav_staff"<?=
-						Format::add_class($PageID, array('staff'), 'active', true)?>>
+						Gazelle\Format::add_class($PageID, array('staff'), 'active', true)?>>
 						<a href="staff.php" title="Staff">Staff</a>
 					</li>
 				</ul>

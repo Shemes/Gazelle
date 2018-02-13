@@ -23,7 +23,7 @@ $Join2 = "f.FriendID = i.UserID";
 
 
 
-list($Page, $Limit) = Format::page_limit(FRIENDS_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(FRIENDS_PER_PAGE);
 
 // Main query
 $DB->query("
@@ -59,7 +59,7 @@ list($Results) = $DB->next_record();
 	<div class="linkbox">
 <?
 // Pagination
-$Pages = Format::get_pages($Page, $Results, FRIENDS_PER_PAGE, 9);
+$Pages = Gazelle\Format::get_pages($Page, $Results, FRIENDS_PER_PAGE, 9);
 echo $Pages;
 ?>
 	</div>
@@ -79,17 +79,17 @@ foreach ($Friends as $Friend) {
 			<td colspan="<?=(Users::has_avatars_enabled() ? 3 : 2)?>">
 				<span style="float: left;"><?=Users::format_username($FriendID, true, true, true, true)?>
 <?	if (\Gazelle\Paranoia::check('ratio', $Paranoia, $Class, $FriendID)) { ?>
-				&nbsp;Ratio: <strong><?=Format::get_ratio_html($Uploaded, $Downloaded)?></strong>
+				&nbsp;Ratio: <strong><?=Gazelle\Format::get_ratio_html($Uploaded, $Downloaded)?></strong>
 <?
 	}
 	if (\Gazelle\Paranoia::check('uploaded', $Paranoia, $Class, $FriendID)) {
 ?>
-				&nbsp;Up: <strong><?=Format::get_size($Uploaded)?></strong>
+				&nbsp;Up: <strong><?=Gazelle\Format::get_size($Uploaded)?></strong>
 <?
 	}
 	if (\Gazelle\Paranoia::check('downloaded', $Paranoia, $Class, $FriendID)) {
 ?>
-				&nbsp;Down: <strong><?=Format::get_size($Downloaded)?></strong>
+				&nbsp;Down: <strong><?=Gazelle\Format::get_size($Downloaded)?></strong>
 <?	} ?>
 				</span>
 <?	if (\Gazelle\Paranoia::check('lastseen', $Paranoia, $Class, $FriendID)) { ?>

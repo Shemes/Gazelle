@@ -180,7 +180,7 @@ if (check_perms('torrents_edit') && (check_perms('users_mod') || $Properties['Ca
 				<td>
 					<select id="newcategoryid" name="newcategoryid" onchange="ChangeCategory(this.value);">
 <?		foreach ($Categories as $CatID => $CatName) { ?>
-						<option value="<?=($CatID + 1)?>"<?Format::selected('CategoryID', $CatID + 1, 'selected', $Properties)?>><?=($CatName)?></option>
+						<option value="<?=($CatID + 1)?>"<?Gazelle\Format::selected('CategoryID', $CatID + 1, 'selected', $Properties)?>><?=($CatName)?></option>
 <?		} ?>
 					</select>
 				</td>

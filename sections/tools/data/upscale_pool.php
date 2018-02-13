@@ -4,7 +4,7 @@ if (!check_perms('site_view_flow')) {
 }
 View::show_header('Upscale Pool');
 define('USERS_PER_PAGE', 50);
-list($Page, $Limit) = Format::page_limit(USERS_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(USERS_PER_PAGE);
 
 $RS = $DB->query("
 	SELECT
@@ -48,7 +48,7 @@ if ($DB->has_results()) {
 	</div>
 	<div class="linkbox">
 <?
-	$Pages = Format::get_pages($Page, $Results, USERS_PER_PAGE, 11);
+	$Pages = Gazelle\Format::get_pages($Page, $Results, USERS_PER_PAGE, 11);
 	echo $Pages;
 ?>
 	</div>
@@ -72,12 +72,12 @@ if ($DB->has_results()) {
 ?>
 		<tr class="row<?=$Row?>">
 			<td><?=Users::format_username($UserID, true, true, true, true)?></td>
-			<td class="number_column"><?=Format::get_size($Uploaded)?></td>
-			<td class="number_column"><?=Format::get_size($Downloaded)?></td>
-			<td class="number_column"><?=Format::get_ratio_html($Uploaded, $Downloaded)?></td>
+			<td class="number_column"><?=Gazelle\Format::get_size($Uploaded)?></td>
+			<td class="number_column"><?=Gazelle\Format::get_size($Downloaded)?></td>
+			<td class="number_column"><?=Gazelle\Format::get_ratio_html($Uploaded, $Downloaded)?></td>
 			<td class="number_column"><?=number_format($RequiredRatio, 2)?></td>
-			<td class="number_column"><? if (($Downloaded * $RequiredRatio) > $Uploaded) { echo Format::get_size(($Downloaded * $RequiredRatio) - $Uploaded);} ?></td>
-			<td class="number_column"><?=Format::get_size($Downloaded - $RatioWatchDownload)?></td>
+			<td class="number_column"><? if (($Downloaded * $RequiredRatio) > $Uploaded) { echo Gazelle\Format::get_size(($Downloaded * $RequiredRatio) - $Uploaded);} ?></td>
+			<td class="number_column"><?=Gazelle\Format::get_size($Downloaded - $RatioWatchDownload)?></td>
 			<td><?=\Gazelle\Util\Time::timeDiff($Joined, 2)?></td>
 			<td><?=\Gazelle\Util\Time::timeDiff($RatioWatchEnds)?></td>
 			<td><?/*\Gazelle\Util\Time::timeDiff(strtotime($Joined), strtotime($RatioWatchEnds))*/?></td>

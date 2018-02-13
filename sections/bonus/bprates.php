@@ -47,7 +47,7 @@ $TotalWeeklyPoints = $TotalDailyPoints * 7;
 $TotalMonthlyPoints = $TotalDailyPoints * 30.436875;
 $TotalYearlyPoints = $TotalDailyPoints * 365.2425;
 
-$Pages = Format::get_pages($Page, $TotalTorrents, TORRENTS_PER_PAGE);
+$Pages = Gazelle\Format::get_pages($Page, $TotalTorrents, TORRENTS_PER_PAGE);
 
 ?>
 <div class="header">
@@ -76,7 +76,7 @@ $Pages = Format::get_pages($Page, $TotalTorrents, TORRENTS_PER_PAGE);
 	<tbody>
 		<tr>
 			<td><?=$TotalTorrents?></td>
-			<td><?=Format::get_size($TotalSize)?></td>
+			<td><?=Gazelle\Format::get_size($TotalSize)?></td>
 			<td><?=number_format($TotalHourlyPoints, 2)?></td>
 			<td><?=number_format($TotalDailyPoints, 2)?></td>
 			<td><?=number_format($TotalWeeklyPoints, 2)?></td>
@@ -177,7 +177,7 @@ if ($TotalTorrents > 0) {
 ?>
 	<tr>
 		<td><?= $DisplayName ?></td>
-		<td><?= Format::get_size($Torrent['Size']) ?></td>
+		<td><?= Gazelle\Format::get_size($Torrent['Size']) ?></td>
 		<td><?= number_format($Seeders) ?></td>
 		<td><?= \Gazelle\Util\Time::convertHours($Torrent['Seedtime'], 2) ?></td>
 		<td><?= number_format($HourlyPoints, 2) ?></td>

@@ -73,7 +73,7 @@ function UnBan(ip, id, elemID) {
 //]]>
 </script>
 <?
-list($Page, $Limit) = Format::page_limit(IPS_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(IPS_PER_PAGE);
 
 if ($UsersOnly) {
 	$DB->query("
@@ -166,7 +166,7 @@ if (!empty($Results)) {
 	}
 }
 
-$Pages = Format::get_pages($Page, $NumResults, IPS_PER_PAGE, 9);
+$Pages = Gazelle\Format::get_pages($Page, $NumResults, IPS_PER_PAGE, 9);
 
 ?>
 <div class="thin">
@@ -175,9 +175,9 @@ $Pages = Format::get_pages($Page, $NumResults, IPS_PER_PAGE, 9);
 		<div class="linkbox">
 <? 
 if ($UsersOnly) { ?>
-			<a href="userhistory.php?<?=Format::get_url(array('usersonly'))?>" class="brackets">View all IP addresses</a>
+			<a href="userhistory.php?<?=Gazelle\Format::get_url(array('usersonly'))?>" class="brackets">View all IP addresses</a>
 <?	} else { ?>
-			<a href="userhistory.php?<?=Format::get_url()?>&amp;usersonly=1" class="brackets">View IP addresses with users</a>
+			<a href="userhistory.php?<?=Gazelle\Format::get_url()?>&amp;usersonly=1" class="brackets">View IP addresses with users</a>
 <?	} ?>
 		</div>
 <?	
@@ -197,7 +197,7 @@ if ($UsersOnly) { ?>
 <?	if ($UsersOnly) { ?>
 				<input type="hidden" name="usersonly" value="1" />
 <?	} ?>
-				<input type="text" name="ip" value="<?=Format::form('ip')?>" />
+				<input type="text" name="ip" value="<?=Gazelle\Format::form('ip')?>" />
 				<input type="submit" value="Search" />
 				Wildcard (*) search examples: 127.0.* or 1*2.0.*.1 or *.*.*.*
 			</form>

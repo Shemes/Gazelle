@@ -5,7 +5,7 @@ if (!check_perms('users_view_ips')) {
 View::show_header('Dupe IPs');
 define('USERS_PER_PAGE', 50);
 define('IP_OVERLAPS', 5);
-list($Page, $Limit) = Format::page_limit(USERS_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(USERS_PER_PAGE);
 
 
 $RS = $DB->query("
@@ -44,7 +44,7 @@ if ($DB->has_results()) {
 ?>
 	<div class="linkbox">
 <?
-	$Pages = Format::get_pages($Page, $Results, USERS_PER_PAGE, 11);
+	$Pages = Gazelle\Format::get_pages($Page, $Results, USERS_PER_PAGE, 11);
 	echo $Pages;
 ?>
 	</div>

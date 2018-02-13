@@ -25,7 +25,7 @@ if (isset($LoggedUser['PostsPerPage'])) {
 	$PerPage = POSTS_PER_PAGE;
 }
 
-list($Page, $Limit) = Format::page_limit(TOPICS_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(TOPICS_PER_PAGE);
 
 //---------- Get some data to start processing
 
@@ -149,7 +149,7 @@ View::show_header('Forums &gt; '. $Forums[$ForumID]['Name'], '', $IsDonorForum ?
 <?	} ?>
 	<div class="linkbox pager">
 <?
-$Pages = Format::get_pages($Page, $Forums[$ForumID]['NumTopics'], TOPICS_PER_PAGE, 9);
+$Pages = Gazelle\Format::get_pages($Page, $Forums[$ForumID]['NumTopics'], TOPICS_PER_PAGE, 9);
 echo $Pages;
 ?>
 	</div>
@@ -247,7 +247,7 @@ if (count($Forum) === 0) {
 
 ?>
 				<strong>
-					<a href="forums.php?action=viewthread&amp;threadid=<?=$TopicID?>" class="tooltip" data-title-plain="<?=$Title?>" <?=(strlen($DisplayTitle) > $TopicLength ? "title='".$Title."'" : "")?>><?=Format::cut_string($DisplayTitle, $TopicLength)?></a>
+					<a href="forums.php?action=viewthread&amp;threadid=<?=$TopicID?>" class="tooltip" data-title-plain="<?=$Title?>" <?=(strlen($DisplayTitle) > $TopicLength ? "title='".$Title."'" : "")?>><?=Gazelle\Format::cut_string($DisplayTitle, $TopicLength)?></a>
 				</strong>
 				<?=$PagesText?>
 			</span>

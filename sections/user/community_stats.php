@@ -102,13 +102,13 @@ list($ForumTopics) = $DB->fetch_record();
 	if ($ViewCount && !$ViewBounty && !$ViewAll) { ?>
 				<li>Requests filled: <?=number_format($RequestsFilled)?></li>
 <?	} elseif (!$ViewCount && $ViewBounty && !$ViewAll) { ?>
-				<li>Requests filled: <?=Format::get_size($TotalBounty)?> collected</li>
+				<li>Requests filled: <?=Gazelle\Format::get_size($TotalBounty)?> collected</li>
 <?	} elseif ($ViewCount && $ViewBounty && !$ViewAll) { ?>
-				<li>Requests filled: <?=number_format($RequestsFilled)?> for <?=Format::get_size($TotalBounty)?></li>
+				<li>Requests filled: <?=number_format($RequestsFilled)?> for <?=Gazelle\Format::get_size($TotalBounty)?></li>
 <?	} elseif ($ViewAll) { ?>
 				<li>
 					<span<?=($ViewCount === 2 ? ' class="paranoia_override"' : '')?>>Requests filled: <?=number_format($RequestsFilled)?></span>
-					<span<?=($ViewBounty === 2 ? ' class="paranoia_override"' : '')?>> for <?=Format::get_size($TotalBounty) ?></span>
+					<span<?=($ViewBounty === 2 ? ' class="paranoia_override"' : '')?>> for <?=Gazelle\Format::get_size($TotalBounty) ?></span>
 					<a href="requests.php?type=filled&amp;userid=<?=$UserID?>" class="brackets<?=(($ViewAll === 2) ? ' paranoia_override' : '')?>">View</a>
 				</li>
 <?
@@ -123,20 +123,20 @@ list($ForumTopics) = $DB->fetch_record();
 				<li>Requests created: <?=number_format($RequestsCreated)?></li>
 				<li>Requests voted: <?=number_format($RequestsVoted)?></li>
 <?	} elseif (!$ViewCount && $ViewBounty && !$ViewAll) { ?>
-				<li>Requests created: <?=Format::get_size($RequestsCreatedSpent)?> spent</li>
-				<li>Requests voted: <?=Format::get_size($TotalSpent)?> spent</li>
+				<li>Requests created: <?=Gazelle\Format::get_size($RequestsCreatedSpent)?> spent</li>
+				<li>Requests voted: <?=Gazelle\Format::get_size($TotalSpent)?> spent</li>
 <?	} elseif ($ViewCount && $ViewBounty && !$ViewAll) { ?>
-				<li>Requests created: <?=number_format($RequestsCreated)?> for <?=Format::get_size($RequestsCreatedSpent)?></li>
-				<li>Requests voted: <?=number_format($RequestsVoted)?> for <?=Format::get_size($TotalSpent)?></li>
+				<li>Requests created: <?=number_format($RequestsCreated)?> for <?=Gazelle\Format::get_size($RequestsCreatedSpent)?></li>
+				<li>Requests voted: <?=number_format($RequestsVoted)?> for <?=Gazelle\Format::get_size($TotalSpent)?></li>
 <?	} elseif ($ViewAll) { ?>
 				<li>
 					<span<?=($ViewCount === 2 ? ' class="paranoia_override"' : '')?>>Requests created: <?=number_format($RequestsCreated)?></span>
-					<span<?=($ViewBounty === 2 ? ' class="paranoia_override"' : '')?>> for <?=Format::get_size($RequestsCreatedSpent)?></span>
+					<span<?=($ViewBounty === 2 ? ' class="paranoia_override"' : '')?>> for <?=Gazelle\Format::get_size($RequestsCreatedSpent)?></span>
 					<a href="requests.php?type=created&amp;userid=<?=$UserID?>" class="brackets<?=($ViewAll === 2 ? ' paranoia_override' : '')?>">View</a>
 				</li>
 				<li>
 					<span<?=($ViewCount === 2 ? ' class="paranoia_override"' : '')?>>Requests voted: <?=number_format($RequestsVoted)?></span>
-					<span<?=($ViewBounty === 2 ? ' class="paranoia_override"' : '')?>> for <?=Format::get_size($TotalSpent)?></span>
+					<span<?=($ViewBounty === 2 ? ' class="paranoia_override"' : '')?>> for <?=Gazelle\Format::get_size($TotalSpent)?></span>
 					<a href="requests.php?type=voted&amp;userid=<?=$UserID?>" class="brackets<?=($ViewAll === 2 ? ' paranoia_override' : '')?>">View</a>
 				</li>
 <?

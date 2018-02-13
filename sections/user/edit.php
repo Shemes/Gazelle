@@ -185,7 +185,7 @@ echo $Val->GenerateJS('userform');
 				<td class="label tooltip" title="This is a staff-only feature to bypass the &quot;Show stats&quot; button for seeding, leeching, snatched, and downloaded stats on profile pages."><strong>Profile stats</strong></td>
 				<td>
 					<label>
-						<input type="checkbox" name="autoload_comm_stats"<?Format::selected('AutoloadCommStats', 1, 'checked', $SiteOptions);?> />
+						<input type="checkbox" name="autoload_comm_stats"<?Gazelle\Format::selected('AutoloadCommStats', 1, 'checked', $SiteOptions);?> />
 						Automatically fetch the snatch and peer stats on profile pages.
 					</label>
 				</td>
@@ -329,7 +329,7 @@ echo $Val->GenerateJS('userform');
 							<label for="showtfilter">Display filter controls</label>
 						</li>
 						<li>
-							<input type="checkbox" name="showtags" id="showtags"<? Format::selected('ShowTags', 1, 'checked', $SiteOptions); ?> />
+							<input type="checkbox" name="showtags" id="showtags"<? Gazelle\Format::selected('ShowTags', 1, 'checked', $SiteOptions); ?> />
 							<label for="showtags">Display official tag filters</label>
 						</li>
 					</ul>

@@ -18,7 +18,7 @@ if (isset($LoggedUser['PostsPerPage'])) {
 	$PerPage = POSTS_PER_PAGE;
 }
 
-list($Page, $Limit) = Format::page_limit($PerPage);
+list($Page, $Limit) = Gazelle\Format::page_limit($PerPage);
 
 $UserInfo = Users::user_info($UserID);
 extract(array_intersect_key($UserInfo, array_flip(array('Username', 'Enabled', 'Title', 'Avatar', 'Donor', 'Warned'))));
@@ -207,7 +207,7 @@ if (empty($Results)) {
 ?>
 	<div class="linkbox">
 <?
-	$Pages = Format::get_pages($Page, $Results, $PerPage, 11);
+	$Pages = Gazelle\Format::get_pages($Page, $Results, $PerPage, 11);
 	echo $Pages;
 ?>
 	</div>
@@ -226,7 +226,7 @@ if (empty($Results)) {
 			<td colspan="<?=Users::has_avatars_enabled() ? 2 : 1 ?>">
 				<span style="float: left;">
 					<?=\Gazelle\Util\Time::timeDiff($AddedTime) ?>
-					in <a href="forums.php?action=viewthread&amp;threadid=<?=$TopicID?>&amp;postid=<?=$PostID?>#post<?=$PostID?>" class="tooltip" title="<?=display_str($ThreadTitle)?>"><?=Format::cut_string($ThreadTitle, 75)?></a>
+					in <a href="forums.php?action=viewthread&amp;threadid=<?=$TopicID?>&amp;postid=<?=$PostID?>#post<?=$PostID?>" class="tooltip" title="<?=display_str($ThreadTitle)?>"><?=Gazelle\Format::cut_string($ThreadTitle, 75)?></a>
 <?
 		if ($ViewingOwn) {
 			if ((!$Locked || $Sticky) && (!$LastRead || $LastRead < $LastPostID)) { ?>

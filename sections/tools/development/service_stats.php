@@ -52,7 +52,7 @@ View::show_header("Service Stats");
 			</tr>
 			<tr>
 				<td<? if ($MemStats['bytes'] / $MemStats['limit_maxbytes'] > 0.85) { echo ' class="tooltip invalid" title="Evictions begin when storage exceeds 85%" '; } ?>>Cache Storage:</td>
-				<td><?=Format::get_size($MemStats['bytes'])?> <span style="float: right;">(<?=number_format(($MemStats['bytes'] / $MemStats['limit_maxbytes']) * 100, 3);?>%)</span></td>
+				<td><?=Gazelle\Format::get_size($MemStats['bytes'])?> <span style="float: right;">(<?=number_format(($MemStats['bytes'] / $MemStats['limit_maxbytes']) * 100, 3);?>%)</span></td>
 			</tr>
 			<tr><td colspan="2"></td></tr>
 			<tr><td colspan="2"><strong>Utilities</strong></td></tr>
@@ -156,20 +156,20 @@ View::show_header("Service Stats");
 			<tr><td colspan="2"><strong>Data Read</strong></td></tr>
 			<tr>
 				<td>Cache:</td>
-				<td><?=Format::get_size($MemStats['bytes_read'])?></td>
+				<td><?=Gazelle\Format::get_size($MemStats['bytes_read'])?></td>
 			</tr>
 			<tr>
 				<td>Database:</td>
-				<td><?=Format::get_size($DBStats['Bytes_received']['Value'])?></td>
+				<td><?=Gazelle\Format::get_size($DBStats['Bytes_received']['Value'])?></td>
 			</tr>
 			<tr><td colspan="2"><strong>Data Write</strong></td></tr>
 			<tr>
 				<td>Cache:</td>
-				<td><?=Format::get_size($MemStats['bytes_written'])?></td>
+				<td><?=Gazelle\Format::get_size($MemStats['bytes_written'])?></td>
 			</tr>
 			<tr>
 				<td>Database:</td>
-				<td><?=Format::get_size($DBStats['Bytes_sent']['Value'])?></td>
+				<td><?=Gazelle\Format::get_size($DBStats['Bytes_sent']['Value'])?></td>
 			</tr>
 		</table>
 	</div>
@@ -260,20 +260,20 @@ View::show_header("Service Stats");
 			<tr><td colspan="2"><strong>Data Read</strong></td></tr>
 			<tr>
 				<td>Cache:</td>
-				<td><?=Format::get_size($MemStats['bytes_read'] / $MemStats['uptime'])?>/s</td>
+				<td><?=Gazelle\Format::get_size($MemStats['bytes_read'] / $MemStats['uptime'])?>/s</td>
 			</tr>
 			<tr>
 				<td>Database:</td>
-				<td><?=Format::get_size($DBStats['Bytes_received']['Value'] / $DBStats['Uptime']['Value'])?>/s</td>
+				<td><?=Gazelle\Format::get_size($DBStats['Bytes_received']['Value'] / $DBStats['Uptime']['Value'])?>/s</td>
 			</tr>
 			<tr><td colspan="2"><strong>Data Write</strong></td></tr>
 			<tr>
 				<td>Cache:</td>
-				<td><?=Format::get_size($MemStats['bytes_written'] / $MemStats['uptime'])?>/s</td>
+				<td><?=Gazelle\Format::get_size($MemStats['bytes_written'] / $MemStats['uptime'])?>/s</td>
 			</tr>
 			<tr>
 				<td>Database:</td>
-				<td><?=Format::get_size($DBStats['Bytes_sent']['Value'] / $DBStats['Uptime']['Value'])?>/s</td>
+				<td><?=Gazelle\Format::get_size($DBStats['Bytes_sent']['Value'] / $DBStats['Uptime']['Value'])?>/s</td>
 			</tr>
 		</table>
 	</div>

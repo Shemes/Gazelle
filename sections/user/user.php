@@ -350,17 +350,17 @@ if ($Enabled == 1 && (count($FL_Other) || isset($FL_OTHER_success))) {
 	}
 	if (($Override = check_paranoia_here('uploaded'))) {
 ?>
-				<li class="tooltip<?=($Override === 2 ? ' paranoia_override' : '')?>" title="<?=Format::get_size($Uploaded, 5)?>">Uploaded: <?=Format::get_size($Uploaded)?></li>
+				<li class="tooltip<?=($Override === 2 ? ' paranoia_override' : '')?>" title="<?=Gazelle\Format::get_size($Uploaded, 5)?>">Uploaded: <?=Gazelle\Format::get_size($Uploaded)?></li>
 <?
 	}
 	if (($Override = check_paranoia_here('downloaded'))) {
 ?>
-				<li class="tooltip<?=($Override === 2 ? ' paranoia_override' : '')?>" title="<?=Format::get_size($Downloaded, 5)?>">Downloaded: <?=Format::get_size($Downloaded)?></li>
+				<li class="tooltip<?=($Override === 2 ? ' paranoia_override' : '')?>" title="<?=Gazelle\Format::get_size($Downloaded, 5)?>">Downloaded: <?=Gazelle\Format::get_size($Downloaded)?></li>
 <?
 	}
 	if (($Override = check_paranoia_here('ratio'))) {
 ?>
-				<li<?=($Override === 2 ? ' class="paranoia_override"' : '')?>>Ratio: <?=Format::get_ratio_html($Uploaded, $Downloaded)?></li>
+				<li<?=($Override === 2 ? ' class="paranoia_override"' : '')?>>Ratio: <?=Gazelle\Format::get_ratio_html($Uploaded, $Downloaded)?></li>
 <?
 	}
 	if (($Override = check_paranoia_here('requiredratio')) && isset($RequiredRatio)) {
@@ -464,11 +464,11 @@ $OverallRank = UserRank::overall_score($UploadedRank, $DownloadedRank, $UploadsR
 			<div class="head colhead_dark">Percentile Rankings (hover for values)</div>
 			<ul class="stats nobullet">
 <?	if (($Override = check_paranoia_here('uploaded'))) { ?>
-				<li class="tooltip<?=($Override === 2 ? ' paranoia_override' : '')?>" title="<?=Format::get_size($Uploaded)?>">Data uploaded: <?=$UploadedRank === false ? 'Server busy' : number_format($UploadedRank)?></li>
+				<li class="tooltip<?=($Override === 2 ? ' paranoia_override' : '')?>" title="<?=Gazelle\Format::get_size($Uploaded)?>">Data uploaded: <?=$UploadedRank === false ? 'Server busy' : number_format($UploadedRank)?></li>
 <?
 	}
 	if (($Override = check_paranoia_here('downloaded'))) { ?>
-				<li class="tooltip<?=($Override === 2 ? ' paranoia_override' : '')?>" title="<?=Format::get_size($Downloaded)?>">Data downloaded: <?=$DownloadedRank === false ? 'Server busy' : number_format($DownloadedRank)?></li>
+				<li class="tooltip<?=($Override === 2 ? ' paranoia_override' : '')?>" title="<?=Gazelle\Format::get_size($Downloaded)?>">Data downloaded: <?=$DownloadedRank === false ? 'Server busy' : number_format($DownloadedRank)?></li>
 <?
 	}
 	if (($Override = check_paranoia_here('uploads+'))) { ?>
@@ -480,7 +480,7 @@ $OverallRank = UserRank::overall_score($UploadedRank, $DownloadedRank, $UploadsR
 <?
 	}
 	if (($Override = check_paranoia_here('requestsvoted_bounty'))) { ?>
-				<li class="tooltip<?=($Override === 2 ? ' paranoia_override' : '')?>" title="<?=Format::get_size($TotalSpent)?>">Bounty spent: <?=$BountyRank === false ? 'Server busy' : number_format($BountyRank)?></li>
+				<li class="tooltip<?=($Override === 2 ? ' paranoia_override' : '')?>" title="<?=Gazelle\Format::get_size($TotalSpent)?>">Bounty spent: <?=$BountyRank === false ? 'Server busy' : number_format($BountyRank)?></li>
 <?	} ?>
 				<li class="tooltip" title="<?=number_format($ForumPosts)?>">Posts made: <?=$PostRank === false ? 'Server busy' : number_format($PostRank)?></li>
 <?	if (($Override = check_paranoia_here('artistsadded'))) { ?>
@@ -686,7 +686,7 @@ if ($RatioWatchEnds != '0000-00-00 00:00:00'
 ?>
 		<div class="box">
 			<div class="head">Ratio watch</div>
-			<div class="pad">This user is currently on ratio watch and must upload <?=Format::get_size(($Downloaded * $RequiredRatio) - $Uploaded)?> in the next <?=\Gazelle\Util\Time::timeDiff($RatioWatchEnds)?>, or their leeching privileges will be revoked. Amount downloaded while on ratio watch: <?=Format::get_size($Downloaded - $RatioWatchDownload)?></div>
+			<div class="pad">This user is currently on ratio watch and must upload <?=Gazelle\Format::get_size(($Downloaded * $RequiredRatio) - $Uploaded)?> in the next <?=\Gazelle\Util\Time::timeDiff($RatioWatchEnds)?>, or their leeching privileges will be revoked. Amount downloaded while on ratio watch: <?=Gazelle\Format::get_size($Downloaded - $RatioWatchDownload)?></div>
 		</div>
 <?
 }
@@ -962,7 +962,7 @@ if (empty($LoggedUser['DisableRequests']) && check_paranoia_here('requestsvoted_
 <?			} ?>
 						</td>
 						<td>
-							<span id="bounty_<?=$RequestID?>"><?=Format::get_size($Bounty)?></span>
+							<span id="bounty_<?=$RequestID?>"><?=Gazelle\Format::get_size($Bounty)?></span>
 						</td>
 						<td>
 							<?=\Gazelle\Util\Time::timeDiff($Request['TimeAdded']) ?>

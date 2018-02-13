@@ -4,7 +4,7 @@
 Forums search result page
 */
 
-list($Page, $Limit) = Format::page_limit(POSTS_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(POSTS_PER_PAGE);
 
 if (isset($_GET['type']) && $_GET['type'] === 'body') {
 	$Type = 'body';
@@ -304,7 +304,7 @@ $DB->query('SELECT FOUND_ROWS()');
 list($Results) = $DB->next_record();
 $DB->set_query_id($Records);
 
-$Pages = Format::get_pages($Page, $Results, POSTS_PER_PAGE, 9);
+$Pages = Gazelle\Format::get_pages($Page, $Results, POSTS_PER_PAGE, 9);
 echo $Pages;
 ?>
 	</div>
@@ -330,9 +330,9 @@ while (list($ID, $Title, $ForumID, $ForumName, $LastTime, $PostID, $Body, $Threa
 			</td>
 			<td>
 <?	if (empty($ThreadID)) { ?>
-				<a href="forums.php?action=viewthread&amp;threadid=<?=$ID?>"><?=Format::cut_string($Title, 80); ?></a>
+				<a href="forums.php?action=viewthread&amp;threadid=<?=$ID?>"><?=Gazelle\Format::cut_string($Title, 80); ?></a>
 <?	} else { ?>
-				<?=Format::cut_string($Title, 80); ?>
+				<?=Gazelle\Format::cut_string($Title, 80); ?>
 <?
 	}
 	if ($Type == 'body') { ?>

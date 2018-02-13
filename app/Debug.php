@@ -42,7 +42,7 @@ class Debug
         */
         $Ram = memory_get_usage(true);
         if ($Ram > MAX_MEMORY && !defined('MEMORY_EXCEPTION')) {
-            $Reason[] = \Format::get_size($Ram) . ' RAM used';
+            $Reason[] = \Gazelle\Format::get_size($Ram) . ' RAM used';
         }
 
         \G::$DB->warnings(); // see comment in MYSQL::query
@@ -240,7 +240,7 @@ class Debug
             $PageTime = (microtime(true) - $ScriptStartTime);
             $CPUTime = $this->get_cpu_time();
             $Perf = [
-                'Memory usage' => \Format::get_size(memory_get_usage(true)),
+                'Memory usage' => \Gazelle\Format::get_size(memory_get_usage(true)),
                 'Page process time' => number_format($PageTime, 3) . ' s', ];
             if ($CPUTime) {
                 $Perf['CPU time'] = number_format($CPUTime / 1000000, 3) . ' s';
@@ -470,7 +470,7 @@ class Debug
 			<td align="left"><?=number_format($CPUTime / 1000, 3)?> ms</td>
 <?php
             } ?>
-			<td align="left"><?=\Format::get_size($Memory)?></td>
+			<td align="left"><?=\Gazelle\Format::get_size($Memory)?></td>
 		</tr>
 <?php
         } ?>

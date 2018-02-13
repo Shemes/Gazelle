@@ -492,7 +492,7 @@ if (count($_GET)) {
 			$RunQuery = true;
 		}
 
-		list($Page, $Limit) = Format::page_limit(USERS_PER_PAGE);
+		list($Page, $Limit) = Gazelle\Format::page_limit(USERS_PER_PAGE);
 		$SQL .= " LIMIT $Limit";
 	} else {
 		error($Err);
@@ -557,7 +557,7 @@ View::show_header('User search');
 			continue;
 		}
 ?>
-						<option value="<?=$Class['ID'] ?>"<? if ($_GET['class'] === $Class['ID']) { echo ' selected="selected"'; } ?>><?=Format::cut_string($Class['Name'], 10, 1, 1).' ('.$Class['Level'].')'?></option>
+						<option value="<?=$Class['ID'] ?>"<? if ($_GET['class'] === $Class['ID']) { echo ' selected="selected"'; } ?>><?=Gazelle\Format::cut_string($Class['Name'], 10, 1, 1).' ('.$Class['Level'].')'?></option>
 <?	} ?>
 					</select>
 				</td>
@@ -593,7 +593,7 @@ View::show_header('User search');
 	usort($Secondaries, $fnc);
 	foreach ($Secondaries as $Class) {
 ?>
-						<option value="<?=$Class['ID'] ?>"<? if ($_GET['secclass'] === $Class['ID']) { echo ' selected="selected"'; } ?>><?=Format::cut_string($Class['Name'], 20, 1, 1)?></option>
+						<option value="<?=$Class['ID'] ?>"<? if ($_GET['secclass'] === $Class['ID']) { echo ' selected="selected"'; } ?>><?=Gazelle\Format::cut_string($Class['Name'], 20, 1, 1)?></option>
 <?	} ?>
 					</select>
 				</td>
@@ -764,7 +764,7 @@ View::show_header('User search');
 					<select name="stylesheet" id="stylesheet">
 						<option value="">Don't Care</option>
 <?					foreach ($Stylesheets as $Style) { ?>
-						<option value="<?=$Style['ID']?>"<?Format::selected('stylesheet',$Style['ID'])?>><?=$Style['ProperName']?></option>
+						<option value="<?=$Style['ID']?>"<?Gazelle\Format::selected('stylesheet',$Style['ID'])?>><?=$Style['ProperName']?></option>
 <?					} ?>
 					</select>
 				</td>
@@ -841,7 +841,7 @@ if ($RunQuery) {
 ?>
 <div class="linkbox">
 <?
-$Pages = Format::get_pages($Page, $NumResults, USERS_PER_PAGE, 11);
+$Pages = Gazelle\Format::get_pages($Page, $NumResults, USERS_PER_PAGE, 11);
 echo $Pages;
 ?>
 </div>
@@ -868,13 +868,13 @@ echo $Pages;
 while (list($UserID, $Username, $Uploaded, $Downloaded, $Snatched, $Invitees, $Class, $Email, $Enabled, $IP, $Invites, $DisableInvites, $Warned, $Donor, $JoinDate, $LastAccess) = $DB->next_record()) { ?>
 		<tr>
 			<td><?=Users::format_username($UserID, true, true, true, true)?></td>
-			<td><?=Format::get_ratio_html($Uploaded, $Downloaded)?></td>
+			<td><?=Gazelle\Format::get_ratio_html($Uploaded, $Downloaded)?></td>
 			<td><?=display_str($IP)?> (<?=Tools::get_country_code_by_ajax($IP)?>)</td>
 			<td><?=display_str($Email)?></td>
 			<td><?=\Gazelle\Util\Time::timeDiff($JoinDate)?></td>
 			<td><?=\Gazelle\Util\Time::timeDiff($LastAccess)?></td>
-			<td><?=Format::get_size($Uploaded)?></td>
-			<td><?=Format::get_size($Downloaded)?></td>
+			<td><?=Gazelle\Format::get_size($Uploaded)?></td>
+			<td><?=Gazelle\Format::get_size($Downloaded)?></td>
 <?			$DB->query("
 				SELECT COUNT(ud.UserID)
 				FROM users_downloads AS ud

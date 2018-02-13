@@ -269,7 +269,7 @@ class Comments
         }
 
         // If a postid was passed, we need to determine which page that comment is on.
-        // Format::page_limit handles a potential $_GET['page']
+        // Gazelle\Format::page_limit handles a potential $_GET['page']
         if (isset($_GET['postid']) && is_number($_GET['postid']) && $NumComments > TORRENT_COMMENTS_PER_PAGE) {
             \G::$DB->query("
 				SELECT COUNT(ID)
@@ -278,9 +278,9 @@ class Comments
 					AND PageID = $PageID
 					AND ID <= $_GET[postid]");
             list($PostNum) = \G::$DB->next_record();
-            list($CommPage, $Limit) = \Format::page_limit(TORRENT_COMMENTS_PER_PAGE, $PostNum);
+            list($CommPage, $Limit) = \Gazelle\Format::page_limit(TORRENT_COMMENTS_PER_PAGE, $PostNum);
         } else {
-            list($CommPage, $Limit) = \Format::page_limit(TORRENT_COMMENTS_PER_PAGE, $NumComments);
+            list($CommPage, $Limit) = \Gazelle\Format::page_limit(TORRENT_COMMENTS_PER_PAGE, $NumComments);
         }
 
         // Get the cache catalogue

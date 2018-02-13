@@ -42,7 +42,7 @@ if (isset($LoggedUser['PostsPerPage'])) {
 } else {
 	$PerPage = POSTS_PER_PAGE;
 }
-list($Page, $Limit) = Format::page_limit($PerPage);
+list($Page, $Limit) = Gazelle\Format::page_limit($PerPage);
 
 if (!isset($_REQUEST['action'])) {
 	$Action = 'torrents';
@@ -162,7 +162,7 @@ $Count = $DB->record_count();
 
 $DB->query("SELECT FOUND_ROWS()");
 list($Results) = $DB->next_record();
-$Pages = Format::get_pages($Page, $Results, $PerPage, 11);
+$Pages = Gazelle\Format::get_pages($Page, $Results, $PerPage, 11);
 
 $DB->set_query_id($Comments);
 if ($Action == 'requests') {

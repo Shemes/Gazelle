@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 }
 
 define('BANS_PER_PAGE', '20');
-list($Page, $Limit) = Format::page_limit(BANS_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(BANS_PER_PAGE);
 
 $sql = "
 	SELECT
@@ -79,7 +79,7 @@ $Bans = $DB->query($sql);
 $DB->query('SELECT FOUND_ROWS()');
 list($Results) = $DB->next_record();
 
-$PageLinks = Format::get_pages($Page, $Results, BANS_PER_PAGE, 11);
+$PageLinks = Gazelle\Format::get_pages($Page, $Results, BANS_PER_PAGE, 11);
 
 View::show_header('IP Address Bans');
 $DB->set_query_id($Bans);

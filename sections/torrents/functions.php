@@ -253,7 +253,7 @@ function get_group_requests($GroupID) {
 function build_torrents_table($Cache, $DB, $LoggedUser, $GroupID, $GroupName, $GroupCategoryID, $ReleaseType, $TorrentList, $Types) {
 
 	function filelist($Str) {
-		return "</td>\n<td>" . Format::get_size($Str[1]) . "</td>\n</tr>";
+		return "</td>\n<td>" . Gazelle\Format::get_size($Str[1]) . "</td>\n</tr>";
 	}
 
 	$LastRemasterYear = '-';
@@ -346,13 +346,13 @@ function build_torrents_table($Cache, $DB, $LoggedUser, $GroupID, $GroupName, $G
 			$Name = str_replace(' ', '&nbsp;', substr($Name, 0, $Spaces)) . substr($Name, $Spaces);
 		}
 		$FileSize = substr($File, $NameEnd + 3, -3);
-		$FileTable .= sprintf("\n<tr><td>%s</td><td class=\"number_column\">%s</td></tr>", $Name, Format::get_size($FileSize));
+		$FileTable .= sprintf("\n<tr><td>%s</td><td class=\"number_column\">%s</td></tr>", $Name, Gazelle\Format::get_size($FileSize));
 		}
 	} else {
 		$FileListSplit = explode("\n", $FileList);
 		foreach ($FileListSplit as $File) {
 		$FileInfo = Torrents::filelist_get_file($File);
-		$FileTable .= sprintf("\n<tr><td>%s</td><td class=\"number_column\">%s</td></tr>", $FileInfo['name'], Format::get_size($FileInfo['size']));
+		$FileTable .= sprintf("\n<tr><td>%s</td><td class=\"number_column\">%s</td></tr>", $FileInfo['name'], Gazelle\Format::get_size($FileInfo['size']));
 		}
 	}
 	$FileTable .= '
@@ -390,57 +390,57 @@ function build_torrents_table($Cache, $DB, $LoggedUser, $GroupID, $GroupName, $G
 		$AddExtra = ' / ';
 	}
 	if ($IsSnatched) {
-		$ExtraInfo .= $AddExtra . Format::torrent_label('Snatched!');
+		$ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Snatched!');
 		$AddExtra = ' / ';
 	}
 	if ($FreeTorrent == '1') {
-		$ExtraInfo .= $AddExtra . Format::torrent_label('Freeleech!');
+		$ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Freeleech!');
 		$AddExtra = ' / ';
 	}
 	if ($FreeTorrent == '2') {
-		$ExtraInfo .= $AddExtra . Format::torrent_label('Neutral Leech!');
+		$ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Neutral Leech!');
 		$AddExtra = ' / ';
 	}
 	if ($PersonalFL) {
-		$ExtraInfo .= $AddExtra . Format::torrent_label('Personal Freeleech!');
+		$ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Personal Freeleech!');
 		$AddExtra = ' / ';
 	}
 	if ($Reported) {
-		$ExtraInfo .= $AddExtra . Format::torrent_label('Reported');
+		$ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Reported');
 		$AddExtra = ' / ';
 	}
 
 	if ($HasLog && $HasLogDB && $LogChecksum !== '1') {
-		$ExtraInfo .= $AddExtra . Format::torrent_label('Bad/Missing Checksum');
+		$ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Bad/Missing Checksum');
 		$AddExtra = ' / ';
 	}
 
 	if (!empty($BadTags)) {
-		$ExtraInfo .= $AddExtra . Format::torrent_label('Bad Tags');
+		$ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Bad Tags');
 		$AddExtra = ' / ';
 	}
 	if (!empty($BadFolders)) {
-		$ExtraInfo .= $AddExtra . Format::torrent_label('Bad Folders');
+		$ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Bad Folders');
 		$AddExtra = ' / ';
 	}
 	if (!empty($MissingLineage)) {
-		$ExtraInfo .= $AddExtra . Format::torrent_label('Missing Lineage');
+		$ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Missing Lineage');
 		$AddExtra = ' / ';
 	}
 	if (!empty($CassetteApproved)) {
-		$ExtraInfo .= $AddExtra . Format::torrent_label('Cassette Approved');
+		$ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Cassette Approved');
 		$AddExtra = ' / ';
 	}
 	if (!empty($LossymasterApproved)) {
-		$ExtraInfo .= $AddExtra . Format::torrent_label('Lossy Master Approved');
+		$ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Lossy Master Approved');
 		$AddExtra = ' / ';
 	}
 	if (!empty($LossywebApproved)) {
-		$ExtraInfo .= $AddExtra . Format::torrent_label('Lossy WEB Approved');
+		$ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Lossy WEB Approved');
 		$AddExtra = ' / ';
 	}
 	if (!empty($BadFiles)) {
-		$ExtraInfo .= $AddExtra . Format::torrent_label('Bad File Names');
+		$ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Bad File Names');
 		$AddExtra = ' / ';
 	}
 
@@ -484,7 +484,7 @@ function build_torrents_table($Cache, $DB, $LoggedUser, $GroupID, $GroupName, $G
 						]</span>
 						&raquo; <a href="#" onclick="$('#torrent_<?=($TorrentID)?>').gtoggle(); return false;"><?=($ExtraInfo)?></a>
 					</td>
-					<td class="number_column nobr"><?=(Format::get_size($Size))?></td>
+					<td class="number_column nobr"><?=(Gazelle\Format::get_size($Size))?></td>
 					<td class="number_column"><?=(number_format($Snatched))?></td>
 					<td class="number_column"><?=(number_format($Seeders))?></td>
 					<td class="number_column"><?=(number_format($Leechers))?></td>

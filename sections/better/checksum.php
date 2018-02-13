@@ -21,7 +21,7 @@ $Page = !empty($_GET['page']) ? intval($_GET['page']) : 1;
 $Page = max(1, $Page);
 $Limit = TORRENTS_PER_PAGE;
 $Offset = TORRENTS_PER_PAGE * ($Page-1);
-$Pages = Format::get_pages($Page, $Total, TORRENTS_PER_PAGE);
+$Pages = Gazelle\Format::get_pages($Page, $Total, TORRENTS_PER_PAGE);
 
 View::show_header('Torrents with bad/missing checksum');
 $DB->query("

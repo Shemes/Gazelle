@@ -9,7 +9,7 @@ if (empty($_GET['nojump'])) {
 }
 
 define('ARTICLES_PER_PAGE', 25);
-list($Page, $Limit) = Format::page_limit(ARTICLES_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(ARTICLES_PER_PAGE);
 
 $OrderVals = array('Title', 'Created', 'Edited');
 $WayVals = array('Ascending', 'Descending');
@@ -118,7 +118,7 @@ $DB->set_query_id($RS);
 	</div>
 	<br />
 <?
-	$Pages = Format::get_pages($Page, $NumResults, ARTICLES_PER_PAGE);
+	$Pages = Gazelle\Format::get_pages($Page, $NumResults, ARTICLES_PER_PAGE);
 	if ($Pages) { ?>
 	<div class="linkbox pager"><?=($Pages)?></div>
 <?	} ?>

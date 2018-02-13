@@ -7,7 +7,7 @@ if (!check_perms('admin_donor_log')) {
 include(SERVER_ROOT.'/sections/donate/config.php');
 
 define('DONATIONS_PER_PAGE', 50);
-list($Page, $Limit) = Format::page_limit(DONATIONS_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(DONATIONS_PER_PAGE);
 
 $AfterDate = $_GET['after_date'];
 $BeforeDate = $_GET['before_date'];
@@ -139,7 +139,7 @@ if (empty($_GET['email']) && empty($_GET['source']) && empty($_GET['username']) 
 <br />
 <div class="linkbox">
 <?
-	$Pages = Format::get_pages($Page, $Results, DONATIONS_PER_PAGE, 11);
+	$Pages = Gazelle\Format::get_pages($Page, $Results, DONATIONS_PER_PAGE, 11);
 	echo $Pages;
 ?>
 </div>

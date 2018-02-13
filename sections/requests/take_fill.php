@@ -190,7 +190,7 @@ foreach ($UserIDs as $User) {
 }
 
 $RequestVotes = Requests::get_votes_array($RequestID);
-Misc::write_log("Request $RequestID ($FullName) was filled by user $FillerID ($FillerUsername) with the torrent $TorrentID for a ".Format::get_size($RequestVotes['TotalBounty']).' bounty.');
+Misc::write_log("Request $RequestID ($FullName) was filled by user $FillerID ($FillerUsername) with the torrent $TorrentID for a ".Gazelle\Format::get_size($RequestVotes['TotalBounty']).' bounty.');
 
 // Give bounty
 $DB->query("

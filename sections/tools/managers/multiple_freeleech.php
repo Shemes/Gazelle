@@ -57,7 +57,7 @@ if (isset($_POST['torrents'])) {
                     if (empty($Size) || !in_array($Units, array('k', 'm', 'g'))) {
                         $Err = 'Invalid size or units';
                     } else {
-                        $Bytes = Format::get_bytes($Size . $Units);
+                        $Bytes = Gazelle\Format::get_bytes($Size . $Units);
 
                         $DB->query("
                             SELECT ID

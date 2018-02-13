@@ -55,7 +55,7 @@ if (isset($_GET['expire'])) {
 
 View::show_header('Freeleech token history');
 
-list($Page, $Limit) = Format::page_limit(25);
+list($Page, $Limit) = Gazelle\Format::page_limit(25);
 
 $DB->query("
 	SELECT
@@ -79,7 +79,7 @@ $Tokens = $DB->to_array();
 
 $DB->query('SELECT FOUND_ROWS()');
 list($NumResults) = $DB->next_record();
-$Pages = Format::get_pages($Page, $NumResults, 25);
+$Pages = Gazelle\Format::get_pages($Page, $NumResults, 25);
 
 ?>
 <div class="header">
@@ -125,7 +125,7 @@ foreach ($Tokens as $Token) {
 		<td><?=($Expired ? 'Yes' : 'No')?><?=(check_perms('users_mod') && !$Expired) ? " <a href=\"userhistory.php?action=token_history&amp;expire=1&amp;userid=$UserID&amp;torrentid=$TorrentID\">(expire)</a>" : ''; ?>
 		</td>
 <?	if (check_perms('users_mod')) { ?>
-		<td><?=Format::get_size($Downloaded)?></td>
+		<td><?=Gazelle\Format::get_size($Downloaded)?></td>
 		<td><?=$Uses?></td>
 <?	} ?>
 	</tr>

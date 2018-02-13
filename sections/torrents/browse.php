@@ -13,7 +13,7 @@ function header_link($SortKey, $DefaultWay = 'desc') {
 	} else {
 		$NewWay = $DefaultWay;
 	}
-	return "torrents.php?order_way=$NewWay&amp;order_by=$SortKey&amp;".Format::get_url(array('order_way', 'order_by'));
+	return "torrents.php?order_way=$NewWay&amp;order_by=$SortKey&amp;".Gazelle\Format::get_url(array('order_way', 'order_by'));
 }
 
 if (!empty($_GET['searchstr']) || !empty($_GET['groupname'])) {
@@ -160,39 +160,39 @@ View::show_header('Browse Torrents', 'browse');
 			<tr id="artist_name" class="ftr_advanced<?=$HideAdvanced?>">
 				<td class="label">Artist name:</td>
 				<td colspan="3" class="ft_artistname">
-					<input type="search" spellcheck="false" size="40" name="artistname" class="inputtext smaller fti_advanced" value="<?Format::form('artistname')?>" />
+					<input type="search" spellcheck="false" size="40" name="artistname" class="inputtext smaller fti_advanced" value="<?Gazelle\Format::form('artistname')?>" />
 				</td>
 			</tr>
 			<tr id="album_torrent_name" class="ftr_advanced<?=$HideAdvanced?>">
 				<td class="label">Album/Torrent name:</td>
 				<td colspan="3" class="ft_groupname">
-					<input type="search" spellcheck="false" size="40" name="groupname" class="inputtext smaller fti_advanced" value="<?Format::form('groupname')?>" />
+					<input type="search" spellcheck="false" size="40" name="groupname" class="inputtext smaller fti_advanced" value="<?Gazelle\Format::form('groupname')?>" />
 				</td>
 			</tr>
 			<tr id="record_label" class="ftr_advanced<?=$HideAdvanced?>">
 				<td class="label">Record label:</td>
 				<td colspan="3" class="ft_recordlabel">
-					<input type="search" spellcheck="false" size="40" name="recordlabel" class="inputtext smaller fti_advanced" value="<?Format::form('recordlabel')?>" />
+					<input type="search" spellcheck="false" size="40" name="recordlabel" class="inputtext smaller fti_advanced" value="<?Gazelle\Format::form('recordlabel')?>" />
 				</td>
 			</tr>
 			<tr id="catalogue_number_year" class="ftr_advanced<?=$HideAdvanced?>">
 				<td class="label">Catalogue number:</td>
 				<td class="ft_cataloguenumber">
-					<input type="search" size="40" name="cataloguenumber" class="inputtext smallest fti_advanced" value="<?Format::form('cataloguenumber')?>" />
+					<input type="search" size="40" name="cataloguenumber" class="inputtext smallest fti_advanced" value="<?Gazelle\Format::form('cataloguenumber')?>" />
 				</td>
 				<td class="label">Year:</td>
 				<td class="ft_year">
-					<input type="search" name="year" class="inputtext smallest fti_advanced" value="<?Format::form('year')?>" size="4" />
+					<input type="search" name="year" class="inputtext smallest fti_advanced" value="<?Gazelle\Format::form('year')?>" size="4" />
 				</td>
 			</tr>
 			<tr id="edition_expand" class="ftr_advanced<?=$HideAdvanced?>">
 				<td colspan="4" class="center ft_edition_expand"><a href="#" class="brackets" onclick="ToggleEditionRows(); return false;">Click here to toggle searching for specific remaster information</a></td>
 			</tr>
 <?
-if (Format::form('remastertitle', true) == ''
-	&& Format::form('remasteryear', true) == ''
-	&& Format::form('remasterrecordlabel', true) == ''
-	&& Format::form('remastercataloguenumber', true) == ''
+if (Gazelle\Format::form('remastertitle', true) == ''
+	&& Gazelle\Format::form('remasteryear', true) == ''
+	&& Gazelle\Format::form('remasterrecordlabel', true) == ''
+	&& Gazelle\Format::form('remastercataloguenumber', true) == ''
 ) {
 	$Hidden = ' hidden';
 } else {
@@ -202,35 +202,35 @@ if (Format::form('remastertitle', true) == ''
 			<tr id="edition_title" class="ftr_advanced<?=$HideAdvanced . $Hidden?>">
 				<td class="label">Edition title:</td>
 				<td class="ft_remastertitle">
-					<input type="search" spellcheck="false" size="40" name="remastertitle" class="inputtext smaller fti_advanced" value="<?Format::form('remastertitle')?>" />
+					<input type="search" spellcheck="false" size="40" name="remastertitle" class="inputtext smaller fti_advanced" value="<?Gazelle\Format::form('remastertitle')?>" />
 				</td>
 				<td class="label">Edition year:</td>
 				<td class="ft_remasteryear">
-					<input type="search" name="remasteryear" class="inputtext smallest fti_advanced" value="<?Format::form('remasteryear')?>" size="4" />
+					<input type="search" name="remasteryear" class="inputtext smallest fti_advanced" value="<?Gazelle\Format::form('remasteryear')?>" size="4" />
 				</td>
 			</tr>
 			<tr id="edition_label" class="ftr_advanced<?=$HideAdvanced . $Hidden?>">
 				<td class="label">Edition release label:</td>
 				<td colspan="3" class="ft_remasterrecordlabel">
-					<input type="search" spellcheck="false" size="40" name="remasterrecordlabel" class="inputtext smaller fti_advanced" value="<?Format::form('remasterrecordlabel')?>" />
+					<input type="search" spellcheck="false" size="40" name="remasterrecordlabel" class="inputtext smaller fti_advanced" value="<?Gazelle\Format::form('remasterrecordlabel')?>" />
 				</td>
 			</tr>
 			<tr id="edition_catalogue" class="ftr_advanced<?=$HideAdvanced . $Hidden?>">
 				<td class="label">Edition catalogue number:</td>
 				<td colspan="3" class="ft_remastercataloguenumber">
-					<input type="search" size="40" name="remastercataloguenumber" class="inputtext smallest fti_advanced" value="<?Format::form('remastercataloguenumber')?>" />
+					<input type="search" size="40" name="remastercataloguenumber" class="inputtext smallest fti_advanced" value="<?Gazelle\Format::form('remastercataloguenumber')?>" />
 				</td>
 			</tr>
 			<tr id="file_list" class="ftr_advanced<?=$HideAdvanced?>">
 				<td class="label">File list:</td>
 				<td colspan="3" class="ft_filelist">
-					<input type="search" spellcheck="false" size="40" name="filelist" class="inputtext fti_advanced" value="<?Format::form('filelist')?>" />
+					<input type="search" spellcheck="false" size="40" name="filelist" class="inputtext fti_advanced" value="<?Gazelle\Format::form('filelist')?>" />
 				</td>
 			</tr>
 			<tr id="torrent_description" class="ftr_advanced<?=$HideAdvanced?>">
 				<td class="label"><span title="Search torrent descriptions (not group information)" class="tooltip">Torrent description:</span></td>
 				<td colspan="3" class="ft_description">
-					<input type="search" spellcheck="false" size="40" name="description" class="inputtext fti_advanced" value="<?Format::form('description')?>" />
+					<input type="search" spellcheck="false" size="40" name="description" class="inputtext fti_advanced" value="<?Gazelle\Format::form('description')?>" />
 				</td>
 			</tr>
 			<tr id="rip_specifics" class="ftr_advanced<?=$HideAdvanced?>">
@@ -239,24 +239,24 @@ if (Format::form('remastertitle', true) == ''
 					<select id="bitrate" name="encoding" class="ft_bitrate fti_advanced">
 						<option value="">Bitrate</option>
 <?	foreach ($Bitrates as $BitrateName) { ?>
-						<option value="<?=display_str($BitrateName); ?>"<?Format::selected('encoding', $BitrateName)?>><?=display_str($BitrateName); ?></option>
+						<option value="<?=display_str($BitrateName); ?>"<?Gazelle\Format::selected('encoding', $BitrateName)?>><?=display_str($BitrateName); ?></option>
 <?	} ?>			</select>
 
 					<select name="format" class="ft_format fti_advanced">
 						<option value="">Format</option>
 <?	foreach ($Formats as $FormatName) { ?>
-						<option value="<?=display_str($FormatName); ?>"<?Format::selected('format', $FormatName)?>><?=display_str($FormatName); ?></option>
+						<option value="<?=display_str($FormatName); ?>"<?Gazelle\Format::selected('format', $FormatName)?>><?=display_str($FormatName); ?></option>
 <?	} ?>			</select>
 					<select name="media" class="ft_media fti_advanced">
 						<option value="">Media</option>
 <?	foreach ($Media as $MediaName) { ?>
-						<option value="<?=display_str($MediaName); ?>"<?Format::selected('media', $MediaName)?>><?=display_str($MediaName); ?></option>
+						<option value="<?=display_str($MediaName); ?>"<?Gazelle\Format::selected('media', $MediaName)?>><?=display_str($MediaName); ?></option>
 <?	} ?>
 					</select>
 					<select name="releasetype" class="ft_releasetype fti_advanced">
 						<option value="">Release type</option>
 <?	foreach ($ReleaseTypes as $ID=>$Type) { ?>
-						<option value="<?=display_str($ID); ?>"<?Format::selected('releasetype', $ID)?>><?=display_str($Type); ?></option>
+						<option value="<?=display_str($ID); ?>"<?Gazelle\Format::selected('releasetype', $ID)?>><?=display_str($Type); ?></option>
 <?	} ?>
 					</select>
 				</td>
@@ -266,64 +266,64 @@ if (Format::form('remastertitle', true) == ''
 				<td class="nobr ft_misc" colspan="3">
 					<select name="haslog" class="ft_haslog fti_advanced">
 						<option value="">Has Log</option>
-						<option value="1"<?Format::selected('haslog', '1')?>>Yes</option>
-						<option value="0"<?Format::selected('haslog', '0')?>>No</option>
-						<option value="100"<?Format::selected('haslog', '100')?>>100% only</option>
-						<option value="-1"<?Format::selected('haslog', '-1')?>>&lt;100%/Unscored</option>
+						<option value="1"<?Gazelle\Format::selected('haslog', '1')?>>Yes</option>
+						<option value="0"<?Gazelle\Format::selected('haslog', '0')?>>No</option>
+						<option value="100"<?Gazelle\Format::selected('haslog', '100')?>>100% only</option>
+						<option value="-1"<?Gazelle\Format::selected('haslog', '-1')?>>&lt;100%/Unscored</option>
 					</select>
 					<select name="hascue" class="ft_hascue fti_advanced">
 						<option value="">Has Cue</option>
-						<option value="1"<?Format::selected('hascue', 1)?>>Yes</option>
-						<option value="0"<?Format::selected('hascue', 0)?>>No</option>
+						<option value="1"<?Gazelle\Format::selected('hascue', 1)?>>Yes</option>
+						<option value="0"<?Gazelle\Format::selected('hascue', 0)?>>No</option>
 					</select>
 					<select name="scene" class="ft_scene fti_advanced">
 						<option value="">Scene</option>
-						<option value="1"<?Format::selected('scene', 1)?>>Yes</option>
-						<option value="0"<?Format::selected('scene', 0)?>>No</option>
+						<option value="1"<?Gazelle\Format::selected('scene', 1)?>>Yes</option>
+						<option value="0"<?Gazelle\Format::selected('scene', 0)?>>No</option>
 					</select>
 					<select name="vanityhouse" class="ft_vanityhouse fti_advanced">
 						<option value="">Vanity House</option>
-						<option value="1"<?Format::selected('vanityhouse', 1)?>>Yes</option>
-						<option value="0"<?Format::selected('vanityhouse', 0)?>>No</option>
+						<option value="1"<?Gazelle\Format::selected('vanityhouse', 1)?>>Yes</option>
+						<option value="0"<?Gazelle\Format::selected('vanityhouse', 0)?>>No</option>
 					</select>
 					<select name="freetorrent" class="ft_freetorrent fti_advanced">
 						<option value="">Leech Status</option>
-						<option value="1"<?Format::selected('freetorrent', 1)?>>Freeleech</option>
-						<option value="2"<?Format::selected('freetorrent', 2)?>>Neutral Leech</option>
-						<option value="3"<?Format::selected('freetorrent', 3)?>>Either</option>
-						<option value="0"<?Format::selected('freetorrent', 0)?>>Normal</option>
+						<option value="1"<?Gazelle\Format::selected('freetorrent', 1)?>>Freeleech</option>
+						<option value="2"<?Gazelle\Format::selected('freetorrent', 2)?>>Neutral Leech</option>
+						<option value="3"<?Gazelle\Format::selected('freetorrent', 3)?>>Either</option>
+						<option value="0"<?Gazelle\Format::selected('freetorrent', 0)?>>Normal</option>
 					</select>
 				</td>
 			</tr>
 			<tr id="search_terms" class="ftr_basic<?=$HideBasic?>">
 				<td class="label">Search terms:</td>
 				<td colspan="3" class="ftb_searchstr">
-					<input type="search" spellcheck="false" size="40" name="searchstr" class="inputtext fti_basic" value="<?Format::form('searchstr')?>" />
+					<input type="search" spellcheck="false" size="40" name="searchstr" class="inputtext fti_basic" value="<?Gazelle\Format::form('searchstr')?>" />
 				</td>
 			</tr>
 			<tr id="tagfilter">
 				<td class="label"><span title="Use !tag to exclude tag" class="tooltip">Tags (comma-separated):</span></td>
 				<td colspan="3" class="ft_taglist">
 					<input type="search" size="40" id="tags" name="taglist" class="inputtext smaller" value="<?=display_str($Search->get_terms('taglist'))?>"<? Users::has_autocomplete_enabled('other'); ?> />&nbsp;
-					<input type="radio" name="tags_type" id="tags_type0" value="0"<?Format::selected('tags_type', 0, 'checked')?> /><label for="tags_type0"> Any</label>&nbsp;&nbsp;
-					<input type="radio" name="tags_type" id="tags_type1" value="1"<?Format::selected('tags_type', 1, 'checked')?> /><label for="tags_type1"> All</label>
+					<input type="radio" name="tags_type" id="tags_type0" value="0"<?Gazelle\Format::selected('tags_type', 0, 'checked')?> /><label for="tags_type0"> Any</label>&nbsp;&nbsp;
+					<input type="radio" name="tags_type" id="tags_type1" value="1"<?Gazelle\Format::selected('tags_type', 1, 'checked')?> /><label for="tags_type1"> All</label>
 				</td>
 			</tr>
 			<tr id="order">
 				<td class="label">Order by:</td>
 				<td colspan="3" class="ft_order">
 					<select name="order_by" style="width: auto;" class="ft_order_by">
-						<option value="time"<?Format::selected('order_by', 'time')?>>Time added</option>
-						<option value="year"<?Format::selected('order_by', 'year')?>>Year</option>
-						<option value="size"<?Format::selected('order_by', 'size')?>>Size</option>
-						<option value="snatched"<?Format::selected('order_by', 'snatched')?>>Snatched</option>
-						<option value="seeders"<?Format::selected('order_by', 'seeders')?>>Seeders</option>
-						<option value="leechers"<?Format::selected('order_by', 'leechers')?>>Leechers</option>
-						<option value="random"<?Format::selected('order_by', 'random')?>>Random</option>
+						<option value="time"<?Gazelle\Format::selected('order_by', 'time')?>>Time added</option>
+						<option value="year"<?Gazelle\Format::selected('order_by', 'year')?>>Year</option>
+						<option value="size"<?Gazelle\Format::selected('order_by', 'size')?>>Size</option>
+						<option value="snatched"<?Gazelle\Format::selected('order_by', 'snatched')?>>Snatched</option>
+						<option value="seeders"<?Gazelle\Format::selected('order_by', 'seeders')?>>Seeders</option>
+						<option value="leechers"<?Gazelle\Format::selected('order_by', 'leechers')?>>Leechers</option>
+						<option value="random"<?Gazelle\Format::selected('order_by', 'random')?>>Random</option>
 					</select>
 					<select name="order_way" class="ft_order_way">
-						<option value="desc"<?Format::selected('order_way', 'desc')?>>Descending</option>
-						<option value="asc"<?Format::selected('order_way', 'asc')?>>Ascending</option>
+						<option value="desc"<?Gazelle\Format::selected('order_way', 'desc')?>>Descending</option>
+						<option value="asc"<?Gazelle\Format::selected('order_way', 'asc')?>>Ascending</option>
 					</select>
 				</td>
 			</tr>
@@ -463,7 +463,7 @@ HTML;
 
 if ($NumResults < ($Page - 1) * TORRENTS_PER_PAGE + 1) {
 	$LastPage = ceil($NumResults / TORRENTS_PER_PAGE);
-	$Pages = Format::get_pages(0, $NumResults, TORRENTS_PER_PAGE);
+	$Pages = Gazelle\Format::get_pages(0, $NumResults, TORRENTS_PER_PAGE);
 ?>
 <div class="box pad" align="center">
 	<h2>The requested page contains no matches.</h2>
@@ -476,7 +476,7 @@ View::show_footer();die();
 }
 
 // List of pages
-$Pages = Format::get_pages($Page, $NumResults, TORRENTS_PER_PAGE);
+$Pages = Gazelle\Format::get_pages($Page, $NumResults, TORRENTS_PER_PAGE);
 
 $Bookmarks = \Gazelle\Bookmarks::all_bookmarks('torrent');
 ?>
@@ -575,7 +575,7 @@ $ShowGroups = !(!empty($LoggedUser['TorrentGrouping']) && $LoggedUser['TorrentGr
 			</div>
 		</td>
 		<td class="center cats_col">
-			<div title="<?=$TorrentTags->title()?>" class="tooltip <?=Format::css_category($CategoryID)?> <?=$TorrentTags->css_name()?>">
+			<div title="<?=$TorrentTags->title()?>" class="tooltip <?=Gazelle\Format::css_category($CategoryID)?> <?=$TorrentTags->css_name()?>">
 			</div>
 		</td>
 		<td colspan="2" class="big_info">
@@ -600,7 +600,7 @@ $ShowGroups = !(!empty($LoggedUser['TorrentGrouping']) && $LoggedUser['TorrentGr
 			</div>
 		</td>
 		<td class="nobr"><?=\Gazelle\Util\Time::timeDiff($GroupTime, 1)?></td>
-		<td class="number_column nobr"><?=Format::get_size($MaxSize)?> (Max)</td>
+		<td class="number_column nobr"><?=Gazelle\Format::get_size($MaxSize)?> (Max)</td>
 		<td class="number_column"><?=number_format($TotalSnatched)?></td>
 		<td class="number_column<?=($TotalSeeders == 0 ? ' r00' : '')?>"><?=number_format($TotalSeeders)?></td>
 		<td class="number_column"><?=number_format($TotalLeechers)?></td>
@@ -665,7 +665,7 @@ $ShowGroups = !(!empty($LoggedUser['TorrentGrouping']) && $LoggedUser['TorrentGr
 		</td>
 		<td><?=$Data['FileCount']?></td>
 		<td class="nobr"><?=\Gazelle\Util\Time::timeDiff($Data['Time'], 1)?></td>
-		<td class="number_column nobr"><?=Format::get_size($Data['Size'])?></td>
+		<td class="number_column nobr"><?=Gazelle\Format::get_size($Data['Size'])?></td>
 		<td class="number_column"><?=number_format($Data['Snatched'])?></td>
 		<td class="number_column<?=($Data['Seeders'] == 0) ? ' r00' : ''?>"><?=number_format($Data['Seeders'])?></td>
 		<td class="number_column"><?=number_format($Data['Leechers'])?></td>
@@ -686,7 +686,7 @@ $ShowGroups = !(!empty($LoggedUser['TorrentGrouping']) && $LoggedUser['TorrentGr
 			}
 			$ExtraInfo = Torrents::torrent_info($Data, true, true);
 		} elseif ($Data['IsSnatched']) {
-			$ExtraInfo = Format::torrent_label('Snatched!');
+			$ExtraInfo = Gazelle\Format::torrent_label('Snatched!');
 		} else {
 			$ExtraInfo = '';
 		}
@@ -697,7 +697,7 @@ $ShowGroups = !(!empty($LoggedUser['TorrentGrouping']) && $LoggedUser['TorrentGr
 		<td></td>
 <?		} ?>
 		<td class="center cats_col">
-			<div title="<?=$TorrentTags->title()?>" class="tooltip <?=Format::css_category($CategoryID)?> <?=$TorrentTags->css_name()?>"></div>
+			<div title="<?=$TorrentTags->title()?>" class="tooltip <?=Gazelle\Format::css_category($CategoryID)?> <?=$TorrentTags->css_name()?>"></div>
 		</td>
 		<td class="big_info">
 <?		if ($LoggedUser['CoverArt']) { ?>
@@ -720,7 +720,7 @@ $ShowGroups = !(!empty($LoggedUser['TorrentGrouping']) && $LoggedUser['TorrentGr
 		</td>
 		<td><?=$Data['FileCount']?></td>
 		<td class="nobr"><?=\Gazelle\Util\Time::timeDiff($Data['Time'], 1)?></td>
-		<td class="number_column nobr"><?=Format::get_size($Data['Size'])?></td>
+		<td class="number_column nobr"><?=Gazelle\Format::get_size($Data['Size'])?></td>
 		<td class="number_column"><?=number_format($Data['Snatched'])?></td>
 		<td class="number_column<?=($Data['Seeders'] == 0) ? ' r00' : ''?>"><?=number_format($Data['Seeders'])?></td>
 		<td class="number_column"><?=number_format($Data['Leechers'])?></td>

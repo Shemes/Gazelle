@@ -4,7 +4,7 @@ if (!check_perms('users_view_ips') || !check_perms('users_view_email')) {
 }
 View::show_header('Registration log');
 define('USERS_PER_PAGE', 50);
-list($Page, $Limit) = Format::page_limit(USERS_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(USERS_PER_PAGE);
 
 $AfterDate = $_POST['after_date'];
 $BeforeDate = $_POST['before_date'];
@@ -91,7 +91,7 @@ if ($DB->has_results()) {
 ?>
 	<div class="linkbox">
 <?
-	$Pages = Format::get_pages($Page, $Results, USERS_PER_PAGE, 11) ;
+	$Pages = Gazelle\Format::get_pages($Page, $Results, USERS_PER_PAGE, 11) ;
 	echo $Pages;
 ?>
 	</div>
@@ -112,7 +112,7 @@ if ($DB->has_results()) {
 ?>
 		<tr class="row<?=$Row?>">
 			<td><?=Users::format_username($UserID, true, true, true, true)?><br /><?=Users::format_username($InviterID, true, true, true, true)?></td>
-			<td><?=Format::get_ratio_html($Uploaded, $Downloaded)?><br /><?=Format::get_ratio_html($InviterUploaded, $InviterDownloaded)?></td>
+			<td><?=Gazelle\Format::get_ratio_html($Uploaded, $Downloaded)?><br /><?=Gazelle\Format::get_ratio_html($InviterUploaded, $InviterDownloaded)?></td>
 			<td>
 				<span style="float: left;"><?=display_str($Email)?></span>
 				<span style="float: right;"><a href="userhistory.php?action=email&amp;userid=<?=$UserID?>" title="History" class="brackets tooltip">H</a> <a href="/user.php?action=search&amp;email_history=on&amp;email=<?=display_str($Email)?>" title="Search" class="brackets tooltip">S</a></span><br />

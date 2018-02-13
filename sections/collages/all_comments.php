@@ -36,7 +36,7 @@ View::show_header("Comments for collage $Name", 'comments,bbcode,subscriptions')
 		<div class="linkbox">
 			<a href="#" id="subscribelink_collages<?=$CollageID?>" class="brackets" onclick="SubscribeComments('collages', <?=$CollageID?>); return false;"><?=Subscriptions::has_subscribed_comments('collages', $CollageID) !== false ? 'Unsubscribe' : 'Subscribe'?></a>
 <?
-$Pages = Format::get_pages($Page, $NumComments, TORRENT_COMMENTS_PER_PAGE, 9);
+$Pages = Gazelle\Format::get_pages($Page, $NumComments, TORRENT_COMMENTS_PER_PAGE, 9);
 if ($Pages) {
 	echo '<br /><br />' . $Pages;
 }

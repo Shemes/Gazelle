@@ -8,7 +8,7 @@ if (isset($LoggedUser['PostsPerPage'])) {
 } else {
 	$PerPage = POSTS_PER_PAGE;
 }
-list($Page, $Limit) = Format::page_limit($PerPage);
+list($Page, $Limit) = Gazelle\Format::page_limit($PerPage);
 
 View::show_header('Subscriptions','subscriptions,comments,bbcode');
 
@@ -143,7 +143,7 @@ if (!$NumResults) {
 ?>
 	<div class="linkbox">
 <?
-	$Pages = Format::get_pages($Page, $NumResults, $PerPage, 11);
+	$Pages = Gazelle\Format::get_pages($Page, $NumResults, $PerPage, 11);
 	echo $Pages;
 ?>
 	</div>
@@ -191,7 +191,7 @@ if (!$NumResults) {
 				$Links = 'Forums: <a href="forums.php?action=viewforum&amp;forumid=' . $Result['ForumID'] . '">' . display_str($Result['ForumName']) . '</a> &gt; ' .
 					'<a href="forums.php?action=viewthread&amp;threadid=' . $Result['PageID'] .
 						'" class="tooltip" title="' . display_str($Result['Name']) . '">' .
-						display_str(Format::cut_string($Result['Name'], 75)) .
+						display_str(Gazelle\Format::cut_string($Result['Name'], 75)) .
 					'</a>';
 				$JumpLink = 'forums.php?action=viewthread&amp;threadid=' . $Result['PageID'] . '&amp;postid=' . $Result['PostID'] . '#post' . $Result['PostID'];
 				break;

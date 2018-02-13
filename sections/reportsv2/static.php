@@ -16,7 +16,7 @@ if (!check_perms('admin_reports')) {
 include(SERVER_ROOT.'/classes/reports.class.php');
 
 define('REPORTS_PER_PAGE', '10');
-list($Page, $Limit) = Format::page_limit(REPORTS_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(REPORTS_PER_PAGE);
 
 
 if (isset($_GET['view'])) {
@@ -208,7 +208,7 @@ $Reports = $DB->to_array();
 
 $DB->query('SELECT FOUND_ROWS()');
 list($Results) = $DB->next_record();
-$PageLinks = Format::get_pages($Page, $Results, REPORTS_PER_PAGE, 11);
+$PageLinks = Gazelle\Format::get_pages($Page, $Results, REPORTS_PER_PAGE, 11);
 
 View::show_header('Reports V2!', 'reportsv2,bbcode');
 ?>

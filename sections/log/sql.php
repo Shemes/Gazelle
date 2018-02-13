@@ -1,5 +1,5 @@
 <?php
-list($Page, $Limit) = Format::page_limit(LOG_ENTRIES_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(LOG_ENTRIES_PER_PAGE);
 
 if (!empty($_GET['search'])) {
 	$Search = \Gazelle\Util\Db::string($_GET['search']);

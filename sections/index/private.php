@@ -282,7 +282,7 @@ if (($PeerStats = $Cache->get_value('stats_peers')) === false) {
 }
 
 if (!$PeerStatsLocked) {
-	$Ratio = Format::get_ratio_html($SeederCount, $LeecherCount);
+	$Ratio = Gazelle\Format::get_ratio_html($SeederCount, $LeecherCount);
 	$PeerCount = number_format($SeederCount + $LeecherCount);
 	$SeederCount = number_format($SeederCount);
 	$LeecherCount = number_format($LeecherCount);

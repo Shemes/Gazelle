@@ -129,7 +129,7 @@ class TorrentsDL {
 	public function summary($FilterStats) {
 		global $ScriptStartTime;
 		$Time = number_format(1000 * (microtime(true) - $ScriptStartTime), 2)." ms";
-		$Used = Format::get_size(memory_get_usage(true));
+		$Used = Gazelle\Format::get_size(memory_get_usage(true));
 		$Date = date("M d Y, H:i");
 		$NumSkipped = count($this->SkippedFiles);
 		return "Collector Download Summary for $this->Title - " . SITE_NAME . "\r\n"
@@ -147,7 +147,7 @@ class TorrentsDL {
 				: "")
 			. "Torrents downloaded:		$this->NumAdded\r\n"
 			. "\r\n"
-			. "Total size of torrents (ratio hit): ".Format::get_size($this->Size)."\r\n"
+			. "Total size of torrents (ratio hit): ".Gazelle\Format::get_size($this->Size)."\r\n"
 			. ($NumSkipped
 				? "\r\n"
 					. "Albums unavailable within your criteria (consider making a request for your desired format):\r\n"
@@ -208,7 +208,7 @@ class TorrentsDL {
 			$TorrentName = $TorrentArtist . $TorrentName;
 		}
 
-		$TorrentName = Format::cut_string($TorrentName . $TorrentInfo, $MaxLength, true, false);
+		$TorrentName = Gazelle\Format::cut_string($TorrentName . $TorrentInfo, $MaxLength, true, false);
 		if ($TorrentID !== false) {
 			$TorrentName .= "-$TorrentID";
 		}

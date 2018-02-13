@@ -20,7 +20,7 @@ if (isset($LoggedUser['PostsPerPage'])) {
 } else {
 	$PerPage = POSTS_PER_PAGE;
 }
-list($Page, $Limit) = Format::page_limit($PerPage);
+list($Page, $Limit) = Gazelle\Format::page_limit($PerPage);
 
 // Get $Limit last quote notifications
 // We deal with the information about torrents and requests later on...
@@ -86,7 +86,7 @@ View::show_header('Quote Notifications');
 			<a href="userhistory.php?action=quote_notifications&amp;catchup=1" class="brackets">Catch up</a>&nbsp;&nbsp;&nbsp;
 			<br /><br />
 <?
-			$Pages = Format::get_pages($Page, $NumResults, TOPICS_PER_PAGE, 9);
+			$Pages = Gazelle\Format::get_pages($Page, $NumResults, TOPICS_PER_PAGE, 9);
 			echo $Pages;
 			?>
 		</div>
@@ -100,7 +100,7 @@ foreach ($Results as $Result) {
 	switch ($Result['Page']) {
 		case 'forums':
 			$Links = 'Forums: <a href="forums.php?action=viewforum&amp;forumid=' . $Result['ForumID'] . '">' . display_str($Result['ForumName']) . '</a> &gt; ' .
-					'<a href="forums.php?action=viewthread&amp;threadid=' . $Result['PageID'] . '" class="tooltip" title="' . display_str($Result['ForumTitle']) . '">' . Format::cut_string($Result['ForumTitle'], 75) . '</a>';
+					'<a href="forums.php?action=viewthread&amp;threadid=' . $Result['PageID'] . '" class="tooltip" title="' . display_str($Result['ForumTitle']) . '">' . Gazelle\Format::cut_string($Result['ForumTitle'], 75) . '</a>';
 			$JumpLink = 'forums.php?action=viewthread&amp;threadid=' . $Result['PageID'] . '&amp;postid=' . $Result['PostID'] . '#post' . $Result['PostID'];
 			break;
 		case 'artist':

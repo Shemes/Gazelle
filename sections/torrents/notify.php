@@ -31,7 +31,7 @@ if (!empty($_GET['filterid']) && is_number($_GET['filterid'])) {
 	$FilterID = false;
 }
 
-list($Page, $Limit) = Format::page_limit(NOTIFICATIONS_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(NOTIFICATIONS_PER_PAGE);
 
 // The "order by x" links on columns headers
 function header_link($SortKey, $DefaultWay = 'desc') {
@@ -45,7 +45,7 @@ function header_link($SortKey, $DefaultWay = 'desc') {
 	} else {
 		$NewWay = $DefaultWay;
 	}
-	return "?action=notify&amp;order_way=$NewWay&amp;order_by=$SortKey&amp;".Format::get_url(array('page', 'order_way', 'order_by'));
+	return "?action=notify&amp;order_way=$NewWay&amp;order_by=$SortKey&amp;".Gazelle\Format::get_url(array('page', 'order_way', 'order_by'));
 }
 //Perhaps this should be a feature at some point
 if (check_perms('users_mod') && !empty($_GET['userid']) && is_number($_GET['userid']) && $_GET['userid'] != $LoggedUser['ID']) {
@@ -125,7 +125,7 @@ foreach ($Results as $Torrent) {
 		$UnReadIDs[] = $Torrent['TorrentID'];
 	}
 }
-$Pages = Format::get_pages($Page, $TorrentCount, NOTIFICATIONS_PER_PAGE, 9);
+$Pages = Gazelle\Format::get_pages($Page, $TorrentCount, NOTIFICATIONS_PER_PAGE, 9);
 
 if (!empty($GroupIDs)) {
 	$GroupIDs = array_keys($GroupIDs);
@@ -289,7 +289,7 @@ if (empty($Results)) {
 			<input type="checkbox" class="notify_box notify_box_<?=$FilterID?>" value="<?=$TorrentID?>" id="clear_<?=$TorrentID?>" tabindex="1" />
 		</td>
 		<td class="center cats_col">
-			<div title="<?=$TorrentTags->title()?>" class="tooltip <?=Format::css_category($GroupCategoryID)?> <?=$TorrentTags->css_name()?>"></div>
+			<div title="<?=$TorrentTags->title()?>" class="tooltip <?=Gazelle\Format::css_category($GroupCategoryID)?> <?=$TorrentTags->css_name()?>"></div>
 		</td>
 		<td class="big_info">
 <? if ($LoggedUser['CoverArt']) { ?>
@@ -329,7 +329,7 @@ if (empty($Results)) {
 		</td>
 		<td><?=$TorrentInfo['FileCount']?></td>
 		<td class="number_column nobr"><?=\Gazelle\Util\Time::timeDiff($TorrentInfo['Time'])?></td>
-		<td class="number_column nobr"><?=Format::get_size($TorrentInfo['Size'])?></td>
+		<td class="number_column nobr"><?=Gazelle\Format::get_size($TorrentInfo['Size'])?></td>
 		<td class="number_column"><?=number_format($TorrentInfo['Snatched'])?></td>
 		<td class="number_column"><?=number_format($TorrentInfo['Seeders'])?></td>
 		<td class="number_column"><?=number_format($TorrentInfo['Leechers'])?></td>

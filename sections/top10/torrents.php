@@ -109,7 +109,7 @@ if ($DisableFreeTorrentTop10) {
 
 // The link should say the opposite of the current setting
 $FreeleechToggleName = ($DisableFreeTorrentTop10 ? 'show' : 'hide');
-$FreeleechToggleQuery = Format::get_url(array('freeleech', 'groups'));
+$FreeleechToggleQuery = Gazelle\Format::get_url(array('freeleech', 'groups'));
 
 if (!empty($FreeleechToggleQuery))
 	$FreeleechToggleQuery .= '&amp;';
@@ -117,7 +117,7 @@ if (!empty($FreeleechToggleQuery))
 $FreeleechToggleQuery .= 'freeleech=' . $FreeleechToggleName;
 
 $GroupByToggleName = ($_GET['groups'] == 'show' ? 'hide' : 'show');
-$GroupByToggleQuery = Format::get_url(array('freeleech', 'groups'));
+$GroupByToggleQuery = Gazelle\Format::get_url(array('freeleech', 'groups'));
 
 if (!empty($GroupByToggleQuery))
 	$GroupByToggleQuery .= '&amp;';
@@ -524,7 +524,7 @@ function generate_torrent_table($Caption, $Tag, $Details, $Limit) {
 				if ($GroupCategoryID == 1) {
 					$ExtraInfo .= ' / ';
 				}
-				$ExtraInfo .= Format::torrent_label('Snatched!');
+				$ExtraInfo .= Gazelle\Format::torrent_label('Snatched!');
 			}
 			if ($ExtraInfo != '') {
 				$ExtraInfo = "- [$ExtraInfo]";
@@ -544,7 +544,7 @@ function generate_torrent_table($Caption, $Tag, $Details, $Limit) {
 ?>
 	<tr class="torrent row<?=$Highlight . ($IsBookmarked ? ' bookmarked' : '') . ($IsSnatched ? ' snatched_torrent' : '')?>">
 		<td style="padding: 8px; text-align: center;"><strong><?=$Rank?></strong></td>
-		<td class="center cats_col"><div title="<?=$TorrentTags->title()?>" class="tooltip <?=Format::css_category($GroupCategoryID)?> <?=$TorrentTags->css_name()?>"></div></td>
+		<td class="center cats_col"><div title="<?=$TorrentTags->title()?>" class="tooltip <?=Gazelle\Format::css_category($GroupCategoryID)?> <?=$TorrentTags->css_name()?>"></div></td>
 		<td class="big_info">
 <?		if ($LoggedUser['CoverArt']) { ?>
 			<div class="group_image float_left clear">
@@ -570,8 +570,8 @@ function generate_torrent_table($Caption, $Tag, $Details, $Limit) {
 				<div class="tags"><?=$TorrentTags->format()?></div>
 			</div>
 		</td>
-		<td class="number_column nobr"><?=Format::get_size($Size)?></td>
-		<td class="number_column nobr"><?=Format::get_size($Data)?></td>
+		<td class="number_column nobr"><?=Gazelle\Format::get_size($Size)?></td>
+		<td class="number_column nobr"><?=Gazelle\Format::get_size($Data)?></td>
 		<td class="number_column"><?=number_format((double)$Snatched)?></td>
 		<td class="number_column"><?=number_format((double)$Seeders)?></td>
 		<td class="number_column"><?=number_format((double)$Leechers)?></td>

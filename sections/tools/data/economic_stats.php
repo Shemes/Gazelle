@@ -100,17 +100,17 @@ $TotalLeechers = $TotalPeers - $TotalSeeders;
 		<div class="head">Overall stats</div>
 		<div class="pad">
 			<ul class="stats nobullet">
-				<li><strong>Total upload: </strong><?=Format::get_size($TotalUpload)?></li>
-				<li><strong>Total download: </strong><?=Format::get_size($TotalDownload)?></li>
-				<li><strong>Total buffer: </strong><?=Format::get_size($TotalUpload - $TotalDownload)?></li>
+				<li><strong>Total upload: </strong><?=Gazelle\Format::get_size($TotalUpload)?></li>
+				<li><strong>Total download: </strong><?=Gazelle\Format::get_size($TotalDownload)?></li>
+				<li><strong>Total buffer: </strong><?=Gazelle\Format::get_size($TotalUpload - $TotalDownload)?></li>
 				<br />
-				<li><strong>Mean ratio: </strong><?=Format::get_ratio_html($TotalUpload, $TotalDownload)?></li>
-				<li><strong>Mean upload: </strong><?=Format::get_size($TotalUpload / $NumUsers)?></li>
-				<li><strong>Mean download: </strong><?=Format::get_size($TotalDownload / $NumUsers)?></li>
-				<li><strong>Mean buffer: </strong><?=Format::get_size(($TotalUpload - $TotalDownload) / $NumUsers)?></li>
+				<li><strong>Mean ratio: </strong><?=Gazelle\Format::get_ratio_html($TotalUpload, $TotalDownload)?></li>
+				<li><strong>Mean upload: </strong><?=Gazelle\Format::get_size($TotalUpload / $NumUsers)?></li>
+				<li><strong>Mean download: </strong><?=Gazelle\Format::get_size($TotalDownload / $NumUsers)?></li>
+				<li><strong>Mean buffer: </strong><?=Gazelle\Format::get_size(($TotalUpload - $TotalDownload) / $NumUsers)?></li>
 				<br />
-				<li><strong>Total request bounty: </strong><?=Format::get_size($TotalBounty)?></li>
-				<li><strong>Available request bounty: </strong><?=Format::get_size($AvailableBounty)?></li>
+				<li><strong>Total request bounty: </strong><?=Gazelle\Format::get_size($TotalBounty)?></li>
+				<li><strong>Available request bounty: </strong><?=Gazelle\Format::get_size($AvailableBounty)?></li>
 			</ul>
 		</div>
 	</div>
@@ -123,8 +123,8 @@ $TotalLeechers = $TotalPeers - $TotalSeeders;
 				<li><strong>Total leechers: </strong><?=number_format($TotalLeechers)?></li>
 				<li><strong>Total peers: </strong><?=number_format($TotalSeeders + $TotalLeechers)?></li>
 				<li><strong>Total snatches: </strong><?=number_format($TotalOverallSnatches)?></li>
-				<li><strong>Seeder/leecher ratio: </strong><?=Format::get_ratio_html($TotalSeeders, $TotalLeechers)?></li>
-				<li><strong>Seeder/snatch ratio: </strong><?=Format::get_ratio_html($TotalSeeders, $TotalOverallSnatches)?></li>
+				<li><strong>Seeder/leecher ratio: </strong><?=Gazelle\Format::get_ratio_html($TotalSeeders, $TotalLeechers)?></li>
+				<li><strong>Seeder/snatch ratio: </strong><?=Gazelle\Format::get_ratio_html($TotalSeeders, $TotalOverallSnatches)?></li>
 				<br />
 				<li><strong>Mean seeders per torrent: </strong><?=number_format($TotalSeeders / $TotalTorrents, 2)?></li>
 				<li><strong>Mean leechers per torrent: </strong><?=number_format($TotalLeechers / $TotalTorrents, 2)?></li>

@@ -521,7 +521,7 @@ if (empty($LoggedUser['DisableTagging'])) {
 			</tr>
 <?
 function filelist($Str) {
-	return "</td><td>".Format::get_size($Str[1])."</td></tr>";
+	return "</td><td>".Gazelle\Format::get_size($Str[1])."</td></tr>";
 }
 
 $LastRemasterYear = '-';
@@ -609,13 +609,13 @@ foreach ($TorrentList as $Torrent) {
 				$Name = str_replace(' ', '&nbsp;', substr($Name, 0, $Spaces)) . substr($Name, $Spaces);
 			}
 			$FileSize = substr($File, $NameEnd + 3, -3);
-			$FileTable .= sprintf("\n<tr><td>%s</td><td class=\"number_column nobr\">%s</td></tr>", $Name, Format::get_size($FileSize));
+			$FileTable .= sprintf("\n<tr><td>%s</td><td class=\"number_column nobr\">%s</td></tr>", $Name, Gazelle\Format::get_size($FileSize));
 		}
 	} else {
 		$FileListSplit = explode("\n", $FileList);
 		foreach ($FileListSplit as $File) {
 			$FileInfo = Torrents::filelist_get_file($File);
-			$FileTable .= sprintf("\n<tr><td>%s</td><td class=\"number_column nobr\">%s</td></tr>", $FileInfo['name'], Format::get_size($FileInfo['size']));
+			$FileTable .= sprintf("\n<tr><td>%s</td><td class=\"number_column nobr\">%s</td></tr>", $FileInfo['name'], Gazelle\Format::get_size($FileInfo['size']));
 		}
 	}
 	$FileTable .= '
@@ -634,20 +634,20 @@ foreach ($TorrentList as $Torrent) {
 	if (!$ExtraInfo) {
 		$ExtraInfo = $GroupName ; $AddExtra=' / ';
 	}
-	if ($IsSnatched) { $ExtraInfo.=$AddExtra. Format::torrent_label('Snatched!'); $AddExtra=' / '; }
-	if ($FreeTorrent == '1') { $ExtraInfo.=$AddExtra. Format::torrent_label('Freeleech!'); $AddExtra=' / '; }
-	if ($FreeTorrent == '2') { $ExtraInfo.=$AddExtra. Format::torrent_label('Neutral Leech!'); $AddExtra=' / '; }
-	if ($PersonalFL) { $ExtraInfo.=$AddExtra. Format::torrent_label('Personal Freeleech!'); $AddExtra=' / '; }
-	if ($Reported) { $ExtraInfo.=$AddExtra. Format::torrent_label('Reported'); $AddExtra=' / '; }
+	if ($IsSnatched) { $ExtraInfo.=$AddExtra. Gazelle\Format::torrent_label('Snatched!'); $AddExtra=' / '; }
+	if ($FreeTorrent == '1') { $ExtraInfo.=$AddExtra. Gazelle\Format::torrent_label('Freeleech!'); $AddExtra=' / '; }
+	if ($FreeTorrent == '2') { $ExtraInfo.=$AddExtra. Gazelle\Format::torrent_label('Neutral Leech!'); $AddExtra=' / '; }
+	if ($PersonalFL) { $ExtraInfo.=$AddExtra. Gazelle\Format::torrent_label('Personal Freeleech!'); $AddExtra=' / '; }
+	if ($Reported) { $ExtraInfo.=$AddExtra. Gazelle\Format::torrent_label('Reported'); $AddExtra=' / '; }
 
-	if ($HasLog && $HasLogDB && $LogChecksum !== '1') { $ExtraInfo .= $AddExtra . Format::torrent_label('Bad/Missing Checksum'); $AddExtra = ' / '; }
-	if (!empty($BadTags)) { $ExtraInfo.=$AddExtra. Format::torrent_label('Bad Tags'); $AddExtra=' / '; }
-	if (!empty($BadFolders)) { $ExtraInfo.=$AddExtra. Format::torrent_label('Bad Folders'); $AddExtra=' / '; }
-	if (!empty($MissingLineage)) { $ExtraInfo.=$AddExtra. Format::torrent_label('Missing Lineage'); $AddExtra = ' / '; }
-	if (!empty($CassetteApproved)) { $ExtraInfo.=$AddExtra. Format::torrent_label('Cassette Approved'); $AddExtra=' / '; }
-	if (!empty($LossymasterApproved)) { $ExtraInfo.=$AddExtra. Format::torrent_label('Lossy Master Approved'); $AddExtra=' / '; }
-	if (!empty($LossywebApproved)) { $ExtraInfo.=$AddExtra. Format::torrent_label('Lossy WEB Approved'); $AddExtra = ' / '; }
-	if (!empty($BadFiles)) { $ExtraInfo.=$AddExtra. Format::torrent_label('Bad File Names'); $AddExtra=' / '; }
+	if ($HasLog && $HasLogDB && $LogChecksum !== '1') { $ExtraInfo .= $AddExtra . Gazelle\Format::torrent_label('Bad/Missing Checksum'); $AddExtra = ' / '; }
+	if (!empty($BadTags)) { $ExtraInfo.=$AddExtra. Gazelle\Format::torrent_label('Bad Tags'); $AddExtra=' / '; }
+	if (!empty($BadFolders)) { $ExtraInfo.=$AddExtra. Gazelle\Format::torrent_label('Bad Folders'); $AddExtra=' / '; }
+	if (!empty($MissingLineage)) { $ExtraInfo.=$AddExtra. Gazelle\Format::torrent_label('Missing Lineage'); $AddExtra = ' / '; }
+	if (!empty($CassetteApproved)) { $ExtraInfo.=$AddExtra. Gazelle\Format::torrent_label('Cassette Approved'); $AddExtra=' / '; }
+	if (!empty($LossymasterApproved)) { $ExtraInfo.=$AddExtra. Gazelle\Format::torrent_label('Lossy Master Approved'); $AddExtra=' / '; }
+	if (!empty($LossywebApproved)) { $ExtraInfo.=$AddExtra. Gazelle\Format::torrent_label('Lossy WEB Approved'); $AddExtra = ' / '; }
+	if (!empty($BadFiles)) { $ExtraInfo.=$AddExtra. Gazelle\Format::torrent_label('Bad File Names'); $AddExtra=' / '; }
 
 	if ($GroupCategoryID == 1
 		&& ($RemasterTitle != $LastRemasterTitle
@@ -690,7 +690,7 @@ foreach ($TorrentList as $Torrent) {
 					]</span>
 					&raquo; <a href="#" onclick="$('#torrent_<?=$TorrentID?>').gtoggle(); return false;"><?=$ExtraInfo; ?></a>
 				</td>
-				<td class="number_column nobr"><?=Format::get_size($Size)?></td>
+				<td class="number_column nobr"><?=Gazelle\Format::get_size($Size)?></td>
 				<td class="number_column"><?=number_format($Snatched)?></td>
 				<td class="number_column"><?=number_format($Seeders)?></td>
 				<td class="number_column"><?=number_format($Leechers)?></td>
@@ -717,7 +717,7 @@ foreach ($TorrentList as $Torrent) {
 							<br /><a href="torrents.php?action=reseed&amp;torrentid=<?=$TorrentID?>&amp;groupid=<?=$GroupID?>" class="brackets" onclick="return confirm('Are you sure you want to request a re-seed of this torrent?');">Request re-seed</a>
 <?	}
 
-	$NewRatio = Format::get_ratio_html(G::$LoggedUser['BytesUploaded'],\G::$LoggedUser['BytesDownloaded'] + $Size);
+	$NewRatio = Gazelle\Format::get_ratio_html(G::$LoggedUser['BytesUploaded'],\G::$LoggedUser['BytesDownloaded'] + $Size);
 ?>
 							<br /><br />If you download this, your ratio will become <?=$NewRatio?>.
 						</blockquote>
@@ -798,7 +798,7 @@ if (empty($LoggedUser['DisableRequests']) && count($Requests) > 0) {
 						&nbsp;&nbsp; <a href="javascript:Vote(0, <?=$Request['ID']?>)" class="brackets">+</a>
 <?			} ?>
 					</td>
-					<td><?=Format::get_size($RequestVotes['TotalBounty'])?></td>
+					<td><?=Gazelle\Format::get_size($RequestVotes['TotalBounty'])?></td>
 				</tr>
 <?	} ?>
 			</table>
@@ -914,7 +914,7 @@ include(SERVER_ROOT.'/sections/torrents/voter_picks.php');
 		</div>
 <?
 // --- Comments ---
-$Pages = Format::get_pages($Page, $NumComments, TORRENT_COMMENTS_PER_PAGE, 9, '#comments');
+$Pages = Gazelle\Format::get_pages($Page, $NumComments, TORRENT_COMMENTS_PER_PAGE, 9, '#comments');
 ?>
 	<div id="torrent_comments">
 		<div class="linkbox"><a name="comments"></a>

@@ -12,7 +12,7 @@ class PollGraph extends GoogleCharts
     public function add($Label, $Data)
     {
         if ($Label !== false) {
-            $this->Labels[] = \Format::cut_string($Label, 35);
+            $this->Labels[] = \Gazelle\Format::cut_string($Label, 35);
         }
         $this->Data[] = $Data;
     }

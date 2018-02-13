@@ -29,7 +29,7 @@ include(SERVER_ROOT.'/sections/log/sphinx.php');
 <?	if ($TotalMatches > LOG_ENTRIES_PER_PAGE) { ?>
 	<div class="linkbox">
 <?
-	$Pages = Format::get_pages($Page, $TotalMatches, LOG_ENTRIES_PER_PAGE, 9);
+	$Pages = Gazelle\Format::get_pages($Page, $TotalMatches, LOG_ENTRIES_PER_PAGE, 9);
 	echo $Pages;?>
 	</div>
 <?	} ?>

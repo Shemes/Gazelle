@@ -243,7 +243,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 						<a href="user.php?id=<?=$User['UserID']?>"><?=($Boldify ? '<strong>' : '') . display_str($User['Username']) . ($Boldify ? '</strong>' : '')?></a>
 					</td>
 					<td class="number_column">
-						<?=($Boldify ? '<strong>' : '') . Format::get_size($User['Bounty']) . ($Boldify ? "</strong>\n" : "\n")?>
+						<?=($Boldify ? '<strong>' : '') . Gazelle\Format::get_size($User['Bounty']) . ($Boldify ? "</strong>\n" : "\n")?>
 					</td>
 				</tr>
 <?	}
@@ -256,7 +256,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 						<a href="user.php?id=<?=$User['UserID']?>"><strong><?=display_str($User['Username'])?></strong></a>
 					</td>
 					<td class="number_column">
-						<strong><?=Format::get_size($User['Bounty'])?></strong>
+						<strong><?=Gazelle\Format::get_size($User['Bounty'])?></strong>
 					</td>
 				</tr>
 <?			}
@@ -344,7 +344,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 					<span id="votecount"><?=number_format($VoteCount)?></span>
 <?	if ($CanVote) { ?>
 					&nbsp;&nbsp;<a href="javascript:Vote(0)" class="brackets"><strong>+</strong></a>
-					<strong>Costs <?=Format::get_size($MinimumVote, 0)?></strong>
+					<strong>Costs <?=Gazelle\Format::get_size($MinimumVote, 0)?></strong>
 <?	} ?>
 				</td>
 			</tr>
@@ -385,8 +385,8 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 						<input id="total_bounty" type="hidden" value="<?=$RequestVotes['TotalBounty']?>" />
 						Bounty after tax: <strong><span id="bounty_after_tax">0.00 MB</span></strong><br />
 						If you add the entered <strong><span id="new_bounty">0.00 MB</span></strong> of bounty, your new stats will be: <br />
-						Uploaded: <span id="new_uploaded"><?=Format::get_size($LoggedUser['BytesUploaded'])?></span><br />
-						Ratio: <span id="new_ratio"><?=Format::get_ratio_html($LoggedUser['BytesUploaded'],$LoggedUser['BytesDownloaded'])?></span>
+						Uploaded: <span id="new_uploaded"><?=Gazelle\Format::get_size($LoggedUser['BytesUploaded'])?></span><br />
+						Ratio: <span id="new_ratio"><?=Gazelle\Format::get_ratio_html($LoggedUser['BytesUploaded'],$LoggedUser['BytesDownloaded'])?></span>
 						<input type="button" id="button" value="Vote!" disabled="disabled" onclick="Vote();" />
 					</form>
 				</td>
@@ -394,7 +394,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 <?	} ?>
 			<tr id="bounty">
 				<td class="label">Bounty</td>
-				<td id="formatted_bounty"><?=Format::get_size($RequestVotes['TotalBounty'])?></td>
+				<td id="formatted_bounty"><?=Gazelle\Format::get_size($RequestVotes['TotalBounty'])?></td>
 			</tr>
 <?
 	if ($IsFilled) {
@@ -446,7 +446,7 @@ $google_url = 'https://www.google.com/search?tbm=shop&amp;q=' . "$encoded_artist
 		<div class="linkbox">
 			<a name="comments"></a>
 <?
-$Pages = Format::get_pages($Page, $NumComments, TORRENT_COMMENTS_PER_PAGE, 9, '#comments');
+$Pages = Gazelle\Format::get_pages($Page, $NumComments, TORRENT_COMMENTS_PER_PAGE, 9, '#comments');
 echo $Pages;
 ?>
 		</div>

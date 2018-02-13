@@ -18,7 +18,7 @@ if (!in_array($Section, array('inbox', 'sentbox'))) {
 	die();
 }
 
-list($Page, $Limit) = Format::page_limit(MESSAGES_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(MESSAGES_PER_PAGE);
 
 $Sort = empty($_GET['sort']) || $_GET['sort'] != "unread" ? "Date DESC" : "cu.Unread = '1' DESC, DATE DESC";
 
@@ -74,14 +74,14 @@ $DB->query('SELECT FOUND_ROWS()');
 list($NumResults) = $DB->next_record();
 $DB->set_query_id($Results);
 
-$CurURL = Format::get_url(array('sort'));
+$CurURL = Gazelle\Format::get_url(array('sort'));
 if (empty($CurURL)) {
 	$CurURL = "inbox.php?";
 } else {
 	$CurURL = "inbox.php?".$CurURL."&";
 }
 
-$Pages = Format::get_pages($Page, $NumResults, MESSAGES_PER_PAGE, 9);
+$Pages = Gazelle\Format::get_pages($Page, $NumResults, MESSAGES_PER_PAGE, 9);
 
 $JsonMessages = array();
 while (list($ConvID, $Subject, $Unread, $Sticky, $ForwardedID, $ForwardedName, $SenderID, $Username, $Donor, $Warned, $Enabled, $Avatar, $Date) = $DB->next_record()) {

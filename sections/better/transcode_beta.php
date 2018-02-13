@@ -312,7 +312,7 @@ if ($ResultCount == 0) {
 				$DisplayName .= ' ['.$ReleaseTypes[$ReleaseType].']';
 			}
 			if ($Edition['FLACIsSnatched']) {
-				$DisplayName .= ' ' . Format::torrent_label('Snatched!');
+				$DisplayName .= ' ' . Gazelle\Format::torrent_label('Snatched!');
 			}
 ?>
 		<tr<?=($Edition['FLACIsSnatched'] ? ' class="snatched_torrent"' : '')?>>

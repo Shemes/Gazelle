@@ -3,7 +3,7 @@ define('EMAILS_PER_PAGE', 25);
 if (!check_perms('users_view_email')) {
 	error(403);
 }
-list ($Page, $Limit) = Format::page_limit(EMAILS_PER_PAGE);
+list ($Page, $Limit) = Gazelle\Format::page_limit(EMAILS_PER_PAGE);
 
 View::show_header('Manage email blacklist');
 $Where = "";
@@ -49,7 +49,7 @@ list ($NumResults) = $DB->next_record();
 <div class="linkbox pager">
 	<br />
 <?
-	$Pages = Format::get_pages($Page, $NumResults, TOPICS_PER_PAGE, 9);
+	$Pages = Gazelle\Format::get_pages($Page, $NumResults, TOPICS_PER_PAGE, 9);
 	echo $Pages;
 ?>
 </div>

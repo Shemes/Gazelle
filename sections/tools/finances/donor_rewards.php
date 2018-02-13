@@ -4,7 +4,7 @@ if (!check_perms('users_mod')) {
 }
 
 define('USERS_PER_PAGE', 50);
-list ($Page, $Limit) = Format::page_limit(USERS_PER_PAGE);
+list ($Page, $Limit) = Gazelle\Format::page_limit(USERS_PER_PAGE);
 
 $SearchQuery = '';
 if ($_GET['username']) {
@@ -37,7 +37,7 @@ $DB->query("
 $Users = $DB->to_array();
 $DB->query('SELECT FOUND_ROWS()');
 list($Results) = $DB->next_record();
-$Pages = Format::get_pages($Page, $Results, USERS_PER_PAGE, 9);
+$Pages = Gazelle\Format::get_pages($Page, $Results, USERS_PER_PAGE, 9);
 
 View::show_header($Title);
 ?>

@@ -91,7 +91,7 @@ foreach ($GroupIDs as $GroupID) {
 					</div>
 				</td>
 				<td class="center">
-					<div title="<?=$TorrentTags->title()?>" class="tooltip <?=Format::css_category($GroupCategoryID)?> <?=$TorrentTags->css_name()?>"></div>
+					<div title="<?=$TorrentTags->title()?>" class="tooltip <?=Gazelle\Format::css_category($GroupCategoryID)?> <?=$TorrentTags->css_name()?>"></div>
 				</td>
 				<td colspan="5">
 					<strong><?=$DisplayName?></strong>
@@ -153,7 +153,7 @@ foreach ($GroupIDs as $GroupID) {
 			</span>
 			&nbsp;&nbsp;&raquo;&nbsp; <a href="torrents.php?id=<?=$GroupID?>&amp;torrentid=<?=$TorrentID?>"><?=Torrents::torrent_info($Torrent)?></a>
 		</td>
-		<td class="number_column nobr"><?=Format::get_size($Torrent['Size'])?></td>
+		<td class="number_column nobr"><?=Gazelle\Format::get_size($Torrent['Size'])?></td>
 		<td class="number_column"><?=number_format($Torrent['Snatched'])?></td>
 		<td class="number_column<?=(($Torrent['Seeders'] == 0) ? ' r00' : '')?>"><?=number_format($Torrent['Seeders'])?></td>
 		<td class="number_column"><?=number_format($Torrent['Leechers'])?></td>
@@ -168,21 +168,21 @@ foreach ($GroupIDs as $GroupID) {
 		$DisplayName = '<a href="torrents.php?id='.$GroupID.'" class="tooltip" title="View torrent group" dir="ltr">'.$GroupName.'</a>';
 
 		if ($Torrent['IsSnatched']) {
-			$DisplayName .= ' ' . Format::torrent_label('Snatched!');
+			$DisplayName .= ' ' . Gazelle\Format::torrent_label('Snatched!');
 		}
 		if ($Torrent['FreeTorrent'] === '1') {
-			$DisplayName .= ' ' . Format::torrent_label('Freeleech!');
+			$DisplayName .= ' ' . Gazelle\Format::torrent_label('Freeleech!');
 		} elseif ($Torrent['FreeTorrent'] === '2') {
-			$DisplayName .= ' ' . Format::torrent_label('Neutral leech!');
+			$DisplayName .= ' ' . Gazelle\Format::torrent_label('Neutral leech!');
 		} elseif ($Torrent['PersonalFL']) {
-			$DisplayName .= ' ' . Format::torrent_label('Personal Freeleech!');
+			$DisplayName .= ' ' . Gazelle\Format::torrent_label('Personal Freeleech!');
 		}
 		$SnatchedTorrentClass = $Torrent['IsSnatched'] ? ' snatched_torrent' : '';
 ?>
 	<tr class="torrent torrent_row<?=$SnatchedTorrentClass . $SnatchedGroupClass?>" id="group_<?=$GroupID?>">
 		<td></td>
 		<td class="center">
-			<div title="<?=$TorrentTags->title()?>" class="tooltip <?=Format::css_category($GroupCategoryID)?> <?=$TorrentTags->css_name()?>">
+			<div title="<?=$TorrentTags->title()?>" class="tooltip <?=Gazelle\Format::css_category($GroupCategoryID)?> <?=$TorrentTags->css_name()?>">
 			</div>
 		</td>
 		<td>
@@ -201,7 +201,7 @@ foreach ($GroupIDs as $GroupID) {
 			<span class="float_right float_clear"><?=\Gazelle\Util\Time::timeDiff($AddedTime);?></span>
 
 		</td>
-		<td class="number_column nobr"><?=Format::get_size($Torrent['Size'])?></td>
+		<td class="number_column nobr"><?=Gazelle\Format::get_size($Torrent['Size'])?></td>
 		<td class="number_column"><?=number_format($Torrent['Snatched'])?></td>
 		<td class="number_column<?=(($Torrent['Seeders'] == 0) ? ' r00' : '')?>"><?=number_format($Torrent['Seeders'])?></td>
 		<td class="number_column"><?=number_format($Torrent['Leechers'])?></td>

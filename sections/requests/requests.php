@@ -321,11 +321,11 @@ if ($NumResults > 0) {
 		if (($Page - 1) * REQUESTS_PER_PAGE > $NumResults) {
 			$Page = 0;
 		}
-		$PageLinks = Format::get_pages($Page, $NumResults, REQUESTS_PER_PAGE);
+		$PageLinks = Gazelle\Format::get_pages($Page, $NumResults, REQUESTS_PER_PAGE);
 	}
 }
 
-$CurrentURL = Format::get_url(array('order', 'sort', 'page'));
+$CurrentURL = Gazelle\Format::get_url(array('order', 'sort', 'page'));
 View::show_header($Title, 'requests');
 
 ?>
@@ -377,8 +377,8 @@ View::show_header($Title, 'requests');
 				<td class="label">Tags (comma-separated):</td>
 				<td>
 					<input type="search" name="tags" id="tags" size="60" value="<?=!empty($TagNames) ? display_str($TagNames) : ''?>"<? Users::has_autocomplete_enabled('other'); ?> />&nbsp;
-					<input type="radio" name="tags_type" id="tags_type0" value="0"<? Format::selected('tags_type', 0, 'checked')?> /><label for="tags_type0"> Any</label>&nbsp;&nbsp;
-					<input type="radio" name="tags_type" id="tags_type1" value="1"<? Format::selected('tags_type', 1, 'checked')?> /><label for="tags_type1"> All</label>
+					<input type="radio" name="tags_type" id="tags_type0" value="0"<? Gazelle\Format::selected('tags_type', 0, 'checked')?> /><label for="tags_type0"> Any</label>&nbsp;&nbsp;
+					<input type="radio" name="tags_type" id="tags_type1" value="1"<? Gazelle\Format::selected('tags_type', 1, 'checked')?> /><label for="tags_type1"> All</label>
 				</td>
 			</tr>
 			<tr id="include_filled">
@@ -612,7 +612,7 @@ View::show_header($Title, 'requests');
 <?		} ?>
 			</td>
 			<td class="number_column nobr">
-				<?=Format::get_size($Bounty)?>
+				<?=Gazelle\Format::get_size($Bounty)?>
 			</td>
 			<td class="nobr">
 <?		if ($IsFilled) { ?>

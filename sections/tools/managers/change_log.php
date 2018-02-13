@@ -1,6 +1,6 @@
 <?
 $PerPage = POSTS_PER_PAGE;
-list($Page, $Limit) = Format::page_limit($PerPage);
+list($Page, $Limit) = Gazelle\Format::page_limit($PerPage);
 
 $CanEdit = check_perms('users_mod');
 
@@ -48,7 +48,7 @@ View::show_header('Gazelle Change Log', 'datetime_picker', 'datetime_picker');
 	<h2>Gazelle Change Log</h2>
 	<div class="linkbox">
 <?
-	$Pages = Format::get_pages($Page, $NumResults, $PerPage, 11);
+	$Pages = Gazelle\Format::get_pages($Page, $NumResults, $PerPage, 11);
 	echo "\t\t$Pages\n";
 ?>
 	</div>

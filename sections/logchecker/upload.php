@@ -72,7 +72,7 @@ if ($DB->has_results()) {
 			$DisplayName .= ' / Cue';
 		}
 		if ($LogChecksum == '0') {
-			$DisplayName .= ' / ' . Format::torrent_label('Bad/Missing Checksum');
+			$DisplayName .= ' / ' . Gazelle\Format::torrent_label('Bad/Missing Checksum');
 		}
 		echo "\t\t\t\t<tr><td style=\"width: 5%;\"><input type=\"radio\" name=\"torrentid\" value=\"{$ID}\"></td><td>{$DisplayName}</td></tr>";
 	}

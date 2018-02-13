@@ -14,9 +14,7 @@ ini_set('max_file_uploads', 100);
 define('MAX_FILENAME_LENGTH', 255);
 
 include(SERVER_ROOT.'/classes/validate.class.php');
-
 include(SERVER_ROOT.'/sections/torrents/functions.php');
-include(SERVER_ROOT.'/classes/file_checker.class.php');
 
 enforce_login();
 authorize();
@@ -410,7 +408,7 @@ $HasLog = 0;
 $HasCue = 0;
 $TmpFileList = array();
 $TooLongPaths = array();
-$DirName = (isset($Tor->Dec['info']['files']) ? Format::make_utf8($Tor->get_name()) : '');
+$DirName = (isset($Tor->Dec['info']['files']) ? Gazelle\Format::make_utf8($Tor->get_name()) : '');
 $IgnoredLogFileNames = array('audiochecker.log', 'sox.log');
 $fileChecker = new Gazelle\FileChecker;
 
@@ -466,7 +464,7 @@ if ($Type == 'Music') {
 
 		// File list and size
 		list($ExtraTotalSize, $ExtraFileList) = $ExtraTor->file_list();
-		$ExtraDirName = isset($ExtraTor->Dec['info']['files']) ? Format::make_utf8($ExtraTor->get_name()) : '';
+		$ExtraDirName = isset($ExtraTor->Dec['info']['files']) ? Gazelle\Format::make_utf8($ExtraTor->get_name()) : '';
 
 		$ExtraTmpFileList = array();
 		foreach ($ExtraFileList as $ExtraFile) {

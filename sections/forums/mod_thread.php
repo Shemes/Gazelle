@@ -166,7 +166,7 @@ if (isset($_POST['delete'])) {
 		'IsSticky' => $Sticky,
 		'Ranking' => $Ranking,
 		'IsLocked' => $Locked,
-		'Title' => Format::cut_string($RawTitle, 150, 1, 0),
+		'Title' => Gazelle\Format::cut_string($RawTitle, 150, 1, 0),
 		'ForumID' => $ForumID
 		);
 	$Cache->update_row(false, $UpdateArray);

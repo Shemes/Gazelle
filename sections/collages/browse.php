@@ -1,7 +1,7 @@
 <?php
 define('COLLAGES_PER_PAGE', 25);
 
-list($Page, $Limit) = Format::page_limit(COLLAGES_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(COLLAGES_PER_PAGE);
 
 
 $OrderVals = array('Time', 'Name', 'Subscribers', 'Torrents', 'Updated');
@@ -185,8 +185,8 @@ View::show_header(($BookmarkView) ? 'Your bookmarked collages' : 'Browse collage
 					<td class="label">Tags (comma-separated):</td>
 					<td>
 						<input type="text" id="tags" name="tags" size="70" value="<?=(!empty($_GET['tags']) ? display_str($_GET['tags']) : '')?>"<? Users::has_autocomplete_enabled('other'); ?> />&nbsp;
-						<input type="radio" name="tags_type" id="tags_type0" value="0"<?Format::selected('tags_type', 0, 'checked')?> /><label for="tags_type0"> Any</label>&nbsp;&nbsp;
-						<input type="radio" name="tags_type" id="tags_type1" value="1"<?Format::selected('tags_type', 1, 'checked')?> /><label for="tags_type1"> All</label>
+						<input type="radio" name="tags_type" id="tags_type0" value="0"<?Gazelle\Format::selected('tags_type', 0, 'checked')?> /><label for="tags_type0"> Any</label>&nbsp;&nbsp;
+						<input type="radio" name="tags_type" id="tags_type1" value="1"<?Gazelle\Format::selected('tags_type', 1, 'checked')?> /><label for="tags_type1"> All</label>
 					</td>
 				</tr>
 				<tr id="categories">
@@ -281,7 +281,7 @@ View::show_header(($BookmarkView) ? 'Your bookmarked collages' : 'Browse collage
 		<br /><br />
 <?
 	}
-	$Pages = Format::get_pages($Page, $NumResults, COLLAGES_PER_PAGE, 9);
+	$Pages = Gazelle\Format::get_pages($Page, $NumResults, COLLAGES_PER_PAGE, 9);
 	echo $Pages;
 ?>
 	</div>

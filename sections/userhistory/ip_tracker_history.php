@@ -43,7 +43,7 @@ function ShowIPs(rowname) {
 }
 </script>
 <?
-list($Page, $Limit) = Format::page_limit(IPS_PER_PAGE);
+list($Page, $Limit) = Gazelle\Format::page_limit(IPS_PER_PAGE);
 
 $TrackerIps = $DB->query("
 	SELECT IP, fid, tstamp
@@ -57,7 +57,7 @@ $DB->query('SELECT FOUND_ROWS()');
 list($NumResults) = $DB->next_record();
 $DB->set_query_id($TrackerIps);
 
-$Pages = Format::get_pages($Page, $NumResults, IPS_PER_PAGE, 9);
+$Pages = Gazelle\Format::get_pages($Page, $NumResults, IPS_PER_PAGE, 9);
 
 ?>
 <div class="thin">

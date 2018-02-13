@@ -14,7 +14,7 @@ if (!is_number($UserID)) {
 
 $PerPage = TOPICS_PER_PAGE;
 
-list($Page, $Limit) = Format::page_limit($PerPage);
+list($Page, $Limit) = Gazelle\Format::page_limit($PerPage);
 
 $UserInfo = Users::user_info($UserID);
 $Username = $UserInfo['Username'];
@@ -56,7 +56,7 @@ $DB->set_query_id($QueryID);
 		?>
 		<div class="linkbox">
 			<?
-			$Pages = Format::get_pages($Page, $Results, $PerPage, 11);
+			$Pages = Gazelle\Format::get_pages($Page, $Results, $PerPage, 11);
 			echo $Pages;
 			?>
 		</div>

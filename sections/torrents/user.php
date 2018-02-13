@@ -18,7 +18,7 @@ function header_link($SortKey, $DefaultWay = 'DESC') {
 		$NewWay = $DefaultWay;
 	}
 
-	return "torrents.php?way=$NewWay&amp;order=$SortKey&amp;" . Format::get_url(array('way','order'));
+	return "torrents.php?way=$NewWay&amp;order=$SortKey&amp;" . Gazelle\Format::get_url(array('way','order'));
 }
 
 if (!isset($_GET['userid'])) {
@@ -334,7 +334,7 @@ $User = Users::user_info($UserID);
 
 View::show_header($User['Username']."'s $Action torrents",'voting');
 
-$Pages = Format::get_pages($Page, $TorrentCount, TORRENTS_PER_PAGE);
+$Pages = Gazelle\Format::get_pages($Page, $TorrentCount, TORRENTS_PER_PAGE);
 
 
 ?>
@@ -350,7 +350,7 @@ $Pages = Format::get_pages($Page, $TorrentCount, TORRENTS_PER_PAGE);
 					<td>
 						<input type="hidden" name="type" value="<?=$_GET['type']?>" />
 						<input type="hidden" name="userid" value="<?=$UserID?>" />
-						<input type="search" name="search" size="60" value="<?Format::form('search')?>" />
+						<input type="search" name="search" size="60" value="<?Gazelle\Format::form('search')?>" />
 					</td>
 				</tr>
 				<tr>
@@ -359,26 +359,26 @@ $Pages = Format::get_pages($Page, $TorrentCount, TORRENTS_PER_PAGE);
 						<select id="bitrate" name="bitrate" class="ft_bitrate">
 							<option value="">Bitrate</option>
 <?	foreach ($Bitrates as $BitrateName) { ?>
-							<option value="<?=display_str($BitrateName); ?>"<?Format::selected('bitrate', $BitrateName)?>><?=display_str($BitrateName); ?></option>
+							<option value="<?=display_str($BitrateName); ?>"<?Gazelle\Format::selected('bitrate', $BitrateName)?>><?=display_str($BitrateName); ?></option>
 <?	} ?>				</select>
 
 						<select name="format" class="ft_format">
 							<option value="">Format</option>
 <?	foreach ($Formats as $FormatName) { ?>
-							<option value="<?=display_str($FormatName); ?>"<?Format::selected('format', $FormatName)?>><?=display_str($FormatName); ?></option>
+							<option value="<?=display_str($FormatName); ?>"<?Gazelle\Format::selected('format', $FormatName)?>><?=display_str($FormatName); ?></option>
 <?	} ?>
-							<option value="perfectflac"<?Format::selected('filter', 'perfectflac')?>>Perfect FLACs</option>
+							<option value="perfectflac"<?Gazelle\Format::selected('filter', 'perfectflac')?>>Perfect FLACs</option>
 						</select>
 						<select name="media" class="ft_media">
 							<option value="">Media</option>
 <?	foreach ($Media as $MediaName) { ?>
-							<option value="<?=display_str($MediaName); ?>"<?Format::selected('media',$MediaName)?>><?=display_str($MediaName); ?></option>
+							<option value="<?=display_str($MediaName); ?>"<?Gazelle\Format::selected('media',$MediaName)?>><?=display_str($MediaName); ?></option>
 <?	} ?>
 						</select>
 						<select name="releasetype" class="ft_releasetype">
 							<option value="">Release type</option>
 <?	foreach ($ReleaseTypes as $ID=>$Type) { ?>
-							<option value="<?=display_str($ID); ?>"<?Format::selected('releasetype',$ID)?>><?=display_str($Type); ?></option>
+							<option value="<?=display_str($ID); ?>"<?Gazelle\Format::selected('releasetype',$ID)?>><?=display_str($Type); ?></option>
 <?	} ?>
 						</select>
 					</td>
@@ -388,34 +388,34 @@ $Pages = Format::get_pages($Page, $TorrentCount, TORRENTS_PER_PAGE);
 					<td class="nobr" colspan="3">
 						<select name="log" class="ft_haslog">
 							<option value="">Has log</option>
-							<option value="1"<?Format::selected('log','1')?>>Yes</option>
-							<option value="0"<?Format::selected('log','0')?>>No</option>
-							<option value="100"<?Format::selected('log','100')?>>100% only</option>
-							<option value="-1"<?Format::selected('log','-1')?>>&lt;100%/unscored</option>
+							<option value="1"<?Gazelle\Format::selected('log','1')?>>Yes</option>
+							<option value="0"<?Gazelle\Format::selected('log','0')?>>No</option>
+							<option value="100"<?Gazelle\Format::selected('log','100')?>>100% only</option>
+							<option value="-1"<?Gazelle\Format::selected('log','-1')?>>&lt;100%/unscored</option>
 						</select>
 						<select name="cue" class="ft_hascue">
 							<option value="">Has cue</option>
-							<option value="1"<?Format::selected('cue',1)?>>Yes</option>
-							<option value="0"<?Format::selected('cue',0)?>>No</option>
+							<option value="1"<?Gazelle\Format::selected('cue',1)?>>Yes</option>
+							<option value="0"<?Gazelle\Format::selected('cue',0)?>>No</option>
 						</select>
 						<select name="scene" class="ft_scene">
 							<option value="">Scene</option>
-							<option value="1"<?Format::selected('scene',1)?>>Yes</option>
-							<option value="0"<?Format::selected('scene',0)?>>No</option>
+							<option value="1"<?Gazelle\Format::selected('scene',1)?>>Yes</option>
+							<option value="0"<?Gazelle\Format::selected('scene',0)?>>No</option>
 						</select>
 						<select name="vanityhouse" class="ft_vanityhouse">
 							<option value="">Vanity House</option>
-							<option value="1"<?Format::selected('vanityhouse',1)?>>Yes</option>
-							<option value="0"<?Format::selected('vanityhouse',0)?>>No</option>
+							<option value="1"<?Gazelle\Format::selected('vanityhouse',1)?>>Yes</option>
+							<option value="0"<?Gazelle\Format::selected('vanityhouse',0)?>>No</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td class="label"><strong>Tags:</strong></td>
 					<td>
-						<input type="search" name="tags" size="60" class="tooltip" title="Use !tag to exclude tag" value="<?Format::form('tags')?>" />&nbsp;
-						<input type="radio" name="tags_type" id="tags_type0" value="0"<?Format::selected('tags_type', 0, 'checked')?> /><label for="tags_type0"> Any</label>&nbsp;&nbsp;
-						<input type="radio" name="tags_type" id="tags_type1" value="1"<?Format::selected('tags_type', 1, 'checked')?> /><label for="tags_type1"> All</label>
+						<input type="search" name="tags" size="60" class="tooltip" title="Use !tag to exclude tag" value="<?Gazelle\Format::form('tags')?>" />&nbsp;
+						<input type="radio" name="tags_type" id="tags_type0" value="0"<?Gazelle\Format::selected('tags_type', 0, 'checked')?> /><label for="tags_type0"> Any</label>&nbsp;&nbsp;
+						<input type="radio" name="tags_type" id="tags_type1" value="1"<?Gazelle\Format::selected('tags_type', 1, 'checked')?> /><label for="tags_type1"> All</label>
 					</td>
 				</tr>
 
@@ -424,12 +424,12 @@ $Pages = Format::get_pages($Page, $TorrentCount, TORRENTS_PER_PAGE);
 					<td>
 						<select name="order" class="ft_order_by">
 <?	foreach ($Orders as $OrderText) { ?>
-							<option value="<?=$OrderText?>"<?Format::selected('order', $OrderText)?>><?=$OrderText?></option>
+							<option value="<?=$OrderText?>"<?Gazelle\Format::selected('order', $OrderText)?>><?=$OrderText?></option>
 <?	} ?>
 						</select>&nbsp;
 						<select name="way" class="ft_order_way">
 <?	foreach ($Ways as $WayKey=>$WayText) { ?>
-							<option value="<?=$WayKey?>"<?Format::selected('way', $WayKey)?>><?=$WayText?></option>
+							<option value="<?=$WayKey?>"<?Gazelle\Format::selected('way', $WayKey)?>><?=$WayText?></option>
 <?	} ?>
 						</select>
 					</td>
@@ -528,7 +528,7 @@ foreach ($Categories as $CatKey => $CatName) {
 ?>
 		<tr class="torrent torrent_row<?=($Torrent['IsSnatched'] ? ' snatched_torrent' : '') . ($GroupFlags['IsSnatched'] ? ' snatched_group' : '')?>">
 			<td class="center cats_col">
-				<div title="<?=$TorrentTags->title()?>" class="tooltip <?=Format::css_category($GroupCategoryID)?> <?=$TorrentTags->css_name()?>"></div>
+				<div title="<?=$TorrentTags->title()?>" class="tooltip <?=Gazelle\Format::css_category($GroupCategoryID)?> <?=$TorrentTags->css_name()?>"></div>
 			</td>
 			<td class="big_info">
 <?	if ($LoggedUser['CoverArt']) { ?>
@@ -547,7 +547,7 @@ foreach ($Categories as $CatKey => $CatName) {
 				</div>
 			</td>
 			<td class="nobr"><?=\Gazelle\Util\Time::timeDiff($Time, 1)?></td>
-			<td class="number_column nobr"><?=Format::get_size($Torrent['Size'])?></td>
+			<td class="number_column nobr"><?=Gazelle\Format::get_size($Torrent['Size'])?></td>
 			<td class="number_column"><?=number_format($Torrent['Snatched'])?></td>
 			<td class="number_column<?=(($Torrent['Seeders'] == 0) ? ' r00' : '')?>"><?=number_format($Torrent['Seeders'])?></td>
 			<td class="number_column"><?=number_format($Torrent['Leechers'])?></td>

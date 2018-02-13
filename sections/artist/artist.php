@@ -461,7 +461,7 @@ foreach ($Importances as $Group) {
 			</span>
 			&nbsp;&nbsp;&raquo;&nbsp; <a href="torrents.php?id=<?=$GroupID?>&amp;torrentid=<?=$TorrentID?>"><?=Torrents::torrent_info($Torrent)?></a>
 		</td>
-		<td class="number_column nobr"><?=Format::get_size($Torrent['Size'])?></td>
+		<td class="number_column nobr"><?=Gazelle\Format::get_size($Torrent['Size'])?></td>
 		<td class="number_column"><?=number_format($Torrent['Snatched'])?></td>
 		<td class="number_column<?=(($Torrent['Seeders'] == 0) ? ' r00' : '')?>"><?=number_format($Torrent['Seeders'])?></td>
 		<td class="number_column"><?=number_format($Torrent['Leechers'])?></td>
@@ -830,7 +830,7 @@ if ($NumRequests > 0) {
 <?		} ?>
 			</td>
 			<td class="nobr">
-				<span id="bounty_<?=$RequestID?>"><?=Format::get_size($Request['Bounty'])?></span>
+				<span id="bounty_<?=$RequestID?>"><?=Gazelle\Format::get_size($Request['Bounty'])?></span>
 			</td>
 			<td>
 				<?=\Gazelle\Util\Time::timeDiff($Request['TimeAdded'])?>
@@ -953,7 +953,7 @@ if (defined('LASTFM_API_KEY')) {
 }
 
 // --- Comments ---
-$Pages = Format::get_pages($Page, $NumComments, TORRENT_COMMENTS_PER_PAGE, 9, '#comments');
+$Pages = Gazelle\Format::get_pages($Page, $NumComments, TORRENT_COMMENTS_PER_PAGE, 9, '#comments');
 
 ?>
 	<div id="artistcomments">

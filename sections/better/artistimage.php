@@ -23,7 +23,7 @@ WHERE wiki.Image is NULL OR wiki.Image = ''
 ORDER BY a.Name
 LIMIT {$limit} OFFSET {$offset}");
 $artists = $DB->to_array('ArtistID', MYSQLI_ASSOC);
-$pages = Format::get_pages($page, $total, TORRENTS_PER_PAGE);
+$pages = Gazelle\Format::get_pages($page, $total, TORRENTS_PER_PAGE);
 print <<<HTML
 <div class="header">
     <h2>Artists that are missing images</h2>

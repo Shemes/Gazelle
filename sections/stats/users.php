@@ -33,7 +33,7 @@ if (!list($Countries, $Rank, $CountryUsers, $CountryMax, $CountryMin, $LogIncrem
 	reset($Rank);
 
 	for ($i = $CountryMin; $i <= $CountryMax; $i++) {
-		$LogIncrements[] = Format::human_format(pow(2, $i));
+		$LogIncrements[] = Gazelle\Format::human_format(pow(2, $i));
 	}
 	$Cache->cache_value('geodistribution', array($Countries, $Rank, $CountryUsers, $CountryMax, $CountryMin, $LogIncrements), 0);
 }

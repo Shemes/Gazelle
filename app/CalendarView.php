@@ -53,7 +53,7 @@ class CalendarView
             $Color = \Gazelle\Calendar::$Colors[\Gazelle\Calendar::$Importances[$Event['Importance']]];
             $Category = \Gazelle\Calendar::$Categories[$Event['Category']];
             $Tooltip = $Event['Title'] . ' - ' . \Gazelle\Calendar::$Categories[$Event['Category']] . ' - ' . \Gazelle\Calendar::$Importances[$Event['Importance']]; ?>
-			<p><a href="#" class="event_day tooltip" title="<?=$Tooltip?>" data-gazelle-id="<?=$Event['ID']?>" style="color: <?=$Color?>;"><?=Format::cut_string($Event['Title'], 8, true)?></a></p>
+			<p><a href="#" class="event_day tooltip" title="<?=$Tooltip?>" data-gazelle-id="<?=$Event['ID']?>" style="color: <?=$Color?>;"><?=Gazelle\Format::cut_string($Event['Title'], 8, true)?></a></p>
 <?php
         }
     }

@@ -118,10 +118,10 @@ foreach ($Tables as $Table) {
 		<td><?=display_str($Name)?></td>
 		<td><?=display_str($Engine)?></td>
 		<td><?=number_format($Rows)?></td>
-		<td><?=Format::get_size($RowSize)?></td>
-		<td><?=Format::get_size($DataSize)?></td>
-		<td><?=Format::get_size($IndexSize)?></td>
-		<td><?=Format::get_size($DataSize + $IndexSize)?></td>
+		<td><?=Gazelle\Format::get_size($RowSize)?></td>
+		<td><?=Gazelle\Format::get_size($DataSize)?></td>
+		<td><?=Gazelle\Format::get_size($IndexSize)?></td>
+		<td><?=Gazelle\Format::get_size($DataSize + $IndexSize)?></td>
 		<td><a href="tools.php?action=database_specifics&amp;table=<?=display_str($Name)?>" class="brackets">Schema</a></td>
 	</tr>
 <?
@@ -132,9 +132,9 @@ foreach ($Tables as $Table) {
 		<td></td>
 		<td><?=number_format($TotalRows)?></td>
 		<td></td>
-		<td><?=Format::get_size($TotalDataSize)?></td>
-		<td><?=Format::get_size($TotalIndexSize)?></td>
-		<td><?=Format::get_size($TotalDataSize + $TotalIndexSize)?></td>
+		<td><?=Gazelle\Format::get_size($TotalDataSize)?></td>
+		<td><?=Gazelle\Format::get_size($TotalIndexSize)?></td>
+		<td><?=Gazelle\Format::get_size($TotalDataSize + $TotalIndexSize)?></td>
 		<td></td>
 	</tr>
 </table>

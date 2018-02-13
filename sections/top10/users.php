@@ -150,12 +150,12 @@ function generate_user_table($Caption, $Tag, $Details, $Limit) {
 	<tr class="row<?=$Highlight?>">
 		<td class="center"><?=$Rank?></td>
 		<td><?=Users::format_username($Detail['ID'], false, false, false)?></td>
-		<td class="number_column"><?=Format::get_size($Detail['Uploaded'])?></td>
-		<td class="number_column tooltip" title="Upload speed is reported in base 2 in bytes per second, not bits per second."><?=Format::get_size($Detail['UpSpeed'])?>/s</td>
-		<td class="number_column"><?=Format::get_size($Detail['Downloaded'])?></td>
-		<td class="number_column tooltip" title="Download speed is reported in base 2 in bytes per second, not bits per second."><?=Format::get_size($Detail['DownSpeed'])?>/s</td>
+		<td class="number_column"><?=Gazelle\Format::get_size($Detail['Uploaded'])?></td>
+		<td class="number_column tooltip" title="Upload speed is reported in base 2 in bytes per second, not bits per second."><?=Gazelle\Format::get_size($Detail['UpSpeed'])?>/s</td>
+		<td class="number_column"><?=Gazelle\Format::get_size($Detail['Downloaded'])?></td>
+		<td class="number_column tooltip" title="Download speed is reported in base 2 in bytes per second, not bits per second."><?=Gazelle\Format::get_size($Detail['DownSpeed'])?>/s</td>
 		<td class="number_column"><?=number_format($Detail['NumUploads'])?></td>
-		<td class="number_column"><?=Format::get_ratio_html($Detail['Uploaded'], $Detail['Downloaded'])?></td>
+		<td class="number_column"><?=Gazelle\Format::get_ratio_html($Detail['Uploaded'], $Detail['Downloaded'])?></td>
 		<td class="number_column"><?=\Gazelle\Util\Time::timeDiff($Detail['JoinDate'])?></td>
 	</tr>
 <?	} ?>

@@ -26,7 +26,7 @@ foreach (\Gazelle\Artists::get_artists(array_keys($torrents)) as $group_id => $d
         }
     }
 }
-$pages = Format::get_pages($page, $total, TORRENTS_PER_PAGE);
+$pages = Gazelle\Format::get_pages($page, $total, TORRENTS_PER_PAGE);
 print <<<HTML
 <div class="header">
     <h2>Torrent groups that are missing artwork</h2>

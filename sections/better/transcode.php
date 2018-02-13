@@ -139,7 +139,7 @@ foreach ($TorrentGroups as $GroupID => $Editions) {
 			$DisplayName .= ' ['.$ReleaseTypes[$ReleaseType].']';
 		}
 		if ($Edition['IsSnatched']) {
-			$DisplayName .= ' ' . Format::torrent_label('Snatched!');
+			$DisplayName .= ' ' . Gazelle\Format::torrent_label('Snatched!');
 		}
 
 		$EditionInfo = array();

@@ -19,7 +19,7 @@ if (isset($_GET['username'])) {
 
 	if (!$Err) {
 		// Passed validation. Let's rock.
-		list($Page, $Limit) = Format::page_limit(USERS_PER_PAGE);
+		list($Page, $Limit) = Gazelle\Format::page_limit(USERS_PER_PAGE);
 		if ($Page > 10) {
 			$Page = 10;
 			$Limit = sprintf("%d, %d", ($Page - 1) * USERS_PER_PAGE, USERS_PER_PAGE);
@@ -57,7 +57,7 @@ View::show_header('User search');
 	<div class="header">
 		<h3>Search results</h3>
 	</div>
-<?	$Pages = Format::get_pages($Page, $NumResults, USERS_PER_PAGE, 9);
+<?	$Pages = Gazelle\Format::get_pages($Page, $NumResults, USERS_PER_PAGE, 9);
 	if ($Pages) { ?>
 	<div class="linkbox pager"><?=($Pages)?></div>
 <?	} ?>
